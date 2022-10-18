@@ -11,12 +11,13 @@ class WeekViewController: BaseViewController {
     // MARK: - Views
     private let pageControl = UIPageControl().then{
         $0.hidesForSinglePage = true
-        $0.numberOfPages = 7
+        $0.numberOfPages = 5
         $0.currentPageIndicatorTintColor = .signatureBlue
         $0.pageIndicatorTintColor = .lightGray
     }
     // MARK: - Life Cycles
     var weekCollectionView: UICollectionView!
+    var weekFoodData: [WeekFoodModel]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,8 @@ class WeekViewController: BaseViewController {
         setCollectionView(self)
         setUpView()
         setUpConstraint()
+        
+        DayFoodDataManager().getWeekFoodDataManager(self)
     }
     // MARK: - Functions
     func setCollectionView(_ dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate) {
@@ -32,12 +35,11 @@ class WeekViewController: BaseViewController {
             let flowLayout = UICollectionViewFlowLayout()
             flowLayout.minimumInteritemSpacing = 0
             flowLayout.minimumLineSpacing = 0
-            
 
             var bounds = UIScreen.main.bounds
             var width = bounds.size.width
             
-            flowLayout.itemSize = CGSize(width: width, height: 450)
+            flowLayout.itemSize = CGSize(width: width, height: 500)
             flowLayout.scrollDirection = .horizontal
             
             $0.collectionViewLayout = flowLayout
@@ -58,7 +60,7 @@ class WeekViewController: BaseViewController {
         weekCollectionView.snp.makeConstraints { make in
             make.top.equalTo(super.titleLabel.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
-            make.height.greaterThanOrEqualTo(450)
+            make.height.greaterThanOrEqualTo(500)
         }
         pageControl.snp.makeConstraints { make in
             make.centerX.equalTo(weekCollectionView)
@@ -69,31 +71,30 @@ class WeekViewController: BaseViewController {
 // MARK: - CollectionView delegate
 extension WeekViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        let count = folderData.count ?? 0
-//        EmptyView().setEmptyView(self.emptyMessage, self.folderView.folderCollectionView, count)
-        return 7
+//        let count = weekFoodData.count ?? 0
+        return 5
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeekCollectionViewCell.identifier,
                                                             for: indexPath)
                 as? WeekCollectionViewCell else{ fatalError() }
-//        let itemIdx = indexPath.item
-//        cell.setUpData(self.folderData[itemIdx])
+        let itemIdx = indexPath.item
+        if let weekFoodData = self.weekFoodData {
+            cell.setUpData(weekFoodData[itemIdx])
+        }
+        
         return cell
-    }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let itemIdx = indexPath.item
-//        let folderName = self.folderData[itemIdx].folder_name
-//        let folderId = self.folderData[itemIdx].folder_id
-//
-//        let vc = FolderDetailViewController()
-//        vc.folderName = folderName
-//        vc.folderId = folderId
-//        self.navigationController?.pushViewController(vc, animated: true)
     }
     // collectionview indicator
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let page = Int(targetContentOffset.pointee.x / scrollView.frame.width)
         self.pageControl.currentPage = page
+    }
+}
+// MARK: - API Success
+extension WeekViewController {
+    func getWeekFoodAPISuccess(_ result: [WeekFoodModel]) {
+        self.weekFoodData = result
+        self.weekCollectionView.reloadData()
     }
 }

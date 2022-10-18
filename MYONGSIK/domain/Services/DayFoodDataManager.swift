@@ -11,7 +11,7 @@ import Alamofire
 class DayFoodDataManager {
     let BaseURL = UserDefaults.standard.string(forKey: "url") ?? ""
     
-    // MARK: - 사용자 정보 조회
+    // MARK: - 일 간 조회
     func getDayFoodDataManager(_ viewcontroller: MainViewController) {
         AF.request(BaseURL + "/api/v1/foods",
                            method: .get,
@@ -30,6 +30,22 @@ class DayFoodDataManager {
                 default:
                     print(error.localizedDescription)
                 }
+                print(error.localizedDescription)
+            }
+        }
+    }
+    // MARK: - 주 간 조회
+    func getWeekFoodDataManager(_ viewcontroller: WeekViewController) {
+        AF.request(BaseURL + "/api/v1/foods/week",
+                           method: .get,
+                           parameters: nil,
+                           headers: nil)
+            .validate()
+            .responseDecodable(of: APIModel<[WeekFoodModel]>.self) { response in
+            switch response.result {
+            case .success(let result):
+                viewcontroller.getWeekFoodAPISuccess(result.data!)
+            case .failure(let error):
                 print(error.localizedDescription)
             }
         }

@@ -18,3 +18,12 @@ struct DayFoodModel: Decodable {
     let food5: String?
     let food6: String?
 }
+
+struct WeekFoodModel: Decodable {
+    let toDay: String?
+    let status: String?
+    let dayOfTheWeek: String?
+    let lunchA: [String]?
+    let lunchB: [String]?
+    let dinner: [String]?
+}

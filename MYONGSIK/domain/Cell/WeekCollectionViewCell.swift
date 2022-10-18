@@ -32,12 +32,60 @@ class WeekCollectionViewCell: UICollectionViewCell {
         $0.textColor = .black
         $0.text = "월요일"
     }
+    // 중식A
+    let lunchALabel = PaddingLabel().then{
+        $0.text = "중식A"
+        $0.backgroundColor = .signatureBlue
+        $0.font = UIFont.NotoSansKR(size: 12, family: .Regular)
+        $0.textColor = .white
+        
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 10
+    }
+    var lunchAFoodLabel = UILabel().then{
+        $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
+        $0.textColor = .signatureGray
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+    }
+    let seperatorLine1 = UIImageView().then{
+        $0.image = UIImage(named: "seperatorLine")
+    }
+    let lunchBLabel = PaddingLabel().then{
+        $0.text = "중식B"
+        $0.backgroundColor = .signatureBlue
+        $0.font = UIFont.NotoSansKR(size: 12, family: .Regular)
+        $0.textColor = .white
+        
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 10
+    }
+    var lunchBFoodLabel = UILabel().then{
+        $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
+        $0.textColor = .signatureGray
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+    }
+    let seperatorLine2 = UIImageView().then{
+        $0.image = UIImage(named: "seperatorLine")
+    }
+    let dinnerLabel = PaddingLabel().then{
+        $0.text = "석식"
+        $0.backgroundColor = .signatureBlue
+        $0.font = UIFont.NotoSansKR(size: 12, family: .Regular)
+        $0.textColor = .white
+        
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 10
+    }
+    var dinnerFoodLabel = UILabel().then{
+        $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
+        $0.textColor = .signatureGray
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+    }
     
     // MARK: - Life Cycles
-    var ALunchView: UIView!
-    var BLunchView: UIView!
-    var dinnerView: UIView!
-    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
@@ -51,16 +99,20 @@ class WeekCollectionViewCell: UICollectionViewCell {
     // MARK: - Functions
     func setUpView() {
         self.contentView.addSubview(backView)
-        ALunchView = setUpData()
-        BLunchView = setUpData()
-        dinnerView = setUpData()
         
         self.backView.addSubview(date)
         self.backView.addSubview(dayOfWeek)
+        self.backView.addSubview(lunchALabel)
+        self.backView.addSubview(lunchAFoodLabel)
+        self.backView.addSubview(seperatorLine1)
+        self.backView.addSubview(lunchBLabel)
+        self.backView.addSubview(lunchBFoodLabel)
+        self.backView.addSubview(seperatorLine2)
+        self.backView.addSubview(dinnerLabel)
+        self.backView.addSubview(dinnerFoodLabel)
         
-        self.backView.addSubview(ALunchView)
-        self.backView.addSubview(BLunchView)
-        self.backView.addSubview(dinnerView)
+//        setLineDot(view: seperatorLine1, color: .signatureBlue)
+//        setLineDot(view: seperatorLine2, color: .signatureBlue)
     }
     func setUpConstraint() {
         backView.snp.makeConstraints { make in
@@ -74,73 +126,90 @@ class WeekCollectionViewCell: UICollectionViewCell {
             make.centerY.equalTo(date)
             make.leading.equalTo(date.snp.trailing).offset(3)
         }
-        ALunchView.snp.makeConstraints { make in
-            make.height.greaterThanOrEqualTo(111)
-            make.leading.trailing.equalToSuperview().inset(10)
-            make.top.equalTo(date.snp.bottom).offset(10)
+        lunchALabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(19)
+            make.top.equalTo(date.snp.bottom).offset(29)
         }
-        BLunchView.snp.makeConstraints { make in
-            make.height.greaterThanOrEqualTo(111)
-            make.leading.trailing.equalToSuperview().inset(10)
-            make.top.equalTo(ALunchView.snp.bottom)
+        lunchAFoodLabel.snp.makeConstraints { make in
+            make.top.equalTo(lunchALabel.snp.bottom).offset(12)
+            make.leading.trailing.equalToSuperview().inset(25)
+            make.centerX.equalToSuperview()
         }
-        dinnerView.snp.makeConstraints { make in
-            make.height.greaterThanOrEqualTo(111)
+        seperatorLine1.snp.makeConstraints { make in
+            make.height.equalTo(1)
             make.leading.trailing.equalToSuperview().inset(10)
-            make.top.equalTo(BLunchView.snp.bottom)
-            make.bottom.equalToSuperview().offset(-40)
+            make.top.equalTo(lunchAFoodLabel.snp.bottom).offset(16)
+        }
+        lunchBLabel.snp.makeConstraints { make in
+            make.leading.equalTo(lunchALabel)
+            make.top.equalTo(seperatorLine1.snp.bottom).offset(16)
+        }
+        lunchBFoodLabel.snp.makeConstraints { make in
+            make.top.equalTo(lunchBLabel.snp.bottom).offset(12)
+            make.leading.trailing.equalToSuperview().inset(25)
+            make.centerX.equalToSuperview()
+        }
+        seperatorLine2.snp.makeConstraints { make in
+            make.height.equalTo(1)
+            make.leading.trailing.equalToSuperview().inset(10)
+            make.top.equalTo(lunchBFoodLabel.snp.bottom).offset(16)
+        }
+        dinnerLabel.snp.makeConstraints { make in
+            make.leading.equalTo(lunchALabel)
+            make.top.equalTo(seperatorLine2.snp.bottom).offset(16)
+        }
+        dinnerFoodLabel.snp.makeConstraints { make in
+            make.top.equalTo(dinnerLabel.snp.bottom).offset(12)
+            make.leading.trailing.equalToSuperview().inset(25)
+            make.centerX.equalToSuperview()
+//            make.bottom.equalToSuperview().offset(-40)
         }
     }
-    func setUpData() -> UIView {
-        let backgroundCellView = UIView()
-        let typeLabel = PaddingLabel().then{
-            $0.text = "중식A"
-            $0.backgroundColor = .signatureBlue
-            $0.font = UIFont.NotoSansKR(size: 12, family: .Regular)
-            $0.textColor = .white
+    func setUpData(_ data: WeekFoodModel) {
+        if let date = data.toDay {self.date.text = date}
+        if let dayOfWeek = data.dayOfTheWeek {self.dayOfWeek.text = dayOfWeek}
+        
+        if let lunchAFoods = data.lunchA {
+            let foods = lunchAFoods.joined(separator: " ")
+            self.lunchAFoodLabel.text = foods
             
-            $0.clipsToBounds = true
-            $0.layer.cornerRadius = 10
+            let food1 = lunchAFoods[0]
+            let attribtuedString = NSMutableAttributedString(string: foods)
+            let range = (foods as NSString).range(of: food1)
+            attribtuedString.addAttribute(.foregroundColor, value: UIColor.signatureBlue, range: range)
+            lunchAFoodLabel.attributedText = attribtuedString
         }
-        let foodsLabel = UILabel().then{
-            $0.text = "베이컨김치볶음밥&후라이 맑은우동국물 피쉬앤칩스&케찹 단무지 배추김치"
-            $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
-            $0.textColor = .signatureGray
-            $0.textAlignment = .center
-            $0.numberOfLines = 0
+        if let lunchBFoods = data.lunchB {
+            let foods = lunchBFoods.joined(separator: " ")
+            self.lunchBFoodLabel.text = foods
+            
+            let food1 = lunchBFoods[0]
+            let attribtuedString = NSMutableAttributedString(string: foods)
+            let range = (foods as NSString).range(of: food1)
+            attribtuedString.addAttribute(.foregroundColor, value: UIColor.signatureBlue, range: range)
+            lunchBFoodLabel.attributedText = attribtuedString
         }
-        let seperatorLine = UIView().then{
-            $0.backgroundColor = .signatureBlue
-        }
-        
-        backgroundCellView.addSubview(typeLabel)
-        backgroundCellView.addSubview(foodsLabel)
-        backgroundCellView.addSubview(seperatorLine)
-        
-        typeLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(9)
-            make.top.equalToSuperview().offset(16)
-        }
-        foodsLabel.snp.makeConstraints { make in
-            make.top.equalTo(typeLabel.snp.bottom).offset(12)
-            make.leading.trailing.equalToSuperview().inset(14)
-        }
-        seperatorLine.snp.makeConstraints { make in
-            make.height.equalTo(1)
-            make.leading.trailing.bottom.equalToSuperview()
+        if let dinnerFoods = data.dinner {
+            let foods = dinnerFoods.joined(separator: " ")
+            self.dinnerFoodLabel.text = foods
+            
+            let food1 = dinnerFoods[0]
+            let attribtuedString = NSMutableAttributedString(string: foods)
+            let range = (foods as NSString).range(of: food1)
+            attribtuedString.addAttribute(.foregroundColor, value: UIColor.signatureBlue, range: range)
+            dinnerFoodLabel.attributedText = attribtuedString
         }
         
-        return backgroundCellView
     }
     // 점선
-//    func setLineDot(view: UIView, color: UIColor){
-//       let borderLayer = CAShapeLayer()
-//       borderLayer.strokeColor = color.cgColor
-//       borderLayer.lineDashPattern = [4, 4]
-//       borderLayer.frame = view.bounds
-//       borderLayer.fillColor = nil
-//       borderLayer.path = UIBezierPath(rect: view.bounds).cgPath
-//
-//       view.layer.addSublayer(borderLayer)
-//   }
+    func setLineDot(view: UIView, color: UIColor){
+       let borderLayer = CAShapeLayer()
+       borderLayer.strokeColor = color.cgColor
+       borderLayer.lineDashPattern = [4, 4]
+       borderLayer.frame = view.bounds
+       borderLayer.fillColor = nil
+       borderLayer.path = UIBezierPath(rect: view.bounds).cgPath
+
+       view.layer.addSublayer(borderLayer)
+   }
 }
