@@ -99,12 +99,11 @@
 		23166A7028FECD9D002AEFB7 /* MYONGSIK */ = {
 			isa = PBXGroup;
 			children = (
-				23166A7128FECD9D002AEFB7 /* AppDelegate.swift */,
-				23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */,
-				23166A7528FECD9D002AEFB7 /* ViewController.swift */,
-				23166A7728FECD9D002AEFB7 /* Main.storyboard */,
+				23166AA428FECE81002AEFB7 /* View */,
+				23166AA328FECE79002AEFB7 /* ViewController */,
+				23166AA228FECE74002AEFB7 /* AppDelegate */,
+				23166AA128FECE6F002AEFB7 /* Model */,
 				23166A7A28FECD9E002AEFB7 /* Assets.xcassets */,
-				23166A7C28FECD9E002AEFB7 /* LaunchScreen.storyboard */,
 				23166A7F28FECD9E002AEFB7 /* Info.plist */,
 			);
 			path = MYONGSIK;
@@ -125,6 +124,39 @@
 				23166A9428FECD9F002AEFB7 /* MYONGSIKUITestsLaunchTests.swift */,
 			);
 			path = MYONGSIKUITests;
+			sourceTree = "<group>";
+		};
+		23166AA128FECE6F002AEFB7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		23166AA228FECE74002AEFB7 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				23166A7128FECD9D002AEFB7 /* AppDelegate.swift */,
+				23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		23166AA328FECE79002AEFB7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				23166A7528FECD9D002AEFB7 /* ViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		23166AA428FECE81002AEFB7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				23166A7C28FECD9E002AEFB7 /* LaunchScreen.storyboard */,
+				23166A7728FECD9D002AEFB7 /* Main.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
