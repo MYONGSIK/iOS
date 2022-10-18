@@ -9,13 +9,17 @@
 /* Begin PBXBuildFile section */
 		23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A7128FECD9D002AEFB7 /* AppDelegate.swift */; };
 		23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */; };
-		23166A7628FECD9D002AEFB7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A7528FECD9D002AEFB7 /* ViewController.swift */; };
+		23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A7528FECD9D002AEFB7 /* MainViewController.swift */; };
 		23166A7928FECD9D002AEFB7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23166A7728FECD9D002AEFB7 /* Main.storyboard */; };
 		23166A7B28FECD9E002AEFB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23166A7A28FECD9E002AEFB7 /* Assets.xcassets */; };
 		23166A7E28FECD9E002AEFB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23166A7C28FECD9E002AEFB7 /* LaunchScreen.storyboard */; };
 		23166A8928FECD9F002AEFB7 /* MYONGSIKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A8828FECD9F002AEFB7 /* MYONGSIKTests.swift */; };
 		23166A9328FECD9F002AEFB7 /* MYONGSIKUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A9228FECD9F002AEFB7 /* MYONGSIKUITests.swift */; };
 		23166A9528FECD9F002AEFB7 /* MYONGSIKUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A9428FECD9F002AEFB7 /* MYONGSIKUITestsLaunchTests.swift */; };
+		23735AFA28FEDA6100599221 /* NotoSansKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 23735AF728FEDA6100599221 /* NotoSansKR-Bold.otf */; };
+		23735AFB28FEDA6100599221 /* NotoSansKR-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 23735AF828FEDA6100599221 /* NotoSansKR-Light.otf */; };
+		23735AFC28FEDA6100599221 /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 23735AF928FEDA6100599221 /* NotoSansKR-Regular.otf */; };
+		23735AFE28FEDA7F00599221 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23735AFD28FEDA7F00599221 /* UIFont.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +43,7 @@
 		23166A6E28FECD9C002AEFB7 /* MYONGSIK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MYONGSIK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23166A7128FECD9D002AEFB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		23166A7528FECD9D002AEFB7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		23166A7528FECD9D002AEFB7 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		23166A7828FECD9D002AEFB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		23166A7A28FECD9E002AEFB7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		23166A7D28FECD9E002AEFB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +53,10 @@
 		23166A8E28FECD9F002AEFB7 /* MYONGSIKUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MYONGSIKUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		23166A9228FECD9F002AEFB7 /* MYONGSIKUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MYONGSIKUITests.swift; sourceTree = "<group>"; };
 		23166A9428FECD9F002AEFB7 /* MYONGSIKUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MYONGSIKUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		23735AF728FEDA6100599221 /* NotoSansKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.otf"; sourceTree = "<group>"; };
+		23735AF828FEDA6100599221 /* NotoSansKR-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Light.otf"; sourceTree = "<group>"; };
+		23735AF928FEDA6100599221 /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
+		23735AFD28FEDA7F00599221 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +107,8 @@
 		23166A7028FECD9D002AEFB7 /* MYONGSIK */ = {
 			isa = PBXGroup;
 			children = (
-				23166AA228FECE74002AEFB7 /* AppDelegate */,
-				23166AA428FECE81002AEFB7 /* View */,
-				23166AA328FECE79002AEFB7 /* ViewController */,
-				23166AA128FECE6F002AEFB7 /* Model */,
+				23166AA628FEDA10002AEFB7 /* global */,
+				23166AA728FEDA14002AEFB7 /* domain */,
 				23166A7A28FECD9E002AEFB7 /* Assets.xcassets */,
 				23166A7F28FECD9E002AEFB7 /* Info.plist */,
 			);
@@ -145,7 +151,7 @@
 		23166AA328FECE79002AEFB7 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				23166A7528FECD9D002AEFB7 /* ViewController.swift */,
+				23166A7528FECD9D002AEFB7 /* MainViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -157,6 +163,52 @@
 				23166A7728FECD9D002AEFB7 /* Main.storyboard */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		23166AA528FEDA0A002AEFB7 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		23166AA628FEDA10002AEFB7 /* global */ = {
+			isa = PBXGroup;
+			children = (
+				23735AF528FEDA3D00599221 /* UI */,
+				23166AA528FEDA0A002AEFB7 /* Util */,
+			);
+			path = global;
+			sourceTree = "<group>";
+		};
+		23166AA728FEDA14002AEFB7 /* domain */ = {
+			isa = PBXGroup;
+			children = (
+				23166AA228FECE74002AEFB7 /* AppDelegate */,
+				23166AA428FECE81002AEFB7 /* View */,
+				23166AA328FECE79002AEFB7 /* ViewController */,
+				23166AA128FECE6F002AEFB7 /* Model */,
+			);
+			path = domain;
+			sourceTree = "<group>";
+		};
+		23735AF528FEDA3D00599221 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				23735AF628FEDA4800599221 /* Fonts */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		23735AF628FEDA4800599221 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				23735AF728FEDA6100599221 /* NotoSansKR-Bold.otf */,
+				23735AF828FEDA6100599221 /* NotoSansKR-Light.otf */,
+				23735AF928FEDA6100599221 /* NotoSansKR-Regular.otf */,
+				23735AFD28FEDA7F00599221 /* UIFont.swift */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,7 +316,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				23166A7E28FECD9E002AEFB7 /* LaunchScreen.storyboard in Resources */,
+				23735AFB28FEDA6100599221 /* NotoSansKR-Light.otf in Resources */,
 				23166A7B28FECD9E002AEFB7 /* Assets.xcassets in Resources */,
+				23735AFA28FEDA6100599221 /* NotoSansKR-Bold.otf in Resources */,
+				23735AFC28FEDA6100599221 /* NotoSansKR-Regular.otf in Resources */,
 				23166A7928FECD9D002AEFB7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -290,7 +345,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23166A7628FECD9D002AEFB7 /* ViewController.swift in Sources */,
+				23735AFE28FEDA7F00599221 /* UIFont.swift in Sources */,
+				23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */,
 				23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */,
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 			);
