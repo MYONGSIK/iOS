@@ -18,6 +18,9 @@
 		23166A9328FECD9F002AEFB7 /* MYONGSIKUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A9228FECD9F002AEFB7 /* MYONGSIKUITests.swift */; };
 		23166A9528FECD9F002AEFB7 /* MYONGSIKUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A9428FECD9F002AEFB7 /* MYONGSIKUITestsLaunchTests.swift */; };
 		2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102528FF0A4A0095C0CC /* BaseViewController.swift */; };
+		2324102828FF0BCF0095C0CC /* WeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102728FF0BCF0095C0CC /* WeekViewController.swift */; };
+		2324102A28FF0DD50095C0CC /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102928FF0DD50095C0CC /* PaddingLabel.swift */; };
+		2324102C28FF0DFE0095C0CC /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102B28FF0DFE0095C0CC /* WeekCollectionViewCell.swift */; };
 		23735AFA28FEDA6100599221 /* NotoSansKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 23735AF728FEDA6100599221 /* NotoSansKR-Bold.otf */; };
 		23735AFB28FEDA6100599221 /* NotoSansKR-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 23735AF828FEDA6100599221 /* NotoSansKR-Light.otf */; };
 		23735AFC28FEDA6100599221 /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 23735AF928FEDA6100599221 /* NotoSansKR-Regular.otf */; };
@@ -66,6 +69,9 @@
 		23166A9228FECD9F002AEFB7 /* MYONGSIKUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MYONGSIKUITests.swift; sourceTree = "<group>"; };
 		23166A9428FECD9F002AEFB7 /* MYONGSIKUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MYONGSIKUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2324102528FF0A4A0095C0CC /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		2324102728FF0BCF0095C0CC /* WeekViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekViewController.swift; sourceTree = "<group>"; };
+		2324102928FF0DD50095C0CC /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		2324102B28FF0DFE0095C0CC /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		23735AF728FEDA6100599221 /* NotoSansKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.otf"; sourceTree = "<group>"; };
 		23735AF828FEDA6100599221 /* NotoSansKR-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Light.otf"; sourceTree = "<group>"; };
 		23735AF928FEDA6100599221 /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
@@ -195,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				23166A7528FECD9D002AEFB7 /* MainViewController.swift */,
+				2324102728FF0BCF0095C0CC /* WeekViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -244,6 +251,7 @@
 			children = (
 				23735AF628FEDA4800599221 /* Fonts */,
 				23735B0028FEDBF900599221 /* UIColor.swift */,
+				2324102928FF0DD50095C0CC /* PaddingLabel.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -263,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				23735B0328FEE24900599221 /* MainTableViewCell.swift */,
+				2324102B28FF0DFE0095C0CC /* WeekCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -527,6 +536,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2324102C28FF0DFE0095C0CC /* WeekCollectionViewCell.swift in Sources */,
+				2324102A28FF0DD50095C0CC /* PaddingLabel.swift in Sources */,
 				2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */,
 				23735AFE28FEDA7F00599221 /* UIFont.swift in Sources */,
 				2394E92E28FEF962009B6AEF /* DayFoodDataManager.swift in Sources */,
@@ -536,6 +547,7 @@
 				2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */,
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				23735B0428FEE24900599221 /* MainTableViewCell.swift in Sources */,
+				2324102828FF0BCF0095C0CC /* WeekViewController.swift in Sources */,
 				23735B0128FEDBF900599221 /* UIColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -58,8 +58,9 @@ class BaseViewController: UIViewController {
         
         //setUpConstraint
         navigationView.snp.makeConstraints { make in
-            make.leading.top.trailing.equalToSuperview()
-            make.height.equalTo(144)
+            make.leading.trailing.equalToSuperview()
+            make.top.equalToSuperview().offset(-30)
+            make.height.equalTo(174)
         }
         logoImage.snp.makeConstraints { make in
             make.width.equalTo(103)

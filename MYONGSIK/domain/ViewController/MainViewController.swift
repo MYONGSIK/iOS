@@ -42,13 +42,24 @@ class MainViewController: BaseViewController {
         super.viewDidLoad()
         super.titleLabel.text = "오늘의 식단"
         
+        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        
         DayFoodDataManager().getDayFoodDataManager(self)
         
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
+        
+        self.leftIcon.addTarget(self, action: #selector(calenderButtonDidTap), for: .touchUpInside)
+        self.checkWeekButton.addTarget(self, action: #selector(calenderButtonDidTap), for: .touchUpInside)
     }
 
+    // MARK: - Actions
+    @objc func calenderButtonDidTap() {
+        let vc = WeekViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     // MARK: - Functions
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
         mainTableView = UITableView()
