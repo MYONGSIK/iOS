@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: LaunchScreen
         sleep(2)
         
+        //MARK: Server URL
+        UserDefaults.standard.set("http://54.180.152.115:8085", forKey: "url")
+        
         
         return true
     }

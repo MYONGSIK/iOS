@@ -23,6 +23,9 @@
 		23735AFE28FEDA7F00599221 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23735AFD28FEDA7F00599221 /* UIFont.swift */; };
 		23735B0128FEDBF900599221 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23735B0028FEDBF900599221 /* UIColor.swift */; };
 		23735B0428FEE24900599221 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23735B0328FEE24900599221 /* MainTableViewCell.swift */; };
+		2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92828FEF7C2009B6AEF /* APIModel.swift */; };
+		2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */; };
+		2394E92E28FEF962009B6AEF /* DayFoodDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92D28FEF962009B6AEF /* DayFoodDataManager.swift */; };
 		58A23E1C2028CBEE0CA8BC47 /* Pods_MYONGSIKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */; };
 		92033E7EAD47D14ADA175F1B /* Pods_MYONGSIK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */; };
 /* End PBXBuildFile section */
@@ -67,6 +70,9 @@
 		23735AFD28FEDA7F00599221 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		23735B0028FEDBF900599221 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		23735B0328FEE24900599221 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		2394E92828FEF7C2009B6AEF /* APIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModel.swift; sourceTree = "<group>"; };
+		2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFoodModel.swift; sourceTree = "<group>"; };
+		2394E92D28FEF962009B6AEF /* DayFoodDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFoodDataManager.swift; sourceTree = "<group>"; };
 		409643676213BA9A3C80FD32 /* Pods-MYONGSIKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIKTests.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIKTests/Pods-MYONGSIKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,6 +175,7 @@
 		23166AA128FECE6F002AEFB7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -202,6 +209,7 @@
 		23166AA528FEDA0A002AEFB7 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				2394E92828FEF7C2009B6AEF /* APIModel.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -220,6 +228,7 @@
 			children = (
 				23166AA228FECE74002AEFB7 /* AppDelegate */,
 				23166AA128FECE6F002AEFB7 /* Model */,
+				2394E92A28FEF8CC009B6AEF /* Services */,
 				23166AA428FECE81002AEFB7 /* View */,
 				23166AA328FECE79002AEFB7 /* ViewController */,
 				23735B0228FEE22600599221 /* Cell */,
@@ -253,6 +262,14 @@
 				23735B0328FEE24900599221 /* MainTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		2394E92A28FEF8CC009B6AEF /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2394E92D28FEF962009B6AEF /* DayFoodDataManager.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		C3E767C8B313A0328B6C34CF /* Frameworks */ = {
@@ -507,9 +524,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */,
 				23735AFE28FEDA7F00599221 /* UIFont.swift in Sources */,
+				2394E92E28FEF962009B6AEF /* DayFoodDataManager.swift in Sources */,
 				23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */,
 				23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */,
+				2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */,
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				23735B0428FEE24900599221 /* MainTableViewCell.swift in Sources */,
 				23735B0128FEDBF900599221 /* UIColor.swift in Sources */,

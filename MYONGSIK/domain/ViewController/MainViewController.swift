@@ -48,8 +48,12 @@ class MainViewController: UIViewController {
 
     // MARK: - Life Cycles
     var mainTableView: UITableView!
+    var foodData: [DayFoodModel]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        DayFoodDataManager().getDayFoodDataManager(self)
         
         setUpTableView(dataSourceDelegate: self)
         setUpView()
@@ -121,9 +125,26 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
+        if let foodData = self.foodData {
+            cell.setUpView(data: foodData)
+            cell.setUpConstraint()
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+// MARK: - API Success
+extension MainViewController {
+    //일간 조회
+    func getDayFoodAPISuccess(_ result: [DayFoodModel]) {
+//        print(result)
+        self.foodData = result
+        mainTableView.reloadData()
+    }
+    // 400 error
+    func noFoodAPI() {
+        
     }
 }
