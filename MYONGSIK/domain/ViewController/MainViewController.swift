@@ -9,22 +9,10 @@ import UIKit
 import SnapKit
 import Then
 
-class MainViewController: UIViewController {
+class MainViewController: BaseViewController {
     // MARK: - Views
-    let navigationView = UIView().then{
-        $0.backgroundColor = .signatureBlue
-        $0.clipsToBounds = true
-        $0.layer.cornerRadius = 32
-    }
-    let logoImage = UIImageView().then{
-        $0.image = UIImage(named: "logo")
-    }
     let leftIcon = UIButton().then{
         $0.setImage(UIImage(named: "calendar"), for: .normal)
-    }
-    let titleLabel = UILabel().then{
-        $0.text = "오늘의 식단"
-        $0.font = UIFont.NotoSansKR(size: 18, family: .Bold)
     }
     let checkWeekButton = UIButton().then{
         var config = UIButton.Configuration.tinted()
@@ -52,6 +40,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        super.titleLabel.text = "오늘의 식단"
         
         DayFoodDataManager().getDayFoodDataManager(self)
         
@@ -75,33 +64,16 @@ class MainViewController: UIViewController {
         }
     }
     func setUpView() {
-        self.view.addSubview(navigationView)
-        navigationView.addSubview(logoImage)
-        navigationView.addSubview(leftIcon)
+        super.navigationView.addSubview(leftIcon)
         
-        self.view.addSubview(titleLabel)
         self.view.addSubview(mainTableView)
         self.view.addSubview(checkWeekButton)
     }
     func setUpConstraint() {
-        navigationView.snp.makeConstraints { make in
-            make.leading.top.trailing.equalToSuperview()
-            make.height.equalTo(144)
-        }
-        logoImage.snp.makeConstraints { make in
-            make.width.equalTo(103)
-            make.height.equalTo(78)
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
         leftIcon.snp.makeConstraints { make in
             make.width.height.equalTo(30)
             make.leading.equalToSuperview().offset(22)
-            make.centerY.equalTo(logoImage)
-        }
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(navigationView.snp.bottom).offset(38)
-            make.centerX.equalToSuperview()
+            make.centerY.equalTo(super.logoImage)
         }
         checkWeekButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(69)
@@ -111,7 +83,7 @@ class MainViewController: UIViewController {
         }
         mainTableView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom).offset(2)
+            make.top.equalTo(super.titleLabel.snp.bottom).offset(2)
             make.bottom.equalTo(checkWeekButton.snp.top).offset(-10)
         }
     }

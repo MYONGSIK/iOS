@@ -17,6 +17,7 @@
 		23166A8928FECD9F002AEFB7 /* MYONGSIKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A8828FECD9F002AEFB7 /* MYONGSIKTests.swift */; };
 		23166A9328FECD9F002AEFB7 /* MYONGSIKUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A9228FECD9F002AEFB7 /* MYONGSIKUITests.swift */; };
 		23166A9528FECD9F002AEFB7 /* MYONGSIKUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A9428FECD9F002AEFB7 /* MYONGSIKUITestsLaunchTests.swift */; };
+		2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102528FF0A4A0095C0CC /* BaseViewController.swift */; };
 		23735AFA28FEDA6100599221 /* NotoSansKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 23735AF728FEDA6100599221 /* NotoSansKR-Bold.otf */; };
 		23735AFB28FEDA6100599221 /* NotoSansKR-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 23735AF828FEDA6100599221 /* NotoSansKR-Light.otf */; };
 		23735AFC28FEDA6100599221 /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 23735AF928FEDA6100599221 /* NotoSansKR-Regular.otf */; };
@@ -64,6 +65,7 @@
 		23166A8E28FECD9F002AEFB7 /* MYONGSIKUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MYONGSIKUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		23166A9228FECD9F002AEFB7 /* MYONGSIKUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MYONGSIKUITests.swift; sourceTree = "<group>"; };
 		23166A9428FECD9F002AEFB7 /* MYONGSIKUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MYONGSIKUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2324102528FF0A4A0095C0CC /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		23735AF728FEDA6100599221 /* NotoSansKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.otf"; sourceTree = "<group>"; };
 		23735AF828FEDA6100599221 /* NotoSansKR-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Light.otf"; sourceTree = "<group>"; };
 		23735AF928FEDA6100599221 /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				2394E92828FEF7C2009B6AEF /* APIModel.swift */,
+				2324102528FF0A4A0095C0CC /* BaseViewController.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				2394E92E28FEF962009B6AEF /* DayFoodDataManager.swift in Sources */,
 				23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */,
 				23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */,
+				2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */,
 				2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */,
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				23735B0428FEE24900599221 /* MainTableViewCell.swift in Sources */,
