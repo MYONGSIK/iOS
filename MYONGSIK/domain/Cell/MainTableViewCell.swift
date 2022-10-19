@@ -42,6 +42,7 @@ class MainTableViewCell: UITableViewCell {
         $0.titleLabel?.textColor = .signatureGray
         // Image
         $0.setImage(UIImage(named: "thumbup"), for: .normal)
+        $0.setImage(UIImage(named: "thumbup_blue"), for: .selected)
         $0.semanticContentAttribute = .forceRightToLeft
         $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
     }
@@ -56,6 +57,7 @@ class MainTableViewCell: UITableViewCell {
         $0.titleLabel?.textColor = .signatureGray
         // Image
         $0.setImage(UIImage(named: "thumbdown"), for: .normal)
+        $0.setImage(UIImage(named: "thumbdown_blue"), for: .selected)
         $0.semanticContentAttribute = .forceRightToLeft
         $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
     }
@@ -79,19 +81,22 @@ class MainTableViewCell: UITableViewCell {
     }
 
     // MARK: - Actions
+    // '2022-10-19중식A'의 형태로 저장
+    // 아무 선택 하지 않았을 시 : 0
+    // 맛있어요 : 1
+    // 맛없어요 : 2
+    
     // 맛있어요 클릭
     @objc func thumbUpButtonDidTap() {
         guard let day = data.toDay else {return}
         guard let classification = data.classification else {return}
         
-        // '2022-10-19중식Agood'의 형태로 저장
-        if !thumbUpButton.isSelected {
-            if let type = data.type {UserDefaults.standard.set(true, forKey: day+classification+type+"good")}
-            else {UserDefaults.standard.set(true, forKey: day+classification+"good")}
-        }
-        else {
-            if let type = data.type {UserDefaults.standard.set(false, forKey: day+classification+type+"good")}
-            else {UserDefaults.standard.set(false, forKey: day+classification+"good")}
+        if thumbUpButton.isSelected {
+            if let type = data.type {UserDefaults.standard.set(0, forKey: day+classification+type)}
+            else {UserDefaults.standard.set(0, forKey: day+classification)}
+        } else {
+            if let type = data.type {UserDefaults.standard.set(1, forKey: day+classification+type)}
+            else {UserDefaults.standard.set(1, forKey: day+classification)}
         }
         setUpButtons()
     }
@@ -100,13 +105,12 @@ class MainTableViewCell: UITableViewCell {
         guard let day = data.toDay else {return}
         guard let classification = data.classification else {return}
         
-        if !thumbDownButton.isSelected {
-            if let type = data.type {UserDefaults.standard.set(true, forKey: day+classification+type+"bad")}
-            else {UserDefaults.standard.set(true, forKey: day+classification+"bad")}
-        }
-        else {
-            if let type = data.type {UserDefaults.standard.set(false, forKey: day+classification+type+"bad")}
-            else {UserDefaults.standard.set(true, forKey: day+classification+"bad")}
+        if thumbDownButton.isSelected {
+            if let type = data.type {UserDefaults.standard.set(0, forKey: day+classification+type)}
+            else {UserDefaults.standard.set(0, forKey: day+classification)}
+        } else {
+            if let type = data.type {UserDefaults.standard.set(2, forKey: day+classification+type)}
+            else {UserDefaults.standard.set(2, forKey: day+classification)}
         }
         setUpButtons()
     }
@@ -116,26 +120,28 @@ class MainTableViewCell: UITableViewCell {
         guard let day = data.toDay else {return}
         guard let classification = data.classification else {return}
         
+        var selected = 0
+        
         if let type = data.type {
-            let isGood = UserDefaults.standard.bool(forKey: day+classification+type+"good") ?? false
-            thumbUpButton.isSelected = isGood
-            
-            let isBad = UserDefaults.standard.bool(forKey: day+classification+type+"bad") ?? false
-            thumbDownButton.isSelected = isBad
+            selected = UserDefaults.standard.integer(forKey: day+classification+type) ?? 0
         } else {
-            let isGood = UserDefaults.standard.bool(forKey: day+classification+"good") ?? false
-            thumbUpButton.isSelected = isGood
-            
-            let isBad = UserDefaults.standard.bool(forKey: day+classification+"bad") ?? false
-            thumbDownButton.isSelected = isBad
+            selected = UserDefaults.standard.integer(forKey: day+classification) ?? 0
         }
         
-        if thumbUpButton.isSelected {thumbUpButton.titleLabel?.textColor =  .signatureBlue}
-        else {thumbUpButton.titleLabel?.textColor =  .signatureGray}
+        switch selected {
+        case 1:
+            thumbUpButton.isSelected = true
+            thumbDownButton.isSelected = false
+        case 2:
+            thumbUpButton.isSelected = false
+            thumbDownButton.isSelected = true
+        default:
+            thumbUpButton.isSelected = false
+            thumbDownButton.isSelected = false
+        }
         
-        if thumbDownButton.isSelected {thumbDownButton.titleLabel?.textColor =  .red}
-        else {thumbDownButton.titleLabel?.textColor =  .signatureGray}
-        
+        thumbUpButton.titleLabel?.textColor = thumbUpButton.isSelected ? .signatureBlue : .signatureGray
+        thumbDownButton.titleLabel?.textColor = thumbDownButton.isSelected ? .signatureBlue : .signatureGray
     }
     func setUpView() {
         self.contentView.addSubview(backView)
