@@ -139,9 +139,12 @@ class MainTableViewCell: UITableViewCell {
             thumbUpButton.isSelected = false
             thumbDownButton.isSelected = false
         }
-        
+        // 버튼 색 지정
         thumbUpButton.titleLabel?.textColor = thumbUpButton.isSelected ? .signatureBlue : .signatureGray
         thumbDownButton.titleLabel?.textColor = thumbDownButton.isSelected ? .signatureBlue : .signatureGray
+        // 버튼 폰트 지정
+        thumbUpButton.titleLabel?.font = thumbUpButton.isSelected ? UIFont.NotoSansKR(size: 12, family: .Bold) : UIFont.NotoSansKR(size: 12, family: .Regular)
+        thumbDownButton.titleLabel?.font = thumbDownButton.isSelected ? UIFont.NotoSansKR(size: 12, family: .Bold) : UIFont.NotoSansKR(size: 12, family: .Regular)
     }
     func setUpView() {
         self.contentView.addSubview(backView)
