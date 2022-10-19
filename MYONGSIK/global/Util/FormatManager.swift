@@ -13,7 +13,8 @@ class FormatManager {
 extension String {
     func toDate() -> Date? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy년 MM월 dd일"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.locale = Locale(identifier: "ko")
         dateFormatter.timeZone = TimeZone(identifier: "ko_KR")
         if let date = dateFormatter.date(from: self) {
             return date
