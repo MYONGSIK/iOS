@@ -199,7 +199,7 @@ class MainTableViewCell: UITableViewCell {
         }
     }
     func setUpData() {
-        if let date = data.toDay { self.date.text = date }
+        if let date = data.toDay { self.date.text = date.toDate()?.toString() }
         if let dayOfWeek = data.dayOfTheWeek {self.dayOfTheWeek.text = dayOfWeek}
         if let type = data.classification {
             if let lunchType = data.type {self.type.text = type+lunchType}

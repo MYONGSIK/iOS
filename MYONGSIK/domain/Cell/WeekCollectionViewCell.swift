@@ -110,9 +110,6 @@ class WeekCollectionViewCell: UICollectionViewCell {
         self.backView.addSubview(seperatorLine2)
         self.backView.addSubview(dinnerLabel)
         self.backView.addSubview(dinnerFoodLabel)
-        
-//        setLineDot(view: seperatorLine1, color: .signatureBlue)
-//        setLineDot(view: seperatorLine2, color: .signatureBlue)
     }
     func setUpConstraint() {
         backView.snp.makeConstraints { make in
@@ -166,7 +163,7 @@ class WeekCollectionViewCell: UICollectionViewCell {
         }
     }
     func setUpData(_ data: WeekFoodModel) {
-        if let date = data.toDay {self.date.text = date}
+        if let date = data.toDay {self.date.text = date.toDate()?.toString()}
         if let dayOfWeek = data.dayOfTheWeek {self.dayOfWeek.text = dayOfWeek}
         
         if let lunchAFoods = data.lunchA {
@@ -199,17 +196,5 @@ class WeekCollectionViewCell: UICollectionViewCell {
             attribtuedString.addAttribute(.foregroundColor, value: UIColor.signatureBlue, range: range)
             dinnerFoodLabel.attributedText = attribtuedString
         }
-        
     }
-    // 점선
-    func setLineDot(view: UIView, color: UIColor){
-       let borderLayer = CAShapeLayer()
-       borderLayer.strokeColor = color.cgColor
-       borderLayer.lineDashPattern = [4, 4]
-       borderLayer.frame = view.bounds
-       borderLayer.fillColor = nil
-       borderLayer.path = UIBezierPath(rect: view.bounds).cgPath
-
-       view.layer.addSublayer(borderLayer)
-   }
 }
