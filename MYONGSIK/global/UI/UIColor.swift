@@ -26,4 +26,10 @@ extension UIColor{
         blue: 166/255,
         alpha: 1
     )
+    static let seperatorColor = UIColor(
+        red: 215/255,
+        green: 215/255,
+        blue: 215/255,
+        alpha: 1
+    )
 }

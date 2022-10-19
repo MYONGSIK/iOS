@@ -21,6 +21,7 @@
 		2324102828FF0BCF0095C0CC /* WeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102728FF0BCF0095C0CC /* WeekViewController.swift */; };
 		2324102A28FF0DD50095C0CC /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102928FF0DD50095C0CC /* PaddingLabel.swift */; };
 		2324102C28FF0DFE0095C0CC /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102B28FF0DFE0095C0CC /* WeekCollectionViewCell.swift */; };
+		2324102E28FF2C9F0095C0CC /* FormatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102D28FF2C9F0095C0CC /* FormatManager.swift */; };
 		23735AFA28FEDA6100599221 /* NotoSansKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 23735AF728FEDA6100599221 /* NotoSansKR-Bold.otf */; };
 		23735AFB28FEDA6100599221 /* NotoSansKR-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 23735AF828FEDA6100599221 /* NotoSansKR-Light.otf */; };
 		23735AFC28FEDA6100599221 /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 23735AF928FEDA6100599221 /* NotoSansKR-Regular.otf */; };
@@ -72,6 +73,7 @@
 		2324102728FF0BCF0095C0CC /* WeekViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekViewController.swift; sourceTree = "<group>"; };
 		2324102928FF0DD50095C0CC /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		2324102B28FF0DFE0095C0CC /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
+		2324102D28FF2C9F0095C0CC /* FormatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatManager.swift; sourceTree = "<group>"; };
 		23735AF728FEDA6100599221 /* NotoSansKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.otf"; sourceTree = "<group>"; };
 		23735AF828FEDA6100599221 /* NotoSansKR-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Light.otf"; sourceTree = "<group>"; };
 		23735AF928FEDA6100599221 /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 			children = (
 				2394E92828FEF7C2009B6AEF /* APIModel.swift */,
 				2324102528FF0A4A0095C0CC /* BaseViewController.swift */,
+				2324102D28FF2C9F0095C0CC /* FormatManager.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -547,6 +550,7 @@
 				2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */,
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				23735B0428FEE24900599221 /* MainTableViewCell.swift in Sources */,
+				2324102E28FF2C9F0095C0CC /* FormatManager.swift in Sources */,
 				2324102828FF0BCF0095C0CC /* WeekViewController.swift in Sources */,
 				23735B0128FEDBF900599221 /* UIColor.swift in Sources */,
 			);

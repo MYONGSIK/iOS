@@ -103,14 +103,16 @@ class MainViewController: BaseViewController {
 // MARK: - TableView delegate
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 3
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
+        let itemIdx = indexPath.item
         if let foodData = self.foodData {
-            cell.setUpView(data: foodData)
-            cell.setUpConstraint()
+            cell.data = foodData[itemIdx]
+            cell.setUpData()
+            cell.setUpButtons()
         }
         return cell
     }
