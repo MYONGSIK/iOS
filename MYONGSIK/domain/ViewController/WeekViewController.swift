@@ -15,6 +15,9 @@ class WeekViewController: BaseViewController {
         $0.currentPageIndicatorTintColor = .signatureBlue
         $0.pageIndicatorTintColor = .lightGray
     }
+    let goBackButton = UIButton().then{
+        $0.setImage(UIImage(named: "arrow_left"), for: .normal)
+    }
     // MARK: - Life Cycles
     var weekCollectionView: UICollectionView!
     var weekFoodData: [WeekFoodModel]!
@@ -27,7 +30,13 @@ class WeekViewController: BaseViewController {
         setUpView()
         setUpConstraint()
         
+        goBackButton.addTarget(self, action: #selector(goBackButtonDidTap), for: .touchUpInside)
+        // DATA
         DayFoodDataManager().getWeekFoodDataManager(self)
+    }
+    // MARK: - Actions
+    @objc func goBackButtonDidTap() {
+        self.navigationController?.popViewController(animated: true)
     }
     // MARK: - Functions
     func setCollectionView(_ dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate) {
@@ -53,10 +62,17 @@ class WeekViewController: BaseViewController {
         }
     }
     func setUpView() {
+        super.navigationView.addSubview(goBackButton)
+        
         self.view.addSubview(weekCollectionView)
         self.view.addSubview(pageControl)
     }
     func setUpConstraint() {
+        goBackButton.snp.makeConstraints { make in
+            make.width.height.equalTo(30)
+            make.centerY.equalTo(super.logoImage)
+            make.leading.equalToSuperview().offset(18)
+        }
         weekCollectionView.snp.makeConstraints { make in
             make.top.equalTo(super.titleLabel.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
