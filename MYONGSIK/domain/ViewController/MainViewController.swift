@@ -67,7 +67,6 @@ class MainViewController: BaseViewController {
             $0.delegate = dataSourceDelegate
             $0.dataSource = dataSourceDelegate
             $0.register(MainTableViewCell.self, forCellReuseIdentifier: "MainTableViewCell")
-            $0.register(NoResultTableViewCell.self, forCellReuseIdentifier: "NoResultTableViewCell")
             
             // autoHeight
             $0.rowHeight = UITableView.automaticDimension
