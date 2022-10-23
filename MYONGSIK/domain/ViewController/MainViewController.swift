@@ -137,6 +137,7 @@ extension MainViewController {
         showEmptyView(result)
         mainTableView.reloadData()
 //        print(result)
+//        setTempData()
     }
     
     // Tableview
@@ -193,4 +194,11 @@ extension MainViewController {
     func hideEmptyView() {
         mainTableView.backgroundView?.isHidden = true
     }
+//    func setTempData() {
+//        self.foodData = []
+//        self.foodData.append(DayFoodModel(toDay: "2022-10-19", dayOfTheWeek: "수요일", classification: "중식", type: "A", status: "운영", food1: "food1", food2: "food1", food3: "food1", food4: "food1", food5: "food1", food6: "food1"))
+//        self.foodData.append(DayFoodModel(toDay: "2022-10-19", dayOfTheWeek: "수요일", classification: "중식", type: "A", status: "운영", food1: "food1", food2: "food1", food3: "food1", food4: "food1", food5: "food1", food6: "food1"))
+//        self.foodData.append(DayFoodModel(toDay: "2022-10-19", dayOfTheWeek: "수요일", classification: "중식", type: "A", status: "운영", food1: "food1", food2: "food1", food3: "food1", food4: "food1", food5: "food1", food6: "food1"))
+//        mainTableView.reloadData()
+//    }
 }
