@@ -9,24 +9,24 @@ import UIKit
 
 class WeekViewController: BaseViewController {
     // MARK: - Views
-    private let pageControl = UIPageControl().then{
+    let goBackButton = UIButton().then{
+        $0.setImage(UIImage(named: "arrow_left"), for: .normal)
+    }
+    let pageControl = UIPageControl().then{
         $0.hidesForSinglePage = true
         $0.numberOfPages = 5
         $0.currentPageIndicatorTintColor = .signatureBlue
         $0.pageIndicatorTintColor = .lightGray
     }
-    let goBackButton = UIButton().then{
-        $0.setImage(UIImage(named: "arrow_left"), for: .normal)
-    }
     // MARK: - Life Cycles
-    var weekCollectionView: UICollectionView!
+    var weekTableView: UITableView!
     var weekFoodData: [WeekFoodModel]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        super.titleLabel.text = "주간 식단표"
+//        super.titleLabel.text = "주간 식단표"
 
-        setCollectionView(self)
+        setUpTableView()
         setUpView()
         setUpConstraint()
         
@@ -39,32 +39,22 @@ class WeekViewController: BaseViewController {
         self.navigationController?.popViewController(animated: true)
     }
     // MARK: - Functions
-    func setCollectionView(_ dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate) {
-        weekCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()) .then{
-            let flowLayout = UICollectionViewFlowLayout()
-            flowLayout.minimumInteritemSpacing = 0
-            flowLayout.minimumLineSpacing = 0
-
-            var bounds = UIScreen.main.bounds
-            var width = bounds.size.width
-            
-            flowLayout.itemSize = CGSize(width: width, height: 500)
-            flowLayout.scrollDirection = .horizontal
-            
-            $0.collectionViewLayout = flowLayout
-            $0.dataSource = dataSourceDelegate
-            $0.delegate = dataSourceDelegate
-            
-            $0.showsHorizontalScrollIndicator = false
-            $0.isPagingEnabled = true
-            
-            $0.register(WeekCollectionViewCell.self, forCellWithReuseIdentifier: WeekCollectionViewCell.identifier)
+    func setUpTableView() {
+        weekTableView = UITableView().then{
+            $0.delegate = self
+            $0.dataSource = self
+            $0.register(WeekTableViewCell.self, forCellReuseIdentifier: "WeekTableViewCell")
+            // autoHeight
+            $0.rowHeight = UITableView.automaticDimension
+            $0.estimatedRowHeight = UITableView.automaticDimension
+            $0.showsVerticalScrollIndicator = false
+            $0.separatorStyle = .none
         }
     }
     func setUpView() {
         super.navigationView.addSubview(goBackButton)
         
-        self.view.addSubview(weekCollectionView)
+        self.view.addSubview(weekTableView)
         self.view.addSubview(pageControl)
     }
     func setUpConstraint() {
@@ -73,15 +63,34 @@ class WeekViewController: BaseViewController {
             make.centerY.equalTo(super.logoImage)
             make.leading.equalToSuperview().offset(18)
         }
-        weekCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(super.titleLabel.snp.bottom).offset(10)
+        weekTableView.snp.makeConstraints { make in
+            make.top.equalTo(super.navigationView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.greaterThanOrEqualTo(500)
+            make.height.greaterThanOrEqualTo(570)
         }
         pageControl.snp.makeConstraints { make in
-            make.centerX.equalTo(weekCollectionView)
-            make.top.equalTo(weekCollectionView.snp.bottom)
+            make.centerX.equalTo(weekTableView)
+            if CheckNotch().hasNotch() {make.top.equalTo(weekTableView.snp.bottom)}
+            else {make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-5)}
         }
+    }
+}
+// MARK: - TableView delegate
+extension WeekViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "WeekTableViewCell", for: indexPath) as? WeekTableViewCell else { return UITableViewCell() }
+        cell.setCollectionView(self)
+        cell.selectionStyle = .none
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.frame.height
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 // MARK: - CollectionView delegate
@@ -111,6 +120,6 @@ extension WeekViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension WeekViewController {
     func getWeekFoodAPISuccess(_ result: [WeekFoodModel]) {
         self.weekFoodData = result
-        self.weekCollectionView.reloadData()
+        self.weekTableView.reloadData()
     }
 }

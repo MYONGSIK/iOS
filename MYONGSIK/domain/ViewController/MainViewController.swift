@@ -89,7 +89,8 @@ class MainViewController: BaseViewController {
         checkWeekButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(69)
             make.height.equalTo(50)
-            make.bottom.equalToSuperview().offset(-57)
+            if CheckNotch().hasNotch() {make.bottom.equalToSuperview().offset(-57)}
+            else {make.bottom.equalToSuperview().offset(-27)}
             make.centerX.equalToSuperview()
         }
         mainTableView.snp.makeConstraints { make in
@@ -103,7 +104,9 @@ class MainViewController: BaseViewController {
 // MARK: - TableView delegate
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        if let data = self.foodData {
+            return data.count
+        } else {return 0}
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
@@ -126,10 +129,76 @@ extension MainViewController {
     func getDayFoodAPISuccess(_ result: [DayFoodModel]) {
 //        print(result)
         self.foodData = result
+        hideEmptyView()
         mainTableView.reloadData()
     }
-    // 400 error
-    func noFoodAPI() {
-        
+    // 405 error : 공휴일 X
+    func noFoodAPI(_ result: APIModel<[DayFoodModel]>) {
+        showEmptyView(result)
+        mainTableView.reloadData()
+//        print(result)
+//        setTempData()
     }
+    
+    // Tableview
+    func showEmptyView(_ result: APIModel<[DayFoodModel]>) {
+        let backView = UIView().then{
+            $0.backgroundColor = .white
+            $0.clipsToBounds = true
+            $0.layer.cornerRadius = 10
+            $0.layer.borderColor = UIColor.borderColor.cgColor
+            $0.layer.borderWidth = 1
+        }
+        let date = UILabel().then{
+            if let localDateTime = result.localDateTime {
+                $0.text = FormatManager().localDateTimeToDate(localDateTime: localDateTime)
+            }
+            $0.font = UIFont.NotoSansKR()
+            $0.textColor = .signatureBlue
+        }
+        let dayOfTheWeek = UILabel().then{
+            if let dayOfWeek = result.dayOfTheWeek {$0.text = dayOfWeek}
+            $0.font = UIFont.NotoSansKR()
+            $0.textColor = .signatureBlue
+        }
+        var messageLabel = UILabel().then{
+            if let message = result.message {$0.text = message}
+            $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
+            $0.numberOfLines = 0
+        }
+        let backgroudView = UIView(frame: CGRect(x: 0, y: 0, width: mainTableView.bounds.width, height: mainTableView.bounds.height))
+        backgroudView.addSubview(backView)
+        backView.addSubview(date)
+        backView.addSubview(dayOfTheWeek)
+        backView.addSubview(messageLabel)
+        
+        backView.snp.makeConstraints { make in
+            make.centerY.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(21)
+            make.height.equalTo(178)
+        }
+        date.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(23)
+            make.top.equalToSuperview().offset(19)
+        }
+        dayOfTheWeek.snp.makeConstraints { make in
+            make.centerY.equalTo(date)
+            make.leading.equalTo(date.snp.trailing).offset(3)
+        }
+        messageLabel.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+        }
+        
+        mainTableView.backgroundView = backgroudView
+    }
+    func hideEmptyView() {
+        mainTableView.backgroundView?.isHidden = true
+    }
+//    func setTempData() {
+//        self.foodData = []
+//        self.foodData.append(DayFoodModel(toDay: "2022-10-19", dayOfTheWeek: "수요일", classification: "중식", type: "A", status: "운영", food1: "food1", food2: "food1", food3: "food1", food4: "food1", food5: "food1", food6: "food1"))
+//        self.foodData.append(DayFoodModel(toDay: "2022-10-19", dayOfTheWeek: "수요일", classification: "중식", type: "A", status: "운영", food1: "food1", food2: "food1", food3: "food1", food4: "food1", food5: "food1", food6: "food1"))
+//        self.foodData.append(DayFoodModel(toDay: "2022-10-19", dayOfTheWeek: "수요일", classification: "중식", type: "A", status: "운영", food1: "food1", food2: "food1", food3: "food1", food4: "food1", food5: "food1", food6: "food1"))
+//        mainTableView.reloadData()
+//    }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import Alamofire
+import SwiftUI
 
 class DayFoodDataManager {
     let BaseURL = UserDefaults.standard.string(forKey: "url") ?? ""
@@ -21,15 +22,15 @@ class DayFoodDataManager {
             .responseDecodable(of: APIModel<[DayFoodModel]>.self) { response in
             switch response.result {
             case .success(let result):
-                viewcontroller.getDayFoodAPISuccess(result.data!)
-            case .failure(let error):
-                let statusCode = error.responseCode
-                switch statusCode {
-                case 400:
-                    viewcontroller.noFoodAPI()
+                switch result.httpCode {
+                case 200:
+                    viewcontroller.getDayFoodAPISuccess(result.data!)
+                case 405:
+                    viewcontroller.noFoodAPI(result)
                 default:
-                    print(error.localizedDescription)
+                    fatalError()
                 }
+            case .failure(let error):
                 print(error.localizedDescription)
             }
         }

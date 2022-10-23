@@ -187,17 +187,15 @@ class MainTableViewCell: UITableViewCell {
             make.bottom.equalTo(seperatorLine.snp.top).offset(-9)
         }
         thumbUpButton.snp.makeConstraints { make in
-            make.width.equalTo(70)
             make.height.equalTo(20)
-            make.leading.equalToSuperview().offset(50)
-    //            make.trailing.equalTo(seperatorLine.snp.leading).offset(-48)
+            make.leading.equalToSuperview()
+            make.trailing.equalTo(seperatorLine.snp.leading)
             make.centerY.equalTo(seperatorLine)
         }
         thumbDownButton.snp.makeConstraints { make in
-            make.width.equalTo(70)
             make.height.equalTo(20)
-    //            make.leading.equalTo(seperatorLine.snp.trailing).offset(51)
-            make.trailing.equalToSuperview().offset(-50)
+            make.trailing.equalToSuperview()
+            make.leading.equalTo(seperatorLine.snp.trailing)
             make.centerY.equalTo(seperatorLine)
         }
     }

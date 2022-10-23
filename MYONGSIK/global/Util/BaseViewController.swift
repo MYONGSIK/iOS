@@ -35,12 +35,12 @@ class BaseViewController: UIViewController {
         $0.backgroundColor = .signatureBlue
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 32
+        $0.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMinXMaxYCorner, .layerMaxXMaxYCorner)
     }
     let logoImage = UIImageView().then{
         $0.image = UIImage(named: "logo")
     }
     let titleLabel = UILabel().then{
-//        $0.text = "오늘의 식단"
         $0.font = UIFont.NotoSansKR(size: 18, family: .Bold)
     }
     // MARK: - Life Cycles
@@ -59,8 +59,9 @@ class BaseViewController: UIViewController {
         //setUpConstraint
         navigationView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview().offset(-30)
-            make.height.equalTo(174)
+            make.top.equalToSuperview()
+            if CheckNotch().hasNotch() {make.height.equalTo(144)}
+            else {make.height.equalTo(114)}
         }
         logoImage.snp.makeConstraints { make in
             make.width.equalTo(103)
@@ -74,11 +75,7 @@ class BaseViewController: UIViewController {
         }
     }
     override func viewDidAppear(_ animated: Bool) {
-//        if !NetworkCheck.shared.isConnected {
-//            DispatchQueue.main.async {
-//                SnackBar(self, message: .networkCheck)
-//            }
-//        }
+        
     }
     // MARK: - Actions
     
