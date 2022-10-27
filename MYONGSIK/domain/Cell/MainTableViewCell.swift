@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class MainTableViewCell: UITableViewCell {
     // MARK: - Views
@@ -65,6 +67,7 @@ class MainTableViewCell: UITableViewCell {
 
     //MARK: - LifeCycle
     var data: DayFoodModel!
+    let disposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -72,8 +75,17 @@ class MainTableViewCell: UITableViewCell {
         setUpView()
         setUpConstraint()
         
-        thumbUpButton.addTarget(self, action: #selector(thumbUpButtonDidTap), for: .touchUpInside)
-        thumbDownButton.addTarget(self, action: #selector(thumbDownButtonDidTap), for: .touchUpInside)
+        // Tap Event
+        thumbUpButton.rx.tap
+            .bind {
+                self.thumbUpButtonDidTap()
+            }
+            .disposed(by: disposeBag)
+        thumbDownButton.rx.tap
+            .bind {
+                self.thumbDownButtonDidTap()
+            }
+            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {

@@ -32,6 +32,7 @@
 		2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92828FEF7C2009B6AEF /* APIModel.swift */; };
 		2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */; };
 		2394E92E28FEF962009B6AEF /* DayFoodDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92D28FEF962009B6AEF /* DayFoodDataManager.swift */; };
+		23A7C66B290AB13000351D16 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A7C66A290AB13000351D16 /* ViewModelType.swift */; };
 		23E6ACA7290126EA0091D803 /* WeekTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6ACA6290126EA0091D803 /* WeekTableViewCell.swift */; };
 		23E6ACA9290130C50091D803 /* CheckNotch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6ACA8290130C50091D803 /* CheckNotch.swift */; };
 		58A23E1C2028CBEE0CA8BC47 /* Pods_MYONGSIKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */; };
@@ -88,6 +89,7 @@
 		2394E92828FEF7C2009B6AEF /* APIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModel.swift; sourceTree = "<group>"; };
 		2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFoodModel.swift; sourceTree = "<group>"; };
 		2394E92D28FEF962009B6AEF /* DayFoodDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFoodDataManager.swift; sourceTree = "<group>"; };
+		23A7C66A290AB13000351D16 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		23E6ACA6290126EA0091D803 /* WeekTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekTableViewCell.swift; sourceTree = "<group>"; };
 		23E6ACA8290130C50091D803 /* CheckNotch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckNotch.swift; sourceTree = "<group>"; };
 		409643676213BA9A3C80FD32 /* Pods-MYONGSIKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIKTests.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIKTests/Pods-MYONGSIKTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -227,10 +229,11 @@
 		23166AA528FEDA0A002AEFB7 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				23A7C669290AADE900351D16 /* InfoPlist */,
+				23A7C668290AADD600351D16 /* ViewModel */,
 				2394E92828FEF7C2009B6AEF /* APIModel.swift */,
 				2324102528FF0A4A0095C0CC /* BaseViewController.swift */,
 				2324102D28FF2C9F0095C0CC /* FormatManager.swift */,
-				2348C672290074AB00355B53 /* InfoPlist.strings */,
 				23E6ACA8290130C50091D803 /* CheckNotch.swift */,
 			);
 			path = Util;
@@ -295,6 +298,22 @@
 				2394E92D28FEF962009B6AEF /* DayFoodDataManager.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		23A7C668290AADD600351D16 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				23A7C66A290AB13000351D16 /* ViewModelType.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		23A7C669290AADE900351D16 /* InfoPlist */ = {
+			isa = PBXGroup;
+			children = (
+				2348C672290074AB00355B53 /* InfoPlist.strings */,
+			);
+			path = InfoPlist;
 			sourceTree = "<group>";
 		};
 		C3E767C8B313A0328B6C34CF /* Frameworks */ = {
@@ -561,6 +580,7 @@
 				23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */,
 				2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */,
 				2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */,
+				23A7C66B290AB13000351D16 /* ViewModelType.swift in Sources */,
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				23735B0428FEE24900599221 /* MainTableViewCell.swift in Sources */,
 				2324102E28FF2C9F0095C0CC /* FormatManager.swift in Sources */,
