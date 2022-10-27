@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class WeekViewController: BaseViewController {
     // MARK: - Views
@@ -21,18 +23,27 @@ class WeekViewController: BaseViewController {
     // MARK: - Life Cycles
     var weekTableView: UITableView!
     var weekFoodData: [WeekFoodModel]!
+    let disposeBag = DisposeBag()
+    private let viewModel = WeekViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        super.titleLabel.text = "주간 식단표"
 
         setUpTableView()
         setUpView()
         setUpConstraint()
+        bind()
         
-        goBackButton.addTarget(self, action: #selector(goBackButtonDidTap), for: .touchUpInside)
-        // DATA
-        DayFoodDataManager().getWeekFoodDataManager(self)
+        goBackButton.rx.tap
+            .bind {self.goBackButtonDidTap()}
+            .disposed(by: disposeBag)
+    }
+    private func bind() {
+        let output = viewModel.transform(input: WeekViewModel.Input())
+        
+        output.foodDataSubject.bind(onNext: { [weak self] result in
+            self?.getWeekFoodAPISuccess(result.data ?? [])
+        }).disposed(by: disposeBag)
     }
     // MARK: - Actions
     @objc func goBackButtonDidTap() {

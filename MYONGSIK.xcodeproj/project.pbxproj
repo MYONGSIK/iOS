@@ -34,10 +34,10 @@
 		2373E4FA290ADA5D00D51B8E /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2373E4F9290ADA5D00D51B8E /* MainViewModel.swift */; };
 		2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92828FEF7C2009B6AEF /* APIModel.swift */; };
 		2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */; };
-		2394E92E28FEF962009B6AEF /* DayFoodDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92D28FEF962009B6AEF /* DayFoodDataManager.swift */; };
 		23A7C66B290AB13000351D16 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A7C66A290AB13000351D16 /* ViewModelType.swift */; };
 		23E6ACA7290126EA0091D803 /* WeekTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6ACA6290126EA0091D803 /* WeekTableViewCell.swift */; };
 		23E6ACA9290130C50091D803 /* CheckNotch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6ACA8290130C50091D803 /* CheckNotch.swift */; };
+		23EACC2E290B2445007D229C /* WeekViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EACC2D290B2445007D229C /* WeekViewModel.swift */; };
 		58A23E1C2028CBEE0CA8BC47 /* Pods_MYONGSIKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */; };
 		92033E7EAD47D14ADA175F1B /* Pods_MYONGSIK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */; };
 /* End PBXBuildFile section */
@@ -94,10 +94,10 @@
 		2373E4F9290ADA5D00D51B8E /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		2394E92828FEF7C2009B6AEF /* APIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModel.swift; sourceTree = "<group>"; };
 		2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFoodModel.swift; sourceTree = "<group>"; };
-		2394E92D28FEF962009B6AEF /* DayFoodDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFoodDataManager.swift; sourceTree = "<group>"; };
 		23A7C66A290AB13000351D16 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		23E6ACA6290126EA0091D803 /* WeekTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekTableViewCell.swift; sourceTree = "<group>"; };
 		23E6ACA8290130C50091D803 /* CheckNotch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckNotch.swift; sourceTree = "<group>"; };
+		23EACC2D290B2445007D229C /* WeekViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekViewModel.swift; sourceTree = "<group>"; };
 		409643676213BA9A3C80FD32 /* Pods-MYONGSIKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIKTests.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIKTests/Pods-MYONGSIKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -350,6 +350,7 @@
 		2373E4F5290AD37300D51B8E /* Week */ = {
 			isa = PBXGroup;
 			children = (
+				23EACC2C290B243A007D229C /* ViewModels */,
 				2373E4F7290AD38100D51B8E /* Cells */,
 				2373E4F6290AD37800D51B8E /* ViewControllers */,
 			);
@@ -384,7 +385,6 @@
 		2394E92A28FEF8CC009B6AEF /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				2394E92D28FEF962009B6AEF /* DayFoodDataManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -403,6 +403,14 @@
 				2348C672290074AB00355B53 /* InfoPlist.strings */,
 			);
 			path = InfoPlist;
+			sourceTree = "<group>";
+		};
+		23EACC2C290B243A007D229C /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				23EACC2D290B2445007D229C /* WeekViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		C3E767C8B313A0328B6C34CF /* Frameworks */ = {
@@ -664,13 +672,13 @@
 				2324102A28FF0DD50095C0CC /* PaddingLabel.swift in Sources */,
 				2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */,
 				23735AFE28FEDA7F00599221 /* UIFont.swift in Sources */,
-				2394E92E28FEF962009B6AEF /* DayFoodDataManager.swift in Sources */,
 				23E6ACA9290130C50091D803 /* CheckNotch.swift in Sources */,
 				23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */,
 				23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */,
 				2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */,
 				2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */,
 				23A7C66B290AB13000351D16 /* ViewModelType.swift in Sources */,
+				23EACC2E290B2445007D229C /* WeekViewModel.swift in Sources */,
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				2373E4E5290AC93000D51B8E /* APIManager.swift in Sources */,
 				23735B0428FEE24900599221 /* MainTableViewCell.swift in Sources */,
