@@ -10,44 +10,30 @@ import Alamofire
 import SwiftUI
 
 class DayFoodDataManager {
-    let BaseURL = UserDefaults.standard.string(forKey: "url") ?? ""
-    
     // MARK: - 일 간 조회
     func getDayFoodDataManager(_ viewcontroller: MainViewController) {
-        AF.request(BaseURL + "/api/v1/foods",
-                           method: .get,
-                           parameters: nil,
-                           headers: nil)
-            .validate()
-            .responseDecodable(of: APIModel<[DayFoodModel]>.self) { response in
-            switch response.result {
-            case .success(let result):
-                switch result.httpCode {
-                case 200:
-                    viewcontroller.getDayFoodAPISuccess(result.data!)
-                case 405:
-                    viewcontroller.noFoodAPI(result)
-                default:
-                    fatalError()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
+        APIManager().GetDataManager(from: Constants.BaseURL + Constants.getDayFood) { (data: APIModel<[DayFoodModel]>?, error) in
+            guard let data = data else {print("error: \(error?.debugDescription)"); return}
+            let httpCode = data.httpCode
+            switch httpCode {
+            case 200:
+                viewcontroller.getDayFoodAPISuccess(data.data!)
+            case 405:
+                viewcontroller.noFoodAPI(data)
+            default:
+                fatalError()
             }
         }
     }
     // MARK: - 주 간 조회
     func getWeekFoodDataManager(_ viewcontroller: WeekViewController) {
-        AF.request(BaseURL + "/api/v1/foods/week",
-                           method: .get,
-                           parameters: nil,
-                           headers: nil)
-            .validate()
-            .responseDecodable(of: APIModel<[WeekFoodModel]>.self) { response in
-            switch response.result {
-            case .success(let result):
-                viewcontroller.getWeekFoodAPISuccess(result.data!)
-            case .failure(let error):
-                print(error.localizedDescription)
+        APIManager().GetDataManager(from: Constants.BaseURL + Constants.getWeekFood) { (data: APIModel<[WeekFoodModel]>?, error) in
+            guard let data = data else {print("error: \(error?.debugDescription)"); return}
+            switch data.success {
+            case true:
+                viewcontroller.getWeekFoodAPISuccess(data.data!)
+            default:
+                fatalError()
             }
         }
     }

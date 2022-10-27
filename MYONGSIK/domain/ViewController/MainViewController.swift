@@ -127,7 +127,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 extension MainViewController {
     //일간 조회
     func getDayFoodAPISuccess(_ result: [DayFoodModel]) {
-//        print(result)
         self.foodData = result
         hideEmptyView()
         mainTableView.reloadData()
@@ -136,7 +135,6 @@ extension MainViewController {
     func noFoodAPI(_ result: APIModel<[DayFoodModel]>) {
         showEmptyView(result)
         mainTableView.reloadData()
-//        print(result)
     }
     
     // Tableview
