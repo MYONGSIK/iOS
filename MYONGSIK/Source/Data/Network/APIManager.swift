@@ -7,6 +7,7 @@
 import Alamofire
 
 class APIManager {
+    static let shared = APIManager()
     
     // MARK: - Get Method
     func GetDataManager<T: Decodable>(with param: Encodable? = nil, from url: String, callback: @escaping (_ data: T?, _ error: String?) -> ()) {

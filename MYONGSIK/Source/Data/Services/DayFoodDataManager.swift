@@ -10,6 +10,8 @@ import Alamofire
 import SwiftUI
 
 class DayFoodDataManager {
+    static let shared = DayFoodDataManager()
+    
     // MARK: - 일 간 조회
     func getDayFoodDataManager(_ viewcontroller: MainViewController) {
         APIManager().GetDataManager(from: Constants.BaseURL + Constants.getDayFood) { (data: APIModel<[DayFoodModel]>?, error) in

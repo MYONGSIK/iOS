@@ -31,6 +31,7 @@
 		23735B0428FEE24900599221 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23735B0328FEE24900599221 /* MainTableViewCell.swift */; };
 		2373E4E5290AC93000D51B8E /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2373E4E4290AC93000D51B8E /* APIManager.swift */; };
 		2373E4E7290ACB7D00D51B8E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2373E4E6290ACB7D00D51B8E /* Constants.swift */; };
+		2373E4FA290ADA5D00D51B8E /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2373E4F9290ADA5D00D51B8E /* MainViewModel.swift */; };
 		2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92828FEF7C2009B6AEF /* APIModel.swift */; };
 		2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */; };
 		2394E92E28FEF962009B6AEF /* DayFoodDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92D28FEF962009B6AEF /* DayFoodDataManager.swift */; };
@@ -90,6 +91,7 @@
 		23735B0328FEE24900599221 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		2373E4E4290AC93000D51B8E /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		2373E4E6290ACB7D00D51B8E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2373E4F9290ADA5D00D51B8E /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		2394E92828FEF7C2009B6AEF /* APIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModel.swift; sourceTree = "<group>"; };
 		2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFoodModel.swift; sourceTree = "<group>"; };
 		2394E92D28FEF962009B6AEF /* DayFoodDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFoodDataManager.swift; sourceTree = "<group>"; };
@@ -204,7 +206,7 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		23166AA528FEDA0A002AEFB7 /* Util */ = {
+		23166AA528FEDA0A002AEFB7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				23A7C668290AADD600351D16 /* ViewModel */,
@@ -212,7 +214,7 @@
 				2324102D28FF2C9F0095C0CC /* FormatManager.swift */,
 				23E6ACA8290130C50091D803 /* CheckNotch.swift */,
 			);
-			path = Util;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		23735AF528FEDA3D00599221 /* UI */ = {
@@ -285,10 +287,10 @@
 		2373E4EC290AD1AC00D51B8E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				2373E4F5290AD37300D51B8E /* Week */,
+				23166AA528FEDA0A002AEFB7 /* Utils */,
 				2373E4F2290AD35200D51B8E /* Main */,
+				2373E4F5290AD37300D51B8E /* Week */,
 				2373E4F1290AD31B00D51B8E /* Launch */,
-				23166AA528FEDA0A002AEFB7 /* Util */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -322,6 +324,7 @@
 		2373E4F2290AD35200D51B8E /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				2373E4F8290ADA4500D51B8E /* ViewModels */,
 				2373E4F4290AD35F00D51B8E /* Cells */,
 				2373E4F3290AD35800D51B8E /* ViewControllers */,
 			);
@@ -368,6 +371,14 @@
 				23E6ACA6290126EA0091D803 /* WeekTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		2373E4F8290ADA4500D51B8E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				2373E4F9290ADA5D00D51B8E /* MainViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		2394E92A28FEF8CC009B6AEF /* Services */ = {
@@ -663,6 +674,7 @@
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				2373E4E5290AC93000D51B8E /* APIManager.swift in Sources */,
 				23735B0428FEE24900599221 /* MainTableViewCell.swift in Sources */,
+				2373E4FA290ADA5D00D51B8E /* MainViewModel.swift in Sources */,
 				2324102E28FF2C9F0095C0CC /* FormatManager.swift in Sources */,
 				2324102828FF0BCF0095C0CC /* WeekViewController.swift in Sources */,
 				23E6ACA7290126EA0091D803 /* WeekTableViewCell.swift in Sources */,

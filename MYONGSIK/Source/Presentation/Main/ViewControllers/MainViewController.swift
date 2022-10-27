@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 class MainViewController: BaseViewController {
     // MARK: - Views
@@ -37,6 +39,8 @@ class MainViewController: BaseViewController {
     // MARK: - Life Cycles
     var mainTableView: UITableView!
     var foodData: [DayFoodModel]!
+    let disposeBag = DisposeBag()
+    private let viewModel = MainViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,16 +49,29 @@ class MainViewController: BaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
-        DayFoodDataManager().getDayFoodDataManager(self)
-        
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
+        bind()
         
-        self.leftIcon.addTarget(self, action: #selector(calenderButtonDidTap), for: .touchUpInside)
-        self.checkWeekButton.addTarget(self, action: #selector(calenderButtonDidTap), for: .touchUpInside)
+        // Tap Event - 주간 식단 조회 페이지로 이동
+        let buttons = [self.leftIcon, self.checkWeekButton]
+        for button in buttons {
+            button.rx.tap
+                .bind {self.calenderButtonDidTap()}
+                .disposed(by: disposeBag)
+        }
     }
-
+    private func bind() {
+        let output = viewModel.transform(input: MainViewModel.Input())
+        
+        output.foodDataSubject.bind(onNext: { [weak self] foodData in
+            self?.foodData = foodData
+            self?.hideEmptyView()
+            self?.mainTableView.reloadData()
+        }).disposed(by: disposeBag)
+        
+    }
     // MARK: - Actions
     @objc func calenderButtonDidTap() {
         let vc = WeekViewController()
