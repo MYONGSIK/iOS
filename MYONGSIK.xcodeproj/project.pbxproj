@@ -170,8 +170,8 @@
 		23166A7028FECD9D002AEFB7 /* MYONGSIK */ = {
 			isa = PBXGroup;
 			children = (
-				23166AA628FEDA10002AEFB7 /* global */,
-				23166AA728FEDA14002AEFB7 /* domain */,
+				2373E4E9290AD18A00D51B8E /* Resource */,
+				2373E4E8290AD18500D51B8E /* Source */,
 				23166A7A28FECD9E002AEFB7 /* Assets.xcassets */,
 				23166A7F28FECD9E002AEFB7 /* Info.plist */,
 			);
@@ -195,32 +195,6 @@
 			path = MYONGSIKUITests;
 			sourceTree = "<group>";
 		};
-		23166AA128FECE6F002AEFB7 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		23166AA228FECE74002AEFB7 /* AppDelegate */ = {
-			isa = PBXGroup;
-			children = (
-				23166A7128FECD9D002AEFB7 /* AppDelegate.swift */,
-				23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */,
-			);
-			path = AppDelegate;
-			sourceTree = "<group>";
-		};
-		23166AA328FECE79002AEFB7 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				23166A7528FECD9D002AEFB7 /* MainViewController.swift */,
-				2324102728FF0BCF0095C0CC /* WeekViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
 		23166AA428FECE81002AEFB7 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,37 +207,12 @@
 		23166AA528FEDA0A002AEFB7 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				2373E4E2290AC90100D51B8E /* Data */,
-				23A7C669290AADE900351D16 /* InfoPlist */,
 				23A7C668290AADD600351D16 /* ViewModel */,
-				2394E92828FEF7C2009B6AEF /* APIModel.swift */,
 				2324102528FF0A4A0095C0CC /* BaseViewController.swift */,
 				2324102D28FF2C9F0095C0CC /* FormatManager.swift */,
 				23E6ACA8290130C50091D803 /* CheckNotch.swift */,
 			);
 			path = Util;
-			sourceTree = "<group>";
-		};
-		23166AA628FEDA10002AEFB7 /* global */ = {
-			isa = PBXGroup;
-			children = (
-				23735AF528FEDA3D00599221 /* UI */,
-				23166AA528FEDA0A002AEFB7 /* Util */,
-			);
-			path = global;
-			sourceTree = "<group>";
-		};
-		23166AA728FEDA14002AEFB7 /* domain */ = {
-			isa = PBXGroup;
-			children = (
-				23166AA228FECE74002AEFB7 /* AppDelegate */,
-				23166AA128FECE6F002AEFB7 /* Model */,
-				2394E92A28FEF8CC009B6AEF /* Services */,
-				23166AA428FECE81002AEFB7 /* View */,
-				23166AA328FECE79002AEFB7 /* ViewController */,
-				23735B0228FEE22600599221 /* Cell */,
-			);
-			path = domain;
 			sourceTree = "<group>";
 		};
 		23735AF528FEDA3D00599221 /* UI */ = {
@@ -287,31 +236,138 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		23735B0228FEE22600599221 /* Cell */ = {
+		2373E4E3290AC92600D51B8E /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				23735B0328FEE24900599221 /* MainTableViewCell.swift */,
-				2324102B28FF0DFE0095C0CC /* WeekCollectionViewCell.swift */,
-				23E6ACA6290126EA0091D803 /* WeekTableViewCell.swift */,
+				2394E92828FEF7C2009B6AEF /* APIModel.swift */,
+				2373E4E4290AC93000D51B8E /* APIManager.swift */,
+				2373E4E6290ACB7D00D51B8E /* Constants.swift */,
 			);
-			path = Cell;
+			path = Network;
 			sourceTree = "<group>";
 		};
-		2373E4E2290AC90100D51B8E /* Data */ = {
+		2373E4E8290AD18500D51B8E /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				2373E4EC290AD1AC00D51B8E /* Presentation */,
+				2373E4EB290AD1A900D51B8E /* Data */,
+				2373E4EA290AD19A00D51B8E /* Domain */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		2373E4E9290AD18A00D51B8E /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				2373E4ED290AD20300D51B8E /* Support */,
+				23735AF528FEDA3D00599221 /* UI */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		2373E4EA290AD19A00D51B8E /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				2373E4EE290AD24200D51B8E /* Entity */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		2373E4EB290AD1A900D51B8E /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				2394E92A28FEF8CC009B6AEF /* Services */,
 				2373E4E3290AC92600D51B8E /* Network */,
 			);
 			path = Data;
 			sourceTree = "<group>";
 		};
-		2373E4E3290AC92600D51B8E /* Network */ = {
+		2373E4EC290AD1AC00D51B8E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				2373E4E4290AC93000D51B8E /* APIManager.swift */,
-				2373E4E6290ACB7D00D51B8E /* Constants.swift */,
+				2373E4F5290AD37300D51B8E /* Week */,
+				2373E4F2290AD35200D51B8E /* Main */,
+				2373E4F1290AD31B00D51B8E /* Launch */,
+				23166AA528FEDA0A002AEFB7 /* Util */,
 			);
-			path = Network;
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		2373E4ED290AD20300D51B8E /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				23166A7128FECD9D002AEFB7 /* AppDelegate.swift */,
+				23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */,
+				23A7C669290AADE900351D16 /* InfoPlist */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		2373E4EE290AD24200D51B8E /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		2373E4F1290AD31B00D51B8E /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				23166AA428FECE81002AEFB7 /* View */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
+		2373E4F2290AD35200D51B8E /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				2373E4F4290AD35F00D51B8E /* Cells */,
+				2373E4F3290AD35800D51B8E /* ViewControllers */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		2373E4F3290AD35800D51B8E /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				23166A7528FECD9D002AEFB7 /* MainViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		2373E4F4290AD35F00D51B8E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				23735B0328FEE24900599221 /* MainTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		2373E4F5290AD37300D51B8E /* Week */ = {
+			isa = PBXGroup;
+			children = (
+				2373E4F7290AD38100D51B8E /* Cells */,
+				2373E4F6290AD37800D51B8E /* ViewControllers */,
+			);
+			path = Week;
+			sourceTree = "<group>";
+		};
+		2373E4F6290AD37800D51B8E /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2324102728FF0BCF0095C0CC /* WeekViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		2373E4F7290AD38100D51B8E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2324102B28FF0DFE0095C0CC /* WeekCollectionViewCell.swift */,
+				23E6ACA6290126EA0091D803 /* WeekTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		2394E92A28FEF8CC009B6AEF /* Services */ = {
