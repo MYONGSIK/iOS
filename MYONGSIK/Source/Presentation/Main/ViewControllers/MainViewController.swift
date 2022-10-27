@@ -65,12 +65,9 @@ class MainViewController: BaseViewController {
     private func bind() {
         let output = viewModel.transform(input: MainViewModel.Input())
         
-        output.foodDataSubject.bind(onNext: { [weak self] foodData in
-            self?.foodData = foodData
-            self?.hideEmptyView()
-            self?.mainTableView.reloadData()
+        output.foodDataSubject.bind(onNext: { [weak self] result in
+            self?.getResultAPI(result)
         }).disposed(by: disposeBag)
-        
     }
     // MARK: - Actions
     @objc func calenderButtonDidTap() {
@@ -142,6 +139,18 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 }
 // MARK: - API Success
 extension MainViewController {
+    // 데이터 처리
+    func getResultAPI(_ result: APIModel<[DayFoodModel]>) {
+        let statusCode = result.httpCode
+        switch statusCode {
+        case 200:
+            getDayFoodAPISuccess(result.data!)
+        case 405:
+            noFoodAPI(result)
+        default: fatalError()
+        }
+    }
+    
     //일간 조회
     func getDayFoodAPISuccess(_ result: [DayFoodModel]) {
         self.foodData = result

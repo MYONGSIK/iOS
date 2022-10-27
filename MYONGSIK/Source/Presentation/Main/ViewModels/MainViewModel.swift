@@ -18,11 +18,11 @@ final class MainViewModel: ViewModelType {
     }
 
     struct Output {
-        let foodDataSubject: ReplaySubject<[DayFoodModel]>
+        let foodDataSubject: ReplaySubject<APIModel<[DayFoodModel]>>
     }
     
     private var dataResult: APIModel<[DayFoodModel]>!
-    private let foodDataSubject = ReplaySubject<[DayFoodModel]>.create(bufferSize: 1)
+    private let foodDataSubject = ReplaySubject<APIModel<[DayFoodModel]>>.create(bufferSize: 1)
     
     init() {
         getFoodDetailData()
@@ -35,17 +35,8 @@ final class MainViewModel: ViewModelType {
     func getFoodDetailData() {
         APIManager.shared.GetDataManager(from: Constants.BaseURL + Constants.getDayFood) { (data: APIModel<[DayFoodModel]>?, error) in
             guard let data = data else {print("error: \(error?.debugDescription)"); return}
-            let httpCode = data.httpCode
-            switch httpCode {
-            case 200:
-                self.dataResult = data
-                self.foodDataSubject.onNext(self.dataResult.data!)
-            case 405:
-//                viewcontroller.noFoodAPI(data)
-                fatalError()
-            default:
-                fatalError()
-            }
+            self.dataResult = data
+            self.foodDataSubject.onNext(self.dataResult!)
         }
     }
 }
