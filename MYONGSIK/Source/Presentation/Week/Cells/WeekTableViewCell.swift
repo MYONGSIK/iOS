@@ -20,7 +20,7 @@ class WeekTableViewCell: UITableViewCell {
 
         self.contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            if CheckNotch().hasNotch() {make.top.equalToSuperview().offset(38)}
+            if UIDevice.current.hasNotch {make.top.equalToSuperview().offset(38)}
             else {make.top.equalToSuperview().offset(18)}
             make.centerX.equalToSuperview()
         }

@@ -83,7 +83,7 @@ class WeekViewController: BaseViewController {
         }
         pageControl.snp.makeConstraints { make in
             make.centerX.equalTo(weekTableView)
-            if CheckNotch().hasNotch() {make.top.equalTo(weekTableView.snp.bottom)}
+            if UIDevice.current.hasNotch {make.top.equalTo(weekTableView.snp.bottom)}
             else {make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-5)}
         }
     }

@@ -59,8 +59,8 @@ class BaseViewController: UIViewController {
         navigationView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalToSuperview()
-            if CheckNotch().hasNotch() {make.height.equalTo(121)}
-            else {make.height.equalTo(91)}
+            if UIDevice.current.hasNotch {make.height.equalTo(121)}
+            else{make.height.equalTo(91)}
         }
         logoImage.snp.makeConstraints { make in
             make.width.equalTo(103)

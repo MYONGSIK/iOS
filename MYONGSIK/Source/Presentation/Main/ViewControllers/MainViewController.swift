@@ -103,7 +103,7 @@ class MainViewController: BaseViewController {
         checkWeekButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(69)
             make.height.equalTo(50)
-            if CheckNotch().hasNotch() {make.bottom.equalToSuperview().offset(-57)}
+            if UIDevice.current.hasNotch {make.bottom.equalToSuperview().offset(-57)}
             else {make.bottom.equalToSuperview().offset(-27)}
             make.centerX.equalToSuperview()
         }
