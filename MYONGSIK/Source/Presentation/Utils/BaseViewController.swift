@@ -34,8 +34,6 @@ class BaseViewController: UIViewController {
     let navigationView = UIView().then{
         $0.backgroundColor = .signatureBlue
         $0.clipsToBounds = true
-        $0.layer.cornerRadius = 32
-        $0.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMinXMaxYCorner, .layerMaxXMaxYCorner)
     }
     let logoImage = UIImageView().then{
         $0.image = UIImage(named: "logo")
@@ -60,8 +58,8 @@ class BaseViewController: UIViewController {
         navigationView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalToSuperview()
-            if CheckNotch().hasNotch() {make.height.equalTo(144)}
-            else {make.height.equalTo(114)}
+            if CheckNotch().hasNotch() {make.height.equalTo(121)}
+            else {make.height.equalTo(91)}
         }
         logoImage.snp.makeConstraints { make in
             make.width.equalTo(103)

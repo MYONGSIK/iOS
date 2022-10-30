@@ -77,14 +77,11 @@ class MainTableViewCell: UITableViewCell {
         
         // Tap Event
         thumbUpButton.rx.tap
-            .bind {
-                self.thumbUpButtonDidTap()
-            }
+            .bind {self.thumbUpButtonDidTap()}
             .disposed(by: disposeBag)
+        
         thumbDownButton.rx.tap
-            .bind {
-                self.thumbDownButtonDidTap()
-            }
+            .bind {self.thumbDownButtonDidTap()}
             .disposed(by: disposeBag)
     }
     

@@ -9,9 +9,9 @@ import UIKit
 
 extension UIColor{
     static let signatureBlue = UIColor(
-        red: 39/255,
-        green: 73/255,
-        blue: 132/255,
+        red: 30/255,
+        green: 80/255,
+        blue: 167/255,
         alpha: 1
     )
     static let signatureGray = UIColor(
