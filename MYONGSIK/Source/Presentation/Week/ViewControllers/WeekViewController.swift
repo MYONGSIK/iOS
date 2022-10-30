@@ -28,7 +28,9 @@ class WeekViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.isNavigationBarHidden = true
+        
         setUpTableView()
         setUpView()
         setUpConstraint()

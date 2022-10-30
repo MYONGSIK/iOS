@@ -47,6 +47,7 @@ class BaseViewController: UIViewController {
 
         self.view.backgroundColor = .white
         self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.navigationBar.isHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
                 
         //setUpView
