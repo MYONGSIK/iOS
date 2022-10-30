@@ -35,6 +35,7 @@
 		2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92828FEF7C2009B6AEF /* APIModel.swift */; };
 		2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */; };
 		23A7C66B290AB13000351D16 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A7C66A290AB13000351D16 /* ViewModelType.swift */; };
+		23BE0154290E0AE100861DA5 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BE0153290E0AE100861DA5 /* TabBarViewController.swift */; };
 		23E6ACA7290126EA0091D803 /* WeekTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6ACA6290126EA0091D803 /* WeekTableViewCell.swift */; };
 		23E6ACA9290130C50091D803 /* CheckNotch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6ACA8290130C50091D803 /* CheckNotch.swift */; };
 		23EACC2E290B2445007D229C /* WeekViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EACC2D290B2445007D229C /* WeekViewModel.swift */; };
@@ -95,6 +96,7 @@
 		2394E92828FEF7C2009B6AEF /* APIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModel.swift; sourceTree = "<group>"; };
 		2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFoodModel.swift; sourceTree = "<group>"; };
 		23A7C66A290AB13000351D16 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		23BE0153290E0AE100861DA5 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		23E6ACA6290126EA0091D803 /* WeekTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekTableViewCell.swift; sourceTree = "<group>"; };
 		23E6ACA8290130C50091D803 /* CheckNotch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckNotch.swift; sourceTree = "<group>"; };
 		23EACC2D290B2445007D229C /* WeekViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekViewModel.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				2324102528FF0A4A0095C0CC /* BaseViewController.swift */,
 				2324102D28FF2C9F0095C0CC /* FormatManager.swift */,
 				23E6ACA8290130C50091D803 /* CheckNotch.swift */,
+				23BE0153290E0AE100861DA5 /* TabBarViewController.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -287,6 +290,8 @@
 		2373E4EC290AD1AC00D51B8E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				23BE0150290E0AAF00861DA5 /* Restaurant */,
+				23BE014F290E0AA900861DA5 /* Heart */,
 				23166AA528FEDA0A002AEFB7 /* Utils */,
 				2373E4F2290AD35200D51B8E /* Main */,
 				2373E4F5290AD37300D51B8E /* Week */,
@@ -403,6 +408,36 @@
 				2348C672290074AB00355B53 /* InfoPlist.strings */,
 			);
 			path = InfoPlist;
+			sourceTree = "<group>";
+		};
+		23BE014F290E0AA900861DA5 /* Heart */ = {
+			isa = PBXGroup;
+			children = (
+				23BE0151290E0AB800861DA5 /* ViewControllers */,
+			);
+			path = Heart;
+			sourceTree = "<group>";
+		};
+		23BE0150290E0AAF00861DA5 /* Restaurant */ = {
+			isa = PBXGroup;
+			children = (
+				23BE0152290E0ABE00861DA5 /* ViewControllers */,
+			);
+			path = Restaurant;
+			sourceTree = "<group>";
+		};
+		23BE0151290E0AB800861DA5 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		23BE0152290E0ABE00861DA5 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		23EACC2C290B243A007D229C /* ViewModels */ = {
@@ -671,6 +706,7 @@
 				2373E4E7290ACB7D00D51B8E /* Constants.swift in Sources */,
 				2324102A28FF0DD50095C0CC /* PaddingLabel.swift in Sources */,
 				2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */,
+				23BE0154290E0AE100861DA5 /* TabBarViewController.swift in Sources */,
 				23735AFE28FEDA7F00599221 /* UIFont.swift in Sources */,
 				23E6ACA9290130C50091D803 /* CheckNotch.swift in Sources */,
 				23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */,
