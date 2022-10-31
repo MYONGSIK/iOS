@@ -14,9 +14,9 @@ class TabBarViewController: UITabBarController {
         self.tabBar.backgroundColor = .white
         
        // 인스턴스화
-        let resVC = MainViewController()
+        let resVC = RestaurantViewController()
         let mainVC = MainViewController()
-        let heartVC = MainViewController()
+        let heartVC = HeartViewController()
         
         resVC.tabBarItem.image = UIImage.init(named: "res")
         mainVC.tabBarItem.image = UIImage.init(named: "todayFood")

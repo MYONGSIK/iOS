@@ -13,7 +13,7 @@ import RxCocoa
 
 class MainViewController: BaseViewController {
     // MARK: - Views
-    let leftIcon = UIButton().then{
+    lazy var leftIcon = UIButton().then{
         $0.setImage(UIImage(named: "calendar"), for: .normal)
     }
     let checkWeekButton = UIButton().then{
