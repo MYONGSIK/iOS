@@ -75,7 +75,7 @@ class RestaurantMainViewController: BaseViewController {
     func setUpConstraint() {
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(30)
-            make.bottom.equalToSuperview().offset(-28)
+            make.bottom.equalToSuperview().offset(-22)
         }
         searchButton.snp.makeConstraints { make in
             make.width.height.equalTo(25)
@@ -110,7 +110,8 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
             return cell
         case 2:
             let cell = UITableViewCell()
-            cell.textLabel?.text = "#명지대에서 가장 가기 좋은 곳은..."
+            cell.textLabel?.text = "#명지대에서\n가장 가기 좋은 곳은..."
+            cell.textLabel?.numberOfLines = 2
             cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
             cell.selectionStyle = .none
             return cell

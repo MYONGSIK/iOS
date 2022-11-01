@@ -25,6 +25,8 @@ class RestaurantSearchViewController: BaseViewController {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 19
         $0.addPadding(left: 16, right: 40)
+        
+        $0.becomeFirstResponder()
     }
     
     // MARK: Life Cycles
@@ -46,6 +48,12 @@ class RestaurantSearchViewController: BaseViewController {
         backButton.addTarget(self, action: #selector(goBackButtonDidTap), for: .touchUpInside)
         searchButton.addTarget(self, action: #selector(searchButtonDidTap), for: .touchUpInside)
         searchTextField.addTarget(self, action: #selector(searchTextFieldEditingChanged(_:)), for: .editingChanged)
+        
+        searchResultTableView.keyboardDismissMode = .onDrag
+        searchTextField.delegate = self
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     // MARK: Actions
     @objc func goBackButtonDidTap() {
@@ -138,6 +146,18 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         ScreenManager().linkTo(viewcontroller: self, link)
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+// MARK: UITextField delegate
+extension RestaurantSearchViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 // MARK: - API Success
