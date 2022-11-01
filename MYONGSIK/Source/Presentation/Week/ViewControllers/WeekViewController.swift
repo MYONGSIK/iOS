@@ -28,8 +28,8 @@ class WeekViewController: MainBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = true
         self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
         setUpTableView()
         setUpView()

@@ -46,8 +46,9 @@ class MainViewController: MainBaseViewController {
         super.viewDidLoad()
         super.titleLabel.text = "오늘의 식단"
         
-        self.navigationController?.navigationBar.isHidden = true
         self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
         setUpTableView(dataSourceDelegate: self)
         setUpView()

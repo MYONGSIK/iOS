@@ -36,6 +36,7 @@ class RestaurantSearchViewController: BaseViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
         setUpTableView(dataSourceDelegate: self)
         setUpView()

@@ -14,7 +14,7 @@ class TabBarViewController: UITabBarController {
         self.tabBar.backgroundColor = .white
         
        // 인스턴스화
-        let resVC = RestaurantSearchViewController()
+        let resVC = RestaurantMainViewController()
         let mainVC = MainViewController()
         let heartVC = HeartViewController()
         
