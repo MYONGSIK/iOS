@@ -172,7 +172,7 @@ extension RestaurantMainViewController: UICollectionViewDelegate, UICollectionVi
         case 2:
             cell.titleLabel.text = "#명지술집"
         default:
-            cell.titleLabel.text = "#명지맛집"
+            cell.titleLabel.text = "#명지빵집"
         }
         return cell
     }
@@ -187,7 +187,7 @@ extension RestaurantMainViewController: UICollectionViewDelegate, UICollectionVi
         case 2:
             tagKeyword = "술집"
         default:
-            tagKeyword = "맛집"
+            tagKeyword = "빵집"
         }
         let vc = RestaurantTagViewController()
         vc.tagKeyword = tagKeyword

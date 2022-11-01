@@ -10,6 +10,7 @@
 		16E35826E03E14564D74F8D8 /* Pods_MYONGSIK_MYONGSIKUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F3766A332C9FBAAF6A71FF8 /* Pods_MYONGSIK_MYONGSIKUITests.framework */; };
 		2311611829117F9D00AD73D2 /* HeartListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2311611729117F9D00AD73D2 /* HeartListTableViewCell.swift */; };
 		2311611A2911807A00AD73D2 /* HeartListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231161192911807A00AD73D2 /* HeartListData.swift */; };
+		2311611C2911952200AD73D2 /* SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2311611B2911952200AD73D2 /* SnackBar.swift */; };
 		23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A7128FECD9D002AEFB7 /* AppDelegate.swift */; };
 		23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */; };
 		23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A7528FECD9D002AEFB7 /* MainViewController.swift */; };
@@ -82,6 +83,7 @@
 		108AE19554B82CED05D5D05C /* Pods-MYONGSIKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIKTests.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIKTests/Pods-MYONGSIKTests.release.xcconfig"; sourceTree = "<group>"; };
 		2311611729117F9D00AD73D2 /* HeartListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartListTableViewCell.swift; sourceTree = "<group>"; };
 		231161192911807A00AD73D2 /* HeartListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartListData.swift; sourceTree = "<group>"; };
+		2311611B2911952200AD73D2 /* SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBar.swift; sourceTree = "<group>"; };
 		23166A6E28FECD9C002AEFB7 /* MYONGSIK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MYONGSIK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23166A7128FECD9D002AEFB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				2324102D28FF2C9F0095C0CC /* FormatManager.swift */,
 				23BE0153290E0AE100861DA5 /* TabBarViewController.swift */,
 				23B9E8982911356D009B6D8F /* ScreenManager.swift */,
+				2311611B2911952200AD73D2 /* SnackBar.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -783,6 +786,7 @@
 				23BE0154290E0AE100861DA5 /* TabBarViewController.swift in Sources */,
 				23735AFE28FEDA7F00599221 /* UIFont.swift in Sources */,
 				23E6ACA9290130C50091D803 /* UIDevice.swift in Sources */,
+				2311611C2911952200AD73D2 /* SnackBar.swift in Sources */,
 				23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */,
 				23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */,
 				23C993A429108F6F00B8D1E4 /* RestaurantSearchViewController.swift in Sources */,

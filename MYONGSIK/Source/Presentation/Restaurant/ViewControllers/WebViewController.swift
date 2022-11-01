@@ -105,10 +105,11 @@ class WebViewController: UIViewController, WKUIDelegate {
         let hearts = realm.objects(HeartListData.self)
         for heart in hearts {
             if self.placeName == heart.placeName {self.heartButton.isSelected = true}
-            else {self.heartButton.isSelected = false}
+            break
         }
     }
     func addHeartAnimation() {
+        SnackBar(self, message: .addHeart)
         UIView.transition(with: self.heartButton,
                           duration: 0.35,
                           options: .transitionCrossDissolve,
@@ -117,6 +118,7 @@ class WebViewController: UIViewController, WKUIDelegate {
                           completion: nil);
     }
     func removeHeartAnimation() {
+        SnackBar(self, message: .deleteHeart)
         UIView.transition(with: self.heartButton,
                           duration: 0.35,
                           options: .transitionCrossDissolve,

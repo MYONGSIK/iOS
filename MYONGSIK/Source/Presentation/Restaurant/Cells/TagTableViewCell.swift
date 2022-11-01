@@ -26,7 +26,7 @@ class TagTableViewCell: UITableViewCell {
     func setCollectionView(_ dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate) {
         tagCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()) .then{
             let flowLayout = UICollectionViewFlowLayout()
-            flowLayout.minimumLineSpacing = 18
+            flowLayout.minimumLineSpacing = 10
 
             var bounds = UIScreen.main.bounds
             var width = bounds.size.width
