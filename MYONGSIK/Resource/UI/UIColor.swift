@@ -32,4 +32,10 @@ extension UIColor{
         blue: 215/255,
         alpha: 1
     )
+    static let placeContentColor = UIColor(
+        red: 160/255,
+        green: 160/255,
+        blue: 160/255,
+        alpha: 1
+    )
 }
