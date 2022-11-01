@@ -55,10 +55,10 @@ class WebViewController: UIViewController, WKUIDelegate {
     @objc func heartButtonDidTap() {
         if heartButton.isSelected {
             removeHeartData()
-            heartButton.isSelected = false
+            removeHeartAnimation()
         } else {
             addHeartData()
-            heartButton.isSelected = true
+            addHeartAnimation()
         }
     }
     
@@ -107,5 +107,21 @@ class WebViewController: UIViewController, WKUIDelegate {
             if self.placeName == heart.placeName {self.heartButton.isSelected = true}
             else {self.heartButton.isSelected = false}
         }
+    }
+    func addHeartAnimation() {
+        UIView.transition(with: self.heartButton,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { () -> Void in
+                          self.heartButton.isSelected = true},
+                          completion: nil);
+    }
+    func removeHeartAnimation() {
+        UIView.transition(with: self.heartButton,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { () -> Void in
+                          self.heartButton.isSelected = false},
+                          completion: nil);
     }
 }

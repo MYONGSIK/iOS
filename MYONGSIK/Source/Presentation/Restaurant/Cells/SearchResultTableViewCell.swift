@@ -64,18 +64,13 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.textColor = .placeContentColor
         $0.numberOfLines = 1
     }
-    let goLinkButton = UIButton().then{
-        var config = UIButton.Configuration.plain()
-        var attText = AttributedString.init("바로 가기")
-        
-        attText.font = UIFont.NotoSansKR(size: 16, family: .Bold)
-        attText.foregroundColor = UIColor.signatureBlue
-        config.attributedTitle = attText
-        
-        $0.configuration = config
+    let goLinkButton = UILabel().then{
+        $0.text = "바로 가기"
+        $0.font = UIFont.NotoSansKR(size: 16, family: .Bold)
+        $0.textColor = .signatureBlue
     }
-    let goLinkImageButton = UIButton().then{
-        $0.setImage(UIImage(named: "arrow_right_blue"), for: .normal)
+    let goLinkImageButton = UIImageView().then{
+        $0.image = UIImage(named: "arrow_right_blue")
     }
 
     // MARK: Life Cycles
@@ -134,7 +129,7 @@ class SearchResultTableViewCell: UITableViewCell {
             make.centerY.equalToSuperview()
         }
         goLinkButton.snp.makeConstraints { make in
-            make.trailing.equalTo(goLinkImageButton.snp.leading).offset(15)
+            make.trailing.equalTo(goLinkImageButton.snp.leading)
             make.centerY.equalTo(goLinkImageButton)
         }
         pinImage.snp.makeConstraints { make in
