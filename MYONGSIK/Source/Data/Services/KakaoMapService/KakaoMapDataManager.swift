@@ -18,7 +18,7 @@ class KakaoMapDataManager {
     func searchMapDataManager(_ keyword: String, _ page: Int, _ viewcontroller: RestaurantSearchViewController) {
         let sendUrl = Constants.KakaoURL + Constants.keyword + "\(keyword)"
                     + Constants.x + Constants.y + Constants.radius + Constants.categoryCode
-                    + Constants.page + "\(page)" + Constants.size
+                    + Constants.page + "\(page)" + Constants.size + Constants.sort
         guard let target = sendUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {return}
         guard let url = URL(string: target) else {return}
 
@@ -44,7 +44,7 @@ class KakaoMapDataManager {
     }
     func randomMapDataManager(_ keyword: String, _ viewcontroller: RestaurantMainViewController) {
         let sendUrl = Constants.KakaoURL + Constants.keyword + "\(keyword)"
-                    + Constants.x + Constants.y + Constants.radius + Constants.categoryCode
+                    + Constants.x + Constants.y + Constants.radius + Constants.categoryCode + Constants.sort
         guard let target = sendUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {return}
         guard let url = URL(string: target) else {return}
 
@@ -70,7 +70,7 @@ class KakaoMapDataManager {
     }
     func tagMapDataManager(_ keyword: String, _ viewcontroller: RestaurantTagViewController) {
         let sendUrl = Constants.KakaoURL + Constants.keyword + "\(keyword)"
-                    + Constants.x + Constants.y + Constants.radius + Constants.categoryCode
+                    + Constants.x + Constants.y + Constants.radius + Constants.categoryCode + Constants.sort
         guard let target = sendUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {return}
         guard let url = URL(string: target) else {return}
 

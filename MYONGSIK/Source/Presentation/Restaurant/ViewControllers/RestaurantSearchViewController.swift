@@ -143,7 +143,11 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let itemIdx = indexPath.item
         guard let link = self.searchResult[itemIdx].place_url else {return}
-        ScreenManager().linkTo(viewcontroller: self, link)
+        
+        let vc = WebViewController()
+        vc.webURL = link
+        self.navigationController!.pushViewController(vc, animated: true)
+//        ScreenManager().linkTo(viewcontroller: self, link)
         
         tableView.deselectRow(at: indexPath, animated: true)
     }

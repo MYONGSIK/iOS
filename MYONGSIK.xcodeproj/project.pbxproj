@@ -23,6 +23,8 @@
 		2324102C28FF0DFE0095C0CC /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102B28FF0DFE0095C0CC /* WeekCollectionViewCell.swift */; };
 		2324102E28FF2C9F0095C0CC /* FormatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102D28FF2C9F0095C0CC /* FormatManager.swift */; };
 		23451DE929116964006AE030 /* RestaurantTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23451DE829116964006AE030 /* RestaurantTagViewController.swift */; };
+		23451DEB29117355006AE030 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23451DEA29117355006AE030 /* WebViewController.swift */; };
+		23451DED29117633006AE030 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23451DEC29117633006AE030 /* WebKit.framework */; };
 		2348C670290074AB00355B53 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2348C672290074AB00355B53 /* InfoPlist.strings */; };
 		23735AFA28FEDA6100599221 /* NotoSansKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 23735AF728FEDA6100599221 /* NotoSansKR-Bold.otf */; };
 		23735AFB28FEDA6100599221 /* NotoSansKR-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 23735AF828FEDA6100599221 /* NotoSansKR-Light.otf */; };
@@ -95,6 +97,8 @@
 		2324102B28FF0DFE0095C0CC /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		2324102D28FF2C9F0095C0CC /* FormatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatManager.swift; sourceTree = "<group>"; };
 		23451DE829116964006AE030 /* RestaurantTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantTagViewController.swift; sourceTree = "<group>"; };
+		23451DEA29117355006AE030 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		23451DEC29117633006AE030 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		2348C671290074AB00355B53 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2348C673290074D100355B53 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		23735AF728FEDA6100599221 /* NotoSansKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.otf"; sourceTree = "<group>"; };
@@ -137,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23451DED29117633006AE030 /* WebKit.framework in Frameworks */,
 				92033E7EAD47D14ADA175F1B /* Pods_MYONGSIK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -480,6 +485,7 @@
 				23C993A329108F6F00B8D1E4 /* RestaurantSearchViewController.swift */,
 				23B9E8962911336A009B6D8F /* RestaurantMainViewController.swift */,
 				23451DE829116964006AE030 /* RestaurantTagViewController.swift */,
+				23451DEA29117355006AE030 /* WebViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -503,6 +509,7 @@
 		C3E767C8B313A0328B6C34CF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				23451DEC29117633006AE030 /* WebKit.framework */,
 				6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */,
 				0F3766A332C9FBAAF6A71FF8 /* Pods_MYONGSIK_MYONGSIKUITests.framework */,
 				5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */,
@@ -783,6 +790,7 @@
 				2373E4FA290ADA5D00D51B8E /* MainViewModel.swift in Sources */,
 				2324102E28FF2C9F0095C0CC /* FormatManager.swift in Sources */,
 				2324102828FF0BCF0095C0CC /* WeekViewController.swift in Sources */,
+				23451DEB29117355006AE030 /* WebViewController.swift in Sources */,
 				238F56312910AA0F0044214F /* MainBaseViewController.swift in Sources */,
 				23451DE929116964006AE030 /* RestaurantTagViewController.swift in Sources */,
 				23E6ACA7290126EA0091D803 /* WeekTableViewCell.swift in Sources */,

@@ -35,6 +35,7 @@ class RestaurantMainViewController: BaseViewController {
         self.searchButton.addTarget(self, action: #selector(goSearchButtonDidTap), for: .touchUpInside)
     }
     override func viewDidAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
         //DATA
         self.searchResult.removeAll()
         for i in 1...10 {
@@ -140,7 +141,10 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         let itemIdx = indexPath.item
         if itemIdx > 2 {
             guard let link = self.searchResult[itemIdx - 3].place_url else {return}
-            ScreenManager().linkTo(viewcontroller: self, link)
+            let vc = WebViewController()
+            vc.webURL = link
+            self.navigationController!.pushViewController(vc, animated: true)
+//            ScreenManager().linkTo(viewcontroller: self, link)
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }

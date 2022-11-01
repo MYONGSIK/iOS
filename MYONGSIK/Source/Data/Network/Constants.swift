@@ -22,4 +22,5 @@ struct Constants {
     static let radius = "&radius=" + "1500"
     static let page = "&page="
     static let size = "&size=15"
+    static let sort = "&sort=distance" //거리순
 }
