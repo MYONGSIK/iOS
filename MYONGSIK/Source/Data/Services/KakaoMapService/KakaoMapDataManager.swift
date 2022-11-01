@@ -10,14 +10,13 @@ import Alamofire
 import Kingfisher
 
 class KakaoMapDataManager {
-    let kakaoURL = "https://dapi.kakao.com/v2/local/search/keyword.json?query="
     let headers: HTTPHeaders = [
-                "Authorization": "KakaoAK " + "1167b82f504027f5cbddb0ba44492329",
-                "Accept": "application/json"
-            ]
+        "Authorization": Constants.KakaoAuthorization,
+        "Accept": "application/json"
+    ]
     
     func searchMapDataManager(_ keyword: String, _ viewcontroller: RestaurantViewController) {
-        let sendUrl = kakaoURL + "\(keyword)"
+        let sendUrl = Constants.KakaoURL + "\(keyword)"
         guard let target = sendUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {return}
         guard let url = URL(string: target) else {return}
 
