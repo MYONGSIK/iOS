@@ -12,7 +12,6 @@ class HeartListTableViewCell: UITableViewCell {
     let backView = UIView().then{
         $0.backgroundColor = .white
         $0.clipsToBounds = true
-        $0.layer.cornerRadius = 10
         
         $0.layer.shadowColor = UIColor.black.cgColor // 색깔
         $0.layer.masksToBounds = false  // 내부에 속한 요소들이 UIView 밖을 벗어날 때, 잘라낼 것인지. 그림자는 밖에 그려지는 것이므로 false 로 설정
@@ -24,17 +23,19 @@ class HeartListTableViewCell: UITableViewCell {
         $0.text = "식당이름·"
         $0.font = UIFont.NotoSansKR(size: 20, family: .Bold)
         $0.numberOfLines = 1
-        $0.setContentCompressionResistancePriority(UILayoutPriority(251), for: .horizontal)
+        $0.setContentCompressionResistancePriority(UILayoutPriority(252), for: .horizontal)
     }
     let dotLabel = UILabel().then{
         $0.text = " · "
         $0.font = UIFont.NotoSansKR(size: 20, family: .Bold)
         $0.textColor = .placeContentColor
+        $0.setContentCompressionResistancePriority(UILayoutPriority(251), for: .horizontal)
     }
     let placeCategoryLabel = UILabel().then{
         $0.text = "가게종류"
         $0.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.textColor = .placeContentColor
+        $0.setContentCompressionResistancePriority(UILayoutPriority(251), for: .horizontal)
     }
     let goLinkButton = UIButton().then{
         var config = UIButton.Configuration.plain()
@@ -51,7 +52,7 @@ class HeartListTableViewCell: UITableViewCell {
     }
 
     //MARK: - LifeCycle
-    var data: HeartListModel!
+    var placeUrl: String!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -102,5 +103,11 @@ class HeartListTableViewCell: UITableViewCell {
             make.centerY.equalTo(dotLabel)
             make.trailing.lessThanOrEqualTo(goLinkButton.snp.leading).offset(-15)
         }
+    }
+    
+    func setUpData(_ data: HeartListModel) {
+        if let placeName = data.placeName {self.placeNameLabel.text = placeName}
+        if let category = data.category {self.placeCategoryLabel.text = category}
+        if let placeUrl = data.placeUrl {self.placeUrl = placeUrl}
     }
 }

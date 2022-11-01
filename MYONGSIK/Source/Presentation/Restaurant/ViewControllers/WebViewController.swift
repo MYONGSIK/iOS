@@ -7,8 +7,10 @@
 
 import UIKit
 import WebKit
+import RealmSwift
 
 class WebViewController: UIViewController, WKUIDelegate {
+    // MARK: - Views
     let heartButton = UIButton().then{
         $0.setImage(UIImage(named: "empty_heart"), for: .normal)
         $0.setImage(UIImage(named: "fill_heart"), for: .selected)
@@ -20,8 +22,14 @@ class WebViewController: UIViewController, WKUIDelegate {
         $0.layer.shadowOpacity = 0.25 // alpha값
     }
     
+    // MARK: - Life Cycles
     var webView: WKWebView!
+    let realm = try! Realm()
+    
+    // Properties
     var webURL: String!
+    var placeName: String!
+    var category: String!
     
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
@@ -33,16 +41,71 @@ class WebViewController: UIViewController, WKUIDelegate {
         super.viewDidLoad()
         self.tabBarController?.tabBar.isHidden = true
         
+        let realm = try! Realm()
+        
         guard let url = self.webURL else {return}
         let myURL = URL(string: url)
         let myRequest = URLRequest(url: myURL!)
         webView.load(myRequest)
         
+        setUpView()
+        heartButton.addTarget(self, action: #selector(heartButtonDidTap), for: .touchUpInside)
+    }
+    // MARK: - Actions
+    @objc func heartButtonDidTap() {
+        if heartButton.isSelected {
+            removeHeartData()
+            heartButton.isSelected = false
+        } else {
+            addHeartData()
+            heartButton.isSelected = true
+        }
+    }
+    
+    // MARK: - Functions
+    func setUpView() {
         webView.addSubview(heartButton)
         heartButton.snp.makeConstraints { make in
             make.width.height.equalTo(65)
-            make.trailing.equalToSuperview().offset(-50)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            make.trailing.equalToSuperview().offset(-32)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-32)
+        }
+        getHeartData()
+    }
+    func addHeartData() {
+        guard let url = self.webURL else {return}
+        guard let placeName = self.placeName else {return}
+        guard let category = self.category else {return}
+        
+        let heartData = HeartListData()
+        heartData.placeName = placeName
+        heartData.category = category
+        heartData.placeUrl = url
+        
+        try! realm.write { //렘(DB)에 저장
+              realm.add(heartData)
+            }
+    }
+    func removeHeartData() {
+        guard let url = self.webURL else {return}
+        guard let placeName = self.placeName else {return}
+        guard let category = self.category else {return}
+        
+        // 쿼리를 통해 선택적 삭제
+        let predicate = NSPredicate(format: "placeName = %@", placeName)
+        let obj = realm.objects(HeartListData.self).filter(predicate)
+        print(obj)
+        try! realm.write { //렘(DB)에서 삭제
+            realm.delete(obj)
+            }
+        
+    }
+    func getHeartData() {
+        // 모든 객체 얻기
+        let hearts = realm.objects(HeartListData.self)
+        for heart in hearts {
+            if self.placeName == heart.placeName {self.heartButton.isSelected = true}
+            else {self.heartButton.isSelected = false}
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class HeartViewController: BaseViewController {
     let titleLabel = UILabel().then{
@@ -16,6 +17,8 @@ class HeartViewController: BaseViewController {
 
     // MARK: Life Cycles
     var heartTableView: UITableView!
+    var heartListData: [HeartListModel] = []
+    let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +31,13 @@ class HeartViewController: BaseViewController {
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
+        // DATA
+        self.heartListData.removeAll()
+        getHeartData()
     }
     // MARK: Functions
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
@@ -63,12 +73,13 @@ class HeartViewController: BaseViewController {
 // MARK: - TableView delegate
 extension HeartViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        let count = self.heartListData.count ?? 0
+        return count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HeartListTableViewCell", for: indexPath) as? HeartListTableViewCell else { return UITableViewCell() }
         let itemIdx = indexPath.item
-//        cell.setUpData(self.searchResult[itemIdx])
+        cell.setUpData(self.heartListData[itemIdx])
         cell.selectionStyle = .none
         return cell
     }
@@ -76,7 +87,38 @@ extension HeartViewController: UITableViewDelegate, UITableViewDataSource {
         return 118
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let itemIdx = indexPath.item
+        
+        guard let link = self.heartListData[itemIdx].placeUrl else {return}
+        guard let placeName = self.heartListData[itemIdx].placeName else {return}
+        guard let category = self.heartListData[itemIdx].category else {return}
+        
+        let vc = WebViewController()
+        vc.webURL = link
+        vc.placeName = placeName
+        vc.category = category
+        self.navigationController!.pushViewController(vc, animated: true)
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+// MARK: - Get Realm datas
+extension HeartViewController {
+    func getHeartData() {
+        // 모든 객체 얻기
+        let hearts = realm.objects(HeartListData.self)
+        for heart in hearts {
+            self.heartListData.append(HeartListModel(placeName: heart.placeName, category: heart.category, placeUrl: heart.placeUrl))
+        }
+        reloadDataAnimation()
+    }
+    func reloadDataAnimation() {
+        // reload data with animation
+        UIView.transition(with: self.heartTableView,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { () -> Void in
+                          self.heartTableView.reloadData()},
+                          completion: nil);
     }
 }

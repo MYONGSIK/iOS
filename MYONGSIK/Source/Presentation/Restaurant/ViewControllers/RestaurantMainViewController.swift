@@ -141,8 +141,13 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         let itemIdx = indexPath.item
         if itemIdx > 2 {
             guard let link = self.searchResult[itemIdx - 3].place_url else {return}
+            guard let placeName = self.searchResult[itemIdx - 3].place_name else {return}
+            guard let category = self.searchResult[itemIdx - 3].category_group_name else {return}
+            
             let vc = WebViewController()
             vc.webURL = link
+            vc.placeName = placeName
+            vc.category = category
             self.navigationController!.pushViewController(vc, animated: true)
 //            ScreenManager().linkTo(viewcontroller: self, link)
         }

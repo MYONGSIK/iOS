@@ -16,6 +16,8 @@ target 'MYONGSIK' do
     	pod 'RxSwift',    '~> 4.0'
     	pod 'RxCocoa',    '~> 4.0'
 
+	pod 'RealmSwift', '~>10'
+
   target 'MYONGSIKTests' do
     inherit! :search_paths
     # Pods for testing
