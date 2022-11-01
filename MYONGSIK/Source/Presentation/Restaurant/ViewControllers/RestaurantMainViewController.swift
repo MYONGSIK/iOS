@@ -105,6 +105,7 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TagTableViewCell", for: indexPath) as? TagTableViewCell else { return UITableViewCell() }
+            cell.setCollectionView(self)
             cell.selectionStyle = .none
             return cell
         case 2:
@@ -125,11 +126,11 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         let tag = indexPath.row
         switch tag {
         case 0:
-            return 70
+            return 60
         case 1:
-            return 34
+            return 54
         case 2:
-            return 100
+            return 90
         default:
             return 170
         }
@@ -141,6 +142,32 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
             ScreenManager().linkTo(viewcontroller: self, link)
         }
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+// MARK: - CollectionView delegate
+extension RestaurantMainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier,
+                                                            for: indexPath)
+                as? TagCollectionViewCell else{ fatalError() }
+        let tag = indexPath.row
+        switch tag {
+        case 0:
+            cell.titleLabel.text = "#명지맛집"
+        case 1:
+            cell.titleLabel.text = "#명지카페"
+        case 2:
+            cell.titleLabel.text = "#명지술집"
+        default:
+            cell.titleLabel.text = "#명지맛집"
+        }
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
     }
 }
 // MARK: - API Success
