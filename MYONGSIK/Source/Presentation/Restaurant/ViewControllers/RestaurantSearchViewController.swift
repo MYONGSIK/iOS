@@ -148,7 +148,7 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
-// MARK: UITextField delegate
+// MARK: - UITextField delegate
 extension RestaurantSearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

@@ -68,4 +68,30 @@ class KakaoMapDataManager {
            }
         }
     }
+    func tagMapDataManager(_ keyword: String, _ viewcontroller: RestaurantTagViewController) {
+        let sendUrl = Constants.KakaoURL + Constants.keyword + "\(keyword)"
+                    + Constants.x + Constants.y + Constants.radius + Constants.categoryCode
+        guard let target = sendUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {return}
+        guard let url = URL(string: target) else {return}
+
+        AF.request(url, method: .get, parameters: nil, headers: headers)
+           .validate()
+           .responseDecodable(of: KakaoMapModel.self) { response in
+               
+           switch response.result {
+           case .success(let result):
+                viewcontroller.kakaoTagMapSuccessAPI(result.documents)
+           case .failure(let error):
+               let statusCode = error.responseCode
+               switch statusCode {
+               case 400, 404:
+                   viewcontroller.kakaoTagNoResultAPI()
+               default:
+                   print(error.localizedDescription)
+                   fatalError()
+               }
+               print(error.localizedDescription)
+           }
+        }
+    }
 }

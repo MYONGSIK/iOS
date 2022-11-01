@@ -168,7 +168,21 @@ extension RestaurantMainViewController: UICollectionViewDelegate, UICollectionVi
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        var tagKeyword = ""
+        let tag = indexPath.row
+        switch tag {
+        case 0:
+            tagKeyword = "맛집"
+        case 1:
+            tagKeyword = "카페"
+        case 2:
+            tagKeyword = "술집"
+        default:
+            tagKeyword = "맛집"
+        }
+        let vc = RestaurantTagViewController()
+        vc.tagKeyword = tagKeyword
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 // MARK: - API Success
