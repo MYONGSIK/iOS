@@ -11,7 +11,7 @@ import Then
 import RxSwift
 import RxCocoa
 
-class MainViewController: BaseViewController {
+class MainViewController: MainBaseViewController {
     // MARK: - Views
     lazy var leftIcon = UIButton().then{
         $0.setImage(UIImage(named: "calendar"), for: .normal)

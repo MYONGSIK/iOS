@@ -34,6 +34,7 @@
 		2373E4FA290ADA5D00D51B8E /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2373E4F9290ADA5D00D51B8E /* MainViewModel.swift */; };
 		238F562D2910A54C0044214F /* KakaoMapDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F562C2910A54C0044214F /* KakaoMapDataManager.swift */; };
 		238F562F2910A6D60044214F /* KakaoMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F562E2910A6D60044214F /* KakaoMapModel.swift */; };
+		238F56312910AA0F0044214F /* MainBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F56302910AA0F0044214F /* MainBaseViewController.swift */; };
 		2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92828FEF7C2009B6AEF /* APIModel.swift */; };
 		2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */; };
 		23A7C66B290AB13000351D16 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A7C66A290AB13000351D16 /* ViewModelType.swift */; };
@@ -100,6 +101,7 @@
 		2373E4F9290ADA5D00D51B8E /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		238F562C2910A54C0044214F /* KakaoMapDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapDataManager.swift; sourceTree = "<group>"; };
 		238F562E2910A6D60044214F /* KakaoMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapModel.swift; sourceTree = "<group>"; };
+		238F56302910AA0F0044214F /* MainBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBaseViewController.swift; sourceTree = "<group>"; };
 		2394E92828FEF7C2009B6AEF /* APIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModel.swift; sourceTree = "<group>"; };
 		2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFoodModel.swift; sourceTree = "<group>"; };
 		23A7C66A290AB13000351D16 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			children = (
 				23A7C668290AADD600351D16 /* ViewModel */,
 				2324102528FF0A4A0095C0CC /* BaseViewController.swift */,
+				238F56302910AA0F0044214F /* MainBaseViewController.swift */,
 				2324102D28FF2C9F0095C0CC /* FormatManager.swift */,
 				23BE0153290E0AE100861DA5 /* TabBarViewController.swift */,
 			);
@@ -749,6 +752,7 @@
 				2373E4FA290ADA5D00D51B8E /* MainViewModel.swift in Sources */,
 				2324102E28FF2C9F0095C0CC /* FormatManager.swift in Sources */,
 				2324102828FF0BCF0095C0CC /* WeekViewController.swift in Sources */,
+				238F56312910AA0F0044214F /* MainBaseViewController.swift in Sources */,
 				23E6ACA7290126EA0091D803 /* WeekTableViewCell.swift in Sources */,
 				23735B0128FEDBF900599221 /* UIColor.swift in Sources */,
 			);

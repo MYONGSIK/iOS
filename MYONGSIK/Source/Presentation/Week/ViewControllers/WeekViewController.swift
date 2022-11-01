@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class WeekViewController: BaseViewController {
+class WeekViewController: MainBaseViewController {
     // MARK: - Views
     let goBackButton = UIButton().then{
         $0.setImage(UIImage(named: "arrow_left"), for: .normal)

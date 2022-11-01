@@ -7,12 +7,8 @@
 
 import UIKit
 
-class RestaurantViewController: UIViewController {
+class RestaurantViewController: BaseViewController {
     // MARK: Views
-    let navigationView = UIView().then{
-        $0.backgroundColor = .signatureBlue
-        $0.clipsToBounds = true
-    }
     lazy var searchButton = UIButton().then{
         $0.setImage(UIImage(named: "search"), for: .normal)
         $0.frame = CGRect(x: 0, y: 0, width: 24, height: 22)
@@ -53,18 +49,11 @@ class RestaurantViewController: UIViewController {
     }
     // MARK: Functions
     func setUpView() {
-        self.view.addSubview(navigationView)
-        navigationView.addSubview(searchTextField)
+        super.navigationView.addSubview(searchTextField)
         searchTextField.addSubview(searchButton)
-        
     }
 
     func setUpConstraint() {
-        navigationView.snp.makeConstraints { make in
-            make.leading.trailing.top.equalToSuperview()
-            if UIDevice.current.hasNotch {make.height.equalTo(121)}
-            else {make.height.equalTo(91)}
-        }
         searchTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(23)
             make.bottom.equalToSuperview().offset(-19)
