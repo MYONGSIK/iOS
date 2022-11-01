@@ -6,6 +6,8 @@
 	<string>13.0.0</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>NSIncludesSubDomains</key>
