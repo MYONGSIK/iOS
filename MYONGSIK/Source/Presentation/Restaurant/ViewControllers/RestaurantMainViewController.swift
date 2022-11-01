@@ -85,7 +85,8 @@ class RestaurantMainViewController: BaseViewController {
         }
         restaurantMainTableView.snp.makeConstraints { make in
             make.top.equalTo(super.navigationView.snp.bottom)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
 }

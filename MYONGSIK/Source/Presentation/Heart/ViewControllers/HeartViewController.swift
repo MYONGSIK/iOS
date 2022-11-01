@@ -66,7 +66,8 @@ class HeartViewController: BaseViewController {
         }
         heartTableView.snp.makeConstraints { make in
             make.top.equalTo(super.navigationView.snp.bottom).offset(20)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
 }

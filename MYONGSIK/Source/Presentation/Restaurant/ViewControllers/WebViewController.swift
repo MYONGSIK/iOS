@@ -105,7 +105,6 @@ class WebViewController: UIViewController, WKUIDelegate {
         let hearts = realm.objects(HeartListData.self)
         for heart in hearts {
             if self.placeName == heart.placeName {self.heartButton.isSelected = true}
-            break
         }
     }
     func addHeartAnimation() {

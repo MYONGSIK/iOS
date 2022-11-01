@@ -60,6 +60,7 @@ class RestaurantSearchViewController: BaseViewController {
         self.navigationController?.popViewController(animated: true)
     }
     @objc func searchButtonDidTap() {
+        self.view.endEditing(true)
         KakaoMapDataManager().searchMapDataManager(self.searchKeyword, pageNum, self)
     }
     @objc func searchTextFieldEditingChanged(_ sender: UITextField) {
@@ -112,7 +113,8 @@ class RestaurantSearchViewController: BaseViewController {
             make.centerY.equalToSuperview()
         }
         searchResultTableView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
             make.top.equalTo(super.navigationView.snp.bottom).offset(22)
         }
     }
