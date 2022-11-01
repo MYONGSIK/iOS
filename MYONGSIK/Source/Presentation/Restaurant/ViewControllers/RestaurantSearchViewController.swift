@@ -112,9 +112,10 @@ class RestaurantSearchViewController: BaseViewController {
 // MARK: - TableView delegate
 extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if ((indexPath.row + 1) %  15 == 0) && ((indexPath.row + 1) /  15 == pageNum) {
+        if ((indexPath.row + 1) %  15 == 0) && ((indexPath.row + 1) /  15 == pageNum) && (pageNum < 3) {
             pageNum = pageNum + 1
             KakaoMapDataManager().searchMapDataManager(self.searchKeyword, pageNum, self)
+            print("pageNum:", pageNum)
         }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
