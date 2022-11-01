@@ -16,25 +16,6 @@ class MainViewController: MainBaseViewController {
     lazy var leftIcon = UIButton().then{
         $0.setImage(UIImage(named: "calendar"), for: .normal)
     }
-    let checkWeekButton = UIButton().then{
-        var config = UIButton.Configuration.tinted()
-        var attText = AttributedString.init("이번 주  식단 확인하기")
-        
-        attText.font = UIFont.NotoSansKR(size: 14, family: .Regular)
-        attText.foregroundColor = UIColor.black
-        config.attributedTitle = attText
-        config.background.backgroundColor = .white
-        config.cornerStyle = .capsule
-        
-        $0.configuration = config
-        $0.clipsToBounds = true
-        
-        $0.layer.shadowColor = UIColor.black.cgColor // 색깔
-        $0.layer.masksToBounds = false  // 내부에 속한 요소들이 UIView 밖을 벗어날 때, 잘라낼 것인지. 그림자는 밖에 그려지는 것이므로 false 로 설정
-        $0.layer.shadowOffset = CGSize(width: 0, height: 0) // 위치조정
-        $0.layer.shadowRadius = 2 // 반경
-        $0.layer.shadowOpacity = 0.25 // alpha값
-    }
 
     // MARK: - Life Cycles
     var mainTableView: UITableView!
@@ -56,7 +37,7 @@ class MainViewController: MainBaseViewController {
         bind()
         
         // Tap Event - 주간 식단 조회 페이지로 이동
-        let buttons = [self.leftIcon, self.checkWeekButton]
+        let buttons = [self.leftIcon]
         for button in buttons {
             button.rx.tap
                 .bind {self.calenderButtonDidTap()}
@@ -93,7 +74,6 @@ class MainViewController: MainBaseViewController {
         super.navigationView.addSubview(leftIcon)
         
         self.view.addSubview(mainTableView)
-        self.view.addSubview(checkWeekButton)
     }
     func setUpConstraint() {
         leftIcon.snp.makeConstraints { make in
@@ -101,17 +81,9 @@ class MainViewController: MainBaseViewController {
             make.leading.equalToSuperview().offset(22)
             make.centerY.equalTo(super.logoImage)
         }
-        checkWeekButton.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(69)
-            make.height.equalTo(50)
-            if UIDevice.current.hasNotch {make.bottom.equalToSuperview().offset(-57)}
-            else {make.bottom.equalToSuperview().offset(-27)}
-            make.centerX.equalToSuperview()
-        }
         mainTableView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.bottom.equalToSuperview()
             make.top.equalTo(super.titleLabel.snp.bottom).offset(2)
-            make.bottom.equalTo(checkWeekButton.snp.top).offset(-10)
         }
     }
 }
@@ -120,22 +92,61 @@ class MainViewController: MainBaseViewController {
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let data = self.foodData {
-            return data.count
+            return data.count + 1
         } else {return 0}
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
-        cell.selectionStyle = .none
-        let itemIdx = indexPath.item
-        if let foodData = self.foodData {
-            cell.data = foodData[itemIdx]
-            cell.setUpData()
-            cell.setUpButtons()
+        let count = self.foodData.count ?? 0
+        if indexPath.row == count {
+            let cell = UITableViewCell()
+            setCheckWeekButtonCell(cell)
+            cell.selectionStyle = .none
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
+            cell.selectionStyle = .none
+            let itemIdx = indexPath.item
+            if let foodData = self.foodData {
+                cell.data = foodData[itemIdx]
+                cell.setUpData()
+                cell.setUpButtons()
+            }
+            return cell
         }
-        return cell
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: true)
+//    }
+    
+    func setCheckWeekButtonCell(_ cell: UITableViewCell) {
+        lazy var checkWeekButton = UIButton().then{
+            var config = UIButton.Configuration.tinted()
+            var attText = AttributedString.init("이번 주  식단 확인하기")
+            
+            attText.font = UIFont.NotoSansKR(size: 14, family: .Regular)
+            attText.foregroundColor = UIColor.black
+            config.attributedTitle = attText
+            config.background.backgroundColor = .white
+            config.cornerStyle = .capsule
+            
+            $0.configuration = config
+            $0.clipsToBounds = true
+            
+            $0.layer.shadowColor = UIColor.black.cgColor // 색깔
+            $0.layer.masksToBounds = false  // 내부에 속한 요소들이 UIView 밖을 벗어날 때, 잘라낼 것인지. 그림자는 밖에 그려지는 것이므로 false 로 설정
+            $0.layer.shadowOffset = CGSize(width: 0, height: 0) // 위치조정
+            $0.layer.shadowRadius = 2 // 반경
+            $0.layer.shadowOpacity = 0.25 // alpha값
+        }
+        cell.contentView.addSubview(checkWeekButton)
+        checkWeekButton.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(69)
+            make.top.bottom.equalToSuperview().inset(25)
+            make.height.equalTo(50)
+            make.centerY.centerX.equalToSuperview()
+        }
+        
+        checkWeekButton.addTarget(self, action: #selector(calenderButtonDidTap), for: .touchUpInside)
     }
 }
 // MARK: - API Success
