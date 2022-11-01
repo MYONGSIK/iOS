@@ -36,5 +36,7 @@ class TabBarViewController: UITabBarController {
         let nav3 = UINavigationController(rootViewController: heartVC)
     
         setViewControllers([nav1, nav2, nav3], animated: false)
+        
+        self.selectedIndex = 1
     }
 }
