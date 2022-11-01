@@ -74,6 +74,7 @@ class RestaurantSearchViewController: BaseViewController {
             $0.rowHeight = UITableView.automaticDimension
             $0.estimatedRowHeight = UITableView.automaticDimension
             $0.separatorStyle = .none
+            $0.showsVerticalScrollIndicator = false
         }
     }
     func setUpView() {

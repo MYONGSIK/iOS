@@ -18,16 +18,30 @@ class RestaurantMainViewController: BaseViewController {
     }
 
     // MARK: Life Cycles
+    var restaurantMainTableView: UITableView!
+    var searchResult: [KakaoResultModel] = []
+    private let foodList = ["부대찌개", "국밥", "마라탕", "중식", "한식", "카페", "족발", "술집", "파스타", "커피", "삼겹살", "치킨", "떡볶이", "햄버거", "피자", "초밥", "회", "곱창", "냉면", "닭발"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
+        setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
         
         self.searchButton.addTarget(self, action: #selector(goSearchButtonDidTap), for: .touchUpInside)
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        //DATA
+        self.searchResult.removeAll()
+        for i in 1...10 {
+            let randomKeyword = foodList.randomElement() ?? ""
+            KakaoMapDataManager().randomMapDataManager(randomKeyword, self)
+        }
+        reloadDataAnimation()
     }
     
     // MARK: Actions
@@ -37,9 +51,26 @@ class RestaurantMainViewController: BaseViewController {
     }
     
     // MARK: Functions
+    func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
+        restaurantMainTableView = UITableView()
+        restaurantMainTableView.then{
+            $0.delegate = dataSourceDelegate
+            $0.dataSource = dataSourceDelegate
+            $0.register(SearchResultTableViewCell.self, forCellReuseIdentifier: "SearchResultTableViewCell")
+            $0.register(TagTableViewCell.self, forCellReuseIdentifier: "TagTableViewCell")
+            
+            // autoHeight
+            $0.rowHeight = UITableView.automaticDimension
+            $0.estimatedRowHeight = UITableView.automaticDimension
+            $0.separatorStyle = .none
+            $0.showsVerticalScrollIndicator = false
+        }
+    }
     func setUpView() {
         super.navigationView.addSubview(titleLabel)
         super.navigationView.addSubview(searchButton)
+        
+        self.view.addSubview(restaurantMainTableView)
     }
     func setUpConstraint() {
         titleLabel.snp.makeConstraints { make in
@@ -51,5 +82,84 @@ class RestaurantMainViewController: BaseViewController {
             make.centerY.equalTo(titleLabel)
             make.trailing.equalToSuperview().offset(-22)
         }
+        restaurantMainTableView.snp.makeConstraints { make in
+            make.top.equalTo(super.navigationView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+    }
+}
+// MARK: - TableView delegate
+extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let count = self.searchResult.count ?? 0
+        return count + 3
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let tag = indexPath.row
+        switch tag {
+        case 0:
+            let cell = UITableViewCell()
+            cell.textLabel?.text = "#모아뒀으니 골라보세요!"
+            cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
+            cell.selectionStyle = .none
+            return cell
+        case 1:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TagTableViewCell", for: indexPath) as? TagTableViewCell else { return UITableViewCell() }
+            cell.selectionStyle = .none
+            return cell
+        case 2:
+            let cell = UITableViewCell()
+            cell.textLabel?.text = "#명지대에서 가장 가기 좋은 곳은..."
+            cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
+            cell.selectionStyle = .none
+            return cell
+        default:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
+            let itemIdx = indexPath.item - 3
+            cell.setUpData(self.searchResult[itemIdx])
+            cell.selectionStyle = .none
+            return cell
+        }
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let tag = indexPath.row
+        switch tag {
+        case 0:
+            return 70
+        case 1:
+            return 34
+        case 2:
+            return 100
+        default:
+            return 170
+        }
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let itemIdx = indexPath.item
+        if itemIdx > 2 {
+            guard let link = self.searchResult[itemIdx - 3].place_url else {return}
+            ScreenManager().linkTo(viewcontroller: self, link)
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+// MARK: - API Success
+extension RestaurantMainViewController {
+    func kakaoSearchMapSuccessAPI(_ result: [KakaoResultModel]) {
+        self.searchResult.append(result[0])
+        reloadDataAnimation()
+    }
+    func kakaoSearchNoResultAPI() {
+//        self.searchResult.removeAll()
+//        reloadDataAnimation()
+    }
+    func reloadDataAnimation() {
+        // reload data with animation
+        UIView.transition(with: self.restaurantMainTableView,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { () -> Void in
+                          self.restaurantMainTableView.reloadData()},
+                          completion: nil);
     }
 }

@@ -41,6 +41,8 @@
 		23A7C66B290AB13000351D16 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A7C66A290AB13000351D16 /* ViewModelType.swift */; };
 		23B9E8972911336A009B6D8F /* RestaurantMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B9E8962911336A009B6D8F /* RestaurantMainViewController.swift */; };
 		23B9E8992911356D009B6D8F /* ScreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B9E8982911356D009B6D8F /* ScreenManager.swift */; };
+		23B9E89B29114532009B6D8F /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B9E89A29114532009B6D8F /* TagCollectionViewCell.swift */; };
+		23B9E89D29114670009B6D8F /* TagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B9E89C29114670009B6D8F /* TagTableViewCell.swift */; };
 		23BE0154290E0AE100861DA5 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BE0153290E0AE100861DA5 /* TabBarViewController.swift */; };
 		23C993A429108F6F00B8D1E4 /* RestaurantSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C993A329108F6F00B8D1E4 /* RestaurantSearchViewController.swift */; };
 		23C993A629108F7800B8D1E4 /* HeartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C993A529108F7800B8D1E4 /* HeartViewController.swift */; };
@@ -111,6 +113,8 @@
 		23A7C66A290AB13000351D16 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		23B9E8962911336A009B6D8F /* RestaurantMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantMainViewController.swift; sourceTree = "<group>"; };
 		23B9E8982911356D009B6D8F /* ScreenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenManager.swift; sourceTree = "<group>"; };
+		23B9E89A29114532009B6D8F /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
+		23B9E89C29114670009B6D8F /* TagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTableViewCell.swift; sourceTree = "<group>"; };
 		23BE0153290E0AE100861DA5 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		23C993A329108F6F00B8D1E4 /* RestaurantSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSearchViewController.swift; sourceTree = "<group>"; };
 		23C993A529108F7800B8D1E4 /* HeartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartViewController.swift; sourceTree = "<group>"; };
@@ -413,6 +417,8 @@
 			isa = PBXGroup;
 			children = (
 				238F56332910AC170044214F /* SearchResultTableViewCell.swift */,
+				23B9E89A29114532009B6D8F /* TagCollectionViewCell.swift */,
+				23B9E89C29114670009B6D8F /* TagTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -755,11 +761,13 @@
 				23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */,
 				23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */,
 				23C993A429108F6F00B8D1E4 /* RestaurantSearchViewController.swift in Sources */,
+				23B9E89B29114532009B6D8F /* TagCollectionViewCell.swift in Sources */,
 				2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */,
 				23C993AA2910945400B8D1E4 /* UITextField.swift in Sources */,
 				238F562D2910A54C0044214F /* KakaoMapDataManager.swift in Sources */,
 				2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */,
 				238F56342910AC170044214F /* SearchResultTableViewCell.swift in Sources */,
+				23B9E89D29114670009B6D8F /* TagTableViewCell.swift in Sources */,
 				238F562F2910A6D60044214F /* KakaoMapModel.swift in Sources */,
 				23A7C66B290AB13000351D16 /* ViewModelType.swift in Sources */,
 				23EACC2E290B2445007D229C /* WeekViewModel.swift in Sources */,
