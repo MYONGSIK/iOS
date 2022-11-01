@@ -20,5 +20,5 @@ struct Constants {
     static let y = "&y=" + "37.5803504797164"
     static let radius = "&radius=" + "1500"
     static let page = "&page="
-    static let size = "&size="
+    static let size = "&size=15"
 }

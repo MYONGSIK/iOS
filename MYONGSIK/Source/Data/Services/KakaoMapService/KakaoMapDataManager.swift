@@ -15,8 +15,10 @@ class KakaoMapDataManager {
         "Accept": "application/json"
     ]
     
-    func searchMapDataManager(_ keyword: String, _ viewcontroller: RestaurantSearchViewController) {
-        let sendUrl = Constants.KakaoURL + Constants.keyword + "\(keyword)" + Constants.x + Constants.y + Constants.radius
+    func searchMapDataManager(_ keyword: String, _ page: Int, _ viewcontroller: RestaurantSearchViewController) {
+        let sendUrl = Constants.KakaoURL + Constants.keyword + "\(keyword)"
+                    + Constants.x + Constants.y + Constants.radius
+                    + Constants.page + "\(page)" + Constants.size
         guard let target = sendUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {return}
         guard let url = URL(string: target) else {return}
 
@@ -30,9 +32,10 @@ class KakaoMapDataManager {
            case .failure(let error):
                let statusCode = error.responseCode
                switch statusCode {
-               case 404:
+               case 400, 404:
                    viewcontroller.kakaoSearchNoResultAPI()
                default:
+                   print(error.localizedDescription)
                    fatalError()
                }
                print(error.localizedDescription)

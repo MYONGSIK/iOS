@@ -24,6 +24,7 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.text = "식당이름·"
         $0.font = UIFont.NotoSansKR(size: 20, family: .Bold)
         $0.numberOfLines = 1
+        $0.setContentCompressionResistancePriority(UILayoutPriority(251), for: .horizontal)
     }
     let dotLabel = UILabel().then{
         $0.text = " · "
@@ -43,6 +44,7 @@ class SearchResultTableViewCell: UITableViewCell {
         
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
+        $0.setContentCompressionResistancePriority(UILayoutPriority(252), for: .horizontal)
     }
     let pinImage = UIImageView().then{
         $0.image = UIImage(named: "pin")
@@ -57,7 +59,7 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.image = UIImage(named: "phone")
     }
     let phoneNumLabel = UILabel().then{
-        $0.text = "전화번호"
+        $0.text = "전화번호가 없습니다."
         $0.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.textColor = .placeContentColor
         $0.numberOfLines = 1
@@ -124,7 +126,7 @@ class SearchResultTableViewCell: UITableViewCell {
         distanceLabel.snp.makeConstraints { make in
             make.leading.equalTo(placeCategoryLabel.snp.trailing).offset(8)
             make.centerY.equalTo(placeCategoryLabel)
-            make.trailing.lessThanOrEqualToSuperview().offset(-10)  //
+            make.trailing.lessThanOrEqualToSuperview().offset(-20)  //
         }
         goLinkImageButton.snp.makeConstraints { make in
             make.width.height.equalTo(30)
@@ -157,11 +159,16 @@ class SearchResultTableViewCell: UITableViewCell {
     }
     
     func setUpData(_ data: KakaoResultModel) {
-//        print(data.distance)
         if let placeName = data.place_name {self.placeNameLabel.text = placeName}
         if let category = data.category_group_name {self.placeCategoryLabel.text = category}
         if let distance = data.distance {self.distanceLabel.text = distance + "m"}
-        if let location  = data.address_name {self.locationLabel.text = location}
-        if let phone = data.phone {self.phoneNumLabel.text = phone}
+        if let location  = data.road_address_name {
+            self.locationLabel.text = location
+            if location == "" {self.locationLabel.text = "주소가 없습니다."}
+        }
+        if let phone = data.phone {
+            self.phoneNumLabel.text = phone
+            if phone == "" {self.phoneNumLabel.text = "전화번호가 없습니다."}
+        }
     }
 }

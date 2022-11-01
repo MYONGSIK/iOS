@@ -31,6 +31,7 @@ class RestaurantSearchViewController: BaseViewController {
     var searchKeyword: String = ""
     var searchResultTableView: UITableView!
     var searchResult: [KakaoResultModel] = []
+    var pageNum: Int = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,12 +52,15 @@ class RestaurantSearchViewController: BaseViewController {
         self.navigationController?.popViewController(animated: true)
     }
     @objc func searchButtonDidTap() {
-        KakaoMapDataManager().searchMapDataManager(self.searchKeyword, self)
+        KakaoMapDataManager().searchMapDataManager(self.searchKeyword, pageNum, self)
     }
     @objc func searchTextFieldEditingChanged(_ sender: UITextField) {
+        pageNum = 1
+        self.searchResult.removeAll()
+        
         let text = sender.text ?? ""
         self.searchKeyword = text
-        KakaoMapDataManager().searchMapDataManager(text, self)
+        KakaoMapDataManager().searchMapDataManager(text, pageNum, self)
     }
     // MARK: Functions
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
@@ -106,6 +110,12 @@ class RestaurantSearchViewController: BaseViewController {
 }
 // MARK: - TableView delegate
 extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if ((indexPath.row + 1) %  15 == 0) && ((indexPath.row + 1) /  15 == pageNum) {
+            pageNum = pageNum + 1
+            KakaoMapDataManager().searchMapDataManager(self.searchKeyword, pageNum, self)
+        }
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count = self.searchResult.count ?? 0
         return count
@@ -131,11 +141,24 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
 // MARK: - API Success
 extension RestaurantSearchViewController {
     func kakaoSearchMapSuccessAPI(_ result: [KakaoResultModel]) {
-        self.searchResult = result
-        self.searchResultTableView.reloadData()
+        for searchData in result {
+            self.searchResult.append(searchData)
+        }
+        if pageNum == 1 {reloadDataAnimation()}
+        else {self.searchResultTableView.reloadData()}
     }
     func kakaoSearchNoResultAPI() {
-        self.searchResult = []
-        self.searchResultTableView.reloadData()
+        self.searchResult.removeAll()
+        self.pageNum = 1
+        reloadDataAnimation()
+    }
+    func reloadDataAnimation() {
+        // reload data with animation
+        UIView.transition(with: self.searchResultTableView,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { () -> Void in
+                          self.searchResultTableView.reloadData()},
+                          completion: nil);
     }
 }
