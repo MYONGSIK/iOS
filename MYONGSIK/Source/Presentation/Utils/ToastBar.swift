@@ -8,12 +8,19 @@
 import Foundation
 import UIKit
 
-class SnackBar {
+class ToastBar {
     // MARK: - Views
     let backgroundView = UIView().then{
         $0.backgroundColor = .signatureBlue
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 25
+        $0.alpha = 0.3
+        
+        $0.layer.shadowColor = UIColor.black.cgColor // 색깔
+        $0.layer.masksToBounds = false  // 내부에 속한 요소들이 UIView 밖을 벗어날 때, 잘라낼 것인지. 그림자는 밖에 그려지는 것이므로 false 로 설정
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0) // 위치조정
+        $0.layer.shadowRadius = 4 // 반경
+        $0.layer.shadowOpacity = 0.5 // alpha값
     }
     var title = UILabel().then{
         $0.textColor = .white
@@ -35,7 +42,7 @@ class SnackBar {
         }
         
         backgroundView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(47)
+            make.bottom.equalToSuperview().offset(-75)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-95)
             make.height.equalTo(47)
@@ -47,10 +54,10 @@ class SnackBar {
         // MARK: Animation
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.5) {
-                self.backgroundView.transform = CGAffineTransform(translationX: 0, y: -120)
+                self.backgroundView.alpha = 1
             } completion: { finished in
-                UIView.animate(withDuration: 0.5, delay: 2.5) {
-                    self.backgroundView.transform = .identity
+                UIView.animate(withDuration: 0.5, delay: 1.5) {
+                    self.backgroundView.alpha = 0
                 }
             }
         }
@@ -58,7 +65,7 @@ class SnackBar {
 }
 
 // MARK: - Enum
-extension SnackBar {
+extension ToastBar {
     enum SnackBarMessage: String {
         case addHeart = "찜꽁리스트에 추가되었습니다.💙"
         case deleteHeart = "찜꽁리스트에서 삭제되었습니다.🥲"
