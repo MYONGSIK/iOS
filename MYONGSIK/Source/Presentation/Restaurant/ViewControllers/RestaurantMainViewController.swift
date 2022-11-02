@@ -33,8 +33,10 @@ class RestaurantMainViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
         //DATA
-        self.searchResult.removeAll()
-        KakaoMapDataManager().randomMapDataManager(self)
+        DispatchQueue.main.async {
+            self.searchResult.removeAll()
+            KakaoMapDataManager().randomMapDataManager(self)
+        }
     }
     
     // MARK: Actions
@@ -88,27 +90,35 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         switch tag {
         case 0:
             let cell = UITableViewCell()
-            cell.textLabel?.text = "#모아뒀으니 골라보세요!"
-            cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
-            cell.selectionStyle = .none
+            DispatchQueue.main.async {
+                cell.textLabel?.text = "#모아뒀으니 골라보세요!"
+                cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
+                cell.selectionStyle = .none
+            }
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TagTableViewCell", for: indexPath) as? TagTableViewCell else { return UITableViewCell() }
-            cell.setCollectionView(self)
-            cell.selectionStyle = .none
+            DispatchQueue.main.async {
+                cell.setCollectionView(self)
+                cell.selectionStyle = .none
+            }
             return cell
         case 2:
             let cell = UITableViewCell()
-            cell.textLabel?.text = "#명지대에서\n가장 가기 좋은 곳은..."
-            cell.textLabel?.numberOfLines = 2
-            cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
-            cell.selectionStyle = .none
+            DispatchQueue.main.async {
+                cell.textLabel?.text = "#명지대에서\n가장 가기 좋은 곳은..."
+                cell.textLabel?.numberOfLines = 2
+                cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
+                cell.selectionStyle = .none
+            }
             return cell
         default:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
-            let itemIdx = indexPath.item - 3
-            cell.setUpData(self.searchResult[itemIdx])
-            cell.selectionStyle = .none
+            DispatchQueue.main.async {
+                let itemIdx = indexPath.item - 3
+                cell.setUpData(self.searchResult[itemIdx])
+                cell.selectionStyle = .none
+            }
             return cell
         }
     }
