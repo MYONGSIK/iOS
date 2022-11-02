@@ -11,11 +11,6 @@ class RestaurantMainViewController: BaseViewController {
     let searchButton = UIButton().then{
         $0.setImage(UIImage(named: "search_white"), for: .normal)
     }
-    let titleLabel = UILabel().then{
-        $0.text = "명지맛집"
-        $0.font = UIFont.NotoSansKR(size: 24, family: .Bold)
-        $0.textColor = .white
-    }
 
     // MARK: Life Cycles
     var restaurantMainTableView: UITableView!
@@ -24,6 +19,8 @@ class RestaurantMainViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        super.titleLabel.text = "명지맛집"
+        
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
@@ -68,16 +65,11 @@ class RestaurantMainViewController: BaseViewController {
         }
     }
     func setUpView() {
-        super.navigationView.addSubview(titleLabel)
         super.navigationView.addSubview(searchButton)
         
         self.view.addSubview(restaurantMainTableView)
     }
     func setUpConstraint() {
-        titleLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(30)
-            make.bottom.equalToSuperview().offset(-22)
-        }
         searchButton.snp.makeConstraints { make in
             make.width.height.equalTo(25)
             make.centerY.equalTo(titleLabel)

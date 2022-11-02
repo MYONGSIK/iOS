@@ -13,6 +13,11 @@ class BaseViewController: UIViewController {
         $0.backgroundColor = .signatureBlue
         $0.clipsToBounds = true
     }
+    let titleLabel = UILabel().then{
+        $0.font = UIFont.NotoSansKR(size: 24, family: .Bold)
+        $0.textColor = .white
+    }
+    
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +29,7 @@ class BaseViewController: UIViewController {
                 
         //setUpView
         self.view.addSubview(navigationView)
+        navigationView.addSubview(titleLabel)
         
         //setUpConstraint
         navigationView.snp.makeConstraints { make in
@@ -31,6 +37,10 @@ class BaseViewController: UIViewController {
             make.top.equalToSuperview()
             if UIDevice.current.hasNotch {make.height.equalTo(121)}
             else {make.height.equalTo(91)}
+        }
+        titleLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(30)
+            make.bottom.equalToSuperview().offset(-22)
         }
     }
     override func viewDidAppear(_ animated: Bool) {

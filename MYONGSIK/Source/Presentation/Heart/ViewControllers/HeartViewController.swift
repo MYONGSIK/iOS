@@ -9,12 +9,7 @@ import UIKit
 import RealmSwift
 
 class HeartViewController: BaseViewController {
-    let titleLabel = UILabel().then{
-        $0.text = "나만의 찜꽁리스트"
-        $0.font = UIFont.NotoSansKR(size: 24, family: .Bold)
-        $0.textColor = .white
-    }
-
+    
     // MARK: Life Cycles
     var heartTableView: UITableView!
     var heartListData: [HeartListModel] = []
@@ -22,6 +17,7 @@ class HeartViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        super.titleLabel.text = "나만의 찜꽁리스트"
         self.view.backgroundColor = .white
         
         self.navigationController?.isNavigationBarHidden = true
@@ -55,15 +51,9 @@ class HeartViewController: BaseViewController {
         }
     }
     func setUpView() {
-        super.navigationView.addSubview(titleLabel)
-        
         self.view.addSubview(heartTableView)
     }
     func setUpConstraint() {
-        titleLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(30)
-            make.bottom.equalToSuperview().offset(-22)
-        }
         heartTableView.snp.makeConstraints { make in
             make.top.equalTo(super.navigationView.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview()
