@@ -19,7 +19,7 @@ class WebViewController: UIViewController, WKUIDelegate {
         $0.layer.masksToBounds = false  // 내부에 속한 요소들이 UIView 밖을 벗어날 때, 잘라낼 것인지. 그림자는 밖에 그려지는 것이므로 false 로 설정
         $0.layer.shadowOffset = CGSize(width: 0, height: 0) // 위치조정
         $0.layer.shadowRadius = 4 // 반경
-        $0.layer.shadowOpacity = 0.25 // alpha값
+        $0.layer.shadowOpacity = 0.5 // alpha값
     }
     
     // MARK: - Life Cycles
@@ -53,6 +53,7 @@ class WebViewController: UIViewController, WKUIDelegate {
     }
     // MARK: - Actions
     @objc func heartButtonDidTap() {
+        UIDevice.vibrate()
         if heartButton.isSelected {
             removeHeartData()
             removeHeartAnimation()
@@ -108,7 +109,7 @@ class WebViewController: UIViewController, WKUIDelegate {
         }
     }
     func addHeartAnimation() {
-        SnackBar(self, message: .addHeart)
+        ToastBar(self, message: .addHeart)
         UIView.transition(with: self.heartButton,
                           duration: 0.35,
                           options: .transitionCrossDissolve,
@@ -117,7 +118,7 @@ class WebViewController: UIViewController, WKUIDelegate {
                           completion: nil);
     }
     func removeHeartAnimation() {
-        SnackBar(self, message: .deleteHeart)
+        ToastBar(self, message: .deleteHeart)
         UIView.transition(with: self.heartButton,
                           duration: 0.35,
                           options: .transitionCrossDissolve,

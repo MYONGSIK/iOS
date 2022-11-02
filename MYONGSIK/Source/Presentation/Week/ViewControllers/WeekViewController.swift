@@ -49,6 +49,7 @@ class WeekViewController: MainBaseViewController {
     }
     // MARK: - Actions
     @objc func goBackButtonDidTap() {
+        UIDevice.vibrate()
         self.navigationController?.popViewController(animated: true)
     }
     // MARK: - Functions

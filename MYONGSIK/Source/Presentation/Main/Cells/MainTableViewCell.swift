@@ -108,6 +108,7 @@ class MainTableViewCell: UITableViewCell {
             else {UserDefaults.standard.set(1, forKey: day+classification)}
         }
         setUpButtons()
+        UIDevice.vibrate()
     }
     // 맛없어요 클릭
     @objc func thumbDownButtonDidTap() {
@@ -122,6 +123,7 @@ class MainTableViewCell: UITableViewCell {
             else {UserDefaults.standard.set(2, forKey: day+classification)}
         }
         setUpButtons()
+        UIDevice.vibrate()
     }
     // MARK: - Functions
     func setUpButtons() {

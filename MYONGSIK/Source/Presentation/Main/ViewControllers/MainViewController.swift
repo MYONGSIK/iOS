@@ -53,6 +53,7 @@ class MainViewController: MainBaseViewController {
     }
     // MARK: - Actions
     @objc func calenderButtonDidTap() {
+        UIDevice.vibrate()
         let vc = WeekViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }

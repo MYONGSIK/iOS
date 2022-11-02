@@ -41,6 +41,7 @@ class RestaurantMainViewController: BaseViewController {
     
     // MARK: Actions
     @objc func goSearchButtonDidTap() {
+        UIDevice.vibrate()
         let vc = RestaurantSearchViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -136,6 +137,8 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        UIDevice.vibrate()
+        
         let itemIdx = indexPath.item
         if itemIdx > 2 {
             guard let link = self.searchResult[itemIdx - 3].place_url else {return}
@@ -175,6 +178,8 @@ extension RestaurantMainViewController: UICollectionViewDelegate, UICollectionVi
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        UIDevice.vibrate()
+        
         var tagKeyword = ""
         let tag = indexPath.row
         switch tag {
@@ -195,7 +200,10 @@ extension RestaurantMainViewController: UICollectionViewDelegate, UICollectionVi
 // MARK: - API Success
 extension RestaurantMainViewController {
     func kakaoRandomMapSuccessAPI(_ result: [KakaoResultModel]) {
-        self.searchResult = Array(result[0..<10])
+        let resultCount = result.count ?? 0
+        if resultCount >= 10 {self.searchResult = Array(result[0..<10])}
+        else {self.searchResult = result}
+        
         reloadDataAnimation()
     }
     func kakaoRandomNoResultAPI() {

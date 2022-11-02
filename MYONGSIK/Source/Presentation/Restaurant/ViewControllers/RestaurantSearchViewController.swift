@@ -57,9 +57,11 @@ class RestaurantSearchViewController: BaseViewController {
     }
     // MARK: Actions
     @objc func goBackButtonDidTap() {
+        UIDevice.vibrate()
         self.navigationController?.popViewController(animated: true)
     }
     @objc func searchButtonDidTap() {
+        UIDevice.vibrate()
         self.view.endEditing(true)
     }
     @objc func searchTextFieldEditingChanged(_ sender: UITextField) {
@@ -142,6 +144,8 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         return 170
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        UIDevice.vibrate()
+        
         let itemIdx = indexPath.item
         guard let link = self.searchResult[itemIdx].place_url else {return}
         guard let placeName = self.searchResult[itemIdx].place_name else {return}
