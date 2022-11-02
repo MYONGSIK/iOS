@@ -78,6 +78,8 @@ extension HeartViewController: UITableViewDelegate, UITableViewDataSource {
         return 118
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        UIDevice.vibrate()
+        
         let itemIdx = indexPath.item
         
         guard let link = self.heartListData[itemIdx].placeUrl else {return}

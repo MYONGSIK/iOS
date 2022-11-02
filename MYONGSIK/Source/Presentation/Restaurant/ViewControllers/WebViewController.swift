@@ -53,6 +53,7 @@ class WebViewController: UIViewController, WKUIDelegate {
     }
     // MARK: - Actions
     @objc func heartButtonDidTap() {
+        UIDevice.vibrate()
         if heartButton.isSelected {
             removeHeartData()
             removeHeartAnimation()

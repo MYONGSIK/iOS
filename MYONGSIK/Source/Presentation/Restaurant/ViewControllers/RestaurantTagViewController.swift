@@ -46,6 +46,7 @@ class RestaurantTagViewController: BaseViewController {
     }
     // MARK: Actions
     @objc func goBackButtonDidTap() {
+        UIDevice.vibrate()
         self.navigationController?.popViewController(animated: true)
     }
     // MARK: - Functions
@@ -110,6 +111,8 @@ extension RestaurantTagViewController: UITableViewDelegate, UITableViewDataSourc
         return 170
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        UIDevice.vibrate()
+        
         let itemIdx = indexPath.item
         guard let link = self.tagResult[itemIdx].place_url else {return}
         guard let placeName = self.tagResult[itemIdx].place_name else {return}
