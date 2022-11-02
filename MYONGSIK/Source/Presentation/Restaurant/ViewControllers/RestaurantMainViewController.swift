@@ -15,7 +15,6 @@ class RestaurantMainViewController: BaseViewController {
     // MARK: Life Cycles
     var restaurantMainTableView: UITableView!
     var searchResult: [KakaoResultModel] = []
-    private let foodList = ["부대찌개", "국밥", "마라탕", "중식", "한식", "카페", "족발", "술집", "파스타", "커피", "삼겹살", "치킨", "떡볶이", "햄버거", "피자", "초밥", "회", "곱창", "냉면", "닭발"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,11 +34,7 @@ class RestaurantMainViewController: BaseViewController {
         self.tabBarController?.tabBar.isHidden = false
         //DATA
         self.searchResult.removeAll()
-        for i in 1...10 {
-            let randomKeyword = foodList.randomElement() ?? ""
-            KakaoMapDataManager().randomMapDataManager(randomKeyword, self)
-        }
-        reloadDataAnimation()
+        KakaoMapDataManager().randomMapDataManager(self)
     }
     
     // MARK: Actions
@@ -189,13 +184,13 @@ extension RestaurantMainViewController: UICollectionViewDelegate, UICollectionVi
 }
 // MARK: - API Success
 extension RestaurantMainViewController {
-    func kakaoSearchMapSuccessAPI(_ result: [KakaoResultModel]) {
-        self.searchResult.append(result[0])
+    func kakaoRandomMapSuccessAPI(_ result: [KakaoResultModel]) {
+        self.searchResult = Array(result[0..<10])
         reloadDataAnimation()
     }
-    func kakaoSearchNoResultAPI() {
-//        self.searchResult.removeAll()
-//        reloadDataAnimation()
+    func kakaoRandomNoResultAPI() {
+        self.searchResult.removeAll()
+        reloadDataAnimation()
     }
     func reloadDataAnimation() {
         // reload data with animation
