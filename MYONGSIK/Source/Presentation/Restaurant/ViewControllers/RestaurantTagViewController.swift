@@ -40,8 +40,9 @@ class RestaurantTagViewController: BaseViewController {
         if let tagKeyword = self.tagKeyword {self.subTitleLabel.text = "# 명지\(tagKeyword)"}
         
         // DATA
+        self.tagResult.removeAll()
         guard let tagKeyword = self.tagKeyword else {return}
-        KakaoMapDataManager().tagMapDataManager(tagKeyword, self)
+        KakaoMapDataManager().tagMapDataManager(tagKeyword, pageNum, self)
     }
     // MARK: Actions
     @objc func goBackButtonDidTap() {
@@ -91,7 +92,7 @@ extension RestaurantTagViewController: UITableViewDelegate, UITableViewDataSourc
         if ((indexPath.row + 1) %  15 == 0) && ((indexPath.row + 1) /  15 == pageNum) && (pageNum < 3) {
             pageNum = pageNum + 1
             guard let tagKeyword = self.tagKeyword else {return}
-            KakaoMapDataManager().tagMapDataManager(tagKeyword, self)
+            KakaoMapDataManager().tagMapDataManager(tagKeyword, pageNum, self)
         }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -126,7 +127,9 @@ extension RestaurantTagViewController: UITableViewDelegate, UITableViewDataSourc
 // MARK: - API Success
 extension RestaurantTagViewController {
     func kakaoTagMapSuccessAPI(_ result: [KakaoResultModel]) {
-        self.tagResult = result
+        for tagData in result {
+            self.tagResult.append(tagData)
+        }
         if pageNum == 1 {reloadDataAnimation()}
         else {self.tagResultTableView.reloadData()}
     }
