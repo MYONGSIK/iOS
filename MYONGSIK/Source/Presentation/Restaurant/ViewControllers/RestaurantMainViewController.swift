@@ -11,19 +11,15 @@ class RestaurantMainViewController: BaseViewController {
     let searchButton = UIButton().then{
         $0.setImage(UIImage(named: "search_white"), for: .normal)
     }
-    let titleLabel = UILabel().then{
-        $0.text = "명지맛집"
-        $0.font = UIFont.NotoSansKR(size: 24, family: .Bold)
-        $0.textColor = .white
-    }
 
     // MARK: Life Cycles
     var restaurantMainTableView: UITableView!
     var searchResult: [KakaoResultModel] = []
-    private let foodList = ["부대찌개", "국밥", "마라탕", "중식", "한식", "카페", "족발", "술집", "파스타", "커피", "삼겹살", "치킨", "떡볶이", "햄버거", "피자", "초밥", "회", "곱창", "냉면", "닭발"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        super.titleLabel.text = "명지맛집"
+        
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
@@ -37,12 +33,10 @@ class RestaurantMainViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
         //DATA
-        self.searchResult.removeAll()
-        for i in 1...10 {
-            let randomKeyword = foodList.randomElement() ?? ""
-            KakaoMapDataManager().randomMapDataManager(randomKeyword, self)
+        DispatchQueue.main.async {
+            self.searchResult.removeAll()
+            KakaoMapDataManager().randomMapDataManager(self)
         }
-        reloadDataAnimation()
     }
     
     // MARK: Actions
@@ -68,16 +62,11 @@ class RestaurantMainViewController: BaseViewController {
         }
     }
     func setUpView() {
-        super.navigationView.addSubview(titleLabel)
         super.navigationView.addSubview(searchButton)
         
         self.view.addSubview(restaurantMainTableView)
     }
     func setUpConstraint() {
-        titleLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(30)
-            make.bottom.equalToSuperview().offset(-22)
-        }
         searchButton.snp.makeConstraints { make in
             make.width.height.equalTo(25)
             make.centerY.equalTo(titleLabel)
@@ -101,27 +90,35 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         switch tag {
         case 0:
             let cell = UITableViewCell()
-            cell.textLabel?.text = "#모아뒀으니 골라보세요!"
-            cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
-            cell.selectionStyle = .none
+            DispatchQueue.main.async {
+                cell.textLabel?.text = "#모아뒀으니 골라보세요!"
+                cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
+                cell.selectionStyle = .none
+            }
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TagTableViewCell", for: indexPath) as? TagTableViewCell else { return UITableViewCell() }
-            cell.setCollectionView(self)
-            cell.selectionStyle = .none
+            DispatchQueue.main.async {
+                cell.setCollectionView(self)
+                cell.selectionStyle = .none
+            }
             return cell
         case 2:
             let cell = UITableViewCell()
-            cell.textLabel?.text = "#명지대에서\n가장 가기 좋은 곳은..."
-            cell.textLabel?.numberOfLines = 2
-            cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
-            cell.selectionStyle = .none
+            DispatchQueue.main.async {
+                cell.textLabel?.text = "#명지대에서\n가장 가기 좋은 곳은..."
+                cell.textLabel?.numberOfLines = 2
+                cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
+                cell.selectionStyle = .none
+            }
             return cell
         default:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
-            let itemIdx = indexPath.item - 3
-            cell.setUpData(self.searchResult[itemIdx])
-            cell.selectionStyle = .none
+            DispatchQueue.main.async {
+                let itemIdx = indexPath.item - 3
+                cell.setUpData(self.searchResult[itemIdx])
+                cell.selectionStyle = .none
+            }
             return cell
         }
     }
@@ -197,13 +194,13 @@ extension RestaurantMainViewController: UICollectionViewDelegate, UICollectionVi
 }
 // MARK: - API Success
 extension RestaurantMainViewController {
-    func kakaoSearchMapSuccessAPI(_ result: [KakaoResultModel]) {
-        self.searchResult.append(result[0])
+    func kakaoRandomMapSuccessAPI(_ result: [KakaoResultModel]) {
+        self.searchResult = Array(result[0..<10])
         reloadDataAnimation()
     }
-    func kakaoSearchNoResultAPI() {
-//        self.searchResult.removeAll()
-//        reloadDataAnimation()
+    func kakaoRandomNoResultAPI() {
+        self.searchResult.removeAll()
+        reloadDataAnimation()
     }
     func reloadDataAnimation() {
         // reload data with animation

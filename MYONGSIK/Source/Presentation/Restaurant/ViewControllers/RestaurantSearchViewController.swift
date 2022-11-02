@@ -61,7 +61,6 @@ class RestaurantSearchViewController: BaseViewController {
     }
     @objc func searchButtonDidTap() {
         self.view.endEditing(true)
-        KakaoMapDataManager().searchMapDataManager(self.searchKeyword, pageNum, self)
     }
     @objc func searchTextFieldEditingChanged(_ sender: UITextField) {
         pageNum = 1

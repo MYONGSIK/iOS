@@ -12,7 +12,7 @@ class RestaurantTagViewController: BaseViewController {
     let backButton = UIButton().then{
         $0.setImage(UIImage(named: "arrow_left"), for: .normal)
     }
-    let titleLabel = UILabel().then{
+    let subTitleLabel = UILabel().then{
         $0.text = "# 모아뒀으니 골라보세요!"
         $0.font = UIFont.NotoSansKR(size: 24, family: .Bold)
         $0.textColor = .white
@@ -37,11 +37,12 @@ class RestaurantTagViewController: BaseViewController {
         self.backButton.addTarget(self, action: #selector(goBackButtonDidTap), for: .touchUpInside)
     }
     override func viewDidAppear(_ animated: Bool) {
-        if let tagKeyword = self.tagKeyword {self.titleLabel.text = "# 명지\(tagKeyword)"}
+        if let tagKeyword = self.tagKeyword {self.subTitleLabel.text = "# 명지\(tagKeyword)"}
         
         // DATA
+        self.tagResult.removeAll()
         guard let tagKeyword = self.tagKeyword else {return}
-        KakaoMapDataManager().tagMapDataManager(tagKeyword, self)
+        KakaoMapDataManager().tagMapDataManager(tagKeyword, pageNum, self)
     }
     // MARK: Actions
     @objc func goBackButtonDidTap() {
@@ -64,7 +65,7 @@ class RestaurantTagViewController: BaseViewController {
     }
     func setUpView() {
         super.navigationView.addSubview(backButton)
-        super.navigationView.addSubview(titleLabel)
+        super.navigationView.addSubview(subTitleLabel)
         
         self.view.addSubview(tagResultTableView)
     }
@@ -74,7 +75,7 @@ class RestaurantTagViewController: BaseViewController {
             make.leading.equalToSuperview().offset(15)
             make.bottom.equalToSuperview().offset(-23)
         }
-        titleLabel.snp.makeConstraints { make in
+        subTitleLabel.snp.makeConstraints { make in
             make.leading.equalTo(backButton.snp.trailing).offset(10)
             make.centerY.equalTo(backButton)
         }
@@ -91,7 +92,7 @@ extension RestaurantTagViewController: UITableViewDelegate, UITableViewDataSourc
         if ((indexPath.row + 1) %  15 == 0) && ((indexPath.row + 1) /  15 == pageNum) && (pageNum < 3) {
             pageNum = pageNum + 1
             guard let tagKeyword = self.tagKeyword else {return}
-            KakaoMapDataManager().tagMapDataManager(tagKeyword, self)
+            KakaoMapDataManager().tagMapDataManager(tagKeyword, pageNum, self)
         }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -126,7 +127,9 @@ extension RestaurantTagViewController: UITableViewDelegate, UITableViewDataSourc
 // MARK: - API Success
 extension RestaurantTagViewController {
     func kakaoTagMapSuccessAPI(_ result: [KakaoResultModel]) {
-        self.tagResult = result
+        for tagData in result {
+            self.tagResult.append(tagData)
+        }
         if pageNum == 1 {reloadDataAnimation()}
         else {self.tagResultTableView.reloadData()}
     }
