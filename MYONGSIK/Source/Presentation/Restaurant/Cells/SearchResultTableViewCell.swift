@@ -156,7 +156,16 @@ class SearchResultTableViewCell: UITableViewCell {
     func setUpData(_ data: KakaoResultModel) {
         if let placeName = data.place_name {self.placeNameLabel.text = placeName}
         if let category = data.category_group_name {self.placeCategoryLabel.text = category}
-        if let distance = data.distance {self.distanceLabel.text = distance + "m"}
+        if let distance = data.distance {
+            guard let distanceInt = Int(distance) else {return}
+            if distanceInt >= 1000 {
+                let distanceKmFirst = distanceInt / 1000
+                let distanceKmSecond = (distanceInt % 1000) / 100
+                self.distanceLabel.text = "\(distanceKmFirst).\(distanceKmSecond)km"
+            } else {
+                self.distanceLabel.text = "\(distanceInt)m"
+            }
+        }
         if let location  = data.road_address_name {
             self.locationLabel.text = location
             if location == "" {self.locationLabel.text = "주소가 없습니다."}
