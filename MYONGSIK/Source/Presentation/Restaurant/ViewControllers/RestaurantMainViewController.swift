@@ -107,7 +107,7 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 2:
             let cell = UITableViewCell()
             DispatchQueue.main.async {
-                cell.textLabel?.text = "#명지대에서\n가장 가기 좋은 곳은..."
+                cell.textLabel?.text = "#명식이가 준비했습니다!"
                 cell.textLabel?.numberOfLines = 2
                 cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
                 cell.selectionStyle = .none
@@ -129,9 +129,9 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 0:
             return 60
         case 1:
-            return 54
+            return 84
         case 2:
-            return 90
+            return 46
         default:
             return 170
         }

@@ -26,11 +26,8 @@ class TagTableViewCell: UITableViewCell {
     func setCollectionView(_ dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate) {
         tagCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()) .then{
             let flowLayout = UICollectionViewFlowLayout()
-            flowLayout.minimumLineSpacing = 10
+//            flowLayout.minimumLineSpacing = 10
 
-            var bounds = UIScreen.main.bounds
-            var width = bounds.size.width
-            
             flowLayout.itemSize = CGSize(width: 108, height: 54)
             flowLayout.scrollDirection = .horizontal
             
@@ -46,7 +43,8 @@ class TagTableViewCell: UITableViewCell {
         
         self.contentView.addSubview(tagCollectionView)
         tagCollectionView.snp.makeConstraints { make in
-            make.trailing.top.bottom.equalToSuperview()
+            make.trailing.top.equalToSuperview()
+            make.height.equalTo(54)
             make.leading.equalToSuperview().offset(16)
         }
     }
