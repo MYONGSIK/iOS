@@ -4,9 +4,9 @@ prExplanation
 
 🔑 Key Changes
 ----------------
-- [ ] change1
-- [ ] change2
+- change1
+- change2
 
 📢 To Reviewers
 ----------------
-- toReviewers
+toReviewers
