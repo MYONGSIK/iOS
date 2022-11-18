@@ -11,6 +11,7 @@ import Then
 import RxSwift
 import RxCocoa
 
+// MARK: '오늘의 학식' 페이지
 class MainViewController: MainBaseViewController {
     // MARK: - Views
     lazy var leftIcon = UIButton().then{

@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: 찜꽁리스트 셀
 class HeartListTableViewCell: UITableViewCell {
     // MARK: - Views
     let backView = UIView().then{

@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+// MARK: Label에 Padding을 지정해줍니다.
 class PaddingLabel: UILabel {
     @IBInspectable var topInset: CGFloat = 2.0
     @IBInspectable var bottomInset: CGFloat = 2.0

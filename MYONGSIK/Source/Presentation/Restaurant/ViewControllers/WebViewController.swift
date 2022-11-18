@@ -9,6 +9,7 @@ import UIKit
 import WebKit
 import RealmSwift
 
+// MARK: 링크 이동 후 보이는 페이지입니다.
 class WebViewController: UIViewController, WKUIDelegate {
     // MARK: - Views
     let heartButton = UIButton().then{
@@ -24,7 +25,7 @@ class WebViewController: UIViewController, WKUIDelegate {
     
     // MARK: - Life Cycles
     var webView: WKWebView!
-    let realm = try! Realm()
+    let realm = try! Realm()    // Realm을 활용해 기기에 저장합니다.
     
     // Properties
     var webURL: String!
@@ -41,6 +42,7 @@ class WebViewController: UIViewController, WKUIDelegate {
         super.viewDidLoad()
         self.tabBarController?.tabBar.isHidden = true
         
+        // realm 객체 정의
         let realm = try! Realm()
         
         guard let url = self.webURL else {return}
@@ -86,6 +88,11 @@ class WebViewController: UIViewController, WKUIDelegate {
         try! realm.write { //렘(DB)에 저장
               realm.add(heartData)
             }
+        // MARK: -
+        /*
+         기존방식: HeartListData 모델을 정의하고, 이름/카테고리/url을 저장하며 이것으로 아이템들을 구분하였습니다.
+         수정해야할 방식: 각 맛집마다 ID가 있습니다. removeHeartData 할 때, ID를 통해 구분하시면 되겠습니다.
+         */
     }
     func removeHeartData() {
         guard let url = self.webURL else {return}
@@ -93,6 +100,7 @@ class WebViewController: UIViewController, WKUIDelegate {
         guard let category = self.category else {return}
         
         // 쿼리를 통해 선택적 삭제
+        // TODO: 추후 placeName이 아닌 ID로 데이터 삭제 !!!!!!
         let predicate = NSPredicate(format: "placeName = %@", placeName)
         let obj = realm.objects(HeartListData.self).filter(predicate)
         print(obj)

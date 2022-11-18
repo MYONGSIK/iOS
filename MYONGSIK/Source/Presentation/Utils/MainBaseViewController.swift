@@ -8,38 +8,19 @@
 import Foundation
 import UIKit
 
+// 로고이미지가 중앙에 있는 메인페이지의 뷰컨입니다.
 class MainBaseViewController: UIViewController {
-    // MARK: - Properties
-    // MARK: Init
-    // 기본 초기화
-//    init(){
-//        super.init(nibName: nil, bundle: nil)
-//        self.viewDidLoad()
-//    }
-//    // 제목 설정
-//    init(title: String){
-//        super.init(nibName: nil, bundle: nil)
-//        self.viewDidLoad()
-////        self.rightPositionBtn = EtcButton(title: title)
-//    }
-//    // 상단 오른쪽 버튼 설정
-//    init(btnImage: UIImage){
-//        super.init(nibName: nil, bundle: nil)
-//        self.viewDidLoad()
-////        self.rightPositionBtn = EtcButton(image: btnImage)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//    }
     // MARK: Views
+    // 상단바
     let navigationView = UIView().then{
         $0.backgroundColor = .signatureBlue
         $0.clipsToBounds = true
     }
+    // 상단 로고 이미지
     let logoImage = UIImageView().then{
         $0.image = UIImage(named: "logo")
     }
+    // 상단 제목
     let titleLabel = UILabel().then{
         $0.font = UIFont.NotoSansKR(size: 18, family: .Bold)
     }

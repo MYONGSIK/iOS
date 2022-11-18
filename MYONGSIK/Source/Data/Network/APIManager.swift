@@ -6,6 +6,7 @@
 //
 import Alamofire
 
+// MARK: Generic을 활용한 네트워크 통신
 class APIManager {
     static let shared = APIManager()
     

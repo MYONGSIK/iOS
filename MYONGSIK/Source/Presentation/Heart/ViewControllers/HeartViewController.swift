@@ -8,6 +8,7 @@
 import UIKit
 import RealmSwift
 
+// MARK: 찜꽁리스트 페이지
 class HeartViewController: BaseViewController {
     
     // MARK: Life Cycles

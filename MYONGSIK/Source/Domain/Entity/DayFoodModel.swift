@@ -5,6 +5,7 @@
 //  Created by gomin on 2022/10/19.
 //
 
+// MARK: 일간 학식 모델
 struct DayFoodModel: Decodable {
     let toDay: String?
     let dayOfTheWeek: String?
@@ -19,6 +20,7 @@ struct DayFoodModel: Decodable {
     let food6: String?
 }
 
+// MARK: 주간 학식 모델
 struct WeekFoodModel: Decodable {
     let toDay: String?
     let status: String?

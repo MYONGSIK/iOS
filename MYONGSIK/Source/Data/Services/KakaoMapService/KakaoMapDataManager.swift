@@ -9,13 +9,16 @@ import Foundation
 import Alamofire
 import Kingfisher
 
+// MARK: 카카오api를 활용
 class KakaoMapDataManager {
     let headers: HTTPHeaders = [
         "Authorization": Constants.KakaoAuthorization,
         "Accept": "application/json"
     ]
+    // Random list (추천맛집)
     private let foodList = ["부대찌개", "국밥", "마라탕", "중식", "한식", "카페", "족발", "술집", "파스타", "커피", "삼겹살", "치킨", "떡볶이", "햄버거", "피자", "초밥", "회", "곱창", "냉면", "닭발"]
     
+    // MARK: 검색 시
     func searchMapDataManager(_ keyword: String, _ page: Int, _ viewcontroller: RestaurantSearchViewController) {
         let sendUrl = Constants.KakaoURL + Constants.keyword + "\(keyword)"
                     + Constants.x + Constants.y + Constants.radius + Constants.categoryCode
@@ -43,6 +46,7 @@ class KakaoMapDataManager {
            }
         }
     }
+    // MARK: '명지맛집' 페이지 > 추천맛집 랜덤 결과
     func randomMapDataManager(_ viewcontroller: RestaurantMainViewController) {
         let randomKeyword = foodList.randomElement() ?? ""
         
@@ -71,6 +75,7 @@ class KakaoMapDataManager {
            }
         }
     }
+    // MARK: 태그 맛집 결과
     func tagMapDataManager(_ keyword: String, _ page: Int, _ viewcontroller: RestaurantTagViewController) {
         let sendUrl = Constants.KakaoURL + Constants.keyword + "\(keyword)"
                     + Constants.x + Constants.y + Constants.radius + Constants.categoryCode

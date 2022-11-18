@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: '명지 맛집' 페이지
 class RestaurantMainViewController: BaseViewController {
     let searchButton = UIButton().then{
         $0.setImage(UIImage(named: "search_white"), for: .normal)
@@ -81,6 +82,13 @@ class RestaurantMainViewController: BaseViewController {
     }
 }
 // MARK: - TableView delegate
+/*
+ '#모아뒀으니 골라보세요!' 셀 하나,
+ 태그 CollectionView 셀 하나,
+ '#명식이가 준비했습니다!' 셀 하나,
+ 그 아래에는 추천 맛집 결과값이 나오기 때문에 총 Tableview의 셀 개수는 count+3 입니다.
+ 시간이 급해 이렇게 짰고, 자유롭게 수정하시면 되겠습니다.
+ */
 extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count = self.searchResult.count ?? 0

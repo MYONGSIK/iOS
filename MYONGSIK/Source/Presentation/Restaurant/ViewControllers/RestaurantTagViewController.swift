@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: 명지맛집 > 태그CollectionView셀 클릭 후 나오는 페이지입니다.
 class RestaurantTagViewController: BaseViewController {
     // MARK: - Views
     let backButton = UIButton().then{

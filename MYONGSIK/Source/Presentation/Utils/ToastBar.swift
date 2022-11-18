@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// MARK: 토스트바 직접 구현
+// 찜꽁리스트 추가 시 띄워줍니다.
 class ToastBar {
     // MARK: - Views
     let backgroundView = UIView().then{
@@ -34,7 +36,8 @@ class ToastBar {
         title.text = message.rawValue
         backgroundView.addSubview(title)
         
-        // 만약 하단바가 존재할 때
+        // 하단바가 존재할 때와 존재하지 않을 때를 나눠서 작업합니다.
+        // 아마 카카오맛집url에서는 하단바가 존재하지 않을 것입니다.
         if (originView.tabBarController?.tabBar.isHidden == false) {
             originView.tabBarController?.tabBar.addSubview(backgroundView)
         } else {
@@ -52,6 +55,9 @@ class ToastBar {
         }
         
         // MARK: Animation
+        // 0.5초만에 생겨나고
+        // 1.5초동안 유지
+        // 0.5초만에 사라집니다.
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.5) {
                 self.backgroundView.alpha = 1
@@ -65,6 +71,7 @@ class ToastBar {
 }
 
 // MARK: - Enum
+// 토스트바에 쓸 문구를 정의합니다.
 extension ToastBar {
     enum SnackBarMessage: String {
         case addHeart = "찜꽁리스트에 추가되었습니다.💙"

@@ -8,8 +8,9 @@
 import Foundation
 import UIKit
 
+// MARK: 폰트 정의
 extension UIFont{
-    
+    // 자주 쓰이는 폰트를 enum으로 정리하였습니다.
     enum Family: String {
         case Bold, Regular, Light
     }

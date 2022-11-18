@@ -7,18 +7,19 @@
 
 import UIKit
 
+// MARK: 검색 페이지 > 검색 결과 셀
 class SearchResultTableViewCell: UITableViewCell {
     // MARK: Views
     let backView = UIView().then{
         $0.backgroundColor = .white
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
-        
-        $0.layer.shadowColor = UIColor.black.cgColor // 색깔
-        $0.layer.masksToBounds = false  // 내부에 속한 요소들이 UIView 밖을 벗어날 때, 잘라낼 것인지. 그림자는 밖에 그려지는 것이므로 false 로 설정
-        $0.layer.shadowOffset = CGSize(width: 0, height: 0) // 위치조정
-        $0.layer.shadowRadius = 4 // 반경
-        $0.layer.shadowOpacity = 0.2 // alpha값
+        // Shadow
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.masksToBounds = false
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.layer.shadowRadius = 4
+        $0.layer.shadowOpacity = 0.2
     }
     let placeNameLabel = UILabel().then{
         $0.text = "식당이름·"
@@ -152,7 +153,7 @@ class SearchResultTableViewCell: UITableViewCell {
             make.centerY.equalTo(phoneImage)
         }
     }
-    
+    // MARK: 서버에서 데이터를 받아온 후 출력시킵니다.
     func setUpData(_ data: KakaoResultModel) {
         if let placeName = data.place_name {self.placeNameLabel.text = placeName}
         if let category = data.category_group_name {self.placeCategoryLabel.text = category}

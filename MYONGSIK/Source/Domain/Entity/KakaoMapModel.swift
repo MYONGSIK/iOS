@@ -5,6 +5,7 @@
 //  Created by gomin on 2022/11/01.
 //
 
+// MARK: 카카오 검색 시 응답 모델
 struct KakaoMapModel: Decodable {
     let documents: [KakaoResultModel]
 }

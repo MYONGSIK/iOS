@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+// MARK: 주간 학식 식단표 페이지
 class WeekViewController: MainBaseViewController {
     // MARK: - Views
     let goBackButton = UIButton().then{
