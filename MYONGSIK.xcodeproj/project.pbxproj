@@ -58,6 +58,13 @@
 		23EACC2E290B2445007D229C /* WeekViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EACC2D290B2445007D229C /* WeekViewModel.swift */; };
 		58A23E1C2028CBEE0CA8BC47 /* Pods_MYONGSIKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */; };
 		92033E7EAD47D14ADA175F1B /* Pods_MYONGSIK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */; };
+		A23F2DAF29A2F9080046ED70 /* SubmitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DAE29A2F9080046ED70 /* SubmitData.swift */; };
+		A23F2DB129A2F9750046ED70 /* SubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */; };
+		A23F2DB829A3131C0046ED70 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DB729A3131C0046ED70 /* SplashViewController.swift */; };
+		A2431C8929A3243D00D8E493 /* CampusSetPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2431C8829A3243D00D8E493 /* CampusSetPopupViewController.swift */; };
+		A2431C8C29A3473D00D8E493 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2431C8B29A3473D00D8E493 /* String+.swift */; };
+		A2431C8E29A347C300D8E493 /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2431C8D29A347C300D8E493 /* CALayer+.swift */; };
+		A2431C9029A34FBA00D8E493 /* PopupBaseVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2431C8F29A34FBA00D8E493 /* PopupBaseVIewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +146,13 @@
 		6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7595CF6EE606B781645AD9EB /* Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; sourceTree = "<group>"; };
 		77CEA1CD0123C0563A94A6E1 /* Pods-MYONGSIK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.debug.xcconfig"; sourceTree = "<group>"; };
+		A23F2DAE29A2F9080046ED70 /* SubmitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitData.swift; path = "../../../../../iOS 2/MYONGSIK/Source/Domain/Entity/SubmitData.swift"; sourceTree = "<group>"; };
+		A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitViewController.swift; path = ../ViewModels/SubmitViewController.swift; sourceTree = "<group>"; };
+		A23F2DB729A3131C0046ED70 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		A2431C8829A3243D00D8E493 /* CampusSetPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusSetPopupViewController.swift; sourceTree = "<group>"; };
+		A2431C8B29A3473D00D8E493 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		A2431C8D29A347C300D8E493 /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
+		A2431C8F29A34FBA00D8E493 /* PopupBaseVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBaseVIewController.swift; sourceTree = "<group>"; };
 		AE9F16CCD51F90ED1842BEA4 /* Pods-MYONGSIK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -253,6 +267,7 @@
 				23BE0153290E0AE100861DA5 /* TabBarViewController.swift */,
 				23B9E8982911356D009B6D8F /* ScreenManager.swift */,
 				2311611B2911952200AD73D2 /* ToastBar.swift */,
+				A2431C8F29A34FBA00D8E493 /* PopupBaseVIewController.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -311,6 +326,7 @@
 		2373E4E9290AD18A00D51B8E /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				A2431C8A29A3472500D8E493 /* Extensions */,
 				2373E4ED290AD20300D51B8E /* Support */,
 				23735AF528FEDA3D00599221 /* UI */,
 			);
@@ -363,6 +379,7 @@
 				2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */,
 				238F562E2910A6D60044214F /* KakaoMapModel.swift */,
 				231161192911807A00AD73D2 /* HeartListData.swift */,
+				A23F2DAE29A2F9080046ED70 /* SubmitData.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -370,6 +387,7 @@
 		2373E4F1290AD31B00D51B8E /* Launch */ = {
 			isa = PBXGroup;
 			children = (
+				A23F2DB429A30ED10046ED70 /* Splash */,
 				23166AA428FECE81002AEFB7 /* View */,
 			);
 			path = Launch;
@@ -389,6 +407,7 @@
 			isa = PBXGroup;
 			children = (
 				23166A7528FECD9D002AEFB7 /* MainViewController.swift */,
+				A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -521,6 +540,24 @@
 				23EACC2D290B2445007D229C /* WeekViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		A23F2DB429A30ED10046ED70 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				A23F2DB729A3131C0046ED70 /* SplashViewController.swift */,
+				A2431C8829A3243D00D8E493 /* CampusSetPopupViewController.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		A2431C8A29A3472500D8E493 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A2431C8B29A3473D00D8E493 /* String+.swift */,
+				A2431C8D29A347C300D8E493 /* CALayer+.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		C3E767C8B313A0328B6C34CF /* Frameworks */ = {
@@ -785,9 +822,12 @@
 				2311611A2911807A00AD73D2 /* HeartListData.swift in Sources */,
 				23BE0154290E0AE100861DA5 /* TabBarViewController.swift in Sources */,
 				23735AFE28FEDA7F00599221 /* UIFont.swift in Sources */,
+				A2431C8929A3243D00D8E493 /* CampusSetPopupViewController.swift in Sources */,
 				23E6ACA9290130C50091D803 /* UIDevice.swift in Sources */,
 				2311611C2911952200AD73D2 /* ToastBar.swift in Sources */,
+				A2431C9029A34FBA00D8E493 /* PopupBaseVIewController.swift in Sources */,
 				23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */,
+				A2431C8E29A347C300D8E493 /* CALayer+.swift in Sources */,
 				23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */,
 				23C993A429108F6F00B8D1E4 /* RestaurantSearchViewController.swift in Sources */,
 				23B9E89B29114532009B6D8F /* TagCollectionViewCell.swift in Sources */,
@@ -801,6 +841,7 @@
 				238F562F2910A6D60044214F /* KakaoMapModel.swift in Sources */,
 				23A7C66B290AB13000351D16 /* ViewModelType.swift in Sources */,
 				23EACC2E290B2445007D229C /* WeekViewModel.swift in Sources */,
+				A23F2DAF29A2F9080046ED70 /* SubmitData.swift in Sources */,
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				23B9E8992911356D009B6D8F /* ScreenManager.swift in Sources */,
 				23C993A629108F7800B8D1E4 /* HeartViewController.swift in Sources */,
@@ -808,6 +849,7 @@
 				23735B0428FEE24900599221 /* MainTableViewCell.swift in Sources */,
 				23B9E8972911336A009B6D8F /* RestaurantMainViewController.swift in Sources */,
 				2373E4FA290ADA5D00D51B8E /* MainViewModel.swift in Sources */,
+				A23F2DB129A2F9750046ED70 /* SubmitViewController.swift in Sources */,
 				2324102E28FF2C9F0095C0CC /* FormatManager.swift in Sources */,
 				2324102828FF0BCF0095C0CC /* WeekViewController.swift in Sources */,
 				23451DEB29117355006AE030 /* WebViewController.swift in Sources */,
@@ -815,6 +857,8 @@
 				23451DE929116964006AE030 /* RestaurantTagViewController.swift in Sources */,
 				23E6ACA7290126EA0091D803 /* WeekTableViewCell.swift in Sources */,
 				23735B0128FEDBF900599221 /* UIColor.swift in Sources */,
+				A2431C8C29A3473D00D8E493 /* String+.swift in Sources */,
+				A23F2DB829A3131C0046ED70 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,7 +27,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window?.overrideUserInterfaceStyle = UIUserInterfaceStyle.light
         }
         
-        guard let _ = (scene as? UIWindowScene) else { return }
+
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: windowScene)
+
+//        UserDefaults.standard.removeObject(forKey: "userCampus")    // for test
+        
+        if let _ = UserDefaults.standard.object(forKey: "userCampus") {
+            window?.rootViewController = TabBarViewController()
+        } else {
+            window?.rootViewController = SplashViewController()
+        }
+    
+        window?.backgroundColor = .systemBackground
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
