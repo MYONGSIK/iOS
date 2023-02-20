@@ -22,7 +22,7 @@ class CampusSetPopupViewController: PopupBaseVIewController {
         }
 //        print("선택된 캠퍼스 : \(UserDefaults.standard.value(forKey: "userCampus")!)")
 
-        let main = MainViewController()
+        let main = TabBarViewController()
         main.modalPresentationStyle = .fullScreen
         present(main, animated: true)
     }

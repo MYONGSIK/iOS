@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.removeObject(forKey: "userCampus")    // for test
         
         if let _ = UserDefaults.standard.object(forKey: "userCampus") {
-            window?.rootViewController = MainViewController()
+            window?.rootViewController = TabBarViewController()
         } else {
             window?.rootViewController = SplashViewController()
         }
