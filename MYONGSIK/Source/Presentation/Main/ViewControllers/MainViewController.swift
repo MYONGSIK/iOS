@@ -14,10 +14,102 @@ import RxCocoa
 // MARK: '오늘의 학식' 페이지
 class MainViewController: MainBaseViewController {
     // MARK: - Views
-    lazy var leftIcon = UIButton().then{
-        $0.setImage(UIImage(named: "calendar"), for: .normal)
+    var isFoodDataIsEmpty: Bool = false
+
+    let scrolleView = UIScrollView()
+    let contentView = UIView()
+    
+    let adImageView = UIView().then{
+        $0.backgroundColor = .systemGray4
+        $0.layer.cornerRadius = 15
+    }
+    
+    var tableView: UITableView!
+    
+    let titleView = UIView().then {
+        $0.backgroundColor = .clear
     }
 
+    lazy var titleLabel = UILabel().then{
+        $0.text = "오늘의 학식  |  \(getTodayDataText())"
+        $0.font = UIFont.NotoSansKR(size: 22, family: .Bold)
+        $0.textColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)
+    }
+
+    let operatingTimeLabel = UILabel().then{
+        $0.font = UIFont.NotoSansKR(size: 12, family: .Regular)
+        $0.textColor = .gray
+
+        $0.attributedText = "운영시간  |  중식 11:30~17:30  |  석식 18:00~21:00"
+            .attributed(of: "운영시간", value: [
+                .foregroundColor: UIColor.darkGray
+            ])
+    }
+    
+    let changeDayButtonView = UIStackView().then {
+        $0.backgroundColor = .clear
+        $0.axis = .horizontal
+        $0.distribution = .fillEqually 
+    }
+    
+    let goBeforeButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        $0.tintColor = .signatureBlue
+        $0.addTarget(self, action: #selector(didTapGoBeforeButton(_:)), for: .touchUpInside)
+    }
+    
+    let goAfterButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        $0.tintColor = .signatureBlue
+        $0.addTarget(self, action: #selector(didTapGoAfterButton(_:)), for: .touchUpInside)
+    }
+    
+    @objc private func didTapGoBeforeButton(_ sender: UIButton) {
+        print("didTapGoBeforeButton")
+    }
+    
+    @objc private func didTapGoAfterButton(_ sender: UIButton) {
+        print("didTapGoBeforeButton")
+    }
+    
+    
+    let tablePageControl = UIPageControl().then {
+        $0.numberOfPages = 5
+        $0.pageIndicatorTintColor = .lightGray
+        $0.currentPageIndicatorTintColor = .signatureBlue
+        $0.addTarget(self, action: #selector(pageChanged(_:)), for: .valueChanged)
+    }
+    
+    let submitButton = UIButton().then{
+        var config = UIButton.Configuration.tinted()
+        var attText = AttributedString.init("학식에 대한 의견 남기기")
+        
+        attText.font = UIFont.NotoSansKR(size: 14, family: .Bold)
+        attText.foregroundColor = UIColor.white
+        config.attributedTitle = attText
+        config.background.backgroundColor = .signatureBlue
+        config.cornerStyle = .capsule
+        
+        $0.configuration = config
+        $0.clipsToBounds = true
+        $0.setImage(UIImage(named: "pencil"), for: .normal)
+        
+        $0.layer.shadowColor = UIColor.black.cgColor // 색깔
+        $0.layer.masksToBounds = false  // 내부에 속한 요소들이 UIView 밖을 벗어날 때, 잘라낼 것인지. 그림자는 밖에 그려지는 것이므로 false 로 설정
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0) // 위치조정
+        $0.layer.shadowRadius = 2 // 반경
+        $0.layer.shadowOpacity = 0.25 // alpha값
+        
+        $0.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
+    }
+
+    
+        
+    
+    @objc private func pageChanged(_ sender: UIPageControl) {
+        print("pageChanged")
+    }
+    
     // MARK: - Life Cycles
     var mainTableView: UITableView!
     var foodData: [DayFoodModel]!
@@ -26,7 +118,14 @@ class MainViewController: MainBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        super.titleLabel.text = "오늘의 식단"
+        
+        // for test
+        foodData = [
+            // API 통신 오류로 임시 데이터 생성(추후 삭제 예정)
+            DayFoodModel(toDay: "toDay", dayOfTheWeek: "dayOfTheWeek", classification: "중식", type: "A", status: "status", food1: "food1", food2: "food2", food3: "food3", food4: "food4", food5: "food5", food6: "food6"),
+            DayFoodModel(toDay: "toDay", dayOfTheWeek: "dayOfTheWeek", classification: "중식", type: "B", status: "status", food1: "food1", food2: "food2", food3: "food3", food4: "food4", food5: "food5", food6: "food6"),
+            DayFoodModel(toDay: "toDay", dayOfTheWeek: "dayOfTheWeek", classification: "석식", type: "", status: "status", food1: "food1", food2: "food2", food3: "food3", food4: "food4", food5: "food5", food6: "food6")
+        ]
         
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
@@ -38,12 +137,12 @@ class MainViewController: MainBaseViewController {
         bind()
         
         // Tap Event - 주간 식단 조회 페이지로 이동
-        let buttons = [self.leftIcon]
-        for button in buttons {
-            button.rx.tap
-                .bind {self.calenderButtonDidTap()}
-                .disposed(by: disposeBag)
-        }
+//        let buttons = [self.leftIcon]
+//        for button in buttons {
+//            button.rx.tap
+//                .bind {self.calenderButtonDidTap()}
+//                .disposed(by: disposeBag)
+//        }
     }
     private func bind() {
         let output = viewModel.transform(input: MainViewModel.Input())
@@ -60,8 +159,8 @@ class MainViewController: MainBaseViewController {
     }
     // MARK: - Functions
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
-        mainTableView = UITableView()
-        mainTableView.then{
+        tableView = UITableView()
+        tableView.then{
             $0.delegate = dataSourceDelegate
             $0.dataSource = dataSourceDelegate
             $0.register(MainTableViewCell.self, forCellReuseIdentifier: "MainTableViewCell")
@@ -73,66 +172,169 @@ class MainViewController: MainBaseViewController {
         }
     }
     func setUpView() {
-        super.navigationView.addSubview(leftIcon)
+        self.view.addSubview(scrolleView)
+        scrolleView.addSubview(contentView)
+        contentView.addSubview(adImageView)
+        contentView.addSubview(titleView)
+        contentView.addSubview(changeDayButtonView)
+        contentView.addSubview(tableView)
+        contentView.addSubview(tablePageControl)
+        contentView.addSubview(submitButton)
+
+        titleView.addSubview(titleLabel)
+        titleView.addSubview(operatingTimeLabel)
         
-        self.view.addSubview(mainTableView)
+        changeDayButtonView.addSubview(goBeforeButton)
+        changeDayButtonView.addSubview(goAfterButton)
     }
     func setUpConstraint() {
-        leftIcon.snp.makeConstraints { make in
-            make.width.height.equalTo(30)
-            make.leading.equalToSuperview().offset(22)
-            make.centerY.equalTo(super.logoImage)
+        
+        scrolleView.snp.makeConstraints {
+            $0.top.equalTo(super.navigationImgView.snp.bottom).inset(10)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
-        mainTableView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
-            make.top.equalTo(super.titleLabel.snp.bottom).offset(2)
+        contentView.snp.makeConstraints {
+            $0.width.equalToSuperview()
+            $0.centerX.top.bottom.equalToSuperview()
+        }
+
+        adImageView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview().offset(15)
+            $0.trailing.equalToSuperview().inset(15)
+            $0.height.equalTo(70)
+        }
+        
+        titleView.snp.makeConstraints {
+            $0.top.equalTo(adImageView.snp.bottom).offset(5)
+            $0.leading.equalToSuperview()
+            $0.height.equalTo(75)
+            $0.width.equalToSuperview().multipliedBy(0.8)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(12)
+            $0.leading.equalToSuperview().inset(25)
+        }
+        
+        operatingTimeLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(5)
+            $0.leading.equalTo(titleLabel)
+            $0.trailing.equalToSuperview().inset(5)
+        }
+        
+        changeDayButtonView.snp.makeConstraints {
+            $0.top.bottom.height.equalTo(titleView)
+            $0.leading.equalTo(titleView.snp.trailing)
+            $0.trailing.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.2)
+        }
+        
+        goBeforeButton.snp.makeConstraints {
+            $0.leading.top.bottom.equalToSuperview()
+        }
+        
+        goAfterButton.snp.makeConstraints {
+            $0.leading.equalTo(goBeforeButton.snp.trailing)
+            $0.trailing.top.bottom.equalToSuperview()
+        }
+        
+        tableView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(titleView.snp.bottom)
+            $0.height.equalTo(600)
+//            $0.bottom.equalToSuperview().offset(200)
+        }
+        
+        tablePageControl.snp.makeConstraints {
+            $0.top.equalTo(tableView.snp.bottom).offset(30)
+            $0.centerX.equalToSuperview()
+        }
+        
+        submitButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(69)
+            $0.top.equalTo(tablePageControl.snp.bottom).offset(50)
+            $0.bottom.equalToSuperview().inset(100)
+            $0.height.equalTo(50)
+            $0.centerX.equalToSuperview()
+//            $0.bottom.equalToSuperview()
         }
     }
+    
 }
 
 // MARK: - TableView delegate
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let data = self.foodData {
-            return data.count + 1
-        } else {return 0}
+            isFoodDataIsEmpty = false
+            print(self.foodData.count)
+            return data.count
+        } else {
+            isFoodDataIsEmpty = true
+            
+            let alert = UIAlertController(title: nil, message: "불러올 학식 정보가 없거나, \n학식 정보를 불러오는데 실패함", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default))
+            present(alert, animated: true)
+            
+            return 0
+        }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         let count = self.foodData.count ?? 0
-        if indexPath.row == count {
-            let cell = UITableViewCell()
-            setCheckWeekButtonCell(cell)
-            cell.selectionStyle = .none
-            return cell
-        } else {
+
+//        if indexPath.row == 0 {
+//            let cell = UITableViewCell()
+//            cell.addSubview(titleView)
+//
+//
+//            cell.selectionStyle = .none
+//            return cell
+//        }
+        
+//        if indexPath.row == count {
+//            let cell = UITableViewCell()
+//            setSubmitButtonCell(cell)
+//            cell.selectionStyle = .none
+//
+//            return cell
+//        }
+//
+//        else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
             cell.selectionStyle = .none
+
             let itemIdx = indexPath.item
+            print("itemIdx :: \(itemIdx)")
             if let foodData = self.foodData {
                 cell.data = foodData[itemIdx]
                 cell.setUpData()
                 cell.setUpButtons()
             }
             return cell
-        }
+//        }
     }
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        tableView.deselectRow(at: indexPath, animated: true)
 //    }
+
     
-    func setCheckWeekButtonCell(_ cell: UITableViewCell) {
-        lazy var checkWeekButton = UIButton().then{
+    func setSubmitButtonCell(_ cell: UITableViewCell) {
+
+        lazy var submitButton = UIButton().then{
             var config = UIButton.Configuration.tinted()
-            var attText = AttributedString.init("이번 주  식단 확인하기")
+            var attText = AttributedString.init("학식에 대한 의견 남기기")
             
-            attText.font = UIFont.NotoSansKR(size: 14, family: .Regular)
-            attText.foregroundColor = UIColor.black
+            attText.font = UIFont.NotoSansKR(size: 14, family: .Bold)
+            attText.foregroundColor = UIColor.white
             config.attributedTitle = attText
-            config.background.backgroundColor = .white
+            config.background.backgroundColor = .signatureBlue
             config.cornerStyle = .capsule
             
             $0.configuration = config
             $0.clipsToBounds = true
+            $0.setImage(UIImage(named: "pencil"), for: .normal)
             
             $0.layer.shadowColor = UIColor.black.cgColor // 색깔
             $0.layer.masksToBounds = false  // 내부에 속한 요소들이 UIView 밖을 벗어날 때, 잘라낼 것인지. 그림자는 밖에 그려지는 것이므로 false 로 설정
@@ -140,15 +342,26 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             $0.layer.shadowRadius = 2 // 반경
             $0.layer.shadowOpacity = 0.25 // alpha값
         }
-        cell.contentView.addSubview(checkWeekButton)
-        checkWeekButton.snp.makeConstraints { make in
+        cell.contentView.addSubview(submitButton)
+
+        submitButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(69)
-            make.top.bottom.equalToSuperview().inset(25)
+            make.top.equalToSuperview().inset(70)
+            make.bottom.equalToSuperview().inset(100)
             make.height.equalTo(50)
             make.centerY.centerX.equalToSuperview()
         }
         
-        checkWeekButton.addTarget(self, action: #selector(calenderButtonDidTap), for: .touchUpInside)
+        submitButton.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
+        
+    }
+
+    
+    @objc func submitButtonTapped(_ sender: UIButton){
+        let submitViewController = SubmitViewController()
+        submitViewController.modalPresentationStyle = .custom
+        submitViewController.modalTransitionStyle = .crossDissolve
+        self.present(submitViewController, animated: true)
     }
 }
 // MARK: - API Success
@@ -159,7 +372,7 @@ extension MainViewController {
         switch statusCode {
         case 200:
             getDayFoodAPISuccess(result.data!)
-        case 405:
+        case 405, 500:
             noFoodAPI(result)
         default: fatalError()
         }
@@ -198,7 +411,7 @@ extension MainViewController {
             $0.font = UIFont.NotoSansKR()
             $0.textColor = .signatureBlue
         }
-        var messageLabel = UILabel().then{
+        let messageLabel = UILabel().then{
             if let message = result.message {$0.text = message}
             $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
             $0.numberOfLines = 0
@@ -230,5 +443,12 @@ extension MainViewController {
     }
     func hideEmptyView() {
         mainTableView.backgroundView?.isHidden = true
+    }
+    
+    
+    func getTodayDataText() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM월 dd일"
+        return formatter.string(from: Date())
     }
 }

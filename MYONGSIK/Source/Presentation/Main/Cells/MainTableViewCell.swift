@@ -16,22 +16,23 @@ class MainTableViewCell: UITableViewCell {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
         $0.layer.borderColor = UIColor.borderColor.cgColor
-        $0.layer.borderWidth = 1
+        $0.layer.borderWidth = 1.5
     }
     let date = UILabel().then{
         $0.font = UIFont.NotoSansKR()
         $0.textColor = .signatureGray
     }
-    let dayOfTheWeek = UILabel().then{
-        $0.font = UIFont.NotoSansKR()
-        $0.textColor = .signatureGray
+    let typeView = UIView().then {
+        $0.layer.borderWidth = 1.4
+        $0.layer.borderColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1).cgColor
+        $0.layer.cornerRadius = 12
     }
-    let type = UILabel().then{
-        $0.font = UIFont.NotoSansKR()
-        $0.textColor = .signatureBlue
+    let typeLabel = UILabel().then{
+        $0.font = UIFont.NotoSansKR(size: 12)
+        $0.textColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)
     }
     let foodLabel = UILabel().then{
-        $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
+        $0.font = UIFont.NotoSansKR(size: 18, family: .Regular)
         $0.textColor = .signatureGray
         $0.numberOfLines = 0
         $0.textAlignment = .center
@@ -161,8 +162,9 @@ class MainTableViewCell: UITableViewCell {
         self.contentView.addSubview(backView)
         
         backView.addSubview(date)
-        backView.addSubview(dayOfTheWeek)
-        backView.addSubview(type)
+        
+        backView.addSubview(typeView)
+        typeView.addSubview(typeLabel)
         backView.addSubview(foodLabel)
         
         backView.addSubview(seperatorLine)
@@ -178,23 +180,23 @@ class MainTableViewCell: UITableViewCell {
             make.leading.equalToSuperview().offset(14)
             make.top.equalToSuperview().offset(13)
         }
-        dayOfTheWeek.snp.makeConstraints { make in
-            make.centerY.equalTo(date)
-            make.leading.equalTo(date.snp.trailing).offset(3)
+        typeView.snp.makeConstraints {
+            $0.top.leading.equalToSuperview().offset(7)
+            $0.width.equalTo(50)
         }
-        type.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-17)
-            make.centerY.equalTo(date)
+        typeLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.top.bottom.equalToSuperview().inset(3)
         }
         seperatorLine.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalTo(1)
             make.height.equalTo(46)
-            make.bottom.equalToSuperview().offset(-14)
+            make.bottom.equalToSuperview().offset(-10)
         }
         foodLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(27)
-            make.top.equalTo(type.snp.bottom).offset(16)
+            make.top.equalTo(typeView.snp.bottom).offset(16)
             make.bottom.equalTo(seperatorLine.snp.top).offset(-9)
         }
         thumbUpButton.snp.makeConstraints { make in
@@ -212,10 +214,9 @@ class MainTableViewCell: UITableViewCell {
     }
     func setUpData() {
         if let date = data.toDay { self.date.text = date.toDate()?.toString() }
-        if let dayOfWeek = data.dayOfTheWeek {self.dayOfTheWeek.text = dayOfWeek}
         if let type = data.classification {
-            if let lunchType = data.type {self.type.text = type+lunchType}
-            else {self.type.text = type}
+            if let lunchType = data.type {self.typeLabel.text = type+lunchType}
+            else {self.typeLabel.text = type}
         }
         // Foods
         var foods = ""
@@ -235,6 +236,7 @@ class MainTableViewCell: UITableViewCell {
         let attribtuedString = NSMutableAttributedString(string: foods)
         let range = (foods as NSString).range(of: food1Str)
         attribtuedString.addAttribute(.foregroundColor, value: UIColor.signatureBlue, range: range)
+        attribtuedString.addAttribute(.font, value: UIFont.NotoSansKR(size: 18, family: .Bold), range: range)
         self.foodLabel.attributedText = attribtuedString
     }
 }
