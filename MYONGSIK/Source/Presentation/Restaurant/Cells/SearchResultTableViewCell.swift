@@ -47,6 +47,13 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.textColor = .signatureBlue
     }
+    let heartButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "heart"), for: .normal)
+        $0.setImage(UIImage(systemName: "heart.fill"), for: .selected)
+        $0.tintColor = .lightGray
+        
+        $0.addTarget(self, action: #selector(didTapHeartButton(_:)), for: .touchUpInside)
+    }
     let pinImage = UIImageView().then{
         $0.image = UIImage(named: "pin")
     }
@@ -77,6 +84,13 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.backgroundColor = .signatureBlue
         $0.layer.cornerRadius = 15
     }
+    
+    @objc func didTapHeartButton(_ sender: UIButton) {
+        print("식당 좋아요 버튼 탭함")
+        sender.isSelected = !sender.isSelected
+        if sender.isSelected { sender.tintColor = .systemPink }
+        // TODO: 식당 좋아요 정보 서버 POST ?
+    }
         
     // MARK: Life Cycles
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -99,6 +113,7 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.addSubview(dotLabel)
         backView.addSubview(placeCategoryLabel)
         backView.addSubview(distanceLabel)
+        backView.addSubview(heartButton)
         
         backView.addSubview(goLinkButton)
         
@@ -131,6 +146,10 @@ class SearchResultTableViewCell: UITableViewCell {
             make.leading.equalTo(placeCategoryLabel.snp.trailing).offset(8)
             make.centerY.equalTo(placeCategoryLabel)
             make.trailing.lessThanOrEqualToSuperview().offset(-20)  //
+        }
+        heartButton.snp.makeConstraints { make in
+            make.top.trailing.equalToSuperview().inset(20)
+            make.width.height.equalTo(30)
         }
         goLinkButton.snp.makeConstraints { make in
             make.width.equalTo(100)
