@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: '명지 맛집' 페이지
-class RestaurantMainViewController: BaseViewController {
+class RestaurantMainViewController: MainBaseViewController {
     let searchButton = UIButton().then{
         $0.setImage(UIImage(named: "search_white"), for: .normal)
     }
@@ -19,7 +19,7 @@ class RestaurantMainViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        super.titleLabel.text = "명지맛집"
+        super.topLabel.text = "명지맛집"
         
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
@@ -64,20 +64,61 @@ class RestaurantMainViewController: BaseViewController {
         }
     }
     func setUpView() {
-        super.navigationView.addSubview(searchButton)
+        super.navigationImgView.addSubview(searchButton)
         
         self.view.addSubview(restaurantMainTableView)
     }
     func setUpConstraint() {
         searchButton.snp.makeConstraints { make in
             make.width.height.equalTo(25)
-            make.centerY.equalTo(titleLabel)
+            make.centerY.equalTo(topLabel)
             make.trailing.equalToSuperview().offset(-22)
         }
         restaurantMainTableView.snp.makeConstraints { make in
-            make.top.equalTo(super.navigationView.snp.bottom)
+            make.top.equalTo(super.navigationImgView.snp.bottom).inset(20)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        }
+    }
+    func setSortButtonCell(_ cell: UITableViewCell) {
+        let titleLabel = UILabel().then {
+            $0.text = "#명지인이 선택한 맛집"
+            $0.numberOfLines = 2
+            $0.font = UIFont.NotoSansKR(size: 22, family: .Bold)
+        }
+        
+        let likeOrder = UIAction(title: "인기순", image: nil, handler: { _ in print("인기순 선택") })
+        let distanceOrder = UIAction(title: "거리순", image: nil, handler: { _ in print("거리순 선택") })
+        
+        let sortButton = UIButton(type: .system).then {
+            $0.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            $0.semanticContentAttribute = .forceRightToLeft
+            $0.tintColor = .gray
+            $0.layer.cornerRadius = 15
+
+            $0.menu = UIMenu(
+                title: "",
+                image: nil,
+                identifier: nil,
+                options: .displayInline,
+                children: [likeOrder, distanceOrder]
+            )
+            $0.showsMenuAsPrimaryAction = true
+            $0.changesSelectionAsPrimaryAction = true
+        }
+        cell.contentView.addSubview(titleLabel)
+        cell.contentView.addSubview(sortButton)
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(5)
+            $0.leading.equalToSuperview().inset(15)
+        }
+        
+        sortButton.snp.makeConstraints {
+            $0.centerY.equalTo(titleLabel)
+            $0.trailing.equalToSuperview().inset(15)
+            $0.height.equalTo(30)
+            $0.width.equalTo(80)
         }
     }
 }
@@ -115,14 +156,13 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 2:
             let cell = UITableViewCell()
             DispatchQueue.main.async {
-                cell.textLabel?.text = "#명식이가 준비했습니다!"
-                cell.textLabel?.numberOfLines = 2
-                cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
                 cell.selectionStyle = .none
+                self.setSortButtonCell(cell)
             }
             return cell
         default:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
+
             DispatchQueue.main.async {
                 let itemIdx = indexPath.item - 3
                 cell.setUpData(self.searchResult[itemIdx])

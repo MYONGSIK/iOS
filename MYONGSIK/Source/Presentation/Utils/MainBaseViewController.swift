@@ -15,7 +15,7 @@ class MainBaseViewController: UIViewController {
     let navigationImgView = UIImageView().then{
         $0.image = UIImage(named: "mainTopBackImg")
         $0.clipsToBounds = true
-        $0.backgroundColor = .clear
+        $0.backgroundColor = .white
     }
     
     let topLabel = UILabel().then {
