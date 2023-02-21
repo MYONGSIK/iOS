@@ -84,13 +84,6 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.backgroundColor = .signatureBlue
         $0.layer.cornerRadius = 15
     }
-    
-    @objc func didTapHeartButton(_ sender: UIButton) {
-        print("식당 좋아요 버튼 탭함")
-        sender.isSelected = !sender.isSelected
-        if sender.isSelected { sender.tintColor = .systemPink }
-        // TODO: 식당 좋아요 정보 서버 POST ?
-    }
         
     // MARK: Life Cycles
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -177,6 +170,15 @@ class SearchResultTableViewCell: UITableViewCell {
             make.centerY.equalTo(phoneImage)
         }
     }
+    
+    @objc func didTapHeartButton(_ sender: UIButton) {
+        print("식당 좋아요 버튼 탭함")
+        sender.isSelected = !sender.isSelected
+        if sender.isSelected { sender.tintColor = .systemPink }
+        if !sender.isSelected { sender.tintColor = .lightGray }
+        // TODO: 식당 좋아요 정보 서버 POST ?
+    }
+    
     // MARK: 서버에서 데이터를 받아온 후 출력시킵니다.
     func setUpData(_ data: KakaoResultModel) {
         if let placeName = data.place_name {self.placeNameLabel.text = placeName}
