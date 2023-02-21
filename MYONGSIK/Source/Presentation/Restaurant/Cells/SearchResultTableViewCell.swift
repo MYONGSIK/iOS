@@ -149,6 +149,7 @@ class SearchResultTableViewCell: UITableViewCell {
         }
         heartButton.snp.makeConstraints { make in
             make.top.trailing.equalToSuperview().inset(20)
+            make.leading.equalTo(distanceLabel.snp.trailing).offset(5)
             make.width.height.equalTo(30)
         }
         goLinkButton.snp.makeConstraints { make in
