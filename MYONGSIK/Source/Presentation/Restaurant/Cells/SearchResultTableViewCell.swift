@@ -39,13 +39,8 @@ class SearchResultTableViewCell: UITableViewCell {
     }
     let distanceLabel = PaddingLabel().then{
         $0.text = "320m"
-        $0.backgroundColor = .signatureBlue
-        $0.font = UIFont.NotoSansKR(size: 10, family: .Bold)
-        $0.textColor = .white
-        
-        $0.clipsToBounds = true
-        $0.layer.cornerRadius = 10
-        $0.setContentCompressionResistancePriority(UILayoutPriority(252), for: .horizontal)
+        $0.font = UIFont.NotoSansKR(size: 13, family: .Bold)
+        $0.textColor = .signatureBlue
     }
     let pinImage = UIImageView().then{
         $0.image = UIImage(named: "pin")
@@ -65,15 +60,19 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.textColor = .placeContentColor
         $0.numberOfLines = 1
     }
-    let goLinkButton = UILabel().then{
-        $0.text = "바로 가기"
-        $0.font = UIFont.NotoSansKR(size: 16, family: .Bold)
-        $0.textColor = .signatureBlue
-    }
-    let goLinkImageButton = UIImageView().then{
-        $0.image = UIImage(named: "arrow_right_blue")
-    }
+    let goLinkButton = UIButton().then{
+        $0.setTitle("바로 가기", for: .normal)
+        $0.titleLabel?.font = UIFont.NotoSansKR(size: 16, family: .Bold)
 
+        $0.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        $0.semanticContentAttribute = .forceRightToLeft
+        $0.clipsToBounds = true
+
+        $0.tintColor = .white
+        $0.backgroundColor = .signatureBlue
+        $0.layer.cornerRadius = 15
+    }
+        
     // MARK: Life Cycles
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -95,7 +94,6 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.addSubview(placeCategoryLabel)
         backView.addSubview(distanceLabel)
         
-        backView.addSubview(goLinkImageButton)
         backView.addSubview(goLinkButton)
         
         backView.addSubview(pinImage)
@@ -124,14 +122,10 @@ class SearchResultTableViewCell: UITableViewCell {
             make.centerY.equalTo(placeCategoryLabel)
             make.trailing.lessThanOrEqualToSuperview().offset(-20)  //
         }
-        goLinkImageButton.snp.makeConstraints { make in
-            make.width.height.equalTo(30)
-            make.trailing.equalToSuperview().offset(-14)
-            make.centerY.equalToSuperview()
-        }
         goLinkButton.snp.makeConstraints { make in
-            make.trailing.equalTo(goLinkImageButton.snp.leading)
-            make.centerY.equalTo(goLinkImageButton)
+            make.width.equalTo(100)
+            make.height.equalTo(30)
+            make.bottom.trailing.equalToSuperview().inset(20)
         }
         pinImage.snp.makeConstraints { make in
             make.width.height.equalTo(19)
