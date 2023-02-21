@@ -10,6 +10,11 @@ import UIKit
 // MARK: 검색 페이지 > 검색 결과 셀
 class SearchResultTableViewCell: UITableViewCell {
     // MARK: Views
+    let howManyLikeLabel = UILabel().then {
+        $0.text = "명지대 학생 중 00명이 담았어요!"
+        $0.font = UIFont.NotoSansKR(size: 14, family: .Bold)
+        $0.textColor = .signatureBlue
+    }
     let backView = UIView().then{
         $0.backgroundColor = .white
         $0.clipsToBounds = true
@@ -87,6 +92,7 @@ class SearchResultTableViewCell: UITableViewCell {
 
     // MARK: Functions
     func setUpView() {
+        self.contentView.addSubview(howManyLikeLabel)
         self.contentView.addSubview(backView)
         
         backView.addSubview(placeNameLabel)
@@ -102,9 +108,13 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.addSubview(phoneNumLabel)
     }
     func setUpConstraint() {
+        howManyLikeLabel.snp.makeConstraints {
+            $0.top.leading.equalToSuperview().inset(15)
+        }
         backView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(15)
-            make.top.bottom.equalToSuperview().inset(10)
+            make.top.equalTo(howManyLikeLabel.snp.bottom).offset(5)
+            make.bottom.equalToSuperview().offset(10)
         }
         placeNameLabel.snp.makeConstraints { make in
             make.leading.top.equalToSuperview().inset(22)
