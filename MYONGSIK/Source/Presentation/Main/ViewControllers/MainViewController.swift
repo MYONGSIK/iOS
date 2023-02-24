@@ -95,13 +95,8 @@ class MainViewController: MainBaseViewController {
         else { isToday = false }
         
         self.foodData = getDailyFoodData(date: date!)
-        if foodData?.count == 0 {
-            tablePageControl.isHidden = true
-            submitButton.isHidden = true
-        } else {
-            tablePageControl.isHidden = false
-            submitButton.isHidden = false
-        }
+        checkDataIsEmpty()
+        
         tableView.reloadData()
         tableView.snp.updateConstraints{
             $0.height.equalTo(foodData!.count * 170 + 50)
@@ -190,6 +185,7 @@ class MainViewController: MainBaseViewController {
                                   parameter: nil,
                                   completionHandler: { [weak self] result in
             self?.foodData = result?.data
+            self?.checkDataIsEmpty()
             self?.tableView.reloadData()
             
             self?.tableView.snp.updateConstraints{
@@ -326,6 +322,15 @@ class MainViewController: MainBaseViewController {
         }
     }
     
+    private func checkDataIsEmpty() {
+        if foodData?.count == 0 {
+            tablePageControl.isHidden = true
+            submitButton.isHidden = true
+        } else {
+            tablePageControl.isHidden = false
+            submitButton.isHidden = false
+        }
+    }
 }
 
 // MARK: - TableView delegate
