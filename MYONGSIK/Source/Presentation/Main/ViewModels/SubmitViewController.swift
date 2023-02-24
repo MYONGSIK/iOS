@@ -202,18 +202,32 @@ class SubmitViewController: UIViewController {
     func saveSubmit(input: String?) {
         if let input = input {
             if let submitted = self.inputTextView.text {
-                let submittedDate = Date()
-                let opinion = submitted
+//                let submittedDate = Date()
+//                let opinion = submitted
+//
+//                let submit = SubmitData()
+//                submit.submittedDate = submittedDate
+//                submit.opinion = opinion
+//
+//                try! realm.write {
+//                        realm.add(submit)
+//                    }
+//
+//                printAllSavedOpinions()
+                if let phoneId = UserDefaults.standard.value(forKey: "phoneId") {
+                    let param = SubmitModel(writerId: phoneId as! String,
+                                            mealId: 0,  // meal ID 어케 구분하냐,,
+                                            content: submitted)
+                    APIManager.shared.postData(urlEndpointString: "/api/v2/reviews",
+                                               dataType: SubmitModel.self,
+                                               responseType: SubmitResponseModel.self,
+                                               parameter: param,
+                                               completionHandler: { result in
+                        // 런타임 에러 -> 메세지가 [String]의 형태라 포맷 오류남 (성공 시 메세지 String 한 개)
+                        print(result.message)
+                    })
+                }
                 
-                let submit = SubmitData()
-                submit.submittedDate = submittedDate
-                submit.opinion = opinion
-                
-                try! realm.write {
-                        realm.add(submit)
-                    }
-                
-                printAllSavedOpinions()
                 
             } else {
                 print("ERROR :: 제출할 의견이 비어있음"); return

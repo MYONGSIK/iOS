@@ -84,14 +84,13 @@ class APIManager {
                      parameters: parameter,
                      encoder: .json)
             .responseDecodable(of: APIModel<R>.self) { response in
+                print(response)
                 switch response.result {
                 case .success(let success):
                     completionHandler(success)
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
-//                print(response)
-//                completionHandler(response)
             }
             .resume()
     }
