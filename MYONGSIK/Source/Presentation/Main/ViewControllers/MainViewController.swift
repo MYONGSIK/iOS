@@ -189,7 +189,7 @@ class MainViewController: MainBaseViewController {
             self?.tableView.reloadData()
             
             self?.tableView.snp.updateConstraints{
-                $0.height.equalTo((self?.foodData!.count)! * 170 + 50)
+                $0.height.equalTo((self?.foodData?.count) ?? 0 * 170 + 50)
             }
         })
         
@@ -206,7 +206,7 @@ class MainViewController: MainBaseViewController {
             }
             
             self?.tableView.snp.updateConstraints{
-                $0.height.equalTo((self?.foodData!.count)! * 170 + 50)
+                $0.height.equalTo((self?.foodData?.count) ?? 0 * 170 + 50)
             }
         })
     }
