@@ -95,6 +95,13 @@ class MainViewController: MainBaseViewController {
         else { isToday = false }
         
         self.foodData = getDailyFoodData(date: date!)
+        if foodData?.count == 0 {
+            tablePageControl.isHidden = true
+            submitButton.isHidden = true
+        } else {
+            tablePageControl.isHidden = false
+            submitButton.isHidden = false
+        }
         tableView.reloadData()
         tableView.snp.updateConstraints{
             $0.height.equalTo(foodData!.count * 170 + 50)
@@ -221,6 +228,7 @@ class MainViewController: MainBaseViewController {
             $0.delegate = dataSourceDelegate
             $0.dataSource = dataSourceDelegate
             $0.register(MainTableViewCell.self, forCellReuseIdentifier: "MainTableViewCell")
+            $0.isScrollEnabled = false
             
             // autoHeight
             $0.rowHeight = UITableView.automaticDimension
