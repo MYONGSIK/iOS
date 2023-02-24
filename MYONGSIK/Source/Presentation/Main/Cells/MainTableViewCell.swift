@@ -122,6 +122,8 @@ class MainTableViewCell: UITableViewCell {
         
         if thumbUpButton.isSelected {
             UserDefaults.standard.set(0, forKey: day+type)
+            minusEvaluationFood(evaluation: "LOVE")
+
         } else {
             showThumbPopupView(emphasisText: (thumbUpButton.titleLabel)!.text!)
         }
@@ -136,12 +138,29 @@ class MainTableViewCell: UITableViewCell {
         
         if thumbDownButton.isSelected {
             UserDefaults.standard.set(0, forKey: day+type)
+            minusEvaluationFood(evaluation: "HATE")
+
         } else {
             showThumbPopupView(emphasisText: (thumbDownButton.titleLabel)!.text!)
         }
         setUpButtons()
     }
+    
     // MARK: - Functions
+    private func minusEvaluationFood(evaluation: String) {
+        let param = MindFoolRequestModel(calculation: "minus",
+                                         mealEvaluate: evaluation,
+                                         mealId: data.mealId)
+        APIManager.shared.postData(urlEndpointString: "/api/v2/meals/evaluate",
+                                   dataType: MindFoolRequestModel.self,
+                                   responseType: Bool.self,
+                                   parameter: param,
+                                   completionHandler: { result in
+            print("학식 평가 취소 요청 - \(result.message)")
+            
+        })
+    }
+    
     func setUpButtons() {
         guard let data = self.data else {return}
         guard let day = data.toDay else {return}

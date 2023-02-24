@@ -62,6 +62,7 @@
 		A23DA70929A7F1AD003FDA56 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70829A7F1AD003FDA56 /* UserModel.swift */; };
 		A23DA70B29A89575003FDA56 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70A29A89575003FDA56 /* UIResponder+.swift */; };
 		A23DA70D29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70C29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift */; };
+		A23DA70F29A8A971003FDA56 /* MindFoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70E29A8A971003FDA56 /* MindFoodModel.swift */; };
 		A23F2DAF29A2F9080046ED70 /* SubmitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DAE29A2F9080046ED70 /* SubmitData.swift */; };
 		A23F2DB129A2F9750046ED70 /* SubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */; };
 		A23F2DB829A3131C0046ED70 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DB729A3131C0046ED70 /* SplashViewController.swift */; };
@@ -155,6 +156,7 @@
 		A23DA70829A7F1AD003FDA56 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		A23DA70A29A89575003FDA56 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
 		A23DA70C29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbButtonSetPopupViewController.swift; sourceTree = "<group>"; };
+		A23DA70E29A8A971003FDA56 /* MindFoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindFoodModel.swift; sourceTree = "<group>"; };
 		A23F2DAE29A2F9080046ED70 /* SubmitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitData.swift; path = "../../../../../iOS 2/MYONGSIK/Source/Domain/Entity/SubmitData.swift"; sourceTree = "<group>"; };
 		A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitViewController.swift; path = ../ViewModels/SubmitViewController.swift; sourceTree = "<group>"; };
 		A23F2DB729A3131C0046ED70 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 				231161192911807A00AD73D2 /* HeartListData.swift */,
 				A23F2DAE29A2F9080046ED70 /* SubmitData.swift */,
 				A23DA70829A7F1AD003FDA56 /* UserModel.swift */,
+				A23DA70E29A8A971003FDA56 /* MindFoodModel.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -879,6 +882,7 @@
 				23451DE929116964006AE030 /* RestaurantTagViewController.swift in Sources */,
 				23E6ACA7290126EA0091D803 /* WeekTableViewCell.swift in Sources */,
 				23735B0128FEDBF900599221 /* UIColor.swift in Sources */,
+				A23DA70F29A8A971003FDA56 /* MindFoodModel.swift in Sources */,
 				A2431C8C29A3473D00D8E493 /* String+.swift in Sources */,
 				A23F2DB829A3131C0046ED70 /* SplashViewController.swift in Sources */,
 			);
