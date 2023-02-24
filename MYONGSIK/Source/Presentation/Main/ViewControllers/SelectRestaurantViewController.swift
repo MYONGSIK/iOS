@@ -8,13 +8,15 @@
 import UIKit
 import SnapKit
 
+
+
 // MARK: 자연캠 식당 선택 화면
 class SelectRestaurantViewController: MainBaseViewController {
     
     let resInfo = [
-        ["교직원 식당", "09:00~17:30"],
-        ["생활관 식당", "08:00~17:30"],
-        ["학관 식당", "11:00~17:30"]
+        [YonginRestaurant.staff.rawValue, "09:00~17:30"],
+        [YonginRestaurant.dormitory.rawValue, "08:00~17:30"],
+        [YonginRestaurant.academy.rawValue, "11:00~17:30"]
     ]
     
     let adImageView = UIView().then{
@@ -77,6 +79,7 @@ extension SelectRestaurantViewController: UITableViewDelegate, UITableViewDataSo
         print(indexPath.row)
         // TODO: 선택된 식당의 학식 정보를 토대로 화면으로 전환 (MainVC) / 현재 화면 전환만 구현해둠
         let mainVC = MainViewController()
+        mainVC.selectedResName = resInfo[indexPath.row][0]
         self.navigationController?.pushViewController(mainVC, animated: true)
     }
 }

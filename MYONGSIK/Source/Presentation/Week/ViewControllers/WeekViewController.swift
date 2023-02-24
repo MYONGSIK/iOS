@@ -67,7 +67,7 @@ class WeekViewController: MainBaseViewController {
         }
     }
     func setUpView() {
-        super.navigationView.addSubview(goBackButton)
+        super.navigationImgView.addSubview(goBackButton)
         
         self.view.addSubview(weekTableView)
         self.view.addSubview(pageControl)
@@ -75,11 +75,11 @@ class WeekViewController: MainBaseViewController {
     func setUpConstraint() {
         goBackButton.snp.makeConstraints { make in
             make.width.height.equalTo(30)
-            make.centerY.equalTo(super.logoImage)
+//            make.centerY.equalTo(super.logoImage)
             make.leading.equalToSuperview().offset(18)
         }
         weekTableView.snp.makeConstraints { make in
-            make.top.equalTo(super.navigationView.snp.bottom)
+            make.top.equalTo(super.navigationImgView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.greaterThanOrEqualTo(570)
         }

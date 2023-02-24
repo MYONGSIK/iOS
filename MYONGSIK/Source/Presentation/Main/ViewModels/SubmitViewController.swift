@@ -34,7 +34,7 @@ class SubmitViewController: UIViewController {
     }
     var inputTextView: UITextView = UITextView()
     var textCountLabel: UILabel = UILabel().then {
-        $0.text = "0/50"
+        $0.text = "0/100"
         $0.font = UIFont.NotoSansKR(size: 12, family: .Regular)
         $0.textColor = .gray
     }
@@ -75,10 +75,10 @@ class SubmitViewController: UIViewController {
     
     @objc func textDidChanged(_ notification: Notification) {
         if let text = self.inputTextView.text {
-            if text.count > 50 {
+            if text.count > 100 {
                 submitButton.isEnabled = false
                 submitButton.backgroundColor = .lightGray
-                textCountLabel.text = "글자 수가 50자를 초과함(\(text.count)/50)"
+                textCountLabel.text = "글자 수가 100자를 초과함(\(text.count)/50)"
                 textCountLabel.textColor = .red
             } else if text.count > 0 {
                 submitButton.isEnabled = true
@@ -121,7 +121,7 @@ class SubmitViewController: UIViewController {
         self.view.addSubview(self.submitView)
         self.submitView.snp.makeConstraints {
             $0.width.equalTo(330)
-            $0.height.equalTo(220)
+            $0.height.equalTo(250)
             $0.centerX.centerY.equalToSuperview()
         }
         

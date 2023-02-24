@@ -8,12 +8,12 @@
 import UIKit
 import SnapKit
 import Then
-import RxSwift
-import RxCocoa
 
 // MARK: '오늘의 학식' 페이지
 class MainViewController: MainBaseViewController {
     // MARK: - Views
+    var selectedResName: String?
+    
     var isFoodDataIsEmpty: Bool = false
 
     let scrolleView = UIScrollView()
@@ -31,7 +31,7 @@ class MainViewController: MainBaseViewController {
     }
 
     lazy var titleLabel = UILabel().then{
-        $0.text = "오늘의 학식  |  \(getTodayDataText())"
+        $0.text = "오늘의 학식  |  \(getTodayDataText(date: Date()))"
         $0.font = UIFont.NotoSansKR(size: 22, family: .Bold)
         $0.textColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)
     }
@@ -64,12 +64,33 @@ class MainViewController: MainBaseViewController {
         $0.addTarget(self, action: #selector(didTapGoAfterButton(_:)), for: .touchUpInside)
     }
     
-    @objc private func didTapGoBeforeButton(_ sender: UIButton) {
-        print("didTapGoBeforeButton")
+    private func setArrowButtons(currentPageControl: Int) {
+        goBeforeButton.isEnabled = true; goBeforeButton.tintColor = .signatureBlue
+        goAfterButton.isEnabled = true; goAfterButton.tintColor = .signatureBlue
+        switch currentPageControl {
+        case 0:
+            goBeforeButton.isEnabled = false; goBeforeButton.tintColor = .lightGray
+        case 4:
+            goAfterButton.isEnabled = false; goAfterButton.tintColor = .lightGray
+        default:
+            return
+        }
     }
     
-    @objc private func didTapGoAfterButton(_ sender: UIButton) {
-        print("didTapGoBeforeButton")
+    @objc private func didTapGoBeforeButton(_ sender: UIButton) { didTapChangeDateButton(value: -1) }
+    @objc private func didTapGoAfterButton(_ sender: UIButton) { didTapChangeDateButton(value: 1) }
+    
+    private func didTapChangeDateButton(value: Int) {
+        tablePageControl.currentPage += value
+        setArrowButtons(currentPageControl: tablePageControl.currentPage)
+        
+        // set titleLabel
+        let date = Calendar.current.date(byAdding: .day, value: tablePageControl.currentPage, to: startDay!)
+        titleLabel.text  = "오늘의 학식  |  \(getTodayDataText(date: date!))"
+        
+        // set daily food data
+        self.foodData = getDailyFoodData(date: date!)
+        tableView.reloadData()
     }
     
     
@@ -94,38 +115,29 @@ class MainViewController: MainBaseViewController {
         $0.clipsToBounds = true
         $0.setImage(UIImage(named: "pencil"), for: .normal)
         
-        $0.layer.shadowColor = UIColor.black.cgColor // 색깔
-        $0.layer.masksToBounds = false  // 내부에 속한 요소들이 UIView 밖을 벗어날 때, 잘라낼 것인지. 그림자는 밖에 그려지는 것이므로 false 로 설정
-        $0.layer.shadowOffset = CGSize(width: 0, height: 0) // 위치조정
-        $0.layer.shadowRadius = 2 // 반경
-        $0.layer.shadowOpacity = 0.25 // alpha값
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.masksToBounds = false
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.layer.shadowRadius = 2
+        $0.layer.shadowOpacity = 0.25
         
         $0.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
     }
-
     
-        
-    
-    @objc private func pageChanged(_ sender: UIPageControl) {
-        print("pageChanged")
-    }
+    @objc private func pageChanged(_ sender: UIPageControl) { print("pageChanged") }
     
     // MARK: - Life Cycles
+    var startDay: Date?
+    var endDay: Date?
+    
     var mainTableView: UITableView!
-    var foodData: [DayFoodModel]!
-    let disposeBag = DisposeBag()
-    private let viewModel = MainViewModel()
+    var foodData: [DayFoodModel]? = []
+    var weekFoodData: [DayFoodModel]? = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // for test
-        foodData = [
-            // API 통신 오류로 임시 데이터 생성(추후 삭제 예정)
-            DayFoodModel(toDay: "toDay", dayOfTheWeek: "dayOfTheWeek", classification: "중식", type: "A", status: "status", food1: "food1", food2: "food2", food3: "food3", food4: "food4", food5: "food5", food6: "food6"),
-            DayFoodModel(toDay: "toDay", dayOfTheWeek: "dayOfTheWeek", classification: "중식", type: "B", status: "status", food1: "food1", food2: "food2", food3: "food3", food4: "food4", food5: "food5", food6: "food6"),
-            DayFoodModel(toDay: "toDay", dayOfTheWeek: "dayOfTheWeek", classification: "석식", type: "", status: "status", food1: "food1", food2: "food2", food3: "food3", food4: "food4", food5: "food5", food6: "food6")
-        ]
+        setSelectedRes()
         
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
@@ -134,23 +146,54 @@ class MainViewController: MainBaseViewController {
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
-        bind()
         
-        // Tap Event - 주간 식단 조회 페이지로 이동
-//        let buttons = [self.leftIcon]
-//        for button in buttons {
-//            button.rx.tap
-//                .bind {self.calenderButtonDidTap()}
-//                .disposed(by: disposeBag)
-//        }
+        setWeekDateData()
+        fetchWeekData()
+        fetchDailyData()
     }
-    private func bind() {
-        let output = viewModel.transform(input: MainViewModel.Input())
-        
-        output.foodDataSubject.bind(onNext: { [weak self] result in
-            self?.getResultAPI(result)
-        }).disposed(by: disposeBag)
+    
+    private func setSelectedRes() {
+        if let userCampus = UserDefaults.standard.value(forKey: "userCampus") {
+            switch userCampus as! String {
+            case Campus.seoul.rawValue:
+                selectedResName = SeoulRestaurant.mcc.rawValue
+                print("인문캠 선택 - 식당 :: \(selectedResName!)")
+            case Campus.yongin.rawValue:
+                print("자연캠 선택 - 식당 :: \(selectedResName)")
+            default:
+                return
+            }
+        }
     }
+    
+    private func fetchDailyData() {
+        print(Constants.getDayFood + "/\(selectedResName!)")
+        APIManager.shared.getData(urlEndpointString: Constants.getDayFood + "/\(selectedResName!)",
+                                  dataType: APIModel<[DayFoodModel]>?.self,
+                                  parameter: nil,
+                                  completionHandler: { [weak self] result in
+            self?.foodData = result?.data
+            self?.tableView.reloadData()
+        })
+    }
+    
+    private func fetchWeekData() {
+        APIManager.shared.getData(urlEndpointString: Constants.getWeekFood + "/\(selectedResName!)",
+                                  dataType: APIModel<[DayFoodModel]>?.self,
+                                  parameter: nil,
+                                  completionHandler: { [weak self] result in
+
+            if let result = result,
+               let data = result.data {
+                self?.weekFoodData = data
+//                print("정렬 전 : week data count - \(self?.weekFoodData)")
+                self?.weekFoodData = data.sorted(by: { $0.toDay! < $1.toDay! })
+//                print("정렬 후 : week data count - \(self?.weekFoodData)")
+            }
+            
+        })
+    }
+
     // MARK: - Actions
     @objc func calenderButtonDidTap() {
         UIDevice.vibrate()
@@ -268,7 +311,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let data = self.foodData {
             isFoodDataIsEmpty = false
-            print(self.foodData.count)
             return data.count
         } else {
             isFoodDataIsEmpty = true
@@ -282,38 +324,19 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let count = self.foodData.count ?? 0
 
-//        if indexPath.row == 0 {
-//            let cell = UITableViewCell()
-//            cell.addSubview(titleView)
-//
-//
-//            cell.selectionStyle = .none
-//            return cell
-//        }
-        
-//        if indexPath.row == count {
-//            let cell = UITableViewCell()
-//            setSubmitButtonCell(cell)
-//            cell.selectionStyle = .none
-//
-//            return cell
-//        }
-//
-//        else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
-            cell.selectionStyle = .none
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
+        cell.selectionStyle = .none
 
-            let itemIdx = indexPath.item
-            print("itemIdx :: \(itemIdx)")
-            if let foodData = self.foodData {
-                cell.data = foodData[itemIdx]
-                cell.setUpData()
-                cell.setUpButtons()
-            }
-            return cell
-//        }
+        let itemIdx = indexPath.item
+        print("itemIdx :: \(itemIdx)")
+        if let foodData = self.foodData {
+            cell.data = foodData[itemIdx]
+            cell.setUpData()
+            cell.setUpButtons()
+        }
+        return cell
+
     }
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        tableView.deselectRow(at: indexPath, animated: true)
@@ -336,11 +359,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             $0.clipsToBounds = true
             $0.setImage(UIImage(named: "pencil"), for: .normal)
             
-            $0.layer.shadowColor = UIColor.black.cgColor // 색깔
-            $0.layer.masksToBounds = false  // 내부에 속한 요소들이 UIView 밖을 벗어날 때, 잘라낼 것인지. 그림자는 밖에 그려지는 것이므로 false 로 설정
-            $0.layer.shadowOffset = CGSize(width: 0, height: 0) // 위치조정
-            $0.layer.shadowRadius = 2 // 반경
-            $0.layer.shadowOpacity = 0.25 // alpha값
+            $0.layer.shadowColor = UIColor.black.cgColor
+            $0.layer.masksToBounds = false
+            $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+            $0.layer.shadowRadius = 2
+            $0.layer.shadowOpacity = 0.25
         }
         cell.contentView.addSubview(submitButton)
 
@@ -406,11 +429,12 @@ extension MainViewController {
             $0.font = UIFont.NotoSansKR()
             $0.textColor = .signatureBlue
         }
-        let dayOfTheWeek = UILabel().then{
-            if let dayOfWeek = result.dayOfTheWeek {$0.text = dayOfWeek}
-            $0.font = UIFont.NotoSansKR()
-            $0.textColor = .signatureBlue
-        }
+//        let dayOfTheWeek = UILabel().then{
+//            if let dayOfWeek = result.dayOfTheWeek {$0.text = dayOfWeek}
+//            $0.text = "dayOfWeek"
+//            $0.font = UIFont.NotoSansKR()
+//            $0.textColor = .signatureBlue
+//        }
         let messageLabel = UILabel().then{
             if let message = result.message {$0.text = message}
             $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
@@ -419,7 +443,7 @@ extension MainViewController {
         let backgroudView = UIView(frame: CGRect(x: 0, y: 0, width: mainTableView.bounds.width, height: mainTableView.bounds.height))
         backgroudView.addSubview(backView)
         backView.addSubview(date)
-        backView.addSubview(dayOfTheWeek)
+//        backView.addSubview(dayOfTheWeek)
         backView.addSubview(messageLabel)
         
         backView.snp.makeConstraints { make in
@@ -431,10 +455,10 @@ extension MainViewController {
             make.leading.equalToSuperview().offset(23)
             make.top.equalToSuperview().offset(19)
         }
-        dayOfTheWeek.snp.makeConstraints { make in
-            make.centerY.equalTo(date)
-            make.leading.equalTo(date.snp.trailing).offset(3)
-        }
+//        dayOfTheWeek.snp.makeConstraints { make in
+//            make.centerY.equalTo(date)
+//            make.leading.equalTo(date.snp.trailing).offset(3)
+//        }
         messageLabel.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
@@ -446,9 +470,57 @@ extension MainViewController {
     }
     
     
-    func getTodayDataText() -> String {
+    func getTodayDataText(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM월 dd일"
-        return formatter.string(from: Date())
+        return formatter.string(from: date)
+    }
+}
+
+extension MainViewController {
+    private func setWeekDateData() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EE"
+        
+        let today = Date()
+        switch dateFormatter.string(from: Date()) {
+        case "월":
+            startDay = today
+            tablePageControl.currentPage = 0
+        case "화":
+            startDay = Calendar.current.date(byAdding: .day, value: -1, to: today)
+            tablePageControl.currentPage = 1
+        case "수":
+            startDay = Calendar.current.date(byAdding: .day, value: -2, to: today)
+            tablePageControl.currentPage = 2
+        case "목":
+            startDay = Calendar.current.date(byAdding: .day, value: -3, to: today)
+            tablePageControl.currentPage = 3
+        case "금":
+            startDay = Calendar.current.date(byAdding: .day, value: -4, to: today)
+            tablePageControl.currentPage = 4
+        default: return
+        }
+        setArrowButtons(currentPageControl: tablePageControl.currentPage)
+        
+        endDay = Calendar.current.date(byAdding: .day, value: 5, to: startDay!)
+    }
+    
+    private func getDailyFoodData(date: Date) -> [DayFoodModel] {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let filterDate = formatter.string(from: date)
+        
+        // TODO: filterDate(0000-00-00)과 toDay의 값이 같은 DayFoodModel만 필터링
+//        let testData = [
+//            DayFoodModel(mealType: "LUNCH_A", meals: [ "22-meal1", "22-meal2", "22-meal3" ], statusType: "OPEN", toDay: "2023-02-22"),
+//            DayFoodModel(mealType: "LUNCH_A", meals: [ "23-meal1", "23-meal2", "23-meal3" ], statusType: "OPEN", toDay: "2023-02-23"),
+//            DayFoodModel(mealType: "LUNCH_B", meals: [ "23-meal1", "23-meal2", "23-meal3" ], statusType: "OPEN", toDay: "2023-02-23"),
+//            DayFoodModel(mealType: "DINNER", meals: [ "24-meal1", "24-meal2", "24-meal3" ], statusType: "OPEN", toDay: "2023-02-24"),
+//            DayFoodModel(mealType: "LUNCH_A", meals: [ "20-meal1", "20-meal2", "20-meal3" ], statusType: "OPEN", toDay: "2023-02-20"),
+//            DayFoodModel(mealType: "LUNCH_A", meals: [ "21-meal1", "21-meal2", "21-meal3" ], statusType: "OPEN", toDay: "2023-02-21"),
+//        ]
+        if let weekFoodData = self.weekFoodData { return weekFoodData.filter { $0.toDay == filterDate } }
+        return []
     }
 }
