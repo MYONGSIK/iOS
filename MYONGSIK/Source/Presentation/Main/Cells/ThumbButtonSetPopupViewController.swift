@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ThumbButtonSetPopupViewController: PopupBaseVIewController {
     var data: DayFoodModel!
@@ -21,17 +22,19 @@ class ThumbButtonSetPopupViewController: PopupBaseVIewController {
         case "맛있어요":
             print("TODO: 맛있어요 POST")
             UserDefaults.standard.set(1, forKey: day+type)
-            dismiss(animated: true)
+            postMindFood(isLike: true)  // 맛있어요 POST
         case "맛없어요":
             print("TODO: 맛없어요 POST")
             UserDefaults.standard.set(2, forKey: day+type)
-            dismiss(animated: true)
+            postMindFood(isLike: false)  // 맛없어요 POST
         default:
             print("ERROR :: fail to set thumbs button action")
             return
         }
         setUpButtons()
         UIDevice.vibrate()
+        
+        dismiss(animated: true)
     }
     
     func setUpButtons() {
@@ -67,7 +70,31 @@ class ThumbButtonSetPopupViewController: PopupBaseVIewController {
             thumbUpButton.titleLabel?.font = thumbUpButton.isSelected ? UIFont.NotoSansKR(size: 12, family: .Bold) : UIFont.NotoSansKR(size: 12, family: .Regular)
             thumbDownButton.titleLabel?.font = thumbDownButton.isSelected ? UIFont.NotoSansKR(size: 12, family: .Bold) : UIFont.NotoSansKR(size: 12, family: .Regular)
         }
+    }
+}
+
+extension ThumbButtonSetPopupViewController {
+    private func postMindFood(isLike: Bool) {
+        var param: MindFoolRequestModel?
+        if isLike {
+            param = MindFoolRequestModel(calculation: "plus",
+                                             mealEvaluate: "LOVE",
+                                             mealId: data.mealId)
+
+        } else {
+            param = MindFoolRequestModel(calculation: "plus",
+                                             mealEvaluate: "HATE",
+                                             mealId: data.mealId)
+        }
         
+        APIManager.shared.postData(urlEndpointString: "/api/v2/meals/evaluate",
+                                   dataType: MindFoolRequestModel.self,
+                                   responseType: Bool.self,
+                                   parameter: param!,
+                                   completionHandler: { result in
+            print(result.message)
+            
+        })
     }
 }
 
