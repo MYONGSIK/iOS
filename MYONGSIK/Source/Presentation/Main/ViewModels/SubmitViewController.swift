@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 import Then
-import RealmSwift
+
 
 // MARK: '학식에 대한 의견 남기기' 페이지
 enum inputStatus {
@@ -18,8 +18,7 @@ enum inputStatus {
 class SubmitViewController: UIViewController {
     
     var submitStatus: inputStatus = .notSubmit
-    let realm =  try! Realm()
-    
+    var mealInfo: DayFoodModel?
     
     // MARK: - Views
     var submitView: UIView = UIView().then {
@@ -50,7 +49,6 @@ class SubmitViewController: UIViewController {
     
     // MARK: - Life Cycles
     override func viewDidLoad() {
-//        deleteAllSubmits()    // for clear Submit Data
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(
@@ -163,8 +161,10 @@ class SubmitViewController: UIViewController {
         if let submitted = self.inputTextView.text {
             
             let phoneId = UIDevice.current.identifierForVendor!.uuidString
+            let mealId = self.mealInfo?.mealId ?? -1
+            
             let param = SubmitModel(writerId: phoneId,
-                                    mealId: 3,  // meal ID 어케 구분하냐,,
+                                    mealId: mealId, 
                                     content: submitted)
             APIManager.shared.postData(urlEndpointString: "/api/v2/reviews",
                                        dataType: SubmitModel.self,
@@ -176,8 +176,6 @@ class SubmitViewController: UIViewController {
                 case true:
                     self?.showCompleteSubmitView()
                 case false:
-                    // TODO: 제출 오류 alert 띄우기
-                    print("TODO: 제출 오류 alert 띄우기")
                     self?.showFailToSubmitAlert(errorcode: result.httpCode)
                 default:
                     return
