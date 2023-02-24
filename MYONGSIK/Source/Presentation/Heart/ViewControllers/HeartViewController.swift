@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 // MARK: 찜꽁리스트 페이지
-class HeartViewController: BaseViewController {
+class HeartViewController: MainBaseViewController {
     
     // MARK: Life Cycles
     var heartTableView: UITableView!
@@ -18,7 +18,7 @@ class HeartViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        super.titleLabel.text = "나만의 찜꽁리스트"
+        super.topLabel.text = "찜꽁리스트"
         self.view.backgroundColor = .white
         
         self.navigationController?.isNavigationBarHidden = true
@@ -56,7 +56,7 @@ class HeartViewController: BaseViewController {
     }
     func setUpConstraint() {
         heartTableView.snp.makeConstraints { make in
-            make.top.equalTo(super.navigationView.snp.bottom).offset(20)
+            make.top.equalTo(super.navigationImgView.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
