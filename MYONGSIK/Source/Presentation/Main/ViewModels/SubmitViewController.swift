@@ -155,101 +155,84 @@ class SubmitViewController: UIViewController {
     
     func setUpCompleteView() {
         if self.inputTextView.text.count > 0 {
-            // 입력된 의견 저장 (추가 구현 필요)
             saveSubmit(input: self.inputTextView.text)
-            
-            // submitView 재설정
-            self.titleLabel.removeFromSuperview()
-            self.inputTextView.removeFromSuperview()
-            self.textCountLabel.removeFromSuperview()
-            self.submitButton.removeFromSuperview()
-                    
-            let imageView = UIImageView().then {
-                $0.contentMode = .scaleAspectFit
-                $0.image = UIImage(named: "custom_check")
-            }
-            submitView.addSubview(imageView)
-            imageView.snp.makeConstraints {
-                $0.width.height.equalTo(100)
-                $0.centerX.equalToSuperview()
-                $0.centerY.equalToSuperview().offset(-30)
-            }
-            
-            let resultLabel = UILabel().then {
-                $0.text = "소중한 의견 제출 감사합니다!"
-                $0.font = UIFont.NotoSansKR(size: 20, family: .Regular)
-                $0.textColor = .black
-            }
-            self.view.addSubview(resultLabel)
-            resultLabel.snp.makeConstraints {
-                $0.top.equalTo(imageView).offset(110)
-                $0.centerX.equalToSuperview()
-            }
-            
-            let subResultLabel = UILabel().then {
-                $0.text = "더욱 발전하는 명식이가 되겠습니다"
-                $0.font = UIFont.NotoSansKR(size: 12, family: .Regular)
-                $0.textColor = .gray
-            }
-            self.view.addSubview(subResultLabel)
-            subResultLabel.snp.makeConstraints {
-                $0.top.equalTo(resultLabel.snp.bottom)
-                $0.centerX.equalToSuperview()
-            }
         }
     }
     
     func saveSubmit(input: String?) {
-        if let input = input {
-            if let submitted = self.inputTextView.text {
-//                let submittedDate = Date()
-//                let opinion = submitted
-//
-//                let submit = SubmitData()
-//                submit.submittedDate = submittedDate
-//                submit.opinion = opinion
-//
-//                try! realm.write {
-//                        realm.add(submit)
-//                    }
-//
-//                printAllSavedOpinions()
-                if let phoneId = UserDefaults.standard.value(forKey: "phoneId") {
-                    let param = SubmitModel(writerId: phoneId as! String,
-                                            mealId: 0,  // meal ID 어케 구분하냐,,
-                                            content: submitted)
-                    APIManager.shared.postData(urlEndpointString: "/api/v2/reviews",
-                                               dataType: SubmitModel.self,
-                                               responseType: SubmitResponseModel.self,
-                                               parameter: param,
-                                               completionHandler: { result in
-                        // 런타임 에러 -> 메세지가 [String]의 형태라 포맷 오류남 (성공 시 메세지 String 한 개)
-                        print(result.message)
-                    })
+        if let submitted = self.inputTextView.text {
+            
+            let phoneId = UIDevice.current.identifierForVendor!.uuidString
+            let param = SubmitModel(writerId: phoneId,
+                                    mealId: 3,  // meal ID 어케 구분하냐,,
+                                    content: submitted)
+            APIManager.shared.postData(urlEndpointString: "/api/v2/reviews",
+                                       dataType: SubmitModel.self,
+                                       responseType: SubmitResponseModel.self,
+                                       parameter: param,
+                                       completionHandler: { [weak self] result in
+
+                switch result.success {
+                case true:
+                    self?.showCompleteSubmitView()
+                case false:
+                    // TODO: 제출 오류 alert 띄우기
+                    print("TODO: 제출 오류 alert 띄우기")
+                    self?.showFailToSubmitAlert(errorcode: result.httpCode)
+                default:
+                    return
                 }
+            })
+
+        } else { print("ERROR :: 제출할 의견이 비어있음"); return }
+        
+    }
+    
+    private func showCompleteSubmitView() {
+        // submitView 재설정
+        self.titleLabel.removeFromSuperview()
+        self.inputTextView.removeFromSuperview()
+        self.textCountLabel.removeFromSuperview()
+        self.submitButton.removeFromSuperview()
                 
-                
-            } else {
-                print("ERROR :: 제출할 의견이 비어있음"); return
-            }
+        let imageView = UIImageView().then {
+            $0.contentMode = .scaleAspectFit
+            $0.image = UIImage(named: "custom_check")
+        }
+        submitView.addSubview(imageView)
+        imageView.snp.makeConstraints {
+            $0.width.height.equalTo(100)
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-30)
+        }
+        
+        let resultLabel = UILabel().then {
+            $0.text = "소중한 의견 제출 감사합니다!"
+            $0.font = UIFont.NotoSansKR(size: 20, family: .Regular)
+            $0.textColor = .black
+        }
+        self.view.addSubview(resultLabel)
+        resultLabel.snp.makeConstraints {
+            $0.top.equalTo(imageView).offset(110)
+            $0.centerX.equalToSuperview()
+        }
+        
+        let subResultLabel = UILabel().then {
+            $0.text = "더욱 발전하는 명식이가 되겠습니다"
+            $0.font = UIFont.NotoSansKR(size: 12, family: .Regular)
+            $0.textColor = .gray
+        }
+        self.view.addSubview(subResultLabel)
+        subResultLabel.snp.makeConstraints {
+            $0.top.equalTo(resultLabel.snp.bottom)
+            $0.centerX.equalToSuperview()
         }
     }
     
-    func printAllSavedOpinions() {
-        let submits = realm.objects(SubmitData.self)
-        for submit in submits {
-            print(submit.submittedDate.toString(), " / ", submit.opinion)
-        }
-    }
-    
-    func deleteAllSubmits(){
-        let submits = realm.objects(SubmitData.self)
-        for submit in submits {
-            try! realm.write {
-                    realm.delete(submit)
-                }
-        }
-       
+    private func showFailToSubmitAlert(errorcode: Int?) {
+        let alert = UIAlertController(title: nil, message: "네트워크 오류로 인하여 의견 제출에 실패하였습니다. \n오류 코드 : \(errorcode)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
     }
 
 }
