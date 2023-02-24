@@ -11,11 +11,12 @@ import Then
 
 // MARK: '오늘의 학식' 페이지
 class MainViewController: MainBaseViewController {
-    // MARK: - Views
+    var isToday: Bool = true
     var selectedResName: String?
-    
     var isFoodDataIsEmpty: Bool = false
-
+    
+    
+    // MARK: - Views
     let scrolleView = UIScrollView()
     let contentView = UIView()
     
@@ -89,6 +90,10 @@ class MainViewController: MainBaseViewController {
         titleLabel.text  = "오늘의 학식  |  \(getTodayDataText(date: date!))"
         
         // set daily food data
+        let today = Calendar.current.date(byAdding: .day, value: 4, to: startDay!)
+        if date == today { isToday = true }
+        else { isToday = false }
+        
         self.foodData = getDailyFoodData(date: date!)
         tableView.reloadData()
     }
@@ -315,7 +320,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             isFoodDataIsEmpty = true
             
-            let alert = UIAlertController(title: nil, message: "불러올 학식 정보가 없거나, \n학식 정보를 불러오는데 실패함", preferredStyle: .alert)
+            let alert = UIAlertController(title: nil, message: "불러올 학식 정보가 없거나, \n학식 정보를 불러오는데 실패하였습니다", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "확인", style: .default))
             present(alert, animated: true)
             
@@ -332,6 +337,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         print("itemIdx :: \(itemIdx)")
         if let foodData = self.foodData {
             cell.data = foodData[itemIdx]
+            cell.isToday = self.isToday
             cell.setUpData()
             cell.setUpButtons()
         }

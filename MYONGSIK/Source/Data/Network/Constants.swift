@@ -10,7 +10,7 @@ struct Constants {
     // API 연결 시
     static let BaseURL = "http://54.180.152.115:8085"
 //    static let BaseURL = "http://43.201.72.185:8085"
-    static let DevelopURL = "http://43.201.72.185:8085"
+    static let DevelopURL = "http://13.209.50.30"
     static let getDayFood = "/api/v2/meals"
     static let getWeekFood = "/api/v2/meals/week"
     
