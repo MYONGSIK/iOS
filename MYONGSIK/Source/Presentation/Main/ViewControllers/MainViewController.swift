@@ -96,6 +96,9 @@ class MainViewController: MainBaseViewController {
         
         self.foodData = getDailyFoodData(date: date!)
         tableView.reloadData()
+        tableView.snp.updateConstraints{
+            $0.height.equalTo(foodData!.count * 170 + 50)
+        }
     }
     
     
@@ -155,6 +158,8 @@ class MainViewController: MainBaseViewController {
         setWeekDateData()
         fetchWeekData()
         fetchDailyData()
+        
+        tableView.snp.updateConstraints{ $0.height.equalTo(foodData!.count * 170 + 50) }
     }
     
     private func setSelectedRes() {
@@ -179,7 +184,12 @@ class MainViewController: MainBaseViewController {
                                   completionHandler: { [weak self] result in
             self?.foodData = result?.data
             self?.tableView.reloadData()
+            
+            self?.tableView.snp.updateConstraints{
+                $0.height.equalTo((self?.foodData!.count)! * 170 + 50)
+            }
         })
+        
     }
     
     private func fetchWeekData() {
@@ -188,14 +198,13 @@ class MainViewController: MainBaseViewController {
                                   parameter: nil,
                                   completionHandler: { [weak self] result in
 
-            if let result = result,
-               let data = result.data {
-                self?.weekFoodData = data
-//                print("정렬 전 : week data count - \(self?.weekFoodData)")
+            if let result = result, let data = result.data {
                 self?.weekFoodData = data.sorted(by: { $0.toDay! < $1.toDay! })
-//                print("정렬 후 : week data count - \(self?.weekFoodData)")
             }
             
+            self?.tableView.snp.updateConstraints{
+                $0.height.equalTo((self?.foodData!.count)! * 170 + 50)
+            }
         })
     }
 
@@ -290,7 +299,7 @@ class MainViewController: MainBaseViewController {
         tableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(titleView.snp.bottom)
-            $0.height.equalTo(600)
+            $0.height.equalTo(500)
 //            $0.bottom.equalToSuperview().offset(200)
         }
         
