@@ -7,58 +7,41 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 // 로고이미지가 중앙에 있는 메인페이지의 뷰컨입니다.
 class MainBaseViewController: UIViewController {
     // MARK: Views
-    // 상단바
-    let navigationView = UIView().then{
-        $0.backgroundColor = .signatureBlue
+    let navigationImgView = UIImageView().then{
+        $0.image = UIImage(named: "mainTopBackImg")
         $0.clipsToBounds = true
+        $0.backgroundColor = .white
     }
-    // 상단 로고 이미지
-    let logoImage = UIImageView().then{
-        $0.image = UIImage(named: "logo")
-    }
-    // 상단 제목
-    let titleLabel = UILabel().then{
+    
+    let topLabel = UILabel().then {
+        $0.text = "명식이"
         $0.font = UIFont.NotoSansKR(size: 18, family: .Bold)
+        $0.textColor = .white
     }
+
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.view.backgroundColor = .white
+        
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.navigationBar.isHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-                
-        //setUpView
-        self.view.addSubview(navigationView)
-        navigationView.addSubview(logoImage)
-        self.view.addSubview(titleLabel)
         
-        //setUpConstraint
-        navigationView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview()
-            if UIDevice.current.hasNotch {make.height.equalTo(121)}
-            else{make.height.equalTo(91)}
+        self.view.addSubview(navigationImgView)
+        navigationImgView.addSubview(topLabel)
+
+        navigationImgView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
         }
-        logoImage.snp.makeConstraints { make in
-            make.width.equalTo(103)
-            make.height.equalTo(78)
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(navigationView.snp.bottom).offset(38)
-            make.centerX.equalToSuperview()
+        topLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
         }
     }
-    override func viewDidAppear(_ animated: Bool) {
-        
-    }
-    // MARK: - Actions
-    
 }

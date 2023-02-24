@@ -9,9 +9,9 @@ import UIKit
 
 extension UIColor{
     static let signatureBlue = UIColor(
-        red: 30/255,
-        green: 80/255,
-        blue: 167/255,
+        red: 10/255,
+        green: 69/255,
+        blue: 202/255,
         alpha: 1
     )
     static let signatureGray = UIColor(
@@ -21,9 +21,9 @@ extension UIColor{
         alpha: 1
     )
     static let borderColor = UIColor(
-        red: 166/255,
-        green: 166/255,
-        blue: 166/255,
+        red: 234/255,
+        green: 234/255,
+        blue: 234/255,
         alpha: 1
     )
     static let seperatorColor = UIColor(

@@ -31,10 +31,10 @@ final class WeekViewModel: ViewModelType {
     }
     
     func getFoodDetailData() {
-        APIManager.shared.GetDataManager(from: Constants.BaseURL + Constants.getWeekFood) { (data: APIModel<[WeekFoodModel]>?, error) in
-            guard let data = data else {print("error: \(error?.debugDescription)"); return}
-            self.dataResult = data
-            self.foodDataSubject.onNext(self.dataResult!)
-        }
+//        APIManager.shared.GetDataManager(from: Constants.BaseURL + Constants.getWeekFood) { (data: APIModel<[WeekFoodModel]>?, error) in
+//            guard let data = data else {print("error: \(error?.debugDescription)"); return}
+//            self.dataResult = data
+//            self.foodDataSubject.onNext(self.dataResult!)
+//        }
     }
 }

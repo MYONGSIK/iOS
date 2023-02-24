@@ -9,8 +9,15 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+enum Area: String {
+    case mcc = "MCC식당"
+    case staff = "교직원식당"
+    case dormitry = "생활관식당"
+}
+
 final class MainViewModel: ViewModelType {
     var disposeBag = DisposeBag()
+    var area: Area?
     
     struct Input {
 //        let thumbUpButtonControlEvent: ControlEvent<Void>
@@ -33,10 +40,10 @@ final class MainViewModel: ViewModelType {
     }
     
     func getFoodDetailData() {
-        APIManager.shared.GetDataManager(from: Constants.BaseURL + Constants.getDayFood) { (data: APIModel<[DayFoodModel]>?, error) in
-            guard let data = data else {print("error: \(error?.debugDescription)"); return}
-            self.dataResult = data
-            self.foodDataSubject.onNext(self.dataResult!)
-        }
+//        APIManager.shared.GetDataManager(from: Constants.BaseURL + Constants.getDayFood + "/MCC식당") { (data: APIModel<[DayFoodModel]>?, error) in
+//            guard let data = data else {print("error: \(error?.debugDescription)"); return}
+//            self.dataResult = data
+//            self.foodDataSubject.onNext(self.dataResult!)
+//        }
     }
 }

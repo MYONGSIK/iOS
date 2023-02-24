@@ -13,6 +13,17 @@ case seoul = "인문캠퍼스"
 case yongin = "자연캠퍼스"
 }
 
+enum SeoulRestaurant: String {
+case mcc = "MCC식당"
+}
+
+
+enum YonginRestaurant: String {
+case staff = "교직원식당"
+case dormitory = "생활관식당"
+case academy = "학관식당"
+}
+
 class SplashViewController: UIViewController {
     
     let titleImgView = UIImageView().then {

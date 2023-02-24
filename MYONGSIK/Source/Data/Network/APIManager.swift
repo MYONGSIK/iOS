@@ -4,6 +4,7 @@
 //
 //  Created by gomin on 2022/10/27.
 //
+import Foundation
 import Alamofire
 
 // MARK: Generic을 활용한 네트워크 통신
@@ -41,6 +42,55 @@ class APIManager {
                 callback(nil, error.localizedDescription)
             }
         }
+    }
+    
+    func getData<T: Decodable>(urlEndpointString: String,
+                               dataType: T.Type,
+                               parameter: Parameters?,
+                               completionHandler: @escaping (T)->Void) {
+        
+        let urlString = Constants.DevelopURL + urlEndpointString
+        if let encodedUrlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+            guard let url = URL(string: encodedUrlString) else { return }
+            
+            AF
+                .request(url, method: .get, parameters: parameter)
+                .responseDecodable(of: T.self) { response in
+                    print("getData called")
+                    switch response.result {
+                    case .success(let success):
+                        completionHandler(success)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+                .resume()
+            
+        } else { print("URL에 한글이 포함되어 있거나 그 외 오류 있으므로 인코딩 실패") }
+        
+    }
+    
+    func postData<T: Codable>(urlEndpointString: String,
+                              dataType: T.Type,
+                              parameter: T,
+                              completionHandler: @escaping (APIModel<T>) -> Void) {
+        
+        guard let url = URL(string: Constants.DevelopURL + urlEndpointString) else { return }
+
+        AF
+            .request(url,
+                     method: .post,
+                     parameters: parameter,
+                     encoder: .json)
+            .responseDecodable(of: APIModel<T>.self) { response in
+                switch response.result {
+                case .success(let success):
+                    completionHandler(success)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+            .resume()
     }
 }
 

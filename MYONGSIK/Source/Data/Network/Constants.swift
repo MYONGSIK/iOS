@@ -9,8 +9,10 @@
 struct Constants {
     // API 연결 시
     static let BaseURL = "http://54.180.152.115:8085"
-    static let getDayFood = "/api/v1/foods"
-    static let getWeekFood = "/api/v1/foods/week"
+//    static let BaseURL = "http://43.201.72.185:8085"
+    static let DevelopURL = "http://43.201.72.185:8085"
+    static let getDayFood = "/api/v2/meals"
+    static let getWeekFood = "/api/v2/meals/week"
     
     // 카카오API: 키워드로 장소 검색
     static let KakaoURL = "https://dapi.kakao.com/v2/local/search/keyword.json?query="
