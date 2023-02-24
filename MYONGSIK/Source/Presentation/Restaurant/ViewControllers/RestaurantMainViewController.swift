@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
 // MARK: '명지 맛집' 페이지
 class RestaurantMainViewController: MainBaseViewController {
     let searchButton = UIButton().then{
         $0.setImage(UIImage(named: "search_white"), for: .normal)
+        $0.addTarget(self, action: #selector(goSearchButtonDidTap), for: .touchUpInside)
     }
 
     // MARK: Life Cycles
@@ -24,12 +27,10 @@ class RestaurantMainViewController: MainBaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
         
-        self.searchButton.addTarget(self, action: #selector(goSearchButtonDidTap), for: .touchUpInside)
     }
     override func viewDidAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
@@ -41,7 +42,7 @@ class RestaurantMainViewController: MainBaseViewController {
     }
     
     // MARK: Actions
-    @objc func goSearchButtonDidTap() {
+    @objc func goSearchButtonDidTap(_ sender: UIButton) {
         UIDevice.vibrate()
         let vc = RestaurantSearchViewController()
         self.navigationController?.pushViewController(vc, animated: true)
@@ -65,14 +66,13 @@ class RestaurantMainViewController: MainBaseViewController {
     }
     func setUpView() {
         super.navigationImgView.addSubview(searchButton)
-        
         self.view.addSubview(restaurantMainTableView)
     }
     func setUpConstraint() {
         searchButton.snp.makeConstraints { make in
             make.width.height.equalTo(25)
             make.centerY.equalTo(topLabel)
-            make.trailing.equalToSuperview().offset(-22)
+            make.trailing.equalToSuperview().inset(22)
         }
         restaurantMainTableView.snp.makeConstraints { make in
             make.top.equalTo(super.navigationImgView.snp.bottom).inset(20)

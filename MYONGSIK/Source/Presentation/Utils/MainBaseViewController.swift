@@ -16,6 +16,7 @@ class MainBaseViewController: UIViewController {
         $0.image = UIImage(named: "mainTopBackImg")
         $0.clipsToBounds = true
         $0.backgroundColor = .white
+        $0.isUserInteractionEnabled = true
     }
     
     let topLabel = UILabel().then {
