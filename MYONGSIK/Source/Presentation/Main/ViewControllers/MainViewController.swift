@@ -410,6 +410,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     @objc func submitButtonTapped(_ sender: UIButton){
         let submitViewController = SubmitViewController()
+        submitViewController.mealInfo = foodData?[0] // MARK: 임시로 해당 날짜의 0번째 학식에 대한 의견으로 고정
         submitViewController.modalPresentationStyle = .custom
         submitViewController.modalTransitionStyle = .crossDissolve
         self.present(submitViewController, animated: true)
