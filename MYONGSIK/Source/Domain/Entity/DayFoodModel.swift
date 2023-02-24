@@ -20,6 +20,7 @@
 //    let food6: String?
 //}
 struct DayFoodModel: Decodable {
+    let mealId: Int?
     let mealType: String?
     let meals: [String]?
     let statusType: String?

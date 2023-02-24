@@ -10,6 +10,8 @@ import RxSwift
 import RxCocoa
 
 class MainTableViewCell: UITableViewCell {
+    var isToday: Bool = true
+    
     // MARK: - Views
     let backView = UIView().then{
         $0.backgroundColor = .white
@@ -48,6 +50,8 @@ class MainTableViewCell: UITableViewCell {
         $0.setImage(UIImage(named: "thumbup_blue"), for: .selected)
         $0.semanticContentAttribute = .forceRightToLeft
         $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
+        
+        $0.addTarget(self, action: #selector(thumbUpButtonDidTap), for: .touchUpInside)
     }
     let seperatorLine = UIView().then{
         $0.backgroundColor = .seperatorColor
@@ -63,6 +67,8 @@ class MainTableViewCell: UITableViewCell {
         $0.setImage(UIImage(named: "thumbdown_blue"), for: .selected)
         $0.semanticContentAttribute = .forceRightToLeft
         $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
+        
+        $0.addTarget(self, action: #selector(thumbDownButtonDidTap), for: .touchUpInside)
     }
     
 
@@ -75,15 +81,6 @@ class MainTableViewCell: UITableViewCell {
 
         setUpView()
         setUpConstraint()
-        
-        // Tap Event
-        thumbUpButton.rx.tap
-            .bind {self.thumbUpButtonDidTap()}
-            .disposed(by: disposeBag)
-        
-        thumbDownButton.rx.tap
-            .bind {self.thumbDownButtonDidTap()}
-            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
@@ -96,50 +93,68 @@ class MainTableViewCell: UITableViewCell {
     // 맛있어요 : 1
     // 맛없어요 : 2
     
+    private func showThumbPopupView(emphasisText: String) {
+        let alertViewController = ThumbButtonSetPopupViewController()
+        
+        alertViewController.emphasisText = emphasisText
+        alertViewController.fullText = "로 \n학식 평가를 하시겠어요?"
+        
+        alertViewController.data = self.data
+        alertViewController.thumbUpButton = self.thumbUpButton
+        alertViewController.thumbDownButton = self.thumbDownButton
+        
+        alertViewController.modalPresentationStyle = .fullScreen
+        if let vc = self.next(ofType: UIViewController.self) { vc.present(alertViewController, animated: true) }
+    }
+    
+    private func alertFailToThumb() {
+        let alert = UIAlertController(title: nil, message: "당일 학식 정보에 대해서만 평가 가능", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        if let vc = self.next(ofType: UIViewController.self) { vc.present(alert, animated: true) }
+    }
+    
     // 맛있어요 클릭
     @objc func thumbUpButtonDidTap() {
+        if !isToday { alertFailToThumb(); return }
+        
         guard let day = data.toDay else {return}
-//        guard let classification = data.classification else {return}
+        guard let type = data.mealType else {return}
         
         if thumbUpButton.isSelected {
-//            if let type = data.type {UserDefaults.standard.set(0, forKey: day+classification+type)}
-//            else {UserDefaults.standard.set(0, forKey: day+classification)}
+            UserDefaults.standard.set(0, forKey: day+type)
         } else {
-//            if let type = data.type {UserDefaults.standard.set(1, forKey: day+classification+type)}
-//            else {UserDefaults.standard.set(1, forKey: day+classification)}
+            showThumbPopupView(emphasisText: (thumbUpButton.titleLabel)!.text!)
         }
         setUpButtons()
-        UIDevice.vibrate()
     }
     // 맛없어요 클릭
     @objc func thumbDownButtonDidTap() {
+        if !isToday { alertFailToThumb(); return }
+        
         guard let day = data.toDay else {return}
-//        guard let classification = data.classification else {return}
+        guard let type = data.mealType else {return}
         
         if thumbDownButton.isSelected {
-//            if let type = data.type {UserDefaults.standard.set(0, forKey: day+classification+type)}
-//            else {UserDefaults.standard.set(0, forKey: day+classification)}
+            UserDefaults.standard.set(0, forKey: day+type)
         } else {
-//            if let type = data.type {UserDefaults.standard.set(2, forKey: day+classification+type)}
-//            else {UserDefaults.standard.set(2, forKey: day+classification)}
+            showThumbPopupView(emphasisText: (thumbDownButton.titleLabel)!.text!)
         }
         setUpButtons()
-        UIDevice.vibrate()
     }
     // MARK: - Functions
     func setUpButtons() {
         guard let data = self.data else {return}
         guard let day = data.toDay else {return}
-//        guard let classification = data.classification else {return}
+        guard let type = data.mealType else {return}
         
         var selected = 0
         
         if let type = data.mealType {
-//            selected = UserDefaults.standard.integer(forKey: day+classification+type) ?? 0
+            selected = UserDefaults.standard.integer(forKey: day+type) ?? 0
         } else {
-//            selected = UserDefaults.standard.integer(forKey: day+classification) ?? 0
+            selected = UserDefaults.standard.integer(forKey: day+type) ?? 0
         }
-        
+        print("selected - \(selected)")
         switch selected {
         case 1:
             thumbUpButton.isSelected = true
