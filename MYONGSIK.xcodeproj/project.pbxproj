@@ -58,6 +58,8 @@
 		23EACC2E290B2445007D229C /* WeekViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EACC2D290B2445007D229C /* WeekViewModel.swift */; };
 		58A23E1C2028CBEE0CA8BC47 /* Pods_MYONGSIKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */; };
 		92033E7EAD47D14ADA175F1B /* Pods_MYONGSIK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */; };
+		A23DA70729A7EFEA003FDA56 /* RegisterUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70629A7EFEA003FDA56 /* RegisterUUID.swift */; };
+		A23DA70929A7F1AD003FDA56 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70829A7F1AD003FDA56 /* UserModel.swift */; };
 		A23F2DAF29A2F9080046ED70 /* SubmitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DAE29A2F9080046ED70 /* SubmitData.swift */; };
 		A23F2DB129A2F9750046ED70 /* SubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */; };
 		A23F2DB829A3131C0046ED70 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DB729A3131C0046ED70 /* SplashViewController.swift */; };
@@ -147,6 +149,8 @@
 		6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7595CF6EE606B781645AD9EB /* Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; sourceTree = "<group>"; };
 		77CEA1CD0123C0563A94A6E1 /* Pods-MYONGSIK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.debug.xcconfig"; sourceTree = "<group>"; };
+		A23DA70629A7EFEA003FDA56 /* RegisterUUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUUID.swift; sourceTree = "<group>"; };
+		A23DA70829A7F1AD003FDA56 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		A23F2DAE29A2F9080046ED70 /* SubmitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitData.swift; path = "../../../../../iOS 2/MYONGSIK/Source/Domain/Entity/SubmitData.swift"; sourceTree = "<group>"; };
 		A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitViewController.swift; path = ../ViewModels/SubmitViewController.swift; sourceTree = "<group>"; };
 		A23F2DB729A3131C0046ED70 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -368,6 +372,7 @@
 		2373E4ED290AD20300D51B8E /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				A23DA70629A7EFEA003FDA56 /* RegisterUUID.swift */,
 				23166A7128FECD9D002AEFB7 /* AppDelegate.swift */,
 				23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */,
 				23A7C669290AADE900351D16 /* InfoPlist */,
@@ -382,6 +387,7 @@
 				238F562E2910A6D60044214F /* KakaoMapModel.swift */,
 				231161192911807A00AD73D2 /* HeartListData.swift */,
 				A23F2DAE29A2F9080046ED70 /* SubmitData.swift */,
+				A23DA70829A7F1AD003FDA56 /* UserModel.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -592,6 +598,8 @@
 			dependencies = (
 			);
 			name = MYONGSIK;
+			packageProductDependencies = (
+			);
 			productName = MYONGSIK;
 			productReference = 23166A6E28FECD9C002AEFB7 /* MYONGSIK.app */;
 			productType = "com.apple.product-type.application";
@@ -836,6 +844,7 @@
 				23B9E89B29114532009B6D8F /* TagCollectionViewCell.swift in Sources */,
 				2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */,
 				2311611829117F9D00AD73D2 /* HeartListTableViewCell.swift in Sources */,
+				A23DA70929A7F1AD003FDA56 /* UserModel.swift in Sources */,
 				23C993AA2910945400B8D1E4 /* UITextField.swift in Sources */,
 				238F562D2910A54C0044214F /* KakaoMapDataManager.swift in Sources */,
 				2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */,
@@ -855,6 +864,7 @@
 				2373E4FA290ADA5D00D51B8E /* MainViewModel.swift in Sources */,
 				A23F2DB129A2F9750046ED70 /* SubmitViewController.swift in Sources */,
 				2324102E28FF2C9F0095C0CC /* FormatManager.swift in Sources */,
+				A23DA70729A7EFEA003FDA56 /* RegisterUUID.swift in Sources */,
 				2324102828FF0BCF0095C0CC /* WeekViewController.swift in Sources */,
 				23451DEB29117355006AE030 /* WebViewController.swift in Sources */,
 				238F56312910AA0F0044214F /* MainBaseViewController.swift in Sources */,

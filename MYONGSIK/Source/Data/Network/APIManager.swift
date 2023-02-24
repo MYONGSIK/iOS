@@ -70,10 +70,11 @@ class APIManager {
         
     }
     
-    func postData<T: Codable>(urlEndpointString: String,
-                              dataType: T.Type,
-                              parameter: T,
-                              completionHandler: @escaping (APIModel<T>) -> Void) {
+    func postData<T: Codable, R: Decodable>(urlEndpointString: String,
+                                            dataType: T.Type,
+                                            responseType: R.Type,
+                                            parameter: T,
+                                            completionHandler: @escaping (APIModel<R>) -> Void) {
         
         guard let url = URL(string: Constants.DevelopURL + urlEndpointString) else { return }
 
@@ -82,13 +83,15 @@ class APIManager {
                      method: .post,
                      parameters: parameter,
                      encoder: .json)
-            .responseDecodable(of: APIModel<T>.self) { response in
-                switch response.result {
-                case .success(let success):
-                    completionHandler(success)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
+            .responseDecodable(of: APIModel<R>.self) { response in
+//                switch response.result {
+//                case .success(let success):
+//                    completionHandler(success)
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                }
+                print(response)
+//                completionHandler(response)
             }
             .resume()
     }

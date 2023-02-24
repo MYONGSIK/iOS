@@ -13,7 +13,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // MARK: LaunchScreen        
+        // MARK: LaunchScreen
+        // 각 상황별로 실행할 작업을 클로저 내에 작성
+        let uuid = UIDevice.current.identifierForVendor!.uuidString
+        checkAppFirstrunOrUpdateStatus {
+//            print("앱 설치 후 최초 실행할때만 실행됨")
+            print("앱 설치 후 최초 UUID - \(uuid)")
+            registerUser(uuid: uuid)
+            // TODO: user register by uuid
+        } updated: {
+//            print("버전 변경시마다 실행됨")
+            print("앱 버전 변경 후 최초 UUID - \(uuid)")
+            registerUser(uuid: uuid)
+            // TODO: user register by uuid
+//            registerUser(uuid: uuid)
+        } nothingChanged: {
+            print("변경 사항 없음")
+        }
+        
         return true
     }
 
