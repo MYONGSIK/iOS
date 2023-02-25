@@ -20,11 +20,11 @@ class MainViewController: MainBaseViewController {
     let scrolleView = UIScrollView()
     let contentView = UIView()
     
-    let adImageView = UIView().then{
-        $0.backgroundColor = .systemGray4
-        $0.layer.cornerRadius = 15
-    }
-    
+//    let adImageView = UIView().then{
+//        $0.backgroundColor = .systemGray4
+//        $0.layer.cornerRadius = 15
+//    }
+
     var tableView: UITableView!
     
     let titleView = UIView().then {
@@ -235,7 +235,7 @@ class MainViewController: MainBaseViewController {
     func setUpView() {
         self.view.addSubview(scrolleView)
         scrolleView.addSubview(contentView)
-        contentView.addSubview(adImageView)
+//        contentView.addSubview(adImageView)
         contentView.addSubview(titleView)
         contentView.addSubview(changeDayButtonView)
         contentView.addSubview(tableView)
@@ -259,15 +259,16 @@ class MainViewController: MainBaseViewController {
             $0.centerX.top.bottom.equalToSuperview()
         }
 
-        adImageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(15)
-            $0.trailing.equalToSuperview().inset(15)
-            $0.height.equalTo(70)
-        }
+//        adImageView.snp.makeConstraints {
+//            $0.top.equalToSuperview()
+//            $0.leading.equalToSuperview().offset(15)
+//            $0.trailing.equalToSuperview().inset(15)
+//            $0.height.equalTo(70)
+//        }
         
         titleView.snp.makeConstraints {
-            $0.top.equalTo(adImageView.snp.bottom).offset(5)
+//            $0.top.equalTo(adImageView.snp.bottom).offset(5)
+            $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
             $0.height.equalTo(75)
             $0.width.equalToSuperview().multipliedBy(0.8)

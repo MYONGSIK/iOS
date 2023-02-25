@@ -64,6 +64,7 @@ class SplashViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
         self.view.addSubview(titleImgView)
         campusButtonStackView.addSubview(seoulCampusButton)
         campusButtonStackView.addSubview(yonginCampusButton)
