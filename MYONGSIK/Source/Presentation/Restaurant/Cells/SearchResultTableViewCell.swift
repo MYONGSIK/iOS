@@ -51,13 +51,13 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.textColor = .signatureBlue
     }
-    let heartButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "heart"), for: .normal)
-        $0.setImage(UIImage(systemName: "heart.fill"), for: .selected)
-        $0.tintColor = .lightGray
-        
-        $0.addTarget(self, action: #selector(didTapHeartButton(_:)), for: .touchUpInside)
-    }
+//    let heartButton = UIButton().then {
+//        $0.setImage(UIImage(systemName: "heart"), for: .normal)
+//        $0.setImage(UIImage(systemName: "heart.fill"), for: .selected)
+//        $0.tintColor = .lightGray
+//
+//        $0.addTarget(self, action: #selector(didTapHeartButton(_:)), for: .touchUpInside)
+//    }
     let pinImage = UIImageView().then{
         $0.image = UIImage(named: "pin")
     }
@@ -110,7 +110,7 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.addSubview(dotLabel)
         backView.addSubview(placeCategoryLabel)
         backView.addSubview(distanceLabel)
-        backView.addSubview(heartButton)
+//        backView.addSubview(heartButton)
         
         backView.addSubview(goLinkButton)
         
@@ -145,11 +145,11 @@ class SearchResultTableViewCell: UITableViewCell {
             make.centerY.equalTo(placeCategoryLabel)
             make.trailing.lessThanOrEqualToSuperview().offset(-20)  //
         }
-        heartButton.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview().inset(20)
-            make.leading.equalTo(distanceLabel.snp.trailing).offset(5)
-            make.width.height.equalTo(30)
-        }
+//        heartButton.snp.makeConstraints { make in
+//            make.top.trailing.equalToSuperview().inset(20)
+//            make.leading.equalTo(distanceLabel.snp.trailing).offset(5)
+//            make.width.height.equalTo(30)
+//        }
         goLinkButton.snp.makeConstraints { make in
             make.width.equalTo(100)
             make.height.equalTo(30)
