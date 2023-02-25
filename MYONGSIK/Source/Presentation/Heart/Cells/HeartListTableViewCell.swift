@@ -74,7 +74,7 @@ class HeartListTableViewCell: UITableViewCell {
     }
     func setUpConstraint() {
         backView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(20)
             make.top.bottom.equalToSuperview().inset(9)
         }
         placeNameLabel.snp.makeConstraints { make in

@@ -12,6 +12,13 @@ import RealmSwift
 class HeartViewController: MainBaseViewController {
     
     // MARK: Life Cycles
+    let emptyLabel = UILabel().then {
+        $0.text = "찜꽁리스트가 비어있어요! \n맛집을 찜꽁해 나만의 맛집 리스트를 만들어봐요!"
+        $0.numberOfLines = 0
+        $0.textColor = .lightGray
+        $0.font = UIFont.NotoSansKR(size: 14, family: .Bold)
+        $0.textAlignment = .center
+    }
     var heartTableView: UITableView!
     var heartListData: [HeartListModel] = []
     let realm = try! Realm()
@@ -35,6 +42,8 @@ class HeartViewController: MainBaseViewController {
         // DATA
         self.heartListData.removeAll()
         getHeartData()
+        setUpView()
+        setUpConstraint()
     }
     // MARK: Functions
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
@@ -52,6 +61,7 @@ class HeartViewController: MainBaseViewController {
         }
     }
     func setUpView() {
+        self.view.addSubview(emptyLabel)
         self.view.addSubview(heartTableView)
     }
     func setUpConstraint() {
@@ -59,6 +69,23 @@ class HeartViewController: MainBaseViewController {
             make.top.equalTo(super.navigationImgView.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        if heartListData.count == 0 {
+            heartTableView.isHidden = true
+            emptyLabel.isHidden = false
+            
+            emptyLabel.snp.makeConstraints {
+                $0.centerX.centerY.equalToSuperview()
+            }
+        } else {
+            heartTableView.isHidden = false
+            emptyLabel.isHidden = true
+            
+            heartTableView.snp.makeConstraints { make in
+                make.top.equalTo(super.navigationImgView.snp.bottom).offset(20)
+                make.leading.trailing.equalToSuperview()
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            }
         }
     }
 }
