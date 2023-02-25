@@ -161,10 +161,13 @@ class SubmitViewController: UIViewController {
         if let submitted = self.inputTextView.text {
             
             let phoneId = UIDevice.current.identifierForVendor!.uuidString
-            let mealId = self.mealInfo?.mealId ?? -1
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            let registeredAt = formatter.string(from: Date())
             
             let param = SubmitModel(writerId: phoneId,
-                                    mealId: mealId, 
+                                    registeredAt: registeredAt,
                                     content: submitted)
             APIManager.shared.postData(urlEndpointString: "/api/v2/reviews",
                                        dataType: SubmitModel.self,
