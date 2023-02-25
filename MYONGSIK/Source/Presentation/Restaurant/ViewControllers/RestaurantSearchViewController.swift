@@ -146,6 +146,10 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         let itemIdx = indexPath.item
+        // MARK: 맛집 검색 결과 셀의 찜 버튼 임시 제거
+        cell.heartButton.isHidden = true
+        cell.heartButton.isEnabled = false
+        //
         cell.setUpData(self.searchResult[itemIdx])
         return cell
     }

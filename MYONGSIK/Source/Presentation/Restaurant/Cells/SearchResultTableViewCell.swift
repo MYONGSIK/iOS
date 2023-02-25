@@ -141,12 +141,11 @@ class SearchResultTableViewCell: UITableViewCell {
             make.centerY.equalTo(placeCategoryLabel)
             make.trailing.lessThanOrEqualToSuperview().offset(-20)  //
         }
-        // MARK: 맛집 검색 결과 셀의 찜 버튼 임시 제거
-//        heartButton.snp.makeConstraints { make in
-//            make.top.trailing.equalToSuperview().inset(20)
-//            make.leading.equalTo(distanceLabel.snp.trailing).offset(5)
-//            make.width.height.equalTo(30)
-//        }
+        heartButton.snp.makeConstraints { make in
+            make.top.trailing.equalToSuperview().inset(20)
+            make.leading.equalTo(distanceLabel.snp.trailing).offset(5)
+            make.width.height.equalTo(30)
+        }
         goLinkButton.snp.makeConstraints { make in
             make.width.equalTo(100)
             make.height.equalTo(30)
