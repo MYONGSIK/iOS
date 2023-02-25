@@ -111,14 +111,14 @@ class HeartListTableViewCell: UITableViewCell {
 //            make.centerY.equalTo(goLinkImageButton)
 //        }
         heartButton.snp.makeConstraints {
-            $0.width.height.equalTo(50)
-            $0.trailing.equalToSuperview()
+            $0.width.height.equalTo(30)
+            $0.trailing.equalToSuperview().inset(5)
             $0.centerY.equalTo(dotLabel)
         }
         placeCategoryLabel.snp.makeConstraints { make in
             make.leading.equalTo(dotLabel.snp.trailing)
             make.centerY.equalTo(dotLabel)
-//            make.trailing.lessThanOrEqualTo(heartButton.snp.leading).offset(-15)
+            make.trailing.lessThanOrEqualTo(heartButton.snp.leading).offset(-15)
         }
         
     }
