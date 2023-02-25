@@ -98,12 +98,13 @@ extension HeartViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HeartListTableViewCell", for: indexPath) as? HeartListTableViewCell else { return UITableViewCell() }
         let itemIdx = indexPath.item
+        cell.delegate = self
         cell.setUpData(self.heartListData[itemIdx])
         cell.selectionStyle = .none
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 118
+        return 90
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         UIDevice.vibrate()
@@ -142,4 +143,23 @@ extension HeartViewController {
                           self.heartTableView.reloadData()},
                           completion: nil);
     }
+}
+
+extension HeartViewController: HeartListDelegate {
+    func deleteHeart(placeName: String) {
+
+        let predicate = NSPredicate(format: "placeName = %@", placeName)
+        let objc = realm.objects(HeartListData.self).filter(predicate)
+        try! realm.write { realm.delete(objc) }
+
+        
+        heartListData = []
+        getHeartData()
+    }
+    
+    func reloadTableView() {
+        self.heartTableView.reloadData()
+    }
+    
+    
 }
