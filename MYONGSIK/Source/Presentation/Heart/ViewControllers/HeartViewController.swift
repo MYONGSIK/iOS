@@ -155,6 +155,7 @@ extension HeartViewController: HeartListDelegate {
         
         heartListData = []
         getHeartData()
+        setUpConstraint()
     }
     
     func reloadTableView() {
