@@ -11,9 +11,20 @@ import Then
 
 // MARK: '오늘의 학식' 페이지
 class MainViewController: MainBaseViewController {
+    // MARK: - Variables
+
     var isToday: Bool = true
-    var selectedResName: String?
+    var isWeekend: Bool = false
     var isFoodDataIsEmpty: Bool = false
+
+    var selectedResName: String?
+    
+    var startDay: Date?
+    var endDay: Date?
+    
+    var mainTableView: UITableView!
+    var foodData: [DayFoodModel]? = []
+    var weekFoodData: [DayFoodModel]? = []
     
     
     // MARK: - Views
@@ -32,7 +43,7 @@ class MainViewController: MainBaseViewController {
     }
 
     lazy var titleLabel = UILabel().then{
-        $0.text = "오늘의 학식  |  \(getTodayDataText(date: Date()))"
+        $0.text = "오늘의 학식  |  "
         $0.font = UIFont.NotoSansKR(size: 22, family: .Bold)
         $0.textColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)
     }
@@ -64,46 +75,7 @@ class MainViewController: MainBaseViewController {
         $0.tintColor = .signatureBlue
         $0.addTarget(self, action: #selector(didTapGoAfterButton(_:)), for: .touchUpInside)
     }
-    
-    private func setArrowButtons(currentPageControl: Int) {
-        goBeforeButton.isEnabled = true; goBeforeButton.tintColor = .signatureBlue
-        goAfterButton.isEnabled = true; goAfterButton.tintColor = .signatureBlue
-        switch currentPageControl {
-        case 0:
-            goBeforeButton.isEnabled = false; goBeforeButton.tintColor = .lightGray
-        case 4:
-            goAfterButton.isEnabled = false; goAfterButton.tintColor = .lightGray
-        default:
-            return
-        }
-    }
-    
-    @objc private func didTapGoBeforeButton(_ sender: UIButton) { didTapChangeDateButton(value: -1) }
-    @objc private func didTapGoAfterButton(_ sender: UIButton) { didTapChangeDateButton(value: 1) }
-    
-    private func didTapChangeDateButton(value: Int) {
-        tablePageControl.currentPage += value
-        setArrowButtons(currentPageControl: tablePageControl.currentPage)
-        
-        // set titleLabel
-        let date = Calendar.current.date(byAdding: .day, value: tablePageControl.currentPage, to: startDay!)
-        titleLabel.text  = "오늘의 학식  |  \(getTodayDataText(date: date!))"
-        
-        // set daily food data
-        let today = Calendar.current.date(byAdding: .day, value: 4, to: startDay!)
-        if date == today { isToday = true }
-        else { isToday = false }
-        
-        self.foodData = getDailyFoodData(date: date!)
-        checkDataIsEmpty()
-        
-        tableView.reloadData()
-        tableView.snp.updateConstraints{
-            $0.height.equalTo(foodData!.count * 170 + 50)
-        }
-    }
-    
-    
+
     let tablePageControl = UIPageControl().then {
         $0.numberOfPages = 5
         $0.pageIndicatorTintColor = .lightGray
@@ -133,21 +105,13 @@ class MainViewController: MainBaseViewController {
         
         $0.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
     }
-    
-    @objc private func pageChanged(_ sender: UIPageControl) { print("pageChanged") }
-    
+
     // MARK: - Life Cycles
-    var startDay: Date?
-    var endDay: Date?
-    
-    var mainTableView: UITableView!
-    var foodData: [DayFoodModel]? = []
-    var weekFoodData: [DayFoodModel]? = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setSelectedRes()
+        setWeekDateData()
         
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
@@ -157,23 +121,21 @@ class MainViewController: MainBaseViewController {
         setUpView()
         setUpConstraint()
         
-        setWeekDateData()
         fetchWeekData()
         fetchDailyData()
         
         tableView.snp.updateConstraints{ $0.height.equalTo(foodData!.count * 170 + 50) }
     }
     
+
+    // MARK: - Functions
     private func setSelectedRes() {
         if let userCampus = UserDefaults.standard.value(forKey: "userCampus") {
             switch userCampus as! String {
-            case Campus.seoul.rawValue:
+            case CampusInfo.seoul.name:
                 selectedResName = SeoulRestaurant.mcc.rawValue
-                print("인문캠 선택 - 식당 :: \(selectedResName!)")
-            case Campus.yongin.rawValue:
-                print("자연캠 선택 - 식당 :: \(selectedResName)")
-            default:
-                return
+            case CampusInfo.yongin.name: return
+            default: return
             }
         }
     }
@@ -184,10 +146,20 @@ class MainViewController: MainBaseViewController {
                                   dataType: APIModel<[DayFoodModel]>?.self,
                                   parameter: nil,
                                   completionHandler: { [weak self] result in
-            self?.foodData = result?.data
-            self?.checkDataIsEmpty()
-            self?.tableView.reloadData()
+            switch result?.httpCode {
+            case 200:
+                // set TableView
+                self?.foodData = result?.data
+                self?.tableView.reloadData()
+                
+            case 405, 500:
+                self?.showAlert(message: result?.message ?? "금일 식당운영을 하지 않습니다")
+            default:
+                self?.showAlert(message: "네트워크 오류 - error code : \(result?.httpCode)")
+                return
+            }
             
+            self?.checkDataIsEmpty()
             self?.tableView.snp.updateConstraints{
                 $0.height.equalTo((self?.foodData?.count) ?? 0 * 170 + 50)
             }
@@ -211,13 +183,6 @@ class MainViewController: MainBaseViewController {
         })
     }
 
-    // MARK: - Actions
-    @objc func calenderButtonDidTap() {
-        UIDevice.vibrate()
-        let vc = WeekViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    // MARK: - Functions
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
         tableView = UITableView()
         tableView.then{
@@ -332,45 +297,44 @@ class MainViewController: MainBaseViewController {
             submitButton.isHidden = false
         }
     }
-}
+    
+    private func setArrowButtons(currentPageControl: Int) {
+//        print("tablePageControl.currentPage - \(tablePageControl.currentPage)")
 
-// MARK: - TableView delegate
-extension MainViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let data = self.foodData {
-            isFoodDataIsEmpty = false
-            return data.count
-        } else {
-            isFoodDataIsEmpty = true
-            
-            let alert = UIAlertController(title: nil, message: "불러올 학식 정보가 없거나, \n학식 정보를 불러오는데 실패하였습니다", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default))
-            present(alert, animated: true)
-            
-            return 0
+        goBeforeButton.isEnabled = true; goBeforeButton.tintColor = .signatureBlue
+        goAfterButton.isEnabled = true; goAfterButton.tintColor = .signatureBlue
+        switch currentPageControl {
+        case 0:
+            goBeforeButton.isEnabled = false; goBeforeButton.tintColor = .lightGray
+        case tablePageControl.numberOfPages-1:
+            goAfterButton.isEnabled = false; goAfterButton.tintColor = .lightGray
+        default:
+            return
         }
     }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
-        cell.selectionStyle = .none
-
-        let itemIdx = indexPath.item
-        print("itemIdx :: \(itemIdx)")
-        if let foodData = self.foodData {
-            cell.data = foodData[itemIdx]
-            cell.isToday = self.isToday
-            cell.setUpData()
-            cell.setUpButtons()
+    private func didTapChangeDateButton(value: Int) {
+        tablePageControl.currentPage += value
+        setArrowButtons(currentPageControl: tablePageControl.currentPage)
+        
+        // set titleLabel
+        print("tablePageControl.currentPage - \(tablePageControl.currentPage)")
+        let date = Calendar.current.date(byAdding: .day, value: tablePageControl.currentPage, to: startDay!)
+        titleLabel.text  = "오늘의 학식  |  \(getTodayDataText(date: date!))"
+        
+        // set daily food data
+        let today = Calendar.current.date(byAdding: .day, value: 4, to: startDay!)
+        if date == today { isToday = true }
+        else { isToday = false }
+        
+        self.foodData = getDailyFoodData(date: date!)
+        checkDataIsEmpty()
+        
+        tableView.reloadData()
+        tableView.snp.updateConstraints{
+            $0.height.equalTo(foodData!.count * 170 + 50)
         }
-        return cell
-
     }
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//    }
-
     
     func setSubmitButtonCell(_ cell: UITableViewCell) {
 
@@ -407,7 +371,18 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         submitButton.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
         
     }
+    
+    // MARK: - Actions
+    @objc private func pageChanged(_ sender: UIPageControl) { print("pageChanged") }
 
+    @objc private func didTapGoBeforeButton(_ sender: UIButton) { didTapChangeDateButton(value: -1) }
+    @objc private func didTapGoAfterButton(_ sender: UIButton) { didTapChangeDateButton(value: 1) }
+    
+    @objc func calenderButtonDidTap() {
+        UIDevice.vibrate()
+        let vc = WeekViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
     @objc func submitButtonTapped(_ sender: UIButton){
         let submitViewController = SubmitViewController()
@@ -417,6 +392,47 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         self.present(submitViewController, animated: true)
     }
 }
+
+// MARK: - TableView delegate
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let data = self.foodData {
+            isFoodDataIsEmpty = false
+            return data.count
+        } else {
+            isFoodDataIsEmpty = true
+            
+            let alert = UIAlertController(title: nil, message: "불러올 학식 정보가 없습니다", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default))
+            present(alert, animated: true)
+            
+            return 0
+        }
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
+        cell.selectionStyle = .none
+
+        let itemIdx = indexPath.item
+//        print("itemIdx :: \(itemIdx)")
+        if let foodData = self.foodData {
+            cell.data = foodData[itemIdx]
+            cell.isToday = self.isToday
+            cell.isWeekend = self.isWeekend
+            cell.setUpData()
+            cell.setUpButtons()
+        }
+        return cell
+
+    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: true)
+//    }
+
+}
+
 // MARK: - API Success
 extension MainViewController {
     // 데이터 처리
@@ -459,12 +475,6 @@ extension MainViewController {
             $0.font = UIFont.NotoSansKR()
             $0.textColor = .signatureBlue
         }
-//        let dayOfTheWeek = UILabel().then{
-//            if let dayOfWeek = result.dayOfTheWeek {$0.text = dayOfWeek}
-//            $0.text = "dayOfWeek"
-//            $0.font = UIFont.NotoSansKR()
-//            $0.textColor = .signatureBlue
-//        }
         let messageLabel = UILabel().then{
             if let message = result.message {$0.text = message}
             $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
@@ -473,7 +483,6 @@ extension MainViewController {
         let backgroudView = UIView(frame: CGRect(x: 0, y: 0, width: mainTableView.bounds.width, height: mainTableView.bounds.height))
         backgroudView.addSubview(backView)
         backView.addSubview(date)
-//        backView.addSubview(dayOfTheWeek)
         backView.addSubview(messageLabel)
         
         backView.snp.makeConstraints { make in
@@ -485,10 +494,6 @@ extension MainViewController {
             make.leading.equalToSuperview().offset(23)
             make.top.equalToSuperview().offset(19)
         }
-//        dayOfTheWeek.snp.makeConstraints { make in
-//            make.centerY.equalTo(date)
-//            make.leading.equalTo(date.snp.trailing).offset(3)
-//        }
         messageLabel.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
@@ -503,6 +508,7 @@ extension MainViewController {
     func getTodayDataText(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM월 dd일"
+        formatter.timeZone = TimeZone(identifier: "UTC")
         return formatter.string(from: date)
     }
 }
@@ -510,6 +516,7 @@ extension MainViewController {
 extension MainViewController {
     private func setWeekDateData() {
         let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
         dateFormatter.dateFormat = "EE"
         
         let today = Date()
@@ -529,11 +536,27 @@ extension MainViewController {
         case "금":
             startDay = Calendar.current.date(byAdding: .day, value: -4, to: today)
             tablePageControl.currentPage = 4
+        case "토":
+            isWeekend = true
+            startDay = Calendar.current.date(byAdding: .day, value: -5, to: today)
+            tablePageControl.currentPage = 4
+            showAlert(message: "주말에는 학생식당을 운영하지 않습니다.")
+        case "일":
+            isWeekend = true
+            startDay = Calendar.current.date(byAdding: .day, value: -6, to: today)
+            tablePageControl.currentPage = 4
+            showAlert(message: "주말에는 학생식당을 운영하지 않습니다.")
         default: return
         }
         setArrowButtons(currentPageControl: tablePageControl.currentPage)
         
-        endDay = Calendar.current.date(byAdding: .day, value: 5, to: startDay!)
+        endDay = Calendar.current.date(byAdding: .day, value: 4, to: startDay!)
+        
+        print("tablePageControl.currentPage - \(tablePageControl.currentPage)")
+        print("start day - \(startDay)")
+        print("end day - \(endDay)")
+        
+        if isWeekend { titleLabel.text = "오늘의 학식  |  \(getTodayDataText(date: endDay!))" }
     }
     
     private func getDailyFoodData(date: Date) -> [DayFoodModel] {
@@ -541,16 +564,13 @@ extension MainViewController {
         formatter.dateFormat = "yyyy-MM-dd"
         let filterDate = formatter.string(from: date)
         
-        // TODO: filterDate(0000-00-00)과 toDay의 값이 같은 DayFoodModel만 필터링
-//        let testData = [
-//            DayFoodModel(mealType: "LUNCH_A", meals: [ "22-meal1", "22-meal2", "22-meal3" ], statusType: "OPEN", toDay: "2023-02-22"),
-//            DayFoodModel(mealType: "LUNCH_A", meals: [ "23-meal1", "23-meal2", "23-meal3" ], statusType: "OPEN", toDay: "2023-02-23"),
-//            DayFoodModel(mealType: "LUNCH_B", meals: [ "23-meal1", "23-meal2", "23-meal3" ], statusType: "OPEN", toDay: "2023-02-23"),
-//            DayFoodModel(mealType: "DINNER", meals: [ "24-meal1", "24-meal2", "24-meal3" ], statusType: "OPEN", toDay: "2023-02-24"),
-//            DayFoodModel(mealType: "LUNCH_A", meals: [ "20-meal1", "20-meal2", "20-meal3" ], statusType: "OPEN", toDay: "2023-02-20"),
-//            DayFoodModel(mealType: "LUNCH_A", meals: [ "21-meal1", "21-meal2", "21-meal3" ], statusType: "OPEN", toDay: "2023-02-21"),
-//        ]
         if let weekFoodData = self.weekFoodData { return weekFoodData.filter { $0.toDay == filterDate } }
         return []
+    }
+    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
     }
 }

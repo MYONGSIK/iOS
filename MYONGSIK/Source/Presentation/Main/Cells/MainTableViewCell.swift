@@ -11,6 +11,7 @@ import RxCocoa
 
 class MainTableViewCell: UITableViewCell {
     var isToday: Bool = true
+    var isWeekend: Bool = false
     
     // MARK: - Views
     let backView = UIView().then{
@@ -106,16 +107,16 @@ class MainTableViewCell: UITableViewCell {
         alertViewController.modalPresentationStyle = .fullScreen
         if let vc = self.next(ofType: UIViewController.self) { vc.present(alertViewController, animated: true) }
     }
-    
-    private func alertFailToThumb() {
-        let alert = UIAlertController(title: nil, message: "당일 학식 정보에 대해서만 평가 가능", preferredStyle: .alert)
+
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default))
         if let vc = self.next(ofType: UIViewController.self) { vc.present(alert, animated: true) }
     }
     
     // 맛있어요 클릭
     @objc func thumbUpButtonDidTap() {
-        if !isToday { alertFailToThumb(); return }
+        if !isToday || isWeekend { showAlert(message: "당일 학식 정보에 대해서만 평가 가능"); return }
         
         guard let day = data.toDay else {return}
         guard let type = data.mealType else {return}
@@ -131,8 +132,8 @@ class MainTableViewCell: UITableViewCell {
     }
     // 맛없어요 클릭
     @objc func thumbDownButtonDidTap() {
-        if !isToday { alertFailToThumb(); return }
-        
+        if !isToday || isWeekend { showAlert(message: "당일 학식 정보에 대해서만 평가 가능"); return }
+
         guard let day = data.toDay else {return}
         guard let type = data.mealType else {return}
         

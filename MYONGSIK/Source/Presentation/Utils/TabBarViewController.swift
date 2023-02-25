@@ -44,7 +44,7 @@ class TabBarViewController: UITabBarController {
     
     func isYonginCampus() -> Bool {
         if let userCampus = UserDefaults.standard.object(forKey: "userCampus") {
-            if userCampus as! String == Campus.yongin.rawValue { return true }
+            if userCampus as! String == CampusInfo.yongin.name { return true }
         } 
         return false
     }

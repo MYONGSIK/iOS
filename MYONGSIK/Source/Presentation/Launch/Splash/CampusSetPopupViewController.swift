@@ -12,10 +12,10 @@ class CampusSetPopupViewController: PopupBaseVIewController {
         super.didTapConfirmButton(sender)
         
         switch super.emphasisText! {
-        case Campus.seoul.rawValue:
-            UserDefaults.standard.set(Campus.seoul.rawValue, forKey: "userCampus")
-        case Campus.yongin.rawValue:
-            UserDefaults.standard.set(Campus.yongin.rawValue, forKey: "userCampus")
+        case CampusInfo.seoul.name:
+            UserDefaults.standard.set(CampusInfo.seoul.name, forKey: "userCampus")
+        case CampusInfo.yongin.name:
+            UserDefaults.standard.set(CampusInfo.yongin.name, forKey: "userCampus")
         default:
             print("ERROR :: fail to set campus")
             return
