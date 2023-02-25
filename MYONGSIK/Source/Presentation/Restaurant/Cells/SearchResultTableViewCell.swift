@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import RealmSwift
 
 // MARK: 검색 페이지 > 검색 결과 셀
 class SearchResultTableViewCell: UITableViewCell {
+    let realm = try! Realm()
+    var data: HeartListModel?
+    
     // MARK: Views
     let howManyLikeLabel = UILabel().then {
         $0.text = "명지대 학생 중 00명이 담았어요!"
@@ -175,13 +179,23 @@ class SearchResultTableViewCell: UITableViewCell {
     @objc func didTapHeartButton(_ sender: UIButton) {
         print("식당 좋아요 버튼 탭함")
         sender.isSelected = !sender.isSelected
-        if sender.isSelected { sender.tintColor = .systemPink }
-        if !sender.isSelected { sender.tintColor = .lightGray }
-        // TODO: 식당 좋아요 정보 서버 POST ?
+        if sender.isSelected {
+            sender.tintColor = .systemPink
+            addHeartData(data: self.data)   // 로컬에 찜 추가
+        }
+        if !sender.isSelected {
+            sender.tintColor = .lightGray
+            deleteHeartData(data: self.data)    // 로컬에 찜 삭제
+        }
+        // TODO: 식당 좋아요 정보 서버 POST -> 업데이트 예정
     }
     
     // MARK: 서버에서 데이터를 받아온 후 출력시킵니다.
     func setUpData(_ data: KakaoResultModel) {
+        self.data = HeartListModel(placeName: data.place_name ?? nil,
+                                   category: data.category_group_name ?? nil,
+                                   placeUrl: data.place_url ?? nil)
+        
         if let placeName = data.place_name {self.placeNameLabel.text = placeName}
         if let category = data.category_group_name {self.placeCategoryLabel.text = category}
         if let distance = data.distance {
@@ -201,6 +215,26 @@ class SearchResultTableViewCell: UITableViewCell {
         if let phone = data.phone {
             self.phoneNumLabel.text = phone
             if phone == "" {self.phoneNumLabel.text = "전화번호가 없습니다."}
+        }
+    }
+    
+    func addHeartData(data: HeartListModel?) {
+        if let data = data {
+            
+            let objc = HeartListData()
+            objc.placeName = data.placeName
+            objc.category = data.category
+            objc.placeUrl = data.placeUrl
+            
+            try! realm.write { realm.add(objc) }
+        }
+    }
+    
+    func deleteHeartData(data: HeartListModel?) {
+        if let data = data {
+            let predicate = NSPredicate(format: "placeName = %@", data.placeName)
+            let objc = realm.objects(HeartListData.self).filter(predicate)
+            try! realm.write { realm.delete(objc) }
         }
     }
 }
