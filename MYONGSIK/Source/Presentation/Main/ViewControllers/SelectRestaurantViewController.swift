@@ -19,10 +19,10 @@ class SelectRestaurantViewController: MainBaseViewController {
 //        [YonginRestaurant.academy.rawValue, "11:00~17:30"]
     ]
     
-    let adImageView = UIView().then{
-        $0.backgroundColor = .systemGray4
-        $0.layer.cornerRadius = 15
-    }
+//    let adImageView = UIView().then{
+//        $0.backgroundColor = .systemGray4
+//        $0.layer.cornerRadius = 15
+//    }
     
     var buttonTableView: UITableView!
     
@@ -45,17 +45,18 @@ class SelectRestaurantViewController: MainBaseViewController {
     }
     
     func setup() {
-        self.view.addSubview(adImageView)
+//        self.view.addSubview(adImageView)
         self.view.addSubview(buttonTableView)
         
-        adImageView.snp.makeConstraints {
-            $0.top.equalTo(super.navigationImgView.snp.bottom).inset(10)
-            $0.leading.equalToSuperview().offset(15)
-            $0.trailing.equalToSuperview().inset(15)
-            $0.height.equalTo(70)
-        }
+//        adImageView.snp.makeConstraints {
+//            $0.top.equalTo(super.navigationImgView.snp.bottom).inset(10)
+//            $0.leading.equalToSuperview().offset(15)
+//            $0.trailing.equalToSuperview().inset(15)
+//            $0.height.equalTo(70)
+//        }
         buttonTableView.snp.makeConstraints {
-            $0.top.equalTo(adImageView.snp.bottom).offset(5)
+//            $0.top.equalTo(adImageView.snp.bottom).offset(5)
+            $0.top.equalTo(super.navigationImgView.snp.bottom).inset(10)
             $0.leading.equalToSuperview().offset(15)
             $0.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview()

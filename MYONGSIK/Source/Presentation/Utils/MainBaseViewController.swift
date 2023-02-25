@@ -24,6 +24,12 @@ class MainBaseViewController: UIViewController {
         $0.font = UIFont.NotoSansKR(size: 18, family: .Bold)
         $0.textColor = .white
     }
+    
+    let setCampusButton = UIButton().then{
+        $0.setImage(UIImage(systemName: "person.circle"), for: .normal)
+//        $0.tintColor = .white
+        $0.addTarget(self, action: #selector(goSplashView(_:)), for: .touchUpInside)
+    }
 
     // MARK: - Life Cycles
     override func viewDidLoad() {
@@ -37,6 +43,7 @@ class MainBaseViewController: UIViewController {
         
         self.view.addSubview(navigationImgView)
         navigationImgView.addSubview(topLabel)
+        navigationImgView.addSubview(setCampusButton)
 
         navigationImgView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
@@ -44,5 +51,18 @@ class MainBaseViewController: UIViewController {
         topLabel.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
         }
+        setCampusButton.snp.makeConstraints {
+            $0.width.height.equalTo(25)
+            $0.centerY.equalTo(topLabel)
+            $0.leading.equalToSuperview().inset(22)
+        }
+    }
+    
+    @objc func goSplashView(_ sender: UIButton) {
+        UIDevice.vibrate()
+        let splash = SplashViewController()
+        splash.modalPresentationStyle = .fullScreen
+        splash.modalTransitionStyle = .crossDissolve
+        present(splash, animated: true)
     }
 }
