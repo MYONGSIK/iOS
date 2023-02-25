@@ -8,20 +8,15 @@
 import UIKit
 import SnapKit
 
-enum Campus: String {
-case seoul = "인문캠퍼스"
-case yongin = "자연캠퍼스"
-}
 
 enum SeoulRestaurant: String {
-case mcc = "MCC식당"
+    case mcc = "MCC식당"
 }
 
-
 enum YonginRestaurant: String {
-case staff = "교직원식당"
-case dormitory = "생활관식당"
-//case academy = "학관식당"
+    case staff = "교직원식당"
+    case dormitory = "생활관식당"
+    //case academy = "학관식당"
 }
 
 class SplashViewController: UIViewController {
@@ -34,14 +29,14 @@ class SplashViewController: UIViewController {
     let campusButtonStackView = UIStackView()
     
     let seoulCampusButton = UIButton().then {
-        $0.setTitle(Campus.seoul.rawValue, for: .normal)
+        $0.setTitle(CampusInfo.seoul.name, for: .normal)
         $0.titleLabel?.font = UIFont.NotoSansKR(size: 16, family: .Bold)
         $0.layer.backgroundColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1).cgColor
         $0.layer.cornerRadius = 25
     }
     
     let yonginCampusButton = UIButton().then {
-        $0.setTitle(Campus.yongin.rawValue, for: .normal)
+        $0.setTitle(CampusInfo.yongin.name, for: .normal)
         $0.titleLabel?.font = UIFont.NotoSansKR(size: 16, family: .Bold)
         $0.layer.backgroundColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1).cgColor
         $0.layer.cornerRadius = 25
