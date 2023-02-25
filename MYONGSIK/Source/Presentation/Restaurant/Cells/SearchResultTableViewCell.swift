@@ -99,7 +99,7 @@ class SearchResultTableViewCell: UITableViewCell {
 
     // MARK: Functions
     func setUpView() {
-        self.contentView.addSubview(howManyLikeLabel)
+//        self.contentView.addSubview(howManyLikeLabel)
         self.contentView.addSubview(backView)
         
         backView.addSubview(placeNameLabel)
@@ -116,13 +116,14 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.addSubview(phoneNumLabel)
     }
     func setUpConstraint() {
-        howManyLikeLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().inset(15)
-        }
+//        howManyLikeLabel.snp.makeConstraints {
+//            $0.top.leading.equalToSuperview().inset(15)
+//        }
         backView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(15)
-            make.top.equalTo(howManyLikeLabel.snp.bottom).offset(5)
-            make.bottom.equalToSuperview().offset(10)
+//            make.top.equalTo(howManyLikeLabel.snp.bottom).offset(5)
+            make.top.equalToSuperview().offset(10)
+            make.bottom.equalToSuperview().inset(10)
         }
         placeNameLabel.snp.makeConstraints { make in
             make.leading.top.equalToSuperview().inset(22)
@@ -140,11 +141,12 @@ class SearchResultTableViewCell: UITableViewCell {
             make.centerY.equalTo(placeCategoryLabel)
             make.trailing.lessThanOrEqualToSuperview().offset(-20)  //
         }
-        heartButton.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview().inset(20)
-            make.leading.equalTo(distanceLabel.snp.trailing).offset(5)
-            make.width.height.equalTo(30)
-        }
+        // MARK: 맛집 검색 결과 셀의 찜 버튼 임시 제거
+//        heartButton.snp.makeConstraints { make in
+//            make.top.trailing.equalToSuperview().inset(20)
+//            make.leading.equalTo(distanceLabel.snp.trailing).offset(5)
+//            make.width.height.equalTo(30)
+//        }
         goLinkButton.snp.makeConstraints { make in
             make.width.equalTo(100)
             make.height.equalTo(30)
