@@ -6,10 +6,17 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
-class RestaurantMainViewController: BaseViewController {
+// MARK: '명지 맛집' 페이지
+class RestaurantMainViewController: MainBaseViewController {
+    lazy var refreshControl = UIRefreshControl().then {
+        $0.addTarget(self, action: #selector(refreshContentView), for: .valueChanged)
+    }
     let searchButton = UIButton().then{
         $0.setImage(UIImage(named: "search_white"), for: .normal)
+        $0.addTarget(self, action: #selector(goSearchButtonDidTap), for: .touchUpInside)
     }
 
     // MARK: Life Cycles
@@ -18,17 +25,15 @@ class RestaurantMainViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        super.titleLabel.text = "명지맛집"
+        super.topLabel.text = "명지맛집"
         
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
         
-        self.searchButton.addTarget(self, action: #selector(goSearchButtonDidTap), for: .touchUpInside)
     }
     override func viewDidAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
@@ -40,7 +45,7 @@ class RestaurantMainViewController: BaseViewController {
     }
     
     // MARK: Actions
-    @objc func goSearchButtonDidTap() {
+    @objc func goSearchButtonDidTap(_ sender: UIButton) {
         UIDevice.vibrate()
         let vc = RestaurantSearchViewController()
         self.navigationController?.pushViewController(vc, animated: true)
@@ -63,24 +68,80 @@ class RestaurantMainViewController: BaseViewController {
         }
     }
     func setUpView() {
-        super.navigationView.addSubview(searchButton)
-        
+        super.navigationImgView.addSubview(searchButton)
         self.view.addSubview(restaurantMainTableView)
+        restaurantMainTableView.refreshControl = refreshControl
     }
     func setUpConstraint() {
         searchButton.snp.makeConstraints { make in
             make.width.height.equalTo(25)
-            make.centerY.equalTo(titleLabel)
-            make.trailing.equalToSuperview().offset(-22)
+            make.centerY.equalTo(topLabel)
+            make.trailing.equalToSuperview().inset(22)
         }
         restaurantMainTableView.snp.makeConstraints { make in
-            make.top.equalTo(super.navigationView.snp.bottom)
+            make.top.equalTo(super.navigationImgView.snp.bottom).inset(20)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
+    func setSortButtonCell(_ cell: UITableViewCell) {
+        let titleLabel = UILabel().then {
+            $0.text = "#명지인이 선택한 맛집"
+            $0.numberOfLines = 2
+            $0.font = UIFont.NotoSansKR(size: 22, family: .Bold)
+        }
+        
+//        let likeOrder = UIAction(title: "인기순", image: nil, handler: { _ in print("인기순 선택") })
+//        let distanceOrder = UIAction(title: "거리순", image: nil, handler: { _ in print("거리순 선택") })
+//
+//        let sortButton = UIButton(type: .system).then {
+//            $0.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+//            $0.semanticContentAttribute = .forceRightToLeft
+//            $0.tintColor = .gray
+//            $0.layer.cornerRadius = 15
+//
+//            $0.menu = UIMenu(
+//                title: "",
+//                image: nil,
+//                identifier: nil,
+//                options: .displayInline,
+//                children: [likeOrder, distanceOrder]
+//            )
+//            $0.showsMenuAsPrimaryAction = true
+//            $0.changesSelectionAsPrimaryAction = true
+//        }
+        cell.contentView.addSubview(titleLabel)
+//        cell.contentView.addSubview(sortButton)
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(5)
+            $0.leading.equalToSuperview().inset(15)
+        }
+        
+//        sortButton.snp.makeConstraints {
+//            $0.centerY.equalTo(titleLabel)
+//            $0.trailing.equalToSuperview().inset(15)
+//            $0.height.equalTo(30)
+//            $0.width.equalTo(80)
+//        }
+    }
+    @objc private func refreshContentView() {
+        refreshControl.beginRefreshing()
+        DispatchQueue.main.async {
+            self.searchResult.removeAll()
+            KakaoMapDataManager().randomMapDataManager(self)
+        }
+        refreshControl.endRefreshing()
+    }
 }
 // MARK: - TableView delegate
+/*
+ '#모아뒀으니 골라보세요!' 셀 하나,
+ 태그 CollectionView 셀 하나,
+ '#명식이가 준비했습니다!' 셀 하나,
+ 그 아래에는 추천 맛집 결과값이 나오기 때문에 총 Tableview의 셀 개수는 count+3 입니다.
+ 시간이 급해 이렇게 짰고, 자유롭게 수정하시면 되겠습니다.
+ */
 extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count = self.searchResult.count ?? 0
@@ -107,14 +168,13 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 2:
             let cell = UITableViewCell()
             DispatchQueue.main.async {
-                cell.textLabel?.text = "#명지대에서\n가장 가기 좋은 곳은..."
-                cell.textLabel?.numberOfLines = 2
-                cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
                 cell.selectionStyle = .none
+                self.setSortButtonCell(cell)
             }
             return cell
         default:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
+
             DispatchQueue.main.async {
                 let itemIdx = indexPath.item - 3
                 cell.setUpData(self.searchResult[itemIdx])
@@ -129,9 +189,9 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 0:
             return 60
         case 1:
-            return 54
+            return 84
         case 2:
-            return 90
+            return 46
         default:
             return 170
         }

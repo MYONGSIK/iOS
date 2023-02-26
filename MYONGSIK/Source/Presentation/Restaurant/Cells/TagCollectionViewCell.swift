@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: 명지맛집 페이지 > '#모아뒀으니 골라보세요!' 아래의 #태그가 붙여져있는 셀
 class TagCollectionViewCell: UICollectionViewCell {
     static let identifier = "TagCollectionViewCell"
     
@@ -16,11 +17,11 @@ class TagCollectionViewCell: UICollectionViewCell {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 18
         
-        $0.layer.shadowColor = UIColor.black.cgColor // 색깔
-        $0.layer.masksToBounds = false  // 내부에 속한 요소들이 UIView 밖을 벗어날 때, 잘라낼 것인지. 그림자는 밖에 그려지는 것이므로 false 로 설정
-        $0.layer.shadowOffset = CGSize(width: 0, height: 0) // 위치조정
-        $0.layer.shadowRadius = 4 // 반경
-        $0.layer.shadowOpacity = 0.2 // alpha값
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.masksToBounds = false
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.layer.shadowRadius = 4
+        $0.layer.shadowOpacity = 0.2
     }
     let titleLabel = UILabel().then{
         $0.text = "#Tag"

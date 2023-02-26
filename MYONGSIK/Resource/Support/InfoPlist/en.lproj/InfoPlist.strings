@@ -5,4 +5,7 @@
   Created by gomin on 2022/10/20.
   
 */
+
+// MARK: 영어권 나라에서의 앱 이름
 "CFBundleDisplayName" = "MyongSik";
+

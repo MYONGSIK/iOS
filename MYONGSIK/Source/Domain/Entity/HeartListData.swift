@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-
+// MARK: 찜꽁리스트 데이터 모델
 class HeartListData: Object {
     @objc dynamic var placeName = ""
     @objc dynamic var category = ""

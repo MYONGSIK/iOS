@@ -5,4 +5,6 @@
   Created by gomin on 2022/10/20.
   
 */
+
+// MARK: 앱의 한국어 이름
 "CFBundleDisplayName" = "명식이";

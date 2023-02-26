@@ -6,13 +6,16 @@
 //
 import UIKit
 
+// 기본 파란색 상단바 페이지입니다.
 class BaseViewController: UIViewController {
     // MARK: - Properties
     // MARK: Views
+    // 상단바
     let navigationView = UIView().then{
         $0.backgroundColor = .signatureBlue
         $0.clipsToBounds = true
     }
+    // 상단 제목
     let titleLabel = UILabel().then{
         $0.font = UIFont.NotoSansKR(size: 24, family: .Bold)
         $0.textColor = .white

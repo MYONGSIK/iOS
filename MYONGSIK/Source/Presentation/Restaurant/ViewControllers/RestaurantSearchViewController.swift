@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: 맛집 검색 페이지
 class RestaurantSearchViewController: BaseViewController {
     // MARK: Views
     let backButton = UIButton().then{
@@ -26,6 +27,7 @@ class RestaurantSearchViewController: BaseViewController {
         $0.layer.cornerRadius = 19
         $0.addPadding(left: 16, right: 40)
         
+        // 화면이 시작되자마자 키보드가 활성화됩니다.
         $0.becomeFirstResponder()
     }
     
@@ -65,6 +67,7 @@ class RestaurantSearchViewController: BaseViewController {
         self.view.endEditing(true)
     }
     @objc func searchTextFieldEditingChanged(_ sender: UITextField) {
+        // 입력값이 바뀔 때마다 기존결과값은 초기화, 현재 결과값을 출력합니다.
         pageNum = 1
         self.searchResult.removeAll()
         
@@ -123,6 +126,12 @@ class RestaurantSearchViewController: BaseViewController {
 // MARK: - TableView delegate
 extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        /*
+         카카오API에서는 한 페이지에 최대 15개의 결과값이 나옵니다.
+         최대 3페이지가 나옵니다.
+         따라서 총 최대 45개의 결과값이 나온다고 할 수 있겠습니다.
+         아래의 if조건문: 무한 스크롤
+         */
         if ((indexPath.row + 1) %  15 == 0) && ((indexPath.row + 1) /  15 == pageNum) && (pageNum < 3) {
             pageNum = pageNum + 1
             KakaoMapDataManager().searchMapDataManager(self.searchKeyword, pageNum, self)
@@ -137,6 +146,7 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         let itemIdx = indexPath.item
+        
         cell.setUpData(self.searchResult[itemIdx])
         return cell
     }
@@ -186,6 +196,7 @@ extension RestaurantSearchViewController {
         self.pageNum = 1
         reloadDataAnimation()
     }
+    // 결과값이 나올 때, Tableview에 부드러운 애니메이션을 줍니다.
     func reloadDataAnimation() {
         // reload data with animation
         UIView.transition(with: self.searchResultTableView,
