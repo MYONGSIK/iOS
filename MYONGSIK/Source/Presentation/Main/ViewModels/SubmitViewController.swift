@@ -65,6 +65,11 @@ class SubmitViewController: UIViewController {
         super.viewWillAppear(animated)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: - Actions
     @objc func submitButtonTapped() {
         self.submitStatus = .submitted
