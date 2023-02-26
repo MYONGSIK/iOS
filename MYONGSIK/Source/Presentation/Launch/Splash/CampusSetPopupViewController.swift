@@ -7,7 +7,13 @@
 
 import UIKit
 
-class CampusSetPopupViewController: PopupBaseVIewController {    
+protocol CampusSetPopupDelegate {
+    func resetButtonLayouts()
+}
+
+class CampusSetPopupViewController: PopupBaseVIewController {
+    var delegate: CampusSetPopupDelegate?
+    
     override func didTapConfirmButton(_ sender: UIButton) {
         super.didTapConfirmButton(sender)
         
@@ -25,5 +31,10 @@ class CampusSetPopupViewController: PopupBaseVIewController {
         let main = TabBarViewController()
         main.modalPresentationStyle = .fullScreen
         present(main, animated: true)
+    }
+    
+    override func didTapCancelButton(_ sender: UIButton) {
+        delegate?.resetButtonLayouts()
+        super.didTapCancelButton(sender)
     }
 }

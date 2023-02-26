@@ -137,7 +137,6 @@ class PopupBaseVIewController: UIViewController {
 extension PopupBaseVIewController {
     
     @objc func didTapConfirmButton(_ sender: UIButton) {
-        print("네 버튼 탭")
         sender.backgroundColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)
         sender.setTitleColor(UIColor.white, for: .normal)
         
@@ -146,9 +145,9 @@ extension PopupBaseVIewController {
     
     
     @objc func didTapCancelButton(_ sender: UIButton) {
-        dismiss(animated: true)
         sender.backgroundColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)
         sender.setTitleColor(UIColor.white, for: .normal)
+        dismiss(animated: true)
         
         // detail needs to be written by overriding
     }
