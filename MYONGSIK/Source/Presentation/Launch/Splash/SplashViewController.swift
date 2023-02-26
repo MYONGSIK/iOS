@@ -129,7 +129,7 @@ extension SplashViewController {
         let alertViewController = CampusSetPopupViewController()
         alertViewController.emphasisText = (sender.titleLabel)!.text!
         alertViewController.fullText = "로 \n캠퍼스 설정을 하시겠어요?"
-        alertViewController.modalPresentationStyle = .fullScreen
+        alertViewController.modalPresentationStyle = .overCurrentContext
         present(alertViewController, animated: true)
     }
 }

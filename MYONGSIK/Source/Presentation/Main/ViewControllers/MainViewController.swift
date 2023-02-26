@@ -105,6 +105,15 @@ class MainViewController: MainBaseViewController {
         
         $0.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
     }
+    
+    let isEmptyDataLabel = UILabel().then {
+        $0.text = "* 제공된 학식 정보가 없습니다 *"
+        $0.numberOfLines = 0
+        $0.textColor = .lightGray
+        $0.font = UIFont.NotoSansKR(size: 16, family: .Bold)
+        $0.textAlignment = .center
+        $0.isHidden = true
+    }
 
     // MARK: - Life Cycles
     override func viewDidLoad() {
@@ -168,6 +177,8 @@ class MainViewController: MainBaseViewController {
     }
     
     private func fetchWeekData() {
+        print(Constants.getWeekFood + "/\(selectedResName!)")
+
         APIManager.shared.getData(urlEndpointString: Constants.getWeekFood + "/\(selectedResName!)",
                                   dataType: APIModel<[DayFoodModel]>?.self,
                                   parameter: nil,
@@ -178,7 +189,7 @@ class MainViewController: MainBaseViewController {
             }
             
             self?.tableView.snp.updateConstraints{
-                $0.height.equalTo((self?.foodData?.count) ?? 0 * 170 + 50)
+                $0.height.equalTo((self?.foodData?.count) ?? 0 * 160)
             }
         })
     }
@@ -206,6 +217,7 @@ class MainViewController: MainBaseViewController {
         contentView.addSubview(tableView)
         contentView.addSubview(tablePageControl)
         contentView.addSubview(submitButton)
+        contentView.addSubview(isEmptyDataLabel)
 
         titleView.addSubview(titleLabel)
         titleView.addSubview(operatingTimeLabel)
@@ -274,7 +286,7 @@ class MainViewController: MainBaseViewController {
         }
         
         tablePageControl.snp.makeConstraints {
-            $0.top.equalTo(tableView.snp.bottom).offset(30)
+            $0.top.equalTo(tableView.snp.bottom).offset(5)
             $0.centerX.equalToSuperview()
         }
         
@@ -286,15 +298,21 @@ class MainViewController: MainBaseViewController {
             $0.centerX.equalToSuperview()
 //            $0.bottom.equalToSuperview()
         }
+        isEmptyDataLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(150)
+            $0.centerX.equalToSuperview()
+        }
     }
     
     private func checkDataIsEmpty() {
         if foodData?.count == 0 {
             tablePageControl.isHidden = true
             submitButton.isHidden = true
+            isEmptyDataLabel.isHidden = false
         } else {
             tablePageControl.isHidden = false
             submitButton.isHidden = false
+            isEmptyDataLabel.isHidden = true
         }
     }
     
@@ -329,10 +347,10 @@ class MainViewController: MainBaseViewController {
         
         self.foodData = getDailyFoodData(date: date!)
         checkDataIsEmpty()
-        
-        tableView.reloadData()
+
+        reloadDataAnimation()
         tableView.snp.updateConstraints{
-            $0.height.equalTo(foodData!.count * 170 + 50)
+            $0.height.equalTo(foodData!.count * 160)
         }
     }
     
@@ -378,12 +396,6 @@ class MainViewController: MainBaseViewController {
     @objc private func didTapGoBeforeButton(_ sender: UIButton) { didTapChangeDateButton(value: -1) }
     @objc private func didTapGoAfterButton(_ sender: UIButton) { didTapChangeDateButton(value: 1) }
     
-    @objc func calenderButtonDidTap() {
-        UIDevice.vibrate()
-        let vc = WeekViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
     @objc func submitButtonTapped(_ sender: UIButton){
         let submitViewController = SubmitViewController()
         submitViewController.mealInfo = foodData?[0] // MARK: 임시로 해당 날짜의 0번째 학식에 대한 의견으로 고정
@@ -416,7 +428,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
 
         let itemIdx = indexPath.item
-//        print("itemIdx :: \(itemIdx)")
+        
         if let foodData = self.foodData {
             cell.data = foodData[itemIdx]
             cell.isToday = self.isToday
@@ -552,6 +564,10 @@ extension MainViewController {
         
         endDay = Calendar.current.date(byAdding: .day, value: 4, to: startDay!)
         
+        // 일요일 테스트 용
+//        startDay = Calendar.current.date(byAdding: .day, value: 1, to: today)
+//        endDay = Calendar.current.date(byAdding: .day, value: 4, to: startDay!)
+        
         print("tablePageControl.currentPage - \(tablePageControl.currentPage)")
         print("start day - \(startDay)")
         print("end day - \(endDay)")
@@ -572,5 +588,15 @@ extension MainViewController {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default))
         present(alert, animated: true)
+    }
+    
+    func reloadDataAnimation() {
+        // reload data with animation
+        UIView.transition(with: self.tableView,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { () -> Void in
+                          self.tableView.reloadData()},
+                          completion: nil);
     }
 }

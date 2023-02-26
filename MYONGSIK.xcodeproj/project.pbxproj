@@ -21,9 +21,7 @@
 		23166A9328FECD9F002AEFB7 /* MYONGSIKUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A9228FECD9F002AEFB7 /* MYONGSIKUITests.swift */; };
 		23166A9528FECD9F002AEFB7 /* MYONGSIKUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23166A9428FECD9F002AEFB7 /* MYONGSIKUITestsLaunchTests.swift */; };
 		2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102528FF0A4A0095C0CC /* BaseViewController.swift */; };
-		2324102828FF0BCF0095C0CC /* WeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102728FF0BCF0095C0CC /* WeekViewController.swift */; };
 		2324102A28FF0DD50095C0CC /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102928FF0DD50095C0CC /* PaddingLabel.swift */; };
-		2324102C28FF0DFE0095C0CC /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102B28FF0DFE0095C0CC /* WeekCollectionViewCell.swift */; };
 		2324102E28FF2C9F0095C0CC /* FormatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324102D28FF2C9F0095C0CC /* FormatManager.swift */; };
 		23451DE929116964006AE030 /* RestaurantTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23451DE829116964006AE030 /* RestaurantTagViewController.swift */; };
 		23451DEB29117355006AE030 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23451DEA29117355006AE030 /* WebViewController.swift */; };
@@ -53,9 +51,7 @@
 		23C993A429108F6F00B8D1E4 /* RestaurantSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C993A329108F6F00B8D1E4 /* RestaurantSearchViewController.swift */; };
 		23C993A629108F7800B8D1E4 /* HeartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C993A529108F7800B8D1E4 /* HeartViewController.swift */; };
 		23C993AA2910945400B8D1E4 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C993A92910945400B8D1E4 /* UITextField.swift */; };
-		23E6ACA7290126EA0091D803 /* WeekTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6ACA6290126EA0091D803 /* WeekTableViewCell.swift */; };
 		23E6ACA9290130C50091D803 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6ACA8290130C50091D803 /* UIDevice.swift */; };
-		23EACC2E290B2445007D229C /* WeekViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EACC2D290B2445007D229C /* WeekViewModel.swift */; };
 		58A23E1C2028CBEE0CA8BC47 /* Pods_MYONGSIKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */; };
 		92033E7EAD47D14ADA175F1B /* Pods_MYONGSIK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */; };
 		A23DA70729A7EFEA003FDA56 /* RegisterUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70629A7EFEA003FDA56 /* RegisterUUID.swift */; };
@@ -111,9 +107,7 @@
 		23166A9228FECD9F002AEFB7 /* MYONGSIKUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MYONGSIKUITests.swift; sourceTree = "<group>"; };
 		23166A9428FECD9F002AEFB7 /* MYONGSIKUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MYONGSIKUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2324102528FF0A4A0095C0CC /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		2324102728FF0BCF0095C0CC /* WeekViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekViewController.swift; sourceTree = "<group>"; };
 		2324102928FF0DD50095C0CC /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
-		2324102B28FF0DFE0095C0CC /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		2324102D28FF2C9F0095C0CC /* FormatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatManager.swift; sourceTree = "<group>"; };
 		23451DE829116964006AE030 /* RestaurantTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantTagViewController.swift; sourceTree = "<group>"; };
 		23451DEA29117355006AE030 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -144,9 +138,7 @@
 		23C993A329108F6F00B8D1E4 /* RestaurantSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSearchViewController.swift; sourceTree = "<group>"; };
 		23C993A529108F7800B8D1E4 /* HeartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartViewController.swift; sourceTree = "<group>"; };
 		23C993A92910945400B8D1E4 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
-		23E6ACA6290126EA0091D803 /* WeekTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekTableViewCell.swift; sourceTree = "<group>"; };
 		23E6ACA8290130C50091D803 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
-		23EACC2D290B2445007D229C /* WeekViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekViewModel.swift; sourceTree = "<group>"; };
 		409643676213BA9A3C80FD32 /* Pods-MYONGSIKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIKTests.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIKTests/Pods-MYONGSIKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -370,7 +362,6 @@
 				23BE0150290E0AAF00861DA5 /* Restaurant */,
 				23BE014F290E0AA900861DA5 /* Heart */,
 				2373E4F2290AD35200D51B8E /* Main */,
-				2373E4F5290AD37300D51B8E /* Week */,
 				2373E4F1290AD31B00D51B8E /* Launch */,
 			);
 			path = Presentation;
@@ -434,33 +425,6 @@
 			children = (
 				23735B0328FEE24900599221 /* MainTableViewCell.swift */,
 				A23DA70C29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		2373E4F5290AD37300D51B8E /* Week */ = {
-			isa = PBXGroup;
-			children = (
-				23EACC2C290B243A007D229C /* ViewModels */,
-				2373E4F7290AD38100D51B8E /* Cells */,
-				2373E4F6290AD37800D51B8E /* ViewControllers */,
-			);
-			path = Week;
-			sourceTree = "<group>";
-		};
-		2373E4F6290AD37800D51B8E /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				2324102728FF0BCF0095C0CC /* WeekViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		2373E4F7290AD38100D51B8E /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				2324102B28FF0DFE0095C0CC /* WeekCollectionViewCell.swift */,
-				23E6ACA6290126EA0091D803 /* WeekTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -550,14 +514,6 @@
 				238F562C2910A54C0044214F /* KakaoMapDataManager.swift */,
 			);
 			path = KakaoMapService;
-			sourceTree = "<group>";
-		};
-		23EACC2C290B243A007D229C /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				23EACC2D290B2445007D229C /* WeekViewModel.swift */,
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		A23F2DB429A30ED10046ED70 /* Splash */ = {
@@ -835,7 +791,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2324102C28FF0DFE0095C0CC /* WeekCollectionViewCell.swift in Sources */,
 				2373E4E7290ACB7D00D51B8E /* Constants.swift in Sources */,
 				2324102A28FF0DD50095C0CC /* PaddingLabel.swift in Sources */,
 				2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */,
@@ -864,7 +819,6 @@
 				238F562F2910A6D60044214F /* KakaoMapModel.swift in Sources */,
 				A2A7966529A4702100A2F2E2 /* SelectRestaurantViewController.swift in Sources */,
 				23A7C66B290AB13000351D16 /* ViewModelType.swift in Sources */,
-				23EACC2E290B2445007D229C /* WeekViewModel.swift in Sources */,
 				A23F2DAF29A2F9080046ED70 /* SubmitData.swift in Sources */,
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				23B9E8992911356D009B6D8F /* ScreenManager.swift in Sources */,
@@ -876,11 +830,9 @@
 				A23F2DB129A2F9750046ED70 /* SubmitViewController.swift in Sources */,
 				2324102E28FF2C9F0095C0CC /* FormatManager.swift in Sources */,
 				A23DA70729A7EFEA003FDA56 /* RegisterUUID.swift in Sources */,
-				2324102828FF0BCF0095C0CC /* WeekViewController.swift in Sources */,
 				23451DEB29117355006AE030 /* WebViewController.swift in Sources */,
 				238F56312910AA0F0044214F /* MainBaseViewController.swift in Sources */,
 				23451DE929116964006AE030 /* RestaurantTagViewController.swift in Sources */,
-				23E6ACA7290126EA0091D803 /* WeekTableViewCell.swift in Sources */,
 				23735B0128FEDBF900599221 /* UIColor.swift in Sources */,
 				A23DA70F29A8A971003FDA56 /* MindFoodModel.swift in Sources */,
 				A2431C8C29A3473D00D8E493 /* String+.swift in Sources */,

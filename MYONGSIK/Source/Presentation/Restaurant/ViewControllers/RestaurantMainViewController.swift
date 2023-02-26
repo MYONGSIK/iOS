@@ -11,6 +11,9 @@ import Then
 
 // MARK: '명지 맛집' 페이지
 class RestaurantMainViewController: MainBaseViewController {
+    lazy var refreshControl = UIRefreshControl().then {
+        $0.addTarget(self, action: #selector(refreshContentView), for: .valueChanged)
+    }
     let searchButton = UIButton().then{
         $0.setImage(UIImage(named: "search_white"), for: .normal)
         $0.addTarget(self, action: #selector(goSearchButtonDidTap), for: .touchUpInside)
@@ -67,6 +70,7 @@ class RestaurantMainViewController: MainBaseViewController {
     func setUpView() {
         super.navigationImgView.addSubview(searchButton)
         self.view.addSubview(restaurantMainTableView)
+        restaurantMainTableView.refreshControl = refreshControl
     }
     func setUpConstraint() {
         searchButton.snp.makeConstraints { make in
@@ -120,6 +124,14 @@ class RestaurantMainViewController: MainBaseViewController {
 //            $0.height.equalTo(30)
 //            $0.width.equalTo(80)
 //        }
+    }
+    @objc private func refreshContentView() {
+        refreshControl.beginRefreshing()
+        DispatchQueue.main.async {
+            self.searchResult.removeAll()
+            KakaoMapDataManager().randomMapDataManager(self)
+        }
+        refreshControl.endRefreshing()
     }
 }
 // MARK: - TableView delegate
