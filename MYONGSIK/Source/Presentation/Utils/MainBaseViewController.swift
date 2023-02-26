@@ -25,9 +25,9 @@ class MainBaseViewController: UIViewController {
         $0.textColor = .white
     }
     
+    // 캠퍼스 선택 화면으로 전환되는 버튼
     let setCampusButton = UIButton().then{
         $0.setImage(UIImage(systemName: "person.circle"), for: .normal)
-//        $0.tintColor = .white
         $0.addTarget(self, action: #selector(goSplashView(_:)), for: .touchUpInside)
     }
 

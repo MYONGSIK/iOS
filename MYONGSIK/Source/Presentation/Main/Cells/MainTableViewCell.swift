@@ -104,7 +104,7 @@ class MainTableViewCell: UITableViewCell {
         alertViewController.thumbUpButton = self.thumbUpButton
         alertViewController.thumbDownButton = self.thumbDownButton
         
-        alertViewController.modalPresentationStyle = .fullScreen
+        alertViewController.modalPresentationStyle = .overCurrentContext
         if let vc = self.next(ofType: UIViewController.self) { vc.present(alertViewController, animated: true) }
     }
 
