@@ -6,19 +6,12 @@
 //
 
 // MARK: 일간 학식 모델
-//struct DayFoodModel: Decodable {
-//    let toDay: String?
-//    let dayOfTheWeek: String?
-//    let classification: String?
-//    let type: String?
-//    let status: String?
-//    let food1: String?
-//    let food2: String?
-//    let food3: String?
-//    let food4: String?
-//    let food5: String?
-//    let food6: String?
-//}
+enum MealType: String {
+    case lunch_a = "LUNCH_A"
+    case lunch_b = "LUNCH_B"
+    case dinner = "DINNER"
+}
+
 struct DayFoodModel: Decodable {
     let mealId: Int?
     let mealType: String?
