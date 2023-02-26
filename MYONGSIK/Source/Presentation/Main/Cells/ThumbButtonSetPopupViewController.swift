@@ -106,13 +106,11 @@ extension ThumbButtonSetPopupViewController {
         switch type {
         case .love:
             // 원래 값(맛있어요) 취소
-            print("있던 맛있어요 취소")
             param = MindFoolRequestModel(calculation: Calculation.minus.rawValue,
                                          mealEvaluate: EvaluationType.love.rawValue,
                                              mealId: data.mealId)
         case .hate:
             // 원래 값(맛없어요) 취소
-            print("있던 맛없어요 취소")
             param = MindFoolRequestModel(calculation: Calculation.minus.rawValue,
                                          mealEvaluate: EvaluationType.hate.rawValue,
                                              mealId: data.mealId)

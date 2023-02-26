@@ -49,9 +49,11 @@ enum CampusInfo {
 struct Constants {
     // API 연결 시
     static let BaseURL = "http://13.209.50.30"
+    static let registerUser = "/api/v2/users"
     static let getDayFood = "/api/v2/meals"
     static let getWeekFood = "/api/v2/meals/week"
     static let postFoodEvaluate = "/api/v2/meals/evaluate"
+    static let postFoodReview = "/api/v2/reviews"
     
     // 카카오API: 키워드로 장소 검색
     static let KakaoURL = "https://dapi.kakao.com/v2/local/search/keyword.json?query="

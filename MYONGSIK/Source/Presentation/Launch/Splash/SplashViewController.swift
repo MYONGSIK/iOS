@@ -68,8 +68,7 @@ class SplashViewController: UIViewController {
         
         titleImgView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            if UIDevice().hasNotch { $0.top.equalToSuperview().offset(210) }
-            else { $0.top.equalToSuperview().offset(140) }
+            $0.centerY.equalToSuperview().offset(-105)
         }
         
         campusButtonStackView.snp.makeConstraints {
