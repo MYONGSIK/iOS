@@ -565,10 +565,6 @@ extension MainViewController {
 //        startDay = Calendar.current.date(byAdding: .day, value: 1, to: today)
 //        endDay = Calendar.current.date(byAdding: .day, value: 4, to: startDay!)
         
-        print("tablePageControl.currentPage - \(tablePageControl.currentPage)")
-        print("start day - \(startDay)")
-        print("end day - \(endDay)")
-        
         if isWeekend { titleLabel.text = "오늘의 학식  |  \(getTodayDataText(date: endDay!))" }
     }
     
