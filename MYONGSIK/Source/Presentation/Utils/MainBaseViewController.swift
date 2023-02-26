@@ -29,6 +29,9 @@ class MainBaseViewController: UIViewController {
     let setCampusButton = UIButton().then{
         $0.setImage(UIImage(systemName: "person.circle"), for: .normal)
         $0.addTarget(self, action: #selector(goSplashView(_:)), for: .touchUpInside)
+        // 버튼 임시 삭제 처리
+        $0.isHidden = true
+        $0.isEnabled = false
     }
 
     // MARK: - Life Cycles
