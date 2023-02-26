@@ -97,19 +97,6 @@ class SplashViewController: UIViewController {
         
         setButtonAction()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        resetButtonLayout()
-    }
-    
-    
-    private func resetButtonLayout() {
-        [ seoulCampusButton, yonginCampusButton ].forEach {
-            $0.backgroundColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)
-            $0.setTitleColor(UIColor.white, for: .normal)
-        }
-    }
 }
 
 extension SplashViewController {
@@ -119,7 +106,6 @@ extension SplashViewController {
     }
     
     @objc private func didTapCampusButton(_ sender: UIButton) {
-        print("\(sender.titleLabel?.text!) 버튼 클릭함")
         sender.layer.backgroundColor = UIColor.white.cgColor
         sender.layer.borderWidth = 1.7
         sender.layer.borderColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1).cgColor
@@ -129,7 +115,17 @@ extension SplashViewController {
         let alertViewController = CampusSetPopupViewController()
         alertViewController.emphasisText = (sender.titleLabel)!.text!
         alertViewController.fullText = "로 \n캠퍼스 설정을 하시겠어요?"
+        alertViewController.delegate = self
         alertViewController.modalPresentationStyle = .overCurrentContext
         present(alertViewController, animated: true)
+    }
+}
+
+extension SplashViewController: CampusSetPopupDelegate {
+    func resetButtonLayouts() {
+        [ seoulCampusButton, yonginCampusButton ].forEach {
+            $0.backgroundColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)
+            $0.setTitleColor(UIColor.white, for: .normal)
+        }
     }
 }
