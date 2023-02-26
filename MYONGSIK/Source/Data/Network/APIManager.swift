@@ -49,7 +49,7 @@ class APIManager {
                                parameter: Parameters?,
                                completionHandler: @escaping (T)->Void) {
         
-        let urlString = Constants.DevelopURL + urlEndpointString
+        let urlString = Constants.BaseURL + urlEndpointString
         if let encodedUrlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
             guard let url = URL(string: encodedUrlString) else { return }
             
@@ -76,7 +76,7 @@ class APIManager {
                                             parameter: T,
                                             completionHandler: @escaping (APIModel<R>) -> Void) {
         
-        guard let url = URL(string: Constants.DevelopURL + urlEndpointString) else { return }
+        guard let url = URL(string: Constants.BaseURL + urlEndpointString) else { return }
 
         AF
             .request(url,
