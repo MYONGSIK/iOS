@@ -30,25 +30,16 @@ class PopupBaseVIewController: UIViewController {
             ])
     }
     
+    let horizontalSeparator = UIView().then {  $0.backgroundColor = .signatureBlue }
+    let verticalSeparator = UIView().then { $0.backgroundColor = .signatureBlue }
+    
     let buttonStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.distribution = .fillEqually
-        $0.layer.cornerRadius = 10
-        $0.layer.addBorder([.top],
-                            color: UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1),
-                            width: 1.0)
     }
     
-    let confirmButtonView = UIView().then {
-        $0.layer.addBorder([.top, .right],
-                           color: UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1),
-                           width: 1.0)
-    }
-    let cancelButtonView = UIView().then {
-        $0.layer.addBorder([.top],
-                           color: UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1),
-                           width: 1.0)
-    }
+    let confirmButtonView = UIView()
+    let cancelButtonView = UIView()
     
     let confirmButton = UIButton().then {
         $0.setTitle("네", for: .normal)
@@ -77,8 +68,9 @@ class PopupBaseVIewController: UIViewController {
         alertSettingView.addSubview(alertLabel)
         
         alertSettingView.addSubview(buttonStackView)
-//        buttonStackView.addSubview(confirmButton)
-//        buttonStackView.addSubview(cancelButton)
+        
+        alertSettingView.addSubview(horizontalSeparator)
+        buttonStackView.addSubview(verticalSeparator)
 
         buttonStackView.addSubview(confirmButtonView)
         confirmButtonView.addSubview(confirmButton)
@@ -104,33 +96,35 @@ class PopupBaseVIewController: UIViewController {
             $0.height.equalTo(60)
         }
         
+        horizontalSeparator.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(buttonStackView.snp.top)
+            $0.height.equalTo(1)
+        }
+        
+        verticalSeparator.snp.makeConstraints {
+            $0.width.equalTo(1)
+            $0.height.equalToSuperview()
+            $0.centerX.equalToSuperview()
+        }
+        
+        
         confirmButtonView.snp.makeConstraints {
             $0.leading.top.bottom.equalToSuperview()
-            $0.width.equalToSuperview().dividedBy(2)
+            $0.trailing.equalTo(verticalSeparator.snp.leading)
         }
         confirmButton.snp.makeConstraints {
             $0.top.bottom.leading.trailing.bottom.equalToSuperview()
         }
         
         cancelButtonView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
-            $0.leading.equalTo(confirmButtonView.snp.trailing)
-            $0.width.equalToSuperview().dividedBy(2)
+            $0.top.bottom.trailing.equalToSuperview()
+            $0.leading.equalTo(verticalSeparator.snp.trailing)
         }
         cancelButton.snp.makeConstraints {
             $0.top.bottom.leading.trailing.bottom.equalToSuperview()
         }
         
-//        confirmButton.snp.makeConstraints {
-//            $0.leading.top.bottom.equalToSuperview()
-//            $0.width.equalToSuperview().dividedBy(2)
-//        }
-//
-//        cancelButton.snp.makeConstraints {
-//            $0.top.bottom.equalToSuperview()
-//            $0.leading.equalTo(confirmButton.snp.trailing)
-//            $0.width.equalToSuperview().dividedBy(2)
-//        }
     }
 }
 
