@@ -27,20 +27,19 @@ func checkAppFirstrunOrUpdateStatus(firstrun: () -> (), updated: () -> (), nothi
 
 func registerUser(uuid: String) {
     let param = UserModel(phoneId: uuid)
-    APIManager.shared.postData(urlEndpointString: "/api/v2/users",
+    APIManager.shared.postData(urlEndpointString: Constants.registerUser,
                                dataType: UserModel.self,
                                responseType: APIModel<UserModel>.self,
                                parameter: param,
                                completionHandler: { result in
         
-//        switch result.success {
-//        case true:
-//            UserDefaults.standard.set(result.data?.phoneId, forKey: "phoneId")
-//            print("유저 등록 성공 :: UUID - \(UserDefaults.standard.value(forKey: "phoneId") as! String)")
-//        case false:
-//            print("유저 등록 실패 (result.success is FALSE)")
-//        default:
-//            print("유저 등록 실패 (unknown error)")
-//        }
+        switch result.success {
+        case true:
+            print("유저 등록 성공 :: UUID - \(param.phoneId)")
+        case false:
+            print("유저 등록 실패 (result.success is FALSE)")
+        default:
+            print("유저 등록 실패 (unknown error)")
+        }
     })
 }

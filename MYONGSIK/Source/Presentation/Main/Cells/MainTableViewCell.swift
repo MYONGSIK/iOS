@@ -123,7 +123,7 @@ class MainTableViewCell: UITableViewCell {
         
         if thumbUpButton.isSelected {
             UserDefaults.standard.set(0, forKey: day+type)
-            minusEvaluationFood(evaluation: "LOVE")
+            minusEvaluationFood(evaluation: EvaluationType.love.rawValue)
 
         } else {
             showThumbPopupView(emphasisText: (thumbUpButton.titleLabel)!.text!)
@@ -139,7 +139,7 @@ class MainTableViewCell: UITableViewCell {
         
         if thumbDownButton.isSelected {
             UserDefaults.standard.set(0, forKey: day+type)
-            minusEvaluationFood(evaluation: "HATE")
+            minusEvaluationFood(evaluation: EvaluationType.hate.rawValue)
 
         } else {
             showThumbPopupView(emphasisText: (thumbDownButton.titleLabel)!.text!)
@@ -149,10 +149,10 @@ class MainTableViewCell: UITableViewCell {
     
     // MARK: - Functions
     private func minusEvaluationFood(evaluation: String) {
-        let param = MindFoolRequestModel(calculation: "minus",
+        let param = MindFoolRequestModel(calculation: Calculation.minus.rawValue,
                                          mealEvaluate: evaluation,
                                          mealId: data.mealId)
-        APIManager.shared.postData(urlEndpointString: "/api/v2/meals/evaluate",
+        APIManager.shared.postData(urlEndpointString: Constants.postFoodEvaluate,
                                    dataType: MindFoolRequestModel.self,
                                    responseType: Bool.self,
                                    parameter: param,
@@ -174,7 +174,7 @@ class MainTableViewCell: UITableViewCell {
         } else {
             selected = UserDefaults.standard.integer(forKey: day+type) ?? 0
         }
-        print("selected - \(selected)")
+        
         switch selected {
         case 1:
             thumbUpButton.isSelected = true
@@ -252,9 +252,9 @@ class MainTableViewCell: UITableViewCell {
 
         if let type = data.mealType {
             switch type {
-            case "LUNCH_A": self.typeLabel.text = "중식A"
-            case "LUNCH_B": self.typeLabel.text = "중식B"
-            case "DINNER": self.typeLabel.text = "석식"
+            case MealType.lunch_a.rawValue: self.typeLabel.text = "중식A"
+            case MealType.lunch_b.rawValue: self.typeLabel.text = "중식B"
+            case MealType.dinner.rawValue: self.typeLabel.text = "석식"
             default: self.typeLabel.text = "??"
             }
         }
@@ -264,7 +264,6 @@ class MainTableViewCell: UITableViewCell {
 
         // blue string
         if let originStr = data.meals?[0] {
-            print("originStr = \(originStr)")
             let attribtuedString = NSMutableAttributedString(string: foods)
             let range = (foods as NSString).range(of: originStr)
             attribtuedString.addAttribute(.foregroundColor, value: UIColor.signatureBlue, range: range)

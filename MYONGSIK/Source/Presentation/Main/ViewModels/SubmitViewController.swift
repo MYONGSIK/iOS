@@ -65,6 +65,11 @@ class SubmitViewController: UIViewController {
         super.viewWillAppear(animated)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: - Actions
     @objc func submitButtonTapped() {
         self.submitStatus = .submitted
@@ -169,7 +174,7 @@ class SubmitViewController: UIViewController {
             let param = SubmitModel(writerId: phoneId,
                                     registeredAt: registeredAt,
                                     content: submitted)
-            APIManager.shared.postData(urlEndpointString: "/api/v2/reviews",
+            APIManager.shared.postData(urlEndpointString: Constants.postFoodReview,
                                        dataType: SubmitModel.self,
                                        responseType: SubmitResponseModel.self,
                                        parameter: param,

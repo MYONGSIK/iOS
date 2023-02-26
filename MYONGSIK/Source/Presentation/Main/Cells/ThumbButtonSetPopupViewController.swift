@@ -20,11 +20,15 @@ class ThumbButtonSetPopupViewController: PopupBaseVIewController {
         
         switch super.emphasisText! {
         case "맛있어요":
-            print("TODO: 맛있어요 POST")
+            if let beforeEval = UserDefaults.standard.value(forKey: day+type) {
+                if (beforeEval as! Int) == 2 { minusMindFood(type: EvaluationType.hate) }
+            }
             UserDefaults.standard.set(1, forKey: day+type)
             postMindFood(isLike: true)  // 맛있어요 POST
         case "맛없어요":
-            print("TODO: 맛없어요 POST")
+            if let beforeEval = UserDefaults.standard.value(forKey: day+type) {
+                if (beforeEval as! Int) == 1 { minusMindFood(type: EvaluationType.love) }
+            }
             UserDefaults.standard.set(2, forKey: day+type)
             postMindFood(isLike: false)  // 맛없어요 POST
         default:
@@ -77,17 +81,41 @@ extension ThumbButtonSetPopupViewController {
     private func postMindFood(isLike: Bool) {
         var param: MindFoolRequestModel?
         if isLike {
-            param = MindFoolRequestModel(calculation: "plus",
-                                             mealEvaluate: "LOVE",
+            param = MindFoolRequestModel(calculation: Calculation.plus.rawValue,
+                                         mealEvaluate: EvaluationType.love.rawValue,
                                              mealId: data.mealId)
 
         } else {
-            param = MindFoolRequestModel(calculation: "plus",
-                                             mealEvaluate: "HATE",
+            param = MindFoolRequestModel(calculation: Calculation.plus.rawValue,
+                                             mealEvaluate: EvaluationType.hate.rawValue,
                                              mealId: data.mealId)
         }
         
-        APIManager.shared.postData(urlEndpointString: "/api/v2/meals/evaluate",
+        APIManager.shared.postData(urlEndpointString: Constants.postFoodEvaluate,
+                                   dataType: MindFoolRequestModel.self,
+                                   responseType: Bool.self,
+                                   parameter: param!,
+                                   completionHandler: { result in
+            print(result.message)
+            
+        })
+    }
+    
+    private func minusMindFood(type: EvaluationType) {
+        var param: MindFoolRequestModel?
+        switch type {
+        case .love:
+            // 원래 값(맛있어요) 취소
+            param = MindFoolRequestModel(calculation: Calculation.minus.rawValue,
+                                         mealEvaluate: EvaluationType.love.rawValue,
+                                             mealId: data.mealId)
+        case .hate:
+            // 원래 값(맛없어요) 취소
+            param = MindFoolRequestModel(calculation: Calculation.minus.rawValue,
+                                         mealEvaluate: EvaluationType.hate.rawValue,
+                                             mealId: data.mealId)
+        }
+        APIManager.shared.postData(urlEndpointString: Constants.postFoodEvaluate,
                                    dataType: MindFoolRequestModel.self,
                                    responseType: Bool.self,
                                    parameter: param!,

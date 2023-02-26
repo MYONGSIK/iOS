@@ -7,12 +7,15 @@
 
 import Foundation
 
+enum EvaluationType: String {
+    case love = "LOVE"
+    case hate = "HATE"
+}
 
-//{
-//  "calculation": "plus/minus",
-//  "mealEvaluate": "LOVE/HATE",
-//  "mealId": 0
-//}
+enum Calculation: String {
+    case plus = "plus"
+    case minus = "minus"
+}
 
 struct MindFoolRequestModel: Codable {
     let calculation: String?
