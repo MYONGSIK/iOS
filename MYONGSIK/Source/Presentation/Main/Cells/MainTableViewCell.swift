@@ -116,7 +116,7 @@ class MainTableViewCell: UITableViewCell {
     
     // 맛있어요 클릭
     @objc func thumbUpButtonDidTap() {
-//        if !isToday || isWeekend { showAlert(message: "당일 학식 정보에 대해서만 평가 가능"); return }
+        if !isToday || isWeekend { showAlert(message: "당일 학식 정보에 대해서만 평가 가능"); return }
         
         guard let day = data.toDay else {return}
         guard let type = data.mealType else {return}
@@ -132,7 +132,7 @@ class MainTableViewCell: UITableViewCell {
     }
     // 맛없어요 클릭
     @objc func thumbDownButtonDidTap() {
-//        if !isToday || isWeekend { showAlert(message: "당일 학식 정보에 대해서만 평가 가능"); return }
+        if !isToday || isWeekend { showAlert(message: "당일 학식 정보에 대해서만 평가 가능"); return }
 
         guard let day = data.toDay else {return}
         guard let type = data.mealType else {return}
