@@ -12,9 +12,11 @@
 		<dict>
 			<key>NSIncludesSubDomains</key>
 			<true/>
-			<key>http://54.180.152.115</key>
+			<key>http://13.209.50.30</key>
 			<dict>
-				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
 				<true/>
 			</dict>
 		</dict>
