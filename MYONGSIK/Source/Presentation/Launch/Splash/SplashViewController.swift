@@ -96,6 +96,14 @@ class SplashViewController: UIViewController {
         
         setButtonAction()
     }
+    
+    // MARK: 홈 화면에 캠퍼스 설정 버튼 추가 이전에 사용되는 임시 경고창
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let alert = UIAlertController(title: "⚠️캠퍼스 설정 안내⚠️", message: "\n최초로 설정된 캠퍼스 설정은 이후 변경이 어려우니, 신중하게 골라주세요! ", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
+    }
 }
 
 extension SplashViewController {

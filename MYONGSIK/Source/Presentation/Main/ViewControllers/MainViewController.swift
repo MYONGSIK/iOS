@@ -43,7 +43,7 @@ class MainViewController: MainBaseViewController {
     }
 
     lazy var titleLabel = UILabel().then{
-        $0.text = "오늘의 학식  |  "
+        $0.text = "오늘의 학식  |  \(getTodayDataText(date: Date() + 32400))"
         $0.font = UIFont.NotoSansKR(size: 22, family: .Bold)
         $0.textColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)
     }
@@ -118,22 +118,41 @@ class MainViewController: MainBaseViewController {
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setSelectedRes()
-        setWeekDateData()
-        
+          
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+      
+        setSelectedRes()
+        setWeekDateData()
         
+        fetchDailyData()
+        fetchWeekData()
+      
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
         
-        fetchWeekData()
-        fetchDailyData()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        // set daily food data
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         
-        tableView.snp.updateConstraints{ $0.height.equalTo(foodData!.count * 170 + 50) }
+        let today = Date() + 32400
+        if dateFormatter.string(from: today) == dateFormatter.string(from: today) { isToday = true }
+        else { isToday = false }
+        
+        self.foodData = getDailyFoodData(date: today)
+        checkDataIsEmpty()
+
+        reloadDataAnimation()
+        tableView.snp.updateConstraints{
+            $0.height.equalTo(foodData!.count * 160)
+        }
     }
     
 
@@ -159,7 +178,9 @@ class MainViewController: MainBaseViewController {
             case 200:
                 // set TableView
                 self?.foodData = result?.data
+                self?.reloadDataAnimation()
                 self?.tableView.reloadData()
+                print("ㅅㅂ세팅햇다고 - \(self?.foodData?.count)")
                 
             case 405, 500:
                 self?.showAlert(message: result?.message ?? "금일 식당운영을 하지 않습니다")
@@ -168,9 +189,9 @@ class MainViewController: MainBaseViewController {
                 return
             }
             
-            self?.checkDataIsEmpty()
+//            self?.checkDataIsEmpty()
             self?.tableView.snp.updateConstraints{
-                $0.height.equalTo((self?.foodData?.count) ?? 0 * 170 + 50)
+                $0.height.equalTo((self?.foodData?.count) ?? 0 * 160)
             }
         })
         
@@ -186,6 +207,7 @@ class MainViewController: MainBaseViewController {
 
             if let result = result, let data = result.data {
                 self?.weekFoodData = data.sorted(by: { $0.toDay! < $1.toDay! })
+                self?.tableView.reloadData()
             }
             
             self?.tableView.snp.updateConstraints{
@@ -338,8 +360,12 @@ class MainViewController: MainBaseViewController {
         titleLabel.text  = "오늘의 학식  |  \(getTodayDataText(date: date!))"
         
         // set daily food data
-        let today = Calendar.current.date(byAdding: .day, value: 4, to: startDay!)
-        if date == today { isToday = true }
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let today = Date() + 32400
+        if dateFormatter.string(from: date!) == dateFormatter.string(from: today) { isToday = true }
         else { isToday = false }
         
         self.foodData = getDailyFoodData(date: date!)
@@ -528,8 +554,9 @@ extension MainViewController {
         dateFormatter.timeZone = TimeZone(identifier: "UTC")
         dateFormatter.dateFormat = "EE"
         
-        let today = Date()
-        switch dateFormatter.string(from: Date()) {
+        let today = Date() + 32400
+        print("today - \(today)")
+        switch dateFormatter.string(from: today) {
         case "월":
             startDay = today
             tablePageControl.currentPage = 0
@@ -564,12 +591,15 @@ extension MainViewController {
         // 일요일 테스트 용
 //        startDay = Calendar.current.date(byAdding: .day, value: 1, to: today)
 //        endDay = Calendar.current.date(byAdding: .day, value: 4, to: startDay!)
+        print("startDay - \(startDay)")
+        print("endDay - \(endDay)")
         
         if isWeekend { titleLabel.text = "오늘의 학식  |  \(getTodayDataText(date: endDay!))" }
     }
     
     private func getDailyFoodData(date: Date) -> [DayFoodModel] {
         let formatter = DateFormatter()
+        formatter.timeZone = TimeZone(identifier: "UTC")
         formatter.dateFormat = "yyyy-MM-dd"
         let filterDate = formatter.string(from: date)
         
