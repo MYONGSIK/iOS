@@ -82,7 +82,8 @@ class RestaurantSearchViewController: BaseViewController {
             $0.delegate = dataSourceDelegate
             $0.dataSource = dataSourceDelegate
             $0.register(SearchResultTableViewCell.self, forCellReuseIdentifier: "SearchResultTableViewCell")
-            
+            $0.backgroundColor = .white
+
             // autoHeight
             $0.rowHeight = UITableView.automaticDimension
             $0.estimatedRowHeight = UITableView.automaticDimension

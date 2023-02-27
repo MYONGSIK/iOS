@@ -22,7 +22,7 @@ class MainViewController: MainBaseViewController {
     var startDay: Date?
     var endDay: Date?
     
-    var mainTableView: UITableView!
+//    var mainTableView: UITableView!
     var foodData: [DayFoodModel]? = []
     var weekFoodData: [DayFoodModel]? = []
     
@@ -126,33 +126,12 @@ class MainViewController: MainBaseViewController {
         setSelectedRes()
         setWeekDateData()
         
-        fetchDailyData()
-        fetchWeekData()
-      
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
         
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        // set daily food data
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        let today = Date() + 32400
-        if dateFormatter.string(from: today) == dateFormatter.string(from: today) { isToday = true }
-        else { isToday = false }
-        
-        self.foodData = getDailyFoodData(date: today)
-        checkDataIsEmpty()
-
-        reloadDataAnimation()
-        tableView.snp.updateConstraints{
-            $0.height.equalTo(foodData!.count * 160)
-        }
+        fetchDailyData()
+        fetchWeekData()
     }
     
 
@@ -179,8 +158,7 @@ class MainViewController: MainBaseViewController {
                 // set TableView
                 self?.foodData = result?.data
                 self?.reloadDataAnimation()
-                self?.tableView.reloadData()
-                print("ㅅㅂ세팅햇다고 - \(self?.foodData?.count)")
+                print("fetchDailyData - \(self?.foodData?.count)")
                 
             case 405, 500:
                 self?.showAlert(message: result?.message ?? "금일 식당운영을 하지 않습니다")
@@ -189,10 +167,8 @@ class MainViewController: MainBaseViewController {
                 return
             }
             
-//            self?.checkDataIsEmpty()
-            self?.tableView.snp.updateConstraints{
-                $0.height.equalTo((self?.foodData?.count) ?? 0 * 160)
-            }
+            self?.reloadDataAnimation()
+            self?.checkDataIsEmpty()
         })
         
     }
@@ -209,10 +185,7 @@ class MainViewController: MainBaseViewController {
                 self?.weekFoodData = data.sorted(by: { $0.toDay! < $1.toDay! })
                 self?.tableView.reloadData()
             }
-            
-            self?.tableView.snp.updateConstraints{
-                $0.height.equalTo((self?.foodData?.count) ?? 0 * 160)
-            }
+
         })
     }
 
@@ -223,7 +196,8 @@ class MainViewController: MainBaseViewController {
             $0.dataSource = dataSourceDelegate
             $0.register(MainTableViewCell.self, forCellReuseIdentifier: "MainTableViewCell")
             $0.isScrollEnabled = false
-            
+            $0.backgroundColor = .white
+
             // autoHeight
             $0.rowHeight = UITableView.automaticDimension
             $0.estimatedRowHeight = UITableView.automaticDimension
@@ -470,75 +444,75 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - API Success
 extension MainViewController {
-    // 데이터 처리
-    func getResultAPI(_ result: APIModel<[DayFoodModel]>) {
-        let statusCode = result.httpCode
-        switch statusCode {
-        case 200:
-            getDayFoodAPISuccess(result.data!)
-        case 405, 500:
-            noFoodAPI(result)
-        default: fatalError()
-        }
-    }
-    
-    //일간 조회
-    func getDayFoodAPISuccess(_ result: [DayFoodModel]) {
-        self.foodData = result
-        hideEmptyView()
-        mainTableView.reloadData()
-    }
+//    // 데이터 처리
+//    func getResultAPI(_ result: APIModel<[DayFoodModel]>) {
+//        let statusCode = result.httpCode
+//        switch statusCode {
+//        case 200:
+//            getDayFoodAPISuccess(result.data!)
+//        case 405, 500:
+//            noFoodAPI(result)
+//        default: fatalError()
+//        }
+//    }
+//
+//    //일간 조회
+//    func getDayFoodAPISuccess(_ result: [DayFoodModel]) {
+//        self.foodData = result
+//        hideEmptyView()
+//        mainTableView.reloadData()
+//    }
     // 405 error : 공휴일 X
-    func noFoodAPI(_ result: APIModel<[DayFoodModel]>) {
-        showEmptyView(result)
-        mainTableView.reloadData()
-    }
-    
-    // Tableview
-    func showEmptyView(_ result: APIModel<[DayFoodModel]>) {
-        let backView = UIView().then{
-            $0.backgroundColor = .white
-            $0.clipsToBounds = true
-            $0.layer.cornerRadius = 10
-            $0.layer.borderColor = UIColor.borderColor.cgColor
-            $0.layer.borderWidth = 1
-        }
-        let date = UILabel().then{
-            if let localDateTime = result.localDateTime {
-                $0.text = FormatManager().localDateTimeToDate(localDateTime: localDateTime)
-            }
-            $0.font = UIFont.NotoSansKR()
-            $0.textColor = .signatureBlue
-        }
-        let messageLabel = UILabel().then{
-            if let message = result.message {$0.text = message}
-            $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
-            $0.numberOfLines = 0
-        }
-        let backgroudView = UIView(frame: CGRect(x: 0, y: 0, width: mainTableView.bounds.width, height: mainTableView.bounds.height))
-        backgroudView.addSubview(backView)
-        backView.addSubview(date)
-        backView.addSubview(messageLabel)
-        
-        backView.snp.makeConstraints { make in
-            make.centerY.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(21)
-            make.height.equalTo(178)
-        }
-        date.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(23)
-            make.top.equalToSuperview().offset(19)
-        }
-        messageLabel.snp.makeConstraints { make in
-            make.centerX.centerY.equalToSuperview()
-        }
-        
-        mainTableView.backgroundView = backgroudView
-    }
-    func hideEmptyView() {
-        mainTableView.backgroundView?.isHidden = true
-    }
-    
+//    func noFoodAPI(_ result: APIModel<[DayFoodModel]>) {
+//        showEmptyView(result)
+//        mainTableView.reloadData()
+//    }
+//
+//    // Tableview
+//    func showEmptyView(_ result: APIModel<[DayFoodModel]>) {
+//        let backView = UIView().then{
+//            $0.backgroundColor = .white
+//            $0.clipsToBounds = true
+//            $0.layer.cornerRadius = 10
+//            $0.layer.borderColor = UIColor.borderColor.cgColor
+//            $0.layer.borderWidth = 1
+//        }
+//        let date = UILabel().then{
+//            if let localDateTime = result.localDateTime {
+//                $0.text = FormatManager().localDateTimeToDate(localDateTime: localDateTime)
+//            }
+//            $0.font = UIFont.NotoSansKR()
+//            $0.textColor = .signatureBlue
+//        }
+//        let messageLabel = UILabel().then{
+//            if let message = result.message {$0.text = message}
+//            $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
+//            $0.numberOfLines = 0
+//        }
+//        let backgroudView = UIView(frame: CGRect(x: 0, y: 0, width: mainTableView.bounds.width, height: mainTableView.bounds.height))
+//        backgroudView.addSubview(backView)
+//        backView.addSubview(date)
+//        backView.addSubview(messageLabel)
+//
+//        backView.snp.makeConstraints { make in
+//            make.centerY.centerX.equalToSuperview()
+//            make.leading.trailing.equalToSuperview().inset(21)
+//            make.height.equalTo(178)
+//        }
+//        date.snp.makeConstraints { make in
+//            make.leading.equalToSuperview().offset(23)
+//            make.top.equalToSuperview().offset(19)
+//        }
+//        messageLabel.snp.makeConstraints { make in
+//            make.centerX.centerY.equalToSuperview()
+//        }
+//
+//        mainTableView.backgroundView = backgroudView
+//    }
+//    func hideEmptyView() {
+//        mainTableView.backgroundView?.isHidden = true
+//    }
+//
     
     func getTodayDataText(date: Date) -> String {
         let formatter = DateFormatter()
@@ -614,6 +588,7 @@ extension MainViewController {
     }
     
     func reloadDataAnimation() {
+        print("reloadDataAnimation called")
         // reload data with animation
         UIView.transition(with: self.tableView,
                           duration: 0.35,
