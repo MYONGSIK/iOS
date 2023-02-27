@@ -40,6 +40,7 @@ class WebViewController: UIViewController, WKUIDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = false
         self.tabBarController?.tabBar.isHidden = true
         
         // realm 객체 정의
