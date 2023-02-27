@@ -52,7 +52,8 @@ class HeartViewController: MainBaseViewController {
             $0.delegate = dataSourceDelegate
             $0.dataSource = dataSourceDelegate
             $0.register(HeartListTableViewCell.self, forCellReuseIdentifier: "HeartListTableViewCell")
-            
+            $0.backgroundColor = .white
+
             // autoHeight
             $0.rowHeight = UITableView.automaticDimension
             $0.estimatedRowHeight = UITableView.automaticDimension
