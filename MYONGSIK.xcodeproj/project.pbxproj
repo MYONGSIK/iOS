@@ -35,14 +35,12 @@
 		23735B0428FEE24900599221 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23735B0328FEE24900599221 /* MainTableViewCell.swift */; };
 		2373E4E5290AC93000D51B8E /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2373E4E4290AC93000D51B8E /* APIManager.swift */; };
 		2373E4E7290ACB7D00D51B8E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2373E4E6290ACB7D00D51B8E /* Constants.swift */; };
-		2373E4FA290ADA5D00D51B8E /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2373E4F9290ADA5D00D51B8E /* MainViewModel.swift */; };
 		238F562D2910A54C0044214F /* KakaoMapDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F562C2910A54C0044214F /* KakaoMapDataManager.swift */; };
 		238F562F2910A6D60044214F /* KakaoMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F562E2910A6D60044214F /* KakaoMapModel.swift */; };
 		238F56312910AA0F0044214F /* MainBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F56302910AA0F0044214F /* MainBaseViewController.swift */; };
 		238F56342910AC170044214F /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F56332910AC170044214F /* SearchResultTableViewCell.swift */; };
 		2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92828FEF7C2009B6AEF /* APIModel.swift */; };
 		2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */; };
-		23A7C66B290AB13000351D16 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A7C66A290AB13000351D16 /* ViewModelType.swift */; };
 		23B9E8972911336A009B6D8F /* RestaurantMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B9E8962911336A009B6D8F /* RestaurantMainViewController.swift */; };
 		23B9E8992911356D009B6D8F /* ScreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B9E8982911356D009B6D8F /* ScreenManager.swift */; };
 		23B9E89B29114532009B6D8F /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B9E89A29114532009B6D8F /* TagCollectionViewCell.swift */; };
@@ -122,14 +120,12 @@
 		23735B0328FEE24900599221 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		2373E4E4290AC93000D51B8E /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		2373E4E6290ACB7D00D51B8E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		2373E4F9290ADA5D00D51B8E /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		238F562C2910A54C0044214F /* KakaoMapDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapDataManager.swift; sourceTree = "<group>"; };
 		238F562E2910A6D60044214F /* KakaoMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapModel.swift; sourceTree = "<group>"; };
 		238F56302910AA0F0044214F /* MainBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBaseViewController.swift; sourceTree = "<group>"; };
 		238F56332910AC170044214F /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		2394E92828FEF7C2009B6AEF /* APIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModel.swift; sourceTree = "<group>"; };
 		2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFoodModel.swift; sourceTree = "<group>"; };
-		23A7C66A290AB13000351D16 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		23B9E8962911336A009B6D8F /* RestaurantMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantMainViewController.swift; sourceTree = "<group>"; };
 		23B9E8982911356D009B6D8F /* ScreenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenManager.swift; sourceTree = "<group>"; };
 		23B9E89A29114532009B6D8F /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -264,7 +260,6 @@
 		23166AA528FEDA0A002AEFB7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				23A7C668290AADD600351D16 /* ViewModel */,
 				2324102528FF0A4A0095C0CC /* BaseViewController.swift */,
 				238F56302910AA0F0044214F /* MainBaseViewController.swift */,
 				2324102D28FF2C9F0095C0CC /* FormatManager.swift */,
@@ -403,7 +398,6 @@
 		2373E4F2290AD35200D51B8E /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				2373E4F8290ADA4500D51B8E /* ViewModels */,
 				2373E4F4290AD35F00D51B8E /* Cells */,
 				2373E4F3290AD35800D51B8E /* ViewControllers */,
 			);
@@ -429,14 +423,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		2373E4F8290ADA4500D51B8E /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				2373E4F9290ADA5D00D51B8E /* MainViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		238F56322910AC020044214F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -453,14 +439,6 @@
 				23C993AB2910A4E500B8D1E4 /* KakaoMapService */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		23A7C668290AADD600351D16 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				23A7C66A290AB13000351D16 /* ViewModelType.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		23A7C669290AADE900351D16 /* InfoPlist */ = {
@@ -818,7 +796,6 @@
 				A23DA70B29A89575003FDA56 /* UIResponder+.swift in Sources */,
 				238F562F2910A6D60044214F /* KakaoMapModel.swift in Sources */,
 				A2A7966529A4702100A2F2E2 /* SelectRestaurantViewController.swift in Sources */,
-				23A7C66B290AB13000351D16 /* ViewModelType.swift in Sources */,
 				A23F2DAF29A2F9080046ED70 /* SubmitData.swift in Sources */,
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				23B9E8992911356D009B6D8F /* ScreenManager.swift in Sources */,
@@ -826,7 +803,6 @@
 				2373E4E5290AC93000D51B8E /* APIManager.swift in Sources */,
 				23735B0428FEE24900599221 /* MainTableViewCell.swift in Sources */,
 				23B9E8972911336A009B6D8F /* RestaurantMainViewController.swift in Sources */,
-				2373E4FA290ADA5D00D51B8E /* MainViewModel.swift in Sources */,
 				A23F2DB129A2F9750046ED70 /* SubmitViewController.swift in Sources */,
 				2324102E28FF2C9F0095C0CC /* FormatManager.swift in Sources */,
 				A23DA70729A7EFEA003FDA56 /* RegisterUUID.swift in Sources */,
