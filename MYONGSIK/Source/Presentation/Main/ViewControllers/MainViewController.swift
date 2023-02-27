@@ -31,6 +31,13 @@ class MainViewController: MainBaseViewController {
     let scrolleView = UIScrollView()
     let contentView = UIView()
     
+    
+    let backItemButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        $0.tintColor = .white
+        $0.addTarget(self, action: #selector(didTapBackItemButton), for: .touchUpInside)
+    }
+    
 //    let adImageView = UIView().then{
 //        $0.backgroundColor = .systemGray4
 //        $0.layer.cornerRadius = 15
@@ -141,7 +148,10 @@ class MainViewController: MainBaseViewController {
             switch userCampus as! String {
             case CampusInfo.seoul.name:
                 selectedResName = SeoulRestaurant.mcc.rawValue
-            case CampusInfo.yongin.name: return
+                backItemButton.isHidden = true
+            case CampusInfo.yongin.name:
+                backItemButton.isHidden = false
+                return
             default: return
             }
         }
@@ -205,6 +215,8 @@ class MainViewController: MainBaseViewController {
         }
     }
     func setUpView() {
+        super.navigationImgView.addSubview(backItemButton)
+        
         self.view.addSubview(scrolleView)
         scrolleView.addSubview(contentView)
 //        contentView.addSubview(adImageView)
@@ -222,6 +234,11 @@ class MainViewController: MainBaseViewController {
         changeDayButtonView.addSubview(goAfterButton)
     }
     func setUpConstraint() {
+        backItemButton.snp.makeConstraints {
+            $0.width.height.equalTo(25)
+            $0.centerY.equalTo(super.topLabel)
+            $0.leading.equalToSuperview().inset(22)
+        }
         
         scrolleView.snp.makeConstraints {
             $0.top.equalTo(super.navigationImgView.snp.bottom).inset(10)
@@ -309,6 +326,10 @@ class MainViewController: MainBaseViewController {
             tablePageControl.isHidden = false
             submitButton.isHidden = false
             isEmptyDataLabel.isHidden = true
+            
+            tableView.snp.updateConstraints{
+                $0.height.equalTo(foodData!.count * 160)
+            }
         }
     }
     
@@ -388,6 +409,10 @@ class MainViewController: MainBaseViewController {
     }
     
     // MARK: - Actions
+    @objc private func didTapBackItemButton() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     @objc private func pageChanged(_ sender: UIPageControl) { print("pageChanged") }
 
     @objc private func didTapGoBeforeButton(_ sender: UIButton) { didTapChangeDateButton(value: -1) }
