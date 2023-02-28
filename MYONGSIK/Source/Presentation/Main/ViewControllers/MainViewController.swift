@@ -453,10 +453,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         
         if let foodData = self.foodData {
             cell.data = foodData[itemIdx]
-            cell.isToday = self.isToday
+//            cell.isToday = self.isToday
             cell.isWeekend = self.isWeekend
             cell.setUpData()
             cell.setUpButtons()
+            cell.checkIsToday(isToday: self.isToday)
+
         }
         return cell
 
