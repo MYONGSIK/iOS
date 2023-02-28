@@ -73,7 +73,6 @@ class MainTableViewCell: UITableViewCell {
 
     //MARK: - LifeCycle
     var data: DayFoodModel!
-//    let disposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -84,6 +83,20 @@ class MainTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func checkIsToday(isToday: Bool) {
+        self.isToday = isToday
+        
+        [ thumbUpButton, thumbDownButton ].forEach {
+            if $0.titleLabel?.textColor != .signatureBlue {
+                $0.titleLabel?.textColor = (isToday || isWeekend) ? .signatureGray : .systemGray2
+                $0.tintColor = (isToday || isWeekend) ? .signatureGray : .systemGray2
+            }
+
+            $0.titleLabel?.font = isToday ? UIFont.NotoSansKR(size: 12, family: .Regular) : UIFont.NotoSansKR(size: 12, family: .Light)
+            $0.isEnabled = isToday
+        }
     }
 
     // MARK: - Actions
@@ -114,7 +127,7 @@ class MainTableViewCell: UITableViewCell {
     
     // 맛있어요 클릭
     @objc func thumbUpButtonDidTap() {
-        if !isToday || isWeekend { showAlert(message: "당일 학식 정보에 대해서만 평가 가능"); return }
+//        if !isToday || isWeekend { showAlert(message: "당일 학식 정보에 대해서만 평가 가능"); return }
         
         guard let day = data.toDay else {return}
         guard let type = data.mealType else {return}
@@ -130,7 +143,7 @@ class MainTableViewCell: UITableViewCell {
     }
     // 맛없어요 클릭
     @objc func thumbDownButtonDidTap() {
-        if !isToday || isWeekend { showAlert(message: "당일 학식 정보에 대해서만 평가 가능"); return }
+//        if !isToday || isWeekend { showAlert(message: "당일 학식 정보에 대해서만 평가 가능"); return }
 
         guard let day = data.toDay else {return}
         guard let type = data.mealType else {return}
