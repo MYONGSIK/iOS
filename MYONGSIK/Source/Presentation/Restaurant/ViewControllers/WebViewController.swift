@@ -54,6 +54,10 @@ class WebViewController: UIViewController, WKUIDelegate {
         setUpView()
         heartButton.addTarget(self, action: #selector(heartButtonDidTap), for: .touchUpInside)
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+    }
     // MARK: - Actions
     @objc func heartButtonDidTap() {
         UIDevice.vibrate()
