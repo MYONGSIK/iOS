@@ -51,7 +51,7 @@ class SplashViewController: UIViewController {
     
     @objc private func didTapCampusSetInfoButton() {
         let infoAlert = UIAlertController(title: "캠퍼스 설정이란?",
-                                          message: "\n선택한 캠퍼스의 학식 정보를 제공해드려요! \n(이후 설정에서 변경 가능)",
+                                          message: "\n선택한 캠퍼스의 학식과 주변 맛집 정보를 제공해드려요!",
                                           preferredStyle: .alert)
         infoAlert.addAction(UIAlertAction(title: "알겠어요", style: .default))
         present(infoAlert, animated: true)
