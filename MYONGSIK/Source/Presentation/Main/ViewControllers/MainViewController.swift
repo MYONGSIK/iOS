@@ -236,7 +236,7 @@ class MainViewController: MainBaseViewController {
     func setUpConstraint() {
         backItemButton.snp.makeConstraints {
             $0.width.height.equalTo(25)
-            $0.centerY.equalTo(super.topLabel)
+            $0.centerY.equalTo(super.topLogoImg)
             $0.leading.equalToSuperview().inset(22)
         }
         
@@ -453,10 +453,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         
         if let foodData = self.foodData {
             cell.data = foodData[itemIdx]
-            cell.isToday = self.isToday
+//            cell.isToday = self.isToday
             cell.isWeekend = self.isWeekend
             cell.setUpData()
             cell.setUpButtons()
+            cell.checkIsToday(isToday: self.isToday)
+
         }
         return cell
 

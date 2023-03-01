@@ -25,7 +25,6 @@ class HeartViewController: MainBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        super.topLabel.text = "찜꽁리스트"
         self.view.backgroundColor = .white
         
         self.navigationController?.isNavigationBarHidden = true

@@ -87,7 +87,10 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.tintColor = .white
         $0.backgroundColor = .signatureBlue
         $0.layer.cornerRadius = 15
+        
+        $0.addTarget(self, action: #selector(didTapGoLinkButton), for: .touchUpInside)
     }
+
         
     // MARK: Life Cycles
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -188,6 +191,18 @@ class SearchResultTableViewCell: UITableViewCell {
             deleteHeartData(data: self.data)    // 로컬에 찜 삭제
         }
         // TODO: 식당 좋아요 정보 서버 POST -> 업데이트 예정
+    }
+    
+    @objc func didTapGoLinkButton() {
+        guard let link = self.data?.placeUrl else {return}
+        guard let placeName = self.data?.placeName else {return}
+        guard let category = self.data?.category else {return}
+        
+        let webView = WebViewController()
+        webView.webURL = link
+        webView.placeName = placeName
+        webView.category = category
+        if let vc = self.next(ofType: UIViewController.self) { vc.navigationController?.pushViewController(webView, animated: true) }
     }
     
     // MARK: 서버에서 데이터를 받아온 후 출력시킵니다.

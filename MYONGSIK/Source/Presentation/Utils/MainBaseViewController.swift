@@ -18,11 +18,9 @@ class MainBaseViewController: UIViewController {
         $0.backgroundColor = .white
         $0.isUserInteractionEnabled = true
     }
-    
-    let topLabel = UILabel().then {
-        $0.text = "명식이"
-        $0.font = UIFont.NotoSansKR(size: 18, family: .Bold)
-        $0.textColor = .white
+    let topLogoImg = UIImageView().then {
+        $0.image = UIImage(named: "mainTopLogo")
+        $0.clipsToBounds = true
     }
     
     // 캠퍼스 선택 화면으로 전환되는 버튼
@@ -45,18 +43,21 @@ class MainBaseViewController: UIViewController {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
         self.view.addSubview(navigationImgView)
-        navigationImgView.addSubview(topLabel)
+        navigationImgView.addSubview(topLogoImg)
         navigationImgView.addSubview(setCampusButton)
 
         navigationImgView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
         }
-        topLabel.snp.makeConstraints {
+//        topLabel.snp.makeConstraints {
+//            $0.centerX.centerY.equalToSuperview()
+//        }
+        topLogoImg.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
         }
         setCampusButton.snp.makeConstraints {
             $0.width.height.equalTo(25)
-            $0.centerY.equalTo(topLabel)
+            $0.centerY.equalTo(topLogoImg)
             $0.leading.equalToSuperview().inset(22)
         }
     }
