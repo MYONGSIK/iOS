@@ -14,8 +14,8 @@ import SnapKit
 class SelectRestaurantViewController: MainBaseViewController {
     
     let resInfo = [
-        [YonginRestaurant.staff.rawValue, " \n중식 11:30~13:30  |  석식 17:30~18:30"],
-        [YonginRestaurant.dormitory.rawValue, "\n중식 11:30~13:30  |  석식 17:00~18:30"],
+        [YonginRestaurant.staff.rawValue, "중식 11:30~13:30  |  석식 17:30~18:30"],
+        [YonginRestaurant.dormitory.rawValue, "중식 11:30~13:30  |  석식 17:00~18:30"],
 //        [YonginRestaurant.academy.rawValue, "11:00~17:30"]
     ]
     
@@ -81,6 +81,7 @@ extension SelectRestaurantViewController: UITableViewDelegate, UITableViewDataSo
         // TODO: 선택된 식당의 학식 정보를 토대로 화면으로 전환 (MainVC) / 현재 화면 전환만 구현해둠
         let mainVC = MainViewController()
         mainVC.selectedResName = resInfo[indexPath.row][0]
+        mainVC.operatingTimeText = resInfo[indexPath.row][1]
         self.navigationController?.pushViewController(mainVC, animated: true)
     }
 }
@@ -106,7 +107,7 @@ extension SelectRestaurantViewController {
         }
         let operatingTimeLabel = UILabel().then {
             $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
-            $0.text = "운영시간 \(info[1])"
+            $0.text = "운영시간 \n\(info[1])"
             $0.textColor = .black
             $0.numberOfLines = 0
         }

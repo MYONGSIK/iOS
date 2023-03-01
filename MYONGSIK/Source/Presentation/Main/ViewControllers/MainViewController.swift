@@ -17,8 +17,8 @@ class MainViewController: MainBaseViewController {
     var isWeekend: Bool = false
     var isFoodDataIsEmpty: Bool = false
 
-    var selectedResName: String?
-    
+    var selectedResName: String? = ""
+    var operatingTimeText: String = ""
     var startDay: Date?
     var endDay: Date?
     
@@ -55,14 +55,15 @@ class MainViewController: MainBaseViewController {
         $0.textColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)
     }
 
-    let operatingTimeLabel = UILabel().then{
+
+    lazy var operatingTimeLabel = UILabel().then{
         $0.font = UIFont.NotoSansKR(size: 12, family: .Regular)
         $0.textColor = .gray
-
-        $0.attributedText = "운영시간  |  중식 11:30~17:30  |  석식 18:00~21:00"
+        $0.attributedText = "운영시간  |  \(operatingTimeText)"
             .attributed(of: "운영시간", value: [
                 .foregroundColor: UIColor.darkGray
             ])
+        print(operatingTimeText)
     }
     
     let changeDayButtonView = UIStackView().then {
@@ -148,8 +149,10 @@ class MainViewController: MainBaseViewController {
             switch userCampus as! String {
             case CampusInfo.seoul.name:
                 selectedResName = SeoulRestaurant.mcc.rawValue
+                operatingTimeText = "중식 11:30~14:00  |  석식 17:30~19:00"
                 backItemButton.isHidden = true
             case CampusInfo.yongin.name:
+                print("operatingTimeText - \(operatingTimeText)")
                 backItemButton.isHidden = false
                 return
             default: return
