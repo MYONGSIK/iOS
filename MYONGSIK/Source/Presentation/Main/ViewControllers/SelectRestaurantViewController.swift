@@ -14,8 +14,8 @@ import SnapKit
 class SelectRestaurantViewController: MainBaseViewController {
     
     let resInfo = [
-        [YonginRestaurant.staff.rawValue, "09:00~17:30"],
-        [YonginRestaurant.dormitory.rawValue, "08:00~17:30"],
+        [YonginRestaurant.staff.rawValue, " \n중식 11:30~13:30  |  석식 17:30~18:30"],
+        [YonginRestaurant.dormitory.rawValue, "\n중식 11:30~13:30  |  석식 17:00~18:30"],
 //        [YonginRestaurant.academy.rawValue, "11:00~17:30"]
     ]
     
@@ -108,6 +108,7 @@ extension SelectRestaurantViewController {
             $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
             $0.text = "운영시간 \(info[1])"
             $0.textColor = .black
+            $0.numberOfLines = 0
         }
         let intoButton = UIButton().then {
             $0.setImage(UIImage(systemName: "chevron.right"), for: .normal)
