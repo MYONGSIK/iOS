@@ -17,19 +17,20 @@ class ThumbButtonSetPopupViewController: PopupBaseVIewController {
         super.didTapConfirmButton(sender)
         guard let day = data.toDay else {return}
         guard let type = data.mealType else {return}
+        guard let id = data.mealId else {return}
         
         switch super.emphasisText! {
         case "맛있어요":
-            if let beforeEval = UserDefaults.standard.value(forKey: day+type) {
+            if let beforeEval = UserDefaults.standard.value(forKey: day+type+String(id)) {
                 if (beforeEval as! Int) == 2 { minusMindFood(type: EvaluationType.hate) }
             }
-            UserDefaults.standard.set(1, forKey: day+type)
+            UserDefaults.standard.set(1, forKey: day+type+String(id))
             postMindFood(isLike: true)  // 맛있어요 POST
         case "맛없어요":
-            if let beforeEval = UserDefaults.standard.value(forKey: day+type) {
+            if let beforeEval = UserDefaults.standard.value(forKey: day+type+String(id)) {
                 if (beforeEval as! Int) == 1 { minusMindFood(type: EvaluationType.love) }
             }
-            UserDefaults.standard.set(2, forKey: day+type)
+            UserDefaults.standard.set(2, forKey: day+type+String(id))
             postMindFood(isLike: false)  // 맛없어요 POST
         default:
             print("ERROR :: fail to set thumbs button action")
@@ -45,13 +46,14 @@ class ThumbButtonSetPopupViewController: PopupBaseVIewController {
         guard let data = self.data else {return}
         guard let day = data.toDay else {return}
         guard let type = data.mealType else {return}
+        guard let id = data.mealId else {return}
         
         var selected = 0
         
         if let type = data.mealType {
-            selected = UserDefaults.standard.integer(forKey: day+type) ?? 0
+            selected = UserDefaults.standard.integer(forKey: day+type+String(id)) ?? 0
         } else {
-            selected = UserDefaults.standard.integer(forKey: day+type) ?? 0
+            selected = UserDefaults.standard.integer(forKey: day+type+String(id)) ?? 0
         }
 
         switch selected {
