@@ -37,7 +37,7 @@ func registerUser(uuid: String) {
         case true:
             print("유저 등록 성공 :: UUID - \(param.phoneId)")
         case false:
-            print("유저 등록 실패 (result.success is FALSE)")
+            print("유저 등록 실패 (result.success is FALSE, error code: \(result.httpCode)")
         default:
             print("유저 등록 실패 (unknown error)")
         }

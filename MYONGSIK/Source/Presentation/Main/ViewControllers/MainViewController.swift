@@ -236,7 +236,7 @@ class MainViewController: MainBaseViewController {
     func setUpConstraint() {
         backItemButton.snp.makeConstraints {
             $0.width.height.equalTo(25)
-            $0.centerY.equalTo(super.topLabel)
+            $0.centerY.equalTo(super.topLogoImg)
             $0.leading.equalToSuperview().inset(22)
         }
         

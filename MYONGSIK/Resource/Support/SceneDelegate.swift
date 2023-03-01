@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
 
-        UserDefaults.standard.removeObject(forKey: "userCampus")    // for test
+//        UserDefaults.standard.removeObject(forKey: "userCampus")    // for test
         
         if let _ = UserDefaults.standard.object(forKey: "userCampus") {
             window?.rootViewController = TabBarViewController()

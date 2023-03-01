@@ -57,10 +57,22 @@ class SubmitViewController: UIViewController {
             name: UITextView.textDidChangeNotification,
             object: self.inputView
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardDidHideNotification,
+            object: nil
+        )
         self.view.layer.backgroundColor = UIColor.black.withAlphaComponent(0.5).cgColor
         self.setUpInitialSubView()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
@@ -71,6 +83,19 @@ class SubmitViewController: UIViewController {
     }
     
     // MARK: - Actions
+    @objc func keyboardWillShow() {
+        self.submitView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-140)
+        }
+    }
+    
+    @objc func keyboardWillHide() {
+        self.submitView.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+        }
+    }
+    
     @objc func submitButtonTapped() {
         self.submitStatus = .submitted
         setUpCompleteView()
@@ -90,7 +115,7 @@ class SubmitViewController: UIViewController {
                 textCountLabel.textColor = .gray
             }
         }
-    
+        
     }
     
     // MARK: - Functions
@@ -179,7 +204,7 @@ class SubmitViewController: UIViewController {
                                        responseType: SubmitResponseModel.self,
                                        parameter: param,
                                        completionHandler: { [weak self] result in
-
+                
                 switch result.success {
                 case true:
                     self?.showCompleteSubmitView()
@@ -189,7 +214,7 @@ class SubmitViewController: UIViewController {
                     return
                 }
             })
-
+            
         } else { print("ERROR :: 제출할 의견이 비어있음"); return }
         
     }
@@ -200,7 +225,7 @@ class SubmitViewController: UIViewController {
         self.inputTextView.removeFromSuperview()
         self.textCountLabel.removeFromSuperview()
         self.submitButton.removeFromSuperview()
-                
+        
         let imageView = UIImageView().then {
             $0.contentMode = .scaleAspectFit
             $0.image = UIImage(named: "custom_check")
@@ -240,7 +265,6 @@ class SubmitViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "확인", style: .default))
         present(alert, animated: true)
     }
-
 }
 
 

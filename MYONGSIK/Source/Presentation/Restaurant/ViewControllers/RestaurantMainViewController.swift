@@ -25,7 +25,7 @@ class RestaurantMainViewController: MainBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        super.topLabel.text = "명지맛집"
+//        super.topLabel.text = "명지맛집"
         
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
@@ -76,7 +76,7 @@ class RestaurantMainViewController: MainBaseViewController {
     func setUpConstraint() {
         searchButton.snp.makeConstraints { make in
             make.width.height.equalTo(25)
-            make.centerY.equalTo(topLabel)
+            make.centerY.equalTo(topLogoImg)
             make.trailing.equalToSuperview().inset(22)
         }
         restaurantMainTableView.snp.makeConstraints { make in
