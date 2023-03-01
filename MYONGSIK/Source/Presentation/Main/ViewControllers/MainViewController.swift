@@ -166,7 +166,16 @@ class MainViewController: MainBaseViewController {
             switch result?.httpCode {
             case 200:
                 // set TableView
-                self?.foodData = result?.data
+                // 중식A - 중식B - 석식 순으로 보이도록 데이터 정렬
+                self?.foodData = result?.data!.sorted(by: { $0.mealType! > $1.mealType! })
+                if var data = self?.foodData {
+                    var temp = data[0]
+                    data[0] = data[1]
+                    data[1] = temp
+                    
+                    self?.foodData = data
+                }
+            
                 self?.reloadDataAnimation()
                 print("fetchDailyData - \(self?.foodData?.count)")
                 
@@ -604,7 +613,16 @@ extension MainViewController {
         formatter.dateFormat = "yyyy-MM-dd"
         let filterDate = formatter.string(from: date)
         
-        if let weekFoodData = self.weekFoodData { return weekFoodData.filter { $0.toDay == filterDate } }
+        if var weekFoodData = self.weekFoodData {
+            weekFoodData = weekFoodData.filter { $0.toDay == filterDate }
+            weekFoodData = weekFoodData.sorted(by: { $0.mealType! > $1.mealType! })
+            
+            var temp = weekFoodData[0]
+            weekFoodData[0] = weekFoodData[1]
+            weekFoodData[1] = temp
+            
+            return weekFoodData
+        }
         return []
     }
     
