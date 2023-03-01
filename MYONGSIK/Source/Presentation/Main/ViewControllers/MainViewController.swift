@@ -232,8 +232,8 @@ class MainViewController: MainBaseViewController {
         contentView.addSubview(titleView)
         contentView.addSubview(changeDayButtonView)
         contentView.addSubview(tableView)
-        contentView.addSubview(tablePageControl)
-        contentView.addSubview(submitButton)
+//        contentView.addSubview(tablePageControl)
+//        contentView.addSubview(submitButton)
         contentView.addSubview(isEmptyDataLabel)
 
         titleView.addSubview(titleLabel)
@@ -256,6 +256,7 @@ class MainViewController: MainBaseViewController {
         contentView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.centerX.top.bottom.equalToSuperview()
+            $0.height.equalTo(1000)
         }
 
 //        adImageView.snp.makeConstraints {
@@ -266,7 +267,6 @@ class MainViewController: MainBaseViewController {
 //        }
         
         titleView.snp.makeConstraints {
-//            $0.top.equalTo(adImageView.snp.bottom).offset(5)
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
             $0.height.equalTo(75)
@@ -303,23 +303,23 @@ class MainViewController: MainBaseViewController {
         tableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(titleView.snp.bottom)
-            $0.height.equalTo(500)
-//            $0.bottom.equalToSuperview().offset(200)
+//            $0.height.equalTo(600)
+            $0.bottom.equalToSuperview()
         }
         
-        tablePageControl.snp.makeConstraints {
-            $0.top.equalTo(tableView.snp.bottom).offset(5)
-            $0.centerX.equalToSuperview()
-        }
-        
-        submitButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(69)
-            $0.top.equalTo(tablePageControl.snp.bottom).offset(50)
-            $0.bottom.equalToSuperview().inset(100)
-            $0.height.equalTo(50)
-            $0.centerX.equalToSuperview()
-//            $0.bottom.equalToSuperview()
-        }
+//        tablePageControl.snp.makeConstraints {
+//            $0.top.equalTo(tableView.snp.bottom).offset(5)
+//            $0.centerX.equalToSuperview()
+//        }
+//
+//        submitButton.snp.makeConstraints {
+//            $0.leading.trailing.equalToSuperview().inset(69)
+//            $0.top.equalTo(tablePageControl.snp.bottom).offset(50)
+//            $0.bottom.equalToSuperview().inset(100)
+//            $0.height.equalTo(50)
+//            $0.centerX.equalToSuperview()
+////            $0.bottom.equalToSuperview()
+//        }
         isEmptyDataLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(150)
             $0.centerX.equalToSuperview()
@@ -336,9 +336,9 @@ class MainViewController: MainBaseViewController {
             submitButton.isHidden = false
             isEmptyDataLabel.isHidden = true
             
-            tableView.snp.updateConstraints{
-                $0.height.equalTo(foodData!.count * 160)
-            }
+//            tableView.snp.updateConstraints{
+//                $0.height.equalTo(foodData!.count * 180)
+//            }
         }
     }
     
@@ -376,9 +376,9 @@ class MainViewController: MainBaseViewController {
         checkDataIsEmpty()
 
         reloadDataAnimation()
-        tableView.snp.updateConstraints{
-            $0.height.equalTo(foodData!.count * 160)
-        }
+//        tableView.snp.updateConstraints{
+//            $0.height.equalTo(foodData!.count * 200)
+//        }
     }
     
     func setSubmitButtonCell(_ cell: UITableViewCell) {
@@ -386,17 +386,17 @@ class MainViewController: MainBaseViewController {
         lazy var submitButton = UIButton().then{
             var config = UIButton.Configuration.tinted()
             var attText = AttributedString.init("학식에 대한 의견 남기기")
-            
+
             attText.font = UIFont.NotoSansKR(size: 14, family: .Bold)
             attText.foregroundColor = UIColor.white
             config.attributedTitle = attText
             config.background.backgroundColor = .signatureBlue
             config.cornerStyle = .capsule
-            
+
             $0.configuration = config
             $0.clipsToBounds = true
             $0.setImage(UIImage(named: "pencil"), for: .normal)
-            
+
             $0.layer.shadowColor = UIColor.black.cgColor
             $0.layer.masksToBounds = false
             $0.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -408,13 +408,12 @@ class MainViewController: MainBaseViewController {
         submitButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(69)
             make.top.equalToSuperview().inset(70)
-            make.bottom.equalToSuperview().inset(100)
             make.height.equalTo(50)
             make.centerY.centerX.equalToSuperview()
         }
-        
+
         submitButton.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
-        
+
     }
     
     // MARK: - Actions
@@ -441,7 +440,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let data = self.foodData {
             isFoodDataIsEmpty = false
-            return data.count
+            return data.count + 2
         } else {
             isFoodDataIsEmpty = true
             
@@ -453,16 +452,26 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        if indexPath.row == foodData!.count {
+            let cell = UITableViewCell()
+            cell.addSubview(tablePageControl)
+            tablePageControl.snp.makeConstraints {
+                $0.centerX.centerY.equalToSuperview()
+            }
+            return cell
+        } else if indexPath.row == foodData!.count + 1 {
+            let cell = UITableViewCell()
+            self.setSubmitButtonCell(cell)
+            return cell
+        }
 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
 
-        let itemIdx = indexPath.item
+        let itemIdx = indexPath.row
         
-        if let foodData = self.foodData {
-            cell.data = foodData[itemIdx]
-//            cell.isToday = self.isToday
+        if self.foodData!.count > 0 {
+            cell.data = self.foodData![itemIdx]
             cell.isWeekend = self.isWeekend
             cell.setUpData()
             cell.setUpButtons()
