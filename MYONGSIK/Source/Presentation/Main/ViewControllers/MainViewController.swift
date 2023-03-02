@@ -364,25 +364,27 @@ class MainViewController: MainBaseViewController {
         setArrowButtons(currentPageControl: tablePageControl.currentPage)
         
         // set titleLabel
-        let date = Calendar.current.date(byAdding: .day, value: tablePageControl.currentPage, to: startDay!)
-        titleLabel.text  = "오늘의 학식  |  \(getTodayDataText(date: date!))"
-        
-        // set daily food data
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        let today = Date() + 32400
-        if dateFormatter.string(from: date!) == dateFormatter.string(from: today) { isToday = true }
-        else { isToday = false }
-        
-        self.foodData = getDailyFoodData(date: date!)
-        checkDataIsEmpty()
-
-        reloadDataAnimation()
-//        tableView.snp.updateConstraints{
-//            $0.height.equalTo(foodData!.count * 200)
-//        }
+        if let start = startDay {
+            DispatchQueue.main.async {
+                
+                let date = Calendar.current.date(byAdding: .day, value: self.tablePageControl.currentPage, to: start)
+                self.titleLabel.text  = "오늘의 학식  |  \(self.getTodayDataText(date: date!))"
+                
+                // set daily food data
+                let dateFormatter = DateFormatter()
+                dateFormatter.timeZone = TimeZone(identifier: "UTC")
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                
+                let today = Date() + 32400
+                if dateFormatter.string(from: date!) == dateFormatter.string(from: today) { self.isToday = true }
+                else { self.isToday = false }
+                
+                self.foodData = self.getDailyFoodData(date: date!)
+                self.checkDataIsEmpty()
+                
+                self.reloadDataAnimation()
+            }
+        }
     }
     
     func setSubmitButtonCell(_ cell: UITableViewCell) {
