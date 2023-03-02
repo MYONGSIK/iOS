@@ -17,8 +17,8 @@ class MainViewController: MainBaseViewController {
     var isWeekend: Bool = false
     var isFoodDataIsEmpty: Bool = false
 
-    var selectedResName: String?
-    
+    var selectedResName: String? = ""
+    var operatingTimeText: String = ""
     var startDay: Date?
     var endDay: Date?
     
@@ -55,14 +55,15 @@ class MainViewController: MainBaseViewController {
         $0.textColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)
     }
 
-    let operatingTimeLabel = UILabel().then{
+
+    lazy var operatingTimeLabel = UILabel().then{
         $0.font = UIFont.NotoSansKR(size: 12, family: .Regular)
         $0.textColor = .gray
-
-        $0.attributedText = "운영시간  |  중식 11:30~17:30  |  석식 18:00~21:00"
+        $0.attributedText = "운영시간  |  \(operatingTimeText)"
             .attributed(of: "운영시간", value: [
                 .foregroundColor: UIColor.darkGray
             ])
+        print(operatingTimeText)
     }
     
     let changeDayButtonView = UIStackView().then {
@@ -148,8 +149,10 @@ class MainViewController: MainBaseViewController {
             switch userCampus as! String {
             case CampusInfo.seoul.name:
                 selectedResName = SeoulRestaurant.mcc.rawValue
+                operatingTimeText = "중식 11:30~14:00  |  석식 17:30~19:00"
                 backItemButton.isHidden = true
             case CampusInfo.yongin.name:
+                print("operatingTimeText - \(operatingTimeText)")
                 backItemButton.isHidden = false
                 return
             default: return
@@ -166,7 +169,16 @@ class MainViewController: MainBaseViewController {
             switch result?.httpCode {
             case 200:
                 // set TableView
-                self?.foodData = result?.data
+                // 중식A - 중식B - 석식 순으로 보이도록 데이터 정렬
+                self?.foodData = result?.data!.sorted(by: { $0.mealType! > $1.mealType! })
+                if var data = self?.foodData {
+                    var temp = data[0]
+                    data[0] = data[1]
+                    data[1] = temp
+                    
+                    self?.foodData = data
+                }
+            
                 self?.reloadDataAnimation()
                 print("fetchDailyData - \(self?.foodData?.count)")
                 
@@ -212,6 +224,7 @@ class MainViewController: MainBaseViewController {
             $0.rowHeight = UITableView.automaticDimension
             $0.estimatedRowHeight = UITableView.automaticDimension
             $0.separatorStyle = .none
+            $0.allowsSelection = false
         }
     }
     func setUpView() {
@@ -223,8 +236,8 @@ class MainViewController: MainBaseViewController {
         contentView.addSubview(titleView)
         contentView.addSubview(changeDayButtonView)
         contentView.addSubview(tableView)
-        contentView.addSubview(tablePageControl)
-        contentView.addSubview(submitButton)
+//        contentView.addSubview(tablePageControl)
+//        contentView.addSubview(submitButton)
         contentView.addSubview(isEmptyDataLabel)
 
         titleView.addSubview(titleLabel)
@@ -247,6 +260,7 @@ class MainViewController: MainBaseViewController {
         contentView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.centerX.top.bottom.equalToSuperview()
+            $0.height.equalTo(1000)
         }
 
 //        adImageView.snp.makeConstraints {
@@ -257,7 +271,6 @@ class MainViewController: MainBaseViewController {
 //        }
         
         titleView.snp.makeConstraints {
-//            $0.top.equalTo(adImageView.snp.bottom).offset(5)
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
             $0.height.equalTo(75)
@@ -294,23 +307,23 @@ class MainViewController: MainBaseViewController {
         tableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(titleView.snp.bottom)
-            $0.height.equalTo(500)
-//            $0.bottom.equalToSuperview().offset(200)
+//            $0.height.equalTo(600)
+            $0.bottom.equalToSuperview()
         }
         
-        tablePageControl.snp.makeConstraints {
-            $0.top.equalTo(tableView.snp.bottom).offset(5)
-            $0.centerX.equalToSuperview()
-        }
-        
-        submitButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(69)
-            $0.top.equalTo(tablePageControl.snp.bottom).offset(50)
-            $0.bottom.equalToSuperview().inset(100)
-            $0.height.equalTo(50)
-            $0.centerX.equalToSuperview()
-//            $0.bottom.equalToSuperview()
-        }
+//        tablePageControl.snp.makeConstraints {
+//            $0.top.equalTo(tableView.snp.bottom).offset(5)
+//            $0.centerX.equalToSuperview()
+//        }
+//
+//        submitButton.snp.makeConstraints {
+//            $0.leading.trailing.equalToSuperview().inset(69)
+//            $0.top.equalTo(tablePageControl.snp.bottom).offset(50)
+//            $0.bottom.equalToSuperview().inset(100)
+//            $0.height.equalTo(50)
+//            $0.centerX.equalToSuperview()
+////            $0.bottom.equalToSuperview()
+//        }
         isEmptyDataLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(150)
             $0.centerX.equalToSuperview()
@@ -327,9 +340,9 @@ class MainViewController: MainBaseViewController {
             submitButton.isHidden = false
             isEmptyDataLabel.isHidden = true
             
-            tableView.snp.updateConstraints{
-                $0.height.equalTo(foodData!.count * 160)
-            }
+//            tableView.snp.updateConstraints{
+//                $0.height.equalTo(foodData!.count * 180)
+//            }
         }
     }
     
@@ -351,24 +364,26 @@ class MainViewController: MainBaseViewController {
         setArrowButtons(currentPageControl: tablePageControl.currentPage)
         
         // set titleLabel
-        let date = Calendar.current.date(byAdding: .day, value: tablePageControl.currentPage, to: startDay!)
-        titleLabel.text  = "오늘의 학식  |  \(getTodayDataText(date: date!))"
-        
-        // set daily food data
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        let today = Date() + 32400
-        if dateFormatter.string(from: date!) == dateFormatter.string(from: today) { isToday = true }
-        else { isToday = false }
-        
-        self.foodData = getDailyFoodData(date: date!)
-        checkDataIsEmpty()
-
-        reloadDataAnimation()
-        tableView.snp.updateConstraints{
-            $0.height.equalTo(foodData!.count * 160)
+        if let start = startDay {
+            DispatchQueue.main.async {
+                
+                let date = Calendar.current.date(byAdding: .day, value: self.tablePageControl.currentPage, to: start)
+                self.titleLabel.text  = "오늘의 학식  |  \(self.getTodayDataText(date: date!))"
+                
+                // set daily food data
+                let dateFormatter = DateFormatter()
+                dateFormatter.timeZone = TimeZone(identifier: "UTC")
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                
+                let today = Date() + 32400
+                if dateFormatter.string(from: date!) == dateFormatter.string(from: today) { self.isToday = true }
+                else { self.isToday = false }
+                
+                self.foodData = self.getDailyFoodData(date: date!)
+                self.checkDataIsEmpty()
+                
+                self.reloadDataAnimation()
+            }
         }
     }
     
@@ -377,17 +392,17 @@ class MainViewController: MainBaseViewController {
         lazy var submitButton = UIButton().then{
             var config = UIButton.Configuration.tinted()
             var attText = AttributedString.init("학식에 대한 의견 남기기")
-            
+
             attText.font = UIFont.NotoSansKR(size: 14, family: .Bold)
             attText.foregroundColor = UIColor.white
             config.attributedTitle = attText
             config.background.backgroundColor = .signatureBlue
             config.cornerStyle = .capsule
-            
+
             $0.configuration = config
             $0.clipsToBounds = true
             $0.setImage(UIImage(named: "pencil"), for: .normal)
-            
+
             $0.layer.shadowColor = UIColor.black.cgColor
             $0.layer.masksToBounds = false
             $0.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -399,13 +414,12 @@ class MainViewController: MainBaseViewController {
         submitButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(69)
             make.top.equalToSuperview().inset(70)
-            make.bottom.equalToSuperview().inset(100)
             make.height.equalTo(50)
             make.centerY.centerX.equalToSuperview()
         }
-        
+
         submitButton.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
-        
+
     }
     
     // MARK: - Actions
@@ -432,7 +446,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let data = self.foodData {
             isFoodDataIsEmpty = false
-            return data.count
+            return data.count + 2
         } else {
             isFoodDataIsEmpty = true
             
@@ -444,16 +458,26 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        if indexPath.row == foodData!.count {
+            let cell = UITableViewCell()
+            cell.addSubview(tablePageControl)
+            tablePageControl.snp.makeConstraints {
+                $0.centerX.centerY.equalToSuperview()
+            }
+            return cell
+        } else if indexPath.row == foodData!.count + 1 {
+            let cell = UITableViewCell()
+            self.setSubmitButtonCell(cell)
+            return cell
+        }
 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
 
-        let itemIdx = indexPath.item
+        let itemIdx = indexPath.row
         
-        if let foodData = self.foodData {
-            cell.data = foodData[itemIdx]
-//            cell.isToday = self.isToday
+        if self.foodData!.count > 0 {
+            cell.data = self.foodData![itemIdx]
             cell.isWeekend = self.isWeekend
             cell.setUpData()
             cell.setUpButtons()
@@ -604,7 +628,16 @@ extension MainViewController {
         formatter.dateFormat = "yyyy-MM-dd"
         let filterDate = formatter.string(from: date)
         
-        if let weekFoodData = self.weekFoodData { return weekFoodData.filter { $0.toDay == filterDate } }
+        if var weekFoodData = self.weekFoodData {
+            weekFoodData = weekFoodData.filter { $0.toDay == filterDate }
+            weekFoodData = weekFoodData.sorted(by: { $0.mealType! > $1.mealType! })
+            
+            var temp = weekFoodData[0]
+            weekFoodData[0] = weekFoodData[1]
+            weekFoodData[1] = temp
+            
+            return weekFoodData
+        }
         return []
     }
     

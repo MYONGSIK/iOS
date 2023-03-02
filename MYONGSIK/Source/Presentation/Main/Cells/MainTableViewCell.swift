@@ -131,9 +131,10 @@ class MainTableViewCell: UITableViewCell {
         
         guard let day = data.toDay else {return}
         guard let type = data.mealType else {return}
-        
+        guard let id = data.mealId else {return}
+
         if thumbUpButton.isSelected {
-            UserDefaults.standard.set(0, forKey: day+type)
+            UserDefaults.standard.set(0, forKey: day+type+String(id))
             minusEvaluationFood(evaluation: EvaluationType.love.rawValue)
 
         } else {
@@ -147,9 +148,10 @@ class MainTableViewCell: UITableViewCell {
 
         guard let day = data.toDay else {return}
         guard let type = data.mealType else {return}
-        
+        guard let id = data.mealId else {return}
+
         if thumbDownButton.isSelected {
-            UserDefaults.standard.set(0, forKey: day+type)
+            UserDefaults.standard.set(0, forKey: day+type+String(id))
             minusEvaluationFood(evaluation: EvaluationType.hate.rawValue)
 
         } else {
@@ -177,13 +179,14 @@ class MainTableViewCell: UITableViewCell {
         guard let data = self.data else {return}
         guard let day = data.toDay else {return}
         guard let type = data.mealType else {return}
+        guard let id = data.mealId else {return}
         
         var selected = 0
         
         if let type = data.mealType {
-            selected = UserDefaults.standard.integer(forKey: day+type) ?? 0
+            selected = UserDefaults.standard.integer(forKey: day+type+String(id)) ?? 0
         } else {
-            selected = UserDefaults.standard.integer(forKey: day+type) ?? 0
+            selected = UserDefaults.standard.integer(forKey: day+type+String(id)) ?? 0
         }
         
         switch selected {
