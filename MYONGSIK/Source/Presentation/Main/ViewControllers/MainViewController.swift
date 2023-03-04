@@ -325,7 +325,7 @@ class MainViewController: MainBaseViewController {
 ////            $0.bottom.equalToSuperview()
 //        }
         isEmptyDataLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(150)
+            $0.top.equalToSuperview().offset(120)
             $0.centerX.equalToSuperview()
         }
     }
@@ -434,7 +434,6 @@ class MainViewController: MainBaseViewController {
     
     @objc func submitButtonTapped(_ sender: UIButton){
         let submitViewController = SubmitViewController()
-        submitViewController.mealInfo = foodData?[0] // MARK: 임시로 해당 날짜의 0번째 학식에 대한 의견으로 고정
         submitViewController.modalPresentationStyle = .custom
         submitViewController.modalTransitionStyle = .crossDissolve
         self.present(submitViewController, animated: true)
@@ -632,7 +631,7 @@ extension MainViewController {
             weekFoodData = weekFoodData.filter { $0.toDay == filterDate }
             weekFoodData = weekFoodData.sorted(by: { $0.mealType! > $1.mealType! })
             
-            var temp = weekFoodData[0]
+            let temp = weekFoodData[0]
             weekFoodData[0] = weekFoodData[1]
             weekFoodData[1] = temp
             
