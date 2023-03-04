@@ -18,7 +18,6 @@ enum inputStatus {
 class SubmitViewController: UIViewController {
     
     var submitStatus: inputStatus = .notSubmit
-    var mealInfo: DayFoodModel?
     
     // MARK: - Views
     var submitView: UIView = UIView().then {
