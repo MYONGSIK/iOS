@@ -15,6 +15,7 @@ class MainViewController: MainBaseViewController {
 
     var isToday: Bool = true
     var isWeekend: Bool = false
+    var isSunday: Bool = false
     var isFoodDataIsEmpty: Bool = false
 
     var selectedResName: String? = ""
@@ -161,8 +162,10 @@ class MainViewController: MainBaseViewController {
     }
     
     private func fetchDailyData() {
-        print(Constants.getDayFood + "/\(selectedResName!)")
-        APIManager.shared.getData(urlEndpointString: Constants.getDayFood + "/\(selectedResName!)",
+        var resName = selectedResName
+        if selectedResName == YonginRestaurant.academy.rawValue { resName = "학생식당" }
+        print(Constants.getDayFood + "/\(resName!)")
+        APIManager.shared.getData(urlEndpointString: Constants.getDayFood + "/\(resName!)",
                                   dataType: APIModel<[DayFoodModel]>?.self,
                                   parameter: nil,
                                   completionHandler: { [weak self] result in
@@ -172,9 +175,11 @@ class MainViewController: MainBaseViewController {
                 // 중식A - 중식B - 석식 순으로 보이도록 데이터 정렬
                 self?.foodData = result?.data!.sorted(by: { $0.mealType! > $1.mealType! })
                 if var data = self?.foodData {
-                    var temp = data[0]
-                    data[0] = data[1]
-                    data[1] = temp
+                    if data.count > 1 && data[0].mealType == "DINNER" {
+                        let temp = data[0]
+                        data[0] = data[data.count-1]
+                        data[data.count-1] = temp
+                    }
                     
                     self?.foodData = data
                 }
@@ -196,16 +201,19 @@ class MainViewController: MainBaseViewController {
     }
     
     private func fetchWeekData() {
-        print(Constants.getWeekFood + "/\(selectedResName!)")
+        var resName = selectedResName
+        if selectedResName == YonginRestaurant.academy.rawValue { resName = "학생식당" }
+        
+        print(Constants.getWeekFood + "/\(resName!)")
 
-        APIManager.shared.getData(urlEndpointString: Constants.getWeekFood + "/\(selectedResName!)",
+        APIManager.shared.getData(urlEndpointString: Constants.getWeekFood + "/\(resName!)",
                                   dataType: APIModel<[DayFoodModel]>?.self,
                                   parameter: nil,
                                   completionHandler: { [weak self] result in
 
             if let result = result, let data = result.data {
                 self?.weekFoodData = data.sorted(by: { $0.toDay! < $1.toDay! })
-                self?.tableView.reloadData()
+                self?.reloadDataAnimation()
             }
 
         })
@@ -603,8 +611,9 @@ extension MainViewController {
             showAlert(message: "주말에는 학생식당을 운영하지 않습니다.")
         case "일":
             isWeekend = true
-            startDay = Calendar.current.date(byAdding: .day, value: -6, to: today)
-            tablePageControl.currentPage = 4
+            isSunday = true
+            startDay = Calendar.current.date(byAdding: .day, value: 1, to: today)
+            tablePageControl.currentPage = 0
             showAlert(message: "주말에는 학생식당을 운영하지 않습니다.")
         default: return
         }
@@ -619,6 +628,7 @@ extension MainViewController {
         print("endDay - \(endDay)")
         
         if isWeekend { titleLabel.text = "오늘의 학식  |  \(getTodayDataText(date: endDay!))" }
+        if isSunday { titleLabel.text = "오늘의 학식  |  \(getTodayDataText(date: startDay!))" }
     }
     
     private func getDailyFoodData(date: Date) -> [DayFoodModel] {
@@ -631,9 +641,12 @@ extension MainViewController {
             weekFoodData = weekFoodData.filter { $0.toDay == filterDate }
             weekFoodData = weekFoodData.sorted(by: { $0.mealType! > $1.mealType! })
             
-            let temp = weekFoodData[0]
-            weekFoodData[0] = weekFoodData[1]
-            weekFoodData[1] = temp
+            if weekFoodData.count == 3 {
+                // 중식B - 중식A - 석식 순으로 정렬되어있는 상태이므로 수정 필요
+                let temp = weekFoodData[0]
+                weekFoodData[0] = weekFoodData[1]
+                weekFoodData[1] = temp
+            }
             
             return weekFoodData
         }
