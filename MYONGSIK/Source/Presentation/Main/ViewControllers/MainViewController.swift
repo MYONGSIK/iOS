@@ -175,10 +175,11 @@ class MainViewController: MainBaseViewController {
                 // 중식A - 중식B - 석식 순으로 보이도록 데이터 정렬
                 self?.foodData = result?.data!.sorted(by: { $0.mealType! > $1.mealType! })
                 if var data = self?.foodData {
-                    if data.count > 1 && data[0].mealType == "DINNER" {
+                    if data.count == 3 {
+                        // 중식B - 중식A - 석식 순으로 정렬되어있는 상태이므로 수정 필요
                         let temp = data[0]
-                        data[0] = data[data.count-1]
-                        data[data.count-1] = temp
+                        data[0] = data[1]
+                        data[1] = temp
                     }
                     
                     self?.foodData = data
