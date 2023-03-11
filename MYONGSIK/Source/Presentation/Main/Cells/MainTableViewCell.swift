@@ -285,7 +285,8 @@ class MainTableViewCell: UITableViewCell {
             
             switch res {
             case SeoulRestaurant.mcc.rawValue,
-                YonginRestaurant.staff.rawValue:
+                 YonginRestaurant.staff.rawValue,
+                 YonginRestaurant.dormitory.rawValue:
                 // 중식A - 중식B - 석식
                 switch type {
                 case MealType.lunch_a.rawValue: self.typeLabel.text = "중식A"
@@ -297,8 +298,8 @@ class MainTableViewCell: UITableViewCell {
                 // 조식 - 중식
                 switch type {
                 case MealType.lunch_a.rawValue: self.typeLabel.text = "조식"
-                case MealType.lunch_b.rawValue: self.typeLabel.text = "중식"
-                case MealType.dinner.rawValue: self.typeLabel.text = "석식"
+                case MealType.lunch_b.rawValue: self.typeLabel.text = "조식"
+                case MealType.dinner.rawValue: self.typeLabel.text = "중식"
                 default: self.typeLabel.text = "??"
                 }
             case YonginRestaurant.myungjin.rawValue:
