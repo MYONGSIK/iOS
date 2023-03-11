@@ -177,6 +177,19 @@ class MainTableViewCell: UITableViewCell {
     }
     
     func setUpButtons() {
+        // 명진당 식당일 경우, 맛있어요/맛없어요 버튼 삭제 및 레이아웃 재정의 필요
+        if let res = selectedRestaurant {
+            if res == YonginRestaurant.myungjin.rawValue {
+                thumbUpButton.removeFromSuperview()
+                thumbDownButton.removeFromSuperview()
+                seperatorLine.removeFromSuperview()
+                
+                foodLabel.snp.makeConstraints {
+                    $0.bottom.equalToSuperview().offset(-30)
+                }
+            }
+        }
+        
         guard let data = self.data else {return}
         guard let day = data.toDay else {return}
         guard let type = data.mealType else {return}
@@ -218,10 +231,10 @@ class MainTableViewCell: UITableViewCell {
         backView.addSubview(foodLabel)
         
         backView.addSubview(seperatorLine)
-        if !(selectedRestaurant == YonginRestaurant.myungjin.rawValue) {
-            backView.addSubview(thumbUpButton)
-            backView.addSubview(thumbDownButton)
-        }
+        
+        backView.addSubview(thumbUpButton)
+        backView.addSubview(thumbDownButton)
+        
     }
     func setUpConstraint() {
         backView.snp.makeConstraints { make in
