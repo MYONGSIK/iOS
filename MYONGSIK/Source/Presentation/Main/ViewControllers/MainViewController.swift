@@ -175,7 +175,8 @@ class MainViewController: MainBaseViewController {
                 // 중식A - 중식B - 석식 순으로 보이도록 데이터 정렬
                 self?.foodData = result?.data!.sorted(by: { $0.mealType! > $1.mealType! })
                 if var data = self?.foodData {
-                    if data.count == 3 {
+                    
+                    if (self?.selectedResName == SeoulRestaurant.mcc.rawValue) && (data.count == 3) {
                         // 중식B - 중식A - 석식 순으로 정렬되어있는 상태이므로 수정 필요
                         let temp = data[0]
                         data[0] = data[1]
@@ -481,7 +482,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-
+        if let res = self.selectedResName {
+            cell.selectedRestaurant = res
+            
+        } else { print("selectedResName이 설정되지 않음") }
+        
         let itemIdx = indexPath.row
         
         if self.foodData!.count > 0 {
