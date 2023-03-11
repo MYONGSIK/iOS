@@ -284,13 +284,19 @@ class MainTableViewCell: UITableViewCell {
            let type = data.mealType {
             
             switch res {
-            case SeoulRestaurant.mcc.rawValue,
-                 YonginRestaurant.staff.rawValue,
-                 YonginRestaurant.dormitory.rawValue:
+            case SeoulRestaurant.mcc.rawValue:
                 // 중식A - 중식B - 석식
                 switch type {
                 case MealType.lunch_a.rawValue: self.typeLabel.text = "중식A"
                 case MealType.lunch_b.rawValue: self.typeLabel.text = "중식B"
+                case MealType.dinner.rawValue: self.typeLabel.text = "석식"
+                default: self.typeLabel.text = "??"
+                }
+            case YonginRestaurant.staff.rawValue,
+                 YonginRestaurant.dormitory.rawValue:
+                switch type {
+                case MealType.lunch_a.rawValue: self.typeLabel.text = "중식"
+                case MealType.lunch_b.rawValue: self.typeLabel.text = "중식"
                 case MealType.dinner.rawValue: self.typeLabel.text = "석식"
                 default: self.typeLabel.text = "??"
                 }
