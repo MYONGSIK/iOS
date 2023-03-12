@@ -17,6 +17,7 @@ enum YonginRestaurant: String {
     case staff = "교직원식당"
     case dormitory = "생활관식당"
     case academy = "학관식당"
+    case myungjin = "명진당식당"
 }
 
 class SplashViewController: UIViewController {

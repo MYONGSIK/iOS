@@ -8,6 +8,7 @@
 import UIKit
 
 class MainTableViewCell: UITableViewCell {
+    var selectedRestaurant: String?
     var isToday: Bool = true
     var isWeekend: Bool = false
     
@@ -176,6 +177,19 @@ class MainTableViewCell: UITableViewCell {
     }
     
     func setUpButtons() {
+        // 명진당 식당일 경우, 맛있어요/맛없어요 버튼 삭제 및 레이아웃 재정의 필요
+        if let res = selectedRestaurant {
+            if res == YonginRestaurant.myungjin.rawValue {
+                thumbUpButton.removeFromSuperview()
+                thumbDownButton.removeFromSuperview()
+                seperatorLine.removeFromSuperview()
+                
+                foodLabel.snp.makeConstraints {
+                    $0.bottom.equalToSuperview().offset(-30)
+                }
+            }
+        }
+        
         guard let data = self.data else {return}
         guard let day = data.toDay else {return}
         guard let type = data.mealType else {return}
@@ -217,8 +231,10 @@ class MainTableViewCell: UITableViewCell {
         backView.addSubview(foodLabel)
         
         backView.addSubview(seperatorLine)
+        
         backView.addSubview(thumbUpButton)
         backView.addSubview(thumbDownButton)
+        
     }
     func setUpConstraint() {
         backView.snp.makeConstraints { make in
@@ -264,13 +280,52 @@ class MainTableViewCell: UITableViewCell {
     func setUpData() {
         if let date = data.toDay { self.date.text = date.toDate()?.toString() }
 
-        if let type = data.mealType {
-            switch type {
-            case MealType.lunch_a.rawValue: self.typeLabel.text = "중식A"
-            case MealType.lunch_b.rawValue: self.typeLabel.text = "중식B"
-            case MealType.dinner.rawValue: self.typeLabel.text = "석식"
-            default: self.typeLabel.text = "??"
+        if let res = selectedRestaurant,
+           let type = data.mealType {
+            
+            switch res {
+            case SeoulRestaurant.mcc.rawValue:
+                // 중식A - 중식B - 석식
+                switch type {
+                case MealType.lunch_a.rawValue: self.typeLabel.text = "중식A"
+                case MealType.lunch_b.rawValue: self.typeLabel.text = "중식B"
+                case MealType.dinner.rawValue: self.typeLabel.text = "석식"
+                default: self.typeLabel.text = "??"
+                }
+            case YonginRestaurant.staff.rawValue,
+                 YonginRestaurant.dormitory.rawValue:
+                switch type {
+                case MealType.lunch_a.rawValue: self.typeLabel.text = "중식"
+                case MealType.lunch_b.rawValue: self.typeLabel.text = "중식"
+                case MealType.dinner.rawValue: self.typeLabel.text = "석식"
+                default: self.typeLabel.text = "??"
+                }
+            case YonginRestaurant.academy.rawValue:
+                // 조식 - 중식
+                switch type {
+                case MealType.lunch_a.rawValue: self.typeLabel.text = "조식"
+                case MealType.lunch_b.rawValue: self.typeLabel.text = "조식"
+                case MealType.dinner.rawValue: self.typeLabel.text = "중식"
+                default: self.typeLabel.text = "??"
+                }
+            case YonginRestaurant.myungjin.rawValue:
+                // 백반 - 샐러드 - 볶음밥
+                switch type {
+                case MealType.lunch_a.rawValue: self.typeLabel.text = "백반"
+                case MealType.lunch_b.rawValue: self.typeLabel.text = "샐러드"
+                case MealType.dinner.rawValue: self.typeLabel.text = "볶음밥"
+                default: self.typeLabel.text = "??"
+                }
+            default:
+                return
             }
+            
+//            switch type {
+//            case MealType.lunch_a.rawValue: self.typeLabel.text = "중식A"
+//            case MealType.lunch_b.rawValue: self.typeLabel.text = "중식B"
+//            case MealType.dinner.rawValue: self.typeLabel.text = "석식"
+//            default: self.typeLabel.text = "??"
+//            }
         }
         // Foods
         var foods = ""

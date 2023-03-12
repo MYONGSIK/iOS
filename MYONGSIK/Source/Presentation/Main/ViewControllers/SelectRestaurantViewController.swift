@@ -16,7 +16,8 @@ class SelectRestaurantViewController: MainBaseViewController {
     let resInfo = [
         [YonginRestaurant.staff.rawValue, "중식 11:30~13:30  |  석식 17:30~18:30"],
         [YonginRestaurant.dormitory.rawValue, "중식 11:30~13:30  |  석식 17:00~18:30"],
-        [YonginRestaurant.academy.rawValue, "중식 11:30~14:00"]
+        [YonginRestaurant.academy.rawValue, "조식 08:30~09:30  |  중식 10:00~15:00"],
+        [YonginRestaurant.myungjin.rawValue, "(미정)"]
     ]
     
 //    let adImageView = UIView().then{
