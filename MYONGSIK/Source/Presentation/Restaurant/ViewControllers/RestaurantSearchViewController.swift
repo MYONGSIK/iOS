@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Toast
 
 // MARK: 맛집 검색 페이지
 class RestaurantSearchViewController: BaseViewController {
@@ -146,6 +147,7 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
+        cell.delegate = self
         let itemIdx = indexPath.item
         
         cell.setUpData(self.searchResult[itemIdx])
@@ -206,5 +208,12 @@ extension RestaurantSearchViewController {
                           animations: { () -> Void in
                           self.searchResultTableView.reloadData()},
                           completion: nil);
+    }
+}
+
+// MARK: - Delegate Extension
+extension RestaurantSearchViewController: RestaurantCellDelegate {
+    func showToast(message: String) {
+        self.view.makeToast(message, duration: 1.0, position: .center)
     }
 }
