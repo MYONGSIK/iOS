@@ -48,5 +48,9 @@
 			</array>
 		</dict>
 	</dict>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>nmap</string>
+    </array>
 </dict>
 </plist>

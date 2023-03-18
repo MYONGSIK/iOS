@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Toast
 
 // MARK: 명지맛집 > 태그CollectionView셀 클릭 후 나오는 페이지입니다.
 class RestaurantTagViewController: BaseViewController {
@@ -104,6 +105,7 @@ extension RestaurantTagViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
+        cell.delegate = self
         let itemIdx = indexPath.item
         cell.setUpData(self.tagResult[itemIdx])
         return cell
@@ -150,5 +152,12 @@ extension RestaurantTagViewController {
                           animations: { () -> Void in
                           self.tagResultTableView.reloadData()},
                           completion: nil);
+    }
+}
+
+// MARK: - Delegate Extension
+extension RestaurantTagViewController: RestaurantCellDelegate {
+    func showToast(message: String) {
+        self.view.makeToast(message, duration: 1.0, position: .center)
     }
 }

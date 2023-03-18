@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Toast
 
 // MARK: '명지 맛집' 페이지
 class RestaurantMainViewController: MainBaseViewController {
@@ -179,6 +180,7 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
             DispatchQueue.main.async {
                 let itemIdx = indexPath.item - 3
                 cell.setUpData(self.searchResult[itemIdx])
+                cell.delegate = self
                 cell.selectionStyle = .none
             }
             return cell
@@ -279,5 +281,13 @@ extension RestaurantMainViewController {
                           animations: { () -> Void in
                           self.restaurantMainTableView.reloadData()},
                           completion: nil);
+    }
+}
+
+
+// MARK: - Delegate Extension
+extension RestaurantMainViewController: RestaurantCellDelegate {
+    func showToast(message: String) {
+        self.view.makeToast(message, duration: 1.0, position: .center)
     }
 }
