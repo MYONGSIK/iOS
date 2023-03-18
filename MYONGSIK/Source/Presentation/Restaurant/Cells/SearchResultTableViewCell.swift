@@ -99,24 +99,6 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.addTarget(self, action: #selector(didTapGoLinkButton), for: .touchUpInside)
     }
     
-    @objc func didTapPhoneNumButton(_ sender: UIButton) {
-        if let phoneNum = sender.titleLabel?.text {
-            let url = "tel://\(phoneNum)"
-            
-            if let openApp = URL(string: url), UIApplication.shared.canOpenURL(openApp) {
-                if #available(iOS 10.0, *) { UIApplication.shared.open(openApp, options: [:], completionHandler: nil) }
-                else { UIApplication.shared.openURL(openApp) }
-            }
-            else { delegate?.showToast(message: "번호가 등록되어있지 않습니다!") }
-        }
-        else { delegate?.showToast(message: "번호가 등록되어있지 않습니다!") }
-    }
-    
-    @objc func didTapLocationButton(_ sender: UIButton) {
-        print("didTapLocationButton called --> \(sender.titleLabel?.text)")
-        // TODO: 네이버 지도앱으로 연결 (네이버 지도앱이 없는 경우 토스트 메세지 띄우기)
-    }
-    
     
     // MARK: Life Cycles
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -230,6 +212,32 @@ class SearchResultTableViewCell: UITableViewCell {
         webView.placeName = placeName
         webView.category = category
         if let vc = self.next(ofType: UIViewController.self) { vc.navigationController?.pushViewController(webView, animated: true) }
+    }
+    
+    @objc func didTapPhoneNumButton(_ sender: UIButton) {
+        if let phoneNum = sender.titleLabel?.text {
+            let url = "tel://\(phoneNum)"
+            
+            if let openApp = URL(string: url), UIApplication.shared.canOpenURL(openApp) {
+                if #available(iOS 10.0, *) { UIApplication.shared.open(openApp, options: [:], completionHandler: nil) }
+                else { UIApplication.shared.openURL(openApp) }
+            }
+            else { delegate?.showToast(message: "번호가 등록되어있지 않습니다!") }
+        }
+        else { delegate?.showToast(message: "번호가 등록되어있지 않습니다!") }
+    }
+    
+    @objc func didTapLocationButton(_ sender: UIButton) {
+        if let location = sender.titleLabel?.text {
+            
+            let urlStr = "nmap://search?query=" + location
+            let encodedStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+            
+            if let url = URL(string: encodedStr), UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            else { delegate?.showToast(message: "네이버 지도앱이 설치되어있지 않습니다!") }
+        }
     }
     
     // MARK: 서버에서 데이터를 받아온 후 출력시킵니다.
