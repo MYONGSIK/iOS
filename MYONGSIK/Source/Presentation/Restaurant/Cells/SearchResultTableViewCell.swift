@@ -56,19 +56,19 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.textColor = .signatureBlue
     }
-    //    let heartButton = UIButton().then {
-    //        $0.setImage(UIImage(systemName: "heart"), for: .normal)
-    //        $0.setImage(UIImage(systemName: "heart.fill"), for: .selected)
-    //        $0.tintColor = .lightGray
-    //
-    //        $0.addTarget(self, action: #selector(didTapHeartButton(_:)), for: .touchUpInside)
-    //    }
+//    let heartButton = UIButton().then {
+//        $0.setImage(UIImage(systemName: "heart"), for: .normal)
+//        $0.setImage(UIImage(systemName: "heart.fill"), for: .selected)
+//        $0.tintColor = .lightGray
+//
+//        $0.addTarget(self, action: #selector(didTapHeartButton(_:)), for: .touchUpInside)
+//    }
     let pinImage = UIImageView().then{
         $0.image = UIImage(named: "pin")
     }
     let locationButton = UIButton().then{
         $0.setTitle("가게위치 가게위치 가게위치 가게위치 가게위치 가게위치", for: .normal)
-        $0.titleLabel?.font = UIFont.NotoSansKR(size: 14, family: .Bold)
+        $0.titleLabel?.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.contentHorizontalAlignment  = .left
         $0.setTitleColor(UIColor.placeContentColor, for: .normal)
         $0.addTarget(self, action: #selector(didTapLocationButton(_:)), for: .touchUpInside)
@@ -79,7 +79,7 @@ class SearchResultTableViewCell: UITableViewCell {
     }
     let phoneNumButton = UIButton().then{
         $0.setTitle("전화번호가 없습니다.", for: .normal)
-        $0.titleLabel?.font = UIFont.NotoSansKR(size: 14, family: .Bold)
+        $0.titleLabel?.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.contentHorizontalAlignment  = .left
         $0.setTitleColor(UIColor.placeContentColor, for: .normal)
         $0.addTarget(self, action: #selector(didTapPhoneNumButton(_:)), for: .touchUpInside)
@@ -114,14 +114,14 @@ class SearchResultTableViewCell: UITableViewCell {
     
     // MARK: Functions
     func setUpView() {
-        //        self.contentView.addSubview(howManyLikeLabel)
+//        self.contentView.addSubview(howManyLikeLabel)
         self.contentView.addSubview(backView)
         
         backView.addSubview(placeNameLabel)
         backView.addSubview(dotLabel)
         backView.addSubview(placeCategoryLabel)
         backView.addSubview(distanceLabel)
-        //        backView.addSubview(heartButton)
+//        backView.addSubview(heartButton)
         
         backView.addSubview(goLinkButton)
         
@@ -131,12 +131,12 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.addSubview(phoneNumButton)
     }
     func setUpConstraint() {
-        //        howManyLikeLabel.snp.makeConstraints {
-        //            $0.top.leading.equalToSuperview().inset(15)
-        //        }
+//        howManyLikeLabel.snp.makeConstraints {
+//            $0.top.leading.equalToSuperview().inset(15)
+//        }
         backView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(15)
-            //            make.top.equalTo(howManyLikeLabel.snp.bottom).offset(5)
+//            make.top.equalTo(howManyLikeLabel.snp.bottom).offset(5)
             make.top.equalToSuperview().offset(10)
             make.bottom.equalToSuperview().inset(10)
         }
@@ -156,11 +156,11 @@ class SearchResultTableViewCell: UITableViewCell {
             make.centerY.equalTo(placeCategoryLabel)
             make.trailing.lessThanOrEqualToSuperview().offset(-20)  //
         }
-        //        heartButton.snp.makeConstraints { make in
-        //            make.top.trailing.equalToSuperview().inset(20)
-        //            make.leading.equalTo(distanceLabel.snp.trailing).offset(5)
-        //            make.width.height.equalTo(30)
-        //        }
+//        heartButton.snp.makeConstraints { make in
+//            make.top.trailing.equalToSuperview().inset(20)
+//            make.leading.equalTo(distanceLabel.snp.trailing).offset(5)
+//            make.width.height.equalTo(30)
+//        }
         goLinkButton.snp.makeConstraints { make in
             make.width.equalTo(100)
             make.height.equalTo(30)
@@ -173,8 +173,8 @@ class SearchResultTableViewCell: UITableViewCell {
         }
         locationButton.snp.makeConstraints { make in
             make.leading.equalTo(pinImage.snp.trailing).offset(10)
-            make.top.equalTo(pinImage)
-            //            make.trailing.lessThanOrEqualTo(goLinkButton.snp.leading).offset(-42)
+            make.top.centerY.equalTo(pinImage)
+//            make.trailing.lessThanOrEqualTo(goLinkButton.snp.leading).offset(-42)
             make.trailing.equalToSuperview().offset(-20)
         }
         phoneImage.snp.makeConstraints { make in
@@ -259,14 +259,10 @@ class SearchResultTableViewCell: UITableViewCell {
             }
         }
         if let location  = data.road_address_name {
-            //            self.locationLabel.text = location
-            //            if location == "" {self.locationLabel.text = "주소가 없습니다."}
             self.locationButton.setTitle(location, for: .normal)
             if location == "" {self.locationButton.setTitle("주소가 없습니다.", for: .normal)}
         }
         if let phone = data.phone {
-            //            self.phoneNumLabel.text = phone
-            //            if phone == "" {self.phoneNumLabel.text = "전화번호가 없습니다."}
             self.phoneNumButton.setTitle(phone, for: .normal)
             if phone == "" {self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)}
         }
