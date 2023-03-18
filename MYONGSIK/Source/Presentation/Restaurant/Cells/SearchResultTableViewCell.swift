@@ -61,20 +61,23 @@ class SearchResultTableViewCell: UITableViewCell {
     let pinImage = UIImageView().then{
         $0.image = UIImage(named: "pin")
     }
-    let locationLabel = UILabel().then{
-        $0.text = "가게위치 가게위치 가게위치 가게위치 가게위치 가게위치"
-        $0.font = UIFont.NotoSansKR(size: 13, family: .Bold)
-        $0.textColor = .placeContentColor
-        $0.numberOfLines = 2
+    let locationButton = UIButton().then{
+        $0.setTitle("가게위치 가게위치 가게위치 가게위치 가게위치 가게위치", for: .normal)
+        $0.titleLabel?.font = UIFont.NotoSansKR(size: 14, family: .Bold)
+        $0.contentHorizontalAlignment  = .left
+        $0.setTitleColor(UIColor.placeContentColor, for: .normal)
+        $0.addTarget(self, action: #selector(didTapLocationButton(_:)), for: .touchUpInside)
+
     }
     let phoneImage = UIImageView().then{
         $0.image = UIImage(named: "phone")
     }
-    let phoneNumLabel = UILabel().then{
-        $0.text = "전화번호가 없습니다."
-        $0.font = UIFont.NotoSansKR(size: 13, family: .Bold)
-        $0.textColor = .placeContentColor
-        $0.numberOfLines = 1
+    let phoneNumButton = UIButton().then{
+        $0.setTitle("전화번호가 없습니다.", for: .normal)
+        $0.titleLabel?.font = UIFont.NotoSansKR(size: 14, family: .Bold)
+        $0.contentHorizontalAlignment  = .left
+        $0.setTitleColor(UIColor.placeContentColor, for: .normal)
+        $0.addTarget(self, action: #selector(didTapLocationButton(_:)), for: .touchUpInside)
     }
     let goLinkButton = UIButton().then{
         $0.setTitle("바로 가기", for: .normal)
@@ -89,6 +92,16 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.layer.cornerRadius = 15
         
         $0.addTarget(self, action: #selector(didTapGoLinkButton), for: .touchUpInside)
+    }
+    
+    @objc func didTapPhoneNumButton(_ sender: UIButton) {
+        print("didTapPhoneNumButton called --> \(sender.titleLabel?.text)")
+        // TODO: 전화앱으로 연결
+    }
+    
+    @objc func didTapLocationButton(_ sender: UIButton) {
+        print("didTapLocationButton called --> \(sender.titleLabel?.text)")
+        // TODO: 네이버 지도앱으로 연결 (네이버 지도앱이 없는 경우 토스트 메세지 띄우기)
     }
 
         
@@ -118,9 +131,9 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.addSubview(goLinkButton)
         
         backView.addSubview(pinImage)
-        backView.addSubview(locationLabel)
+        backView.addSubview(locationButton)
         backView.addSubview(phoneImage)
-        backView.addSubview(phoneNumLabel)
+        backView.addSubview(phoneNumButton)
     }
     func setUpConstraint() {
 //        howManyLikeLabel.snp.makeConstraints {
@@ -163,18 +176,19 @@ class SearchResultTableViewCell: UITableViewCell {
             make.leading.equalToSuperview().offset(19)
             make.top.equalTo(placeNameLabel.snp.bottom).offset(14)
         }
-        locationLabel.snp.makeConstraints { make in
+        locationButton.snp.makeConstraints { make in
             make.leading.equalTo(pinImage.snp.trailing).offset(10)
             make.top.equalTo(pinImage)
-            make.trailing.lessThanOrEqualTo(goLinkButton.snp.leading).offset(-42)
+//            make.trailing.lessThanOrEqualTo(goLinkButton.snp.leading).offset(-42)
+            make.trailing.equalToSuperview().offset(-20)
         }
         phoneImage.snp.makeConstraints { make in
             make.width.height.equalTo(15)
             make.top.equalTo(pinImage.snp.bottom).offset(24)
             make.leading.equalTo(pinImage)
         }
-        phoneNumLabel.snp.makeConstraints { make in
-            make.leading.equalTo(locationLabel)
+        phoneNumButton.snp.makeConstraints { make in
+            make.leading.equalTo(locationButton)
             make.centerY.equalTo(phoneImage)
         }
     }
@@ -224,12 +238,16 @@ class SearchResultTableViewCell: UITableViewCell {
             }
         }
         if let location  = data.road_address_name {
-            self.locationLabel.text = location
-            if location == "" {self.locationLabel.text = "주소가 없습니다."}
+//            self.locationLabel.text = location
+//            if location == "" {self.locationLabel.text = "주소가 없습니다."}
+            self.locationButton.setTitle(location, for: .normal)
+            if location == "" {self.locationButton.setTitle("주소가 없습니다.", for: .normal)}
         }
         if let phone = data.phone {
-            self.phoneNumLabel.text = phone
-            if phone == "" {self.phoneNumLabel.text = "전화번호가 없습니다."}
+//            self.phoneNumLabel.text = phone
+//            if phone == "" {self.phoneNumLabel.text = "전화번호가 없습니다."}
+            self.phoneNumButton.setTitle(phone, for: .normal)
+            if phone == "" {self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)}
         }
     }
     
