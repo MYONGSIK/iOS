@@ -137,7 +137,8 @@ class SearchResultTableViewCell: UITableViewCell {
     }
     func setUpConstraint() {
         howManyLikeLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().inset(15)
+            $0.top.equalToSuperview().inset(15)
+            $0.leading.equalToSuperview().inset(22)
         }
         backView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(15)
@@ -249,7 +250,7 @@ class SearchResultTableViewCell: UITableViewCell {
         self.data = HeartListModel(placeName: data.place_name ?? nil,
                                    category: data.category_group_name ?? nil,
                                    placeUrl: data.place_url ?? nil)
-        
+
         if let placeName = data.place_name {self.placeNameLabel.text = placeName}
         if let category = data.category_group_name {self.placeCategoryLabel.text = category}
         if let distance = data.distance {
@@ -267,6 +268,32 @@ class SearchResultTableViewCell: UITableViewCell {
             if location == "" {self.locationButton.setTitle("주소가 없습니다.", for: .normal)}
         }
         if let phone = data.phone {
+            self.phoneNumButton.setTitle(phone, for: .normal)
+            if phone == "" {self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)}
+        }
+    }
+    func setUpDataWithRank(_ data: StoreModel) {
+        self.data = HeartListModel(placeName: data.name ?? nil,
+                                   category: data.category ?? nil,
+                                   placeUrl: data.urlAddress ?? nil)
+        if let count = data.scrapCount {self.howManyLikeLabel.text = "명지대 학생 중 \(count)명이 담았어요!"}
+        if let placeName = data.name {self.placeNameLabel.text = placeName}
+        if let category = data.category {self.placeCategoryLabel.text = category}
+        if let distance = data.distance {
+            guard let distanceInt = Int(distance) else {return}
+            if distanceInt >= 1000 {
+                let distanceKmFirst = distanceInt / 1000
+                let distanceKmSecond = (distanceInt % 1000) / 100
+                self.distanceLabel.text = "\(distanceKmFirst).\(distanceKmSecond)km"
+            } else {
+                self.distanceLabel.text = "\(distanceInt)m"
+            }
+        }
+        if let location  = data.address {
+            self.locationButton.setTitle(location, for: .normal)
+            if location == "" {self.locationButton.setTitle("주소가 없습니다.", for: .normal)}
+        }
+        if let phone = data.contact {
             self.phoneNumButton.setTitle(phone, for: .normal)
             if phone == "" {self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)}
         }

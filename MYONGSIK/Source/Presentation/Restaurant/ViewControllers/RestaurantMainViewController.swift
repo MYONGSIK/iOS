@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Then
 import Toast
+import Alamofire
 
 // MARK: '명지 맛집' 페이지
 class RestaurantMainViewController: MainBaseViewController {
@@ -23,6 +24,8 @@ class RestaurantMainViewController: MainBaseViewController {
     // MARK: Life Cycles
     var restaurantMainTableView: UITableView!
     var searchResult: [KakaoResultModel] = []
+    
+    var rankResults: [StoreModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,10 +43,16 @@ class RestaurantMainViewController: MainBaseViewController {
         self.tabBarController?.tabBar.isHidden = false
         //DATA
         DispatchQueue.main.async {
-            self.searchResult.removeAll()
+//            self.searchResult.removeAll()
             KakaoMapDataManager().randomMapDataManager(self)
+            
+//            self.rankResults.removeAll()
+            self.fetchRankData()
+            self.reloadDataAnimation()
         }
     }
+    
+    
     
     // MARK: Actions
     @objc func goSearchButtonDidTap(_ sender: UIButton) {
@@ -146,7 +155,7 @@ class RestaurantMainViewController: MainBaseViewController {
  */
 extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = self.searchResult.count ?? 0
+        let count = self.rankResults.count ?? 0
         return count + 3
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -179,7 +188,7 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
 
             DispatchQueue.main.async {
                 let itemIdx = indexPath.item - 3
-                cell.setUpData(self.searchResult[itemIdx])
+                cell.setUpDataWithRank(self.rankResults[itemIdx])
                 cell.delegate = self
                 cell.selectionStyle = .none
                 cell.setupLayout(todo: .main)
@@ -197,7 +206,7 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 2:
             return 46
         default:
-            return 190
+            return 200
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -290,5 +299,36 @@ extension RestaurantMainViewController {
 extension RestaurantMainViewController: RestaurantCellDelegate {
     func showToast(message: String) {
         self.view.makeToast(message, duration: 1.0, position: .center)
+    }
+}
+
+// MARK: - API extension
+extension RestaurantMainViewController {
+    func fetchRankData() {
+        let queryParam: Parameters = [
+            "sort": "scrapCount,desc",
+            "campus" : "SEOUL",
+        ]
+        APIManager.shared.getData(urlEndpointString: Constants.getStoreRank,
+                                  dataType: StoreRankModel.self,
+                                  parameter: queryParam,
+                                  completionHandler: { [weak self] response in
+            print("fetchRankData 결과 - \(response)")
+
+            if response.success {
+                self?.rankResults = response.data.content
+            } else {
+                self?.showAlert(message: "맛집 순위 정보를 가져올 수 없습니다.")
+            }
+
+            
+            
+        })
+    }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
     }
 }

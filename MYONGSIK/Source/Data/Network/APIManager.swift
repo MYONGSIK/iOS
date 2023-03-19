@@ -54,7 +54,7 @@ class APIManager {
             guard let url = URL(string: encodedUrlString) else { return }
             
             AF
-                .request(url, method: .get, parameters: parameter)
+                .request(url, method: .get, parameters: parameter, encoding: URLEncoding.queryString)
                 .responseDecodable(of: T.self) { response in
                     print("getData called")
                     switch response.result {

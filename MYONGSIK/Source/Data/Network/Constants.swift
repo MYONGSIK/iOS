@@ -54,6 +54,8 @@ struct Constants {
     static let getWeekFood = "/api/v2/meals/week"
     static let postFoodEvaluate = "/api/v2/meals/evaluate"
     static let postFoodReview = "/api/v2/reviews"
+    static let getStoreRank = "/api/v2/scraps/store"
+    static let postHeart = "/api/v2/scraps"
     
     // 카카오API: 키워드로 장소 검색
     static let KakaoURL = "https://dapi.kakao.com/v2/local/search/keyword.json?query="

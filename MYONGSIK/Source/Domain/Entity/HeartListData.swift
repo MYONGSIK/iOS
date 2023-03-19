@@ -20,3 +20,28 @@ struct HeartListModel {
     let category: String!
     let placeUrl: String!
 }
+
+struct HeartModel {
+    let address: String?
+    let campus: String?
+    let category: String?
+    let code: String?
+    let contact: String?
+    let distance: String?
+    let name: String?
+    let phoneId: String?
+    let urlAddress: String?
+}
+
+
+//{
+//  "address": {},
+//  "campus": {},
+//  "category": {},
+//  "code": {},
+//  "contact": {},
+//  "distance": {},
+//  "name": {},
+//  "phoneId": {},
+//  "urlAddress": {}
+//}
