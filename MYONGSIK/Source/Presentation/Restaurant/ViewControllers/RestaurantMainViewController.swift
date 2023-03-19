@@ -49,8 +49,8 @@ class RestaurantMainViewController: MainBaseViewController {
 //            self.searchResult.removeAll()
             KakaoMapDataManager().randomMapDataManager(self)
             
-//            self.rankResults.removeAll()
             self.fetchRankData()
+            self.rankResults.removeAll()
             self.reloadDataAnimation()
         }
     }
@@ -61,6 +61,8 @@ class RestaurantMainViewController: MainBaseViewController {
     @objc func goSearchButtonDidTap(_ sender: UIButton) {
         UIDevice.vibrate()
         let vc = RestaurantSearchViewController()
+        vc.searchStoreResult = self.rankResults
+        vc.campusInfo = self.campusInfo
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -204,6 +206,7 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
 
             DispatchQueue.main.async {
                 let itemIdx = indexPath.item - 3
+                cell.campusInfo = self.campusInfo
                 cell.setUpDataWithRank(self.rankResults[itemIdx])
                 cell.delegate = self
                 cell.selectionStyle = .none
@@ -230,11 +233,13 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         
         let itemIdx = indexPath.item
         if itemIdx > 2 {
-            guard let link = self.searchResult[itemIdx - 3].place_url else {return}
-            guard let placeName = self.searchResult[itemIdx - 3].place_name else {return}
-            guard let category = self.searchResult[itemIdx - 3].category_group_name else {return}
+            guard let link = self.rankResults[itemIdx - 3].urlAddress else {return}
+            guard let placeName = self.rankResults[itemIdx - 3].name else {return}
+            guard let category = self.rankResults[itemIdx - 3].category else {return}
             
             let vc = WebViewController()
+            vc.storeData = self.rankResults[itemIdx - 3]
+            vc.campusInfo = self.campusInfo
             vc.webURL = link
             vc.placeName = placeName
             vc.category = category
@@ -336,8 +341,6 @@ extension RestaurantMainViewController {
                 self?.showAlert(message: "맛집 순위 정보를 가져올 수 없습니다.")
             }
 
-            
-            
         })
     }
     

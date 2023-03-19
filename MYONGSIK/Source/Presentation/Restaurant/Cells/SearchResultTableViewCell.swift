@@ -20,6 +20,8 @@ enum CellTodo {
 // MARK: 검색 페이지 > 검색 결과 셀
 class SearchResultTableViewCell: UITableViewCell {
     let realm = try! Realm()
+    var campusInfo: CampusInfo?
+    var storeData: StoreModel?
     var data: HeartListModel?
     var delegate: RestaurantCellDelegate?
     
@@ -213,6 +215,8 @@ class SearchResultTableViewCell: UITableViewCell {
         guard let category = self.data?.category else {return}
         
         let webView = WebViewController()
+        webView.campusInfo = campusInfo
+        webView.storeData = storeData
         webView.webURL = link
         webView.placeName = placeName
         webView.category = category
@@ -273,6 +277,7 @@ class SearchResultTableViewCell: UITableViewCell {
         }
     }
     func setUpDataWithRank(_ data: StoreModel) {
+        self.storeData = data
         self.data = HeartListModel(placeName: data.name ?? nil,
                                    category: data.category ?? nil,
                                    placeUrl: data.urlAddress ?? nil)
