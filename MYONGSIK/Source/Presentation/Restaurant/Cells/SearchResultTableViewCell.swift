@@ -114,7 +114,7 @@ class SearchResultTableViewCell: UITableViewCell {
     
     // MARK: Functions
     func setUpView() {
-//        self.contentView.addSubview(howManyLikeLabel)
+        self.contentView.addSubview(howManyLikeLabel)
         self.contentView.addSubview(backView)
         
         backView.addSubview(placeNameLabel)
@@ -131,17 +131,18 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.addSubview(phoneNumButton)
     }
     func setUpConstraint() {
-//        howManyLikeLabel.snp.makeConstraints {
-//            $0.top.leading.equalToSuperview().inset(15)
-//        }
+        howManyLikeLabel.snp.makeConstraints {
+            $0.top.leading.equalToSuperview().inset(15)
+        }
         backView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(15)
-//            make.top.equalTo(howManyLikeLabel.snp.bottom).offset(5)
-            make.top.equalToSuperview().offset(10)
+            make.top.equalTo(howManyLikeLabel.snp.bottom).offset(5)
+//            make.top.equalToSuperview().offset(10)
             make.bottom.equalToSuperview().inset(10)
         }
         placeNameLabel.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview().inset(22)
+            make.leading.equalToSuperview().inset(22)
+            make.top.equalToSuperview().inset(12)
         }
         dotLabel.snp.makeConstraints { make in
             make.leading.equalTo(placeNameLabel.snp.trailing)
@@ -169,7 +170,7 @@ class SearchResultTableViewCell: UITableViewCell {
         pinImage.snp.makeConstraints { make in
             make.width.height.equalTo(19)
             make.leading.equalToSuperview().offset(19)
-            make.top.equalTo(placeNameLabel.snp.bottom).offset(14)
+            make.top.equalTo(placeNameLabel.snp.bottom).offset(12)
         }
         locationButton.snp.makeConstraints { make in
             make.leading.equalTo(pinImage.snp.trailing).offset(10)
@@ -179,7 +180,7 @@ class SearchResultTableViewCell: UITableViewCell {
         }
         phoneImage.snp.makeConstraints { make in
             make.width.height.equalTo(15)
-            make.top.equalTo(pinImage.snp.bottom).offset(24)
+            make.top.equalTo(pinImage.snp.bottom).offset(15)
             make.leading.equalTo(pinImage)
         }
         phoneNumButton.snp.makeConstraints { make in
