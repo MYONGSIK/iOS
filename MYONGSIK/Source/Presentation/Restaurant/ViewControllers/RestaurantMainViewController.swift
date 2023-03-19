@@ -48,9 +48,9 @@ class RestaurantMainViewController: MainBaseViewController {
         DispatchQueue.main.async {
 //            self.searchResult.removeAll()
             KakaoMapDataManager().randomMapDataManager(self)
-            
-            self.fetchRankData()
+
             self.rankResults.removeAll()
+            self.fetchRankData()
             self.reloadDataAnimation()
         }
     }

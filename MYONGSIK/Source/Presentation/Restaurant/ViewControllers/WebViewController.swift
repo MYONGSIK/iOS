@@ -161,9 +161,10 @@ class WebViewController: UIViewController, WKUIDelegate {
         print("찜꽁 Param - \(bodyParam)")
         APIManager.shared.postData(urlEndpointString: Constants.postHeart,
                                    dataType: HeartModel.self,
-                                   responseType: APIModel<HeartModel>.self,
+                                   responseType: HeartModel.self,
                                    parameter: bodyParam,
                                    completionHandler: { response in
+            print(bodyParam)
             print(response)
         })
     }

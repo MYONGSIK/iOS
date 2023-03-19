@@ -206,7 +206,6 @@ class SearchResultTableViewCell: UITableViewCell {
             sender.tintColor = .lightGray
             deleteHeartData(data: self.data)    // 로컬에 찜 삭제
         }
-        // TODO: 식당 좋아요 정보 서버 POST -> 업데이트 예정
     }
     
     @objc func didTapGoLinkButton() {

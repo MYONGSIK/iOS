@@ -166,6 +166,17 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         cell.delegate = self
         let itemIdx = indexPath.item
         
+        let data = StoreModel(address: self.searchResult[itemIdx].road_address_name,
+                              category: self.searchResult[itemIdx].category_group_name,
+                              code: self.searchResult[itemIdx].category_group_code,
+                              contact: self.searchResult[itemIdx].phone,
+                              distance: self.searchResult[itemIdx].distance,
+                              name: self.searchResult[itemIdx].place_name,
+                              scrapCount: nil,
+                              storeId: Int(self.searchResult[itemIdx].id!),
+                              urlAddress: self.searchResult[itemIdx].place_url)
+        print("search data - \(data)")
+        cell.setUpDataWithRank(data)
         cell.setUpData(self.searchResult[itemIdx])
         cell.setupLayout(todo: .search)
         return cell
