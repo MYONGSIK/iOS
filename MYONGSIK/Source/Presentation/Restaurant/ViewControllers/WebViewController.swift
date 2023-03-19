@@ -28,6 +28,9 @@ class WebViewController: UIViewController, WKUIDelegate {
     let realm = try! Realm()    // Realm을 활용해 기기에 저장합니다.
     
     // Properties
+    var storeData: StoreModel?
+    var campusInfo: CampusInfo?
+    
     var webURL: String!
     var placeName: String!
     var category: String!
@@ -66,6 +69,7 @@ class WebViewController: UIViewController, WKUIDelegate {
             removeHeartAnimation()
         } else {
             addHeartData()
+            requestAddHeart()
             addHeartAnimation()
         }
     }
@@ -138,5 +142,30 @@ class WebViewController: UIViewController, WKUIDelegate {
                           animations: { () -> Void in
                           self.heartButton.isSelected = false},
                           completion: nil);
+    }
+    
+    func requestAddHeart() {
+        // TODO: 찜꽁 리스트 추가 POST
+        let campus = (campusInfo == .seoul) ? "SEOUL" : "YONGIN"
+        let phoneId = UIDevice.current.identifierForVendor!.uuidString
+        
+        let bodyParam = HeartModel(address: storeData?.address,
+                                   campus: campus,
+                                   category: storeData?.category,
+                                   code: storeData?.code,
+                                   contact: storeData?.contact,
+                                   distance: storeData?.distance,
+                                   name: storeData?.name,
+                                   phoneId: phoneId,
+                                   urlAddress: storeData?.urlAddress)
+        print("찜꽁 Param - \(bodyParam)")
+        APIManager.shared.postData(urlEndpointString: Constants.postHeart,
+                                   dataType: HeartModel.self,
+                                   responseType: HeartModel.self,
+                                   parameter: bodyParam,
+                                   completionHandler: { response in
+            print(bodyParam)
+            print(response)
+        })
     }
 }

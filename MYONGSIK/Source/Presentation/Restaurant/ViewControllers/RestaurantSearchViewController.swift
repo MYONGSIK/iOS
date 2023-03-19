@@ -36,6 +36,10 @@ class RestaurantSearchViewController: BaseViewController {
     var searchKeyword: String = ""
     var searchResultTableView: UITableView!
     var searchResult: [KakaoResultModel] = []
+    
+    var searchStoreResult: [StoreModel] = []
+    var campusInfo: CampusInfo = .seoul    // default값 - 인캠
+    
     var pageNum: Int = 1
     
     override func viewDidLoad() {
@@ -44,6 +48,7 @@ class RestaurantSearchViewController: BaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
+        setCampusInfo()
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
@@ -77,6 +82,17 @@ class RestaurantSearchViewController: BaseViewController {
         KakaoMapDataManager().searchMapDataManager(text, pageNum, self)
     }
     // MARK: Functions
+    func setCampusInfo() {
+        if let userCampus  = UserDefaults.standard.value(forKey: "userCampus") {
+            switch userCampus as! String {
+            case CampusInfo.seoul.name:
+                campusInfo = .seoul
+            case CampusInfo.yongin.name:
+                campusInfo = .yongin
+            default: return
+            }
+        }
+    }
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
         searchResultTableView = UITableView()
         searchResultTableView.then{
@@ -150,6 +166,17 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         cell.delegate = self
         let itemIdx = indexPath.item
         
+        let data = StoreModel(address: self.searchResult[itemIdx].road_address_name,
+                              category: self.searchResult[itemIdx].category_group_name,
+                              code: self.searchResult[itemIdx].category_group_code,
+                              contact: self.searchResult[itemIdx].phone,
+                              distance: self.searchResult[itemIdx].distance,
+                              name: self.searchResult[itemIdx].place_name,
+                              scrapCount: nil,
+                              storeId: Int(self.searchResult[itemIdx].id!),
+                              urlAddress: self.searchResult[itemIdx].place_url)
+        print("search data - \(data)")
+        cell.setUpDataWithRank(data)
         cell.setUpData(self.searchResult[itemIdx])
         cell.setupLayout(todo: .search)
         return cell
@@ -166,6 +193,17 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         guard let category = self.searchResult[itemIdx].category_group_name else {return}
         
         let vc = WebViewController()
+        vc.campusInfo = self.campusInfo
+        vc.storeData = StoreModel(address: self.searchResult[itemIdx].road_address_name,
+                                  category: self.searchResult[itemIdx].category_group_name,
+                                  code: self.searchResult[itemIdx].category_group_code,
+                                  contact: self.searchResult[itemIdx].phone,
+                                  distance: self.searchResult[itemIdx].distance,
+                                  name: self.searchResult[itemIdx].place_name,
+                                  scrapCount: nil,
+                                  storeId: Int(self.searchResult[itemIdx].id!),
+                                  urlAddress: self.searchResult[itemIdx].place_url)
+        print("vc.storeData - \(vc.storeData)")
         vc.webURL = link
         vc.placeName = placeName
         vc.category = category

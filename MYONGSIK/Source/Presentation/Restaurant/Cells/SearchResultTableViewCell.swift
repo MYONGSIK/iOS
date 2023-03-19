@@ -20,12 +20,14 @@ enum CellTodo {
 // MARK: 검색 페이지 > 검색 결과 셀
 class SearchResultTableViewCell: UITableViewCell {
     let realm = try! Realm()
+    var campusInfo: CampusInfo?
+    var storeData: StoreModel?
     var data: HeartListModel?
     var delegate: RestaurantCellDelegate?
     
     // MARK: Views
     let howManyLikeLabel = UILabel().then {
-        $0.text = "명지대 학생 중 00명이 담았어요!"
+        $0.text = "명지대학생들이 00명이 담았어요!"
         $0.font = UIFont.NotoSansKR(size: 14, family: .Bold)
         $0.textColor = .signatureBlue
     }
@@ -137,7 +139,8 @@ class SearchResultTableViewCell: UITableViewCell {
     }
     func setUpConstraint() {
         howManyLikeLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().inset(15)
+            $0.top.equalToSuperview().inset(15)
+            $0.leading.equalToSuperview().inset(22)
         }
         backView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(15)
@@ -203,7 +206,6 @@ class SearchResultTableViewCell: UITableViewCell {
             sender.tintColor = .lightGray
             deleteHeartData(data: self.data)    // 로컬에 찜 삭제
         }
-        // TODO: 식당 좋아요 정보 서버 POST -> 업데이트 예정
     }
     
     @objc func didTapGoLinkButton() {
@@ -212,6 +214,8 @@ class SearchResultTableViewCell: UITableViewCell {
         guard let category = self.data?.category else {return}
         
         let webView = WebViewController()
+        webView.campusInfo = campusInfo
+        webView.storeData = storeData
         webView.webURL = link
         webView.placeName = placeName
         webView.category = category
@@ -249,7 +253,7 @@ class SearchResultTableViewCell: UITableViewCell {
         self.data = HeartListModel(placeName: data.place_name ?? nil,
                                    category: data.category_group_name ?? nil,
                                    placeUrl: data.place_url ?? nil)
-        
+
         if let placeName = data.place_name {self.placeNameLabel.text = placeName}
         if let category = data.category_group_name {self.placeCategoryLabel.text = category}
         if let distance = data.distance {
@@ -267,6 +271,33 @@ class SearchResultTableViewCell: UITableViewCell {
             if location == "" {self.locationButton.setTitle("주소가 없습니다.", for: .normal)}
         }
         if let phone = data.phone {
+            self.phoneNumButton.setTitle(phone, for: .normal)
+            if phone == "" {self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)}
+        }
+    }
+    func setUpDataWithRank(_ data: StoreModel) {
+        self.storeData = data
+        self.data = HeartListModel(placeName: data.name ?? nil,
+                                   category: data.category ?? nil,
+                                   placeUrl: data.urlAddress ?? nil)
+        if let count = data.scrapCount {self.howManyLikeLabel.text = "명지대학생들이 \(count)명이 담았어요!"}
+        if let placeName = data.name {self.placeNameLabel.text = placeName}
+        if let category = data.category {self.placeCategoryLabel.text = category}
+        if let distance = data.distance {
+            guard let distanceInt = Int(distance) else {return}
+            if distanceInt >= 1000 {
+                let distanceKmFirst = distanceInt / 1000
+                let distanceKmSecond = (distanceInt % 1000) / 100
+                self.distanceLabel.text = "\(distanceKmFirst).\(distanceKmSecond)km"
+            } else {
+                self.distanceLabel.text = "\(distanceInt)m"
+            }
+        }
+        if let location  = data.address {
+            self.locationButton.setTitle(location, for: .normal)
+            if location == "" {self.locationButton.setTitle("주소가 없습니다.", for: .normal)}
+        }
+        if let phone = data.contact {
             self.phoneNumButton.setTitle(phone, for: .normal)
             if phone == "" {self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)}
         }
