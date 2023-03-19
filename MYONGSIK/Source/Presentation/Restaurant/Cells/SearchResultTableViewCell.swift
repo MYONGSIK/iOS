@@ -12,6 +12,11 @@ protocol RestaurantCellDelegate {
     func showToast(message: String)
 }
 
+enum CellTodo {
+    case main
+    case search
+}
+
 // MARK: 검색 페이지 > 검색 결과 셀
 class SearchResultTableViewCell: UITableViewCell {
     let realm = try! Realm()
@@ -137,12 +142,10 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(15)
             make.top.equalTo(howManyLikeLabel.snp.bottom).offset(5)
-//            make.top.equalToSuperview().offset(10)
             make.bottom.equalToSuperview().inset(10)
         }
         placeNameLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(22)
-            make.top.equalToSuperview().inset(12)
+            make.top.leading.equalToSuperview().inset(22)
         }
         dotLabel.snp.makeConstraints { make in
             make.leading.equalTo(placeNameLabel.snp.trailing)
@@ -170,7 +173,7 @@ class SearchResultTableViewCell: UITableViewCell {
         pinImage.snp.makeConstraints { make in
             make.width.height.equalTo(19)
             make.leading.equalToSuperview().offset(19)
-            make.top.equalTo(placeNameLabel.snp.bottom).offset(12)
+            make.top.equalTo(placeNameLabel.snp.bottom).offset(14)
         }
         locationButton.snp.makeConstraints { make in
             make.leading.equalTo(pinImage.snp.trailing).offset(10)
@@ -286,6 +289,28 @@ class SearchResultTableViewCell: UITableViewCell {
             let predicate = NSPredicate(format: "placeName = %@", data.placeName)
             let objc = realm.objects(HeartListData.self).filter(predicate)
             try! realm.write { realm.delete(objc) }
+        }
+    }
+    
+    func setupLayout(todo: CellTodo) {
+        switch todo {
+        case .main:
+            self.howManyLikeLabel.isHidden = false
+        case .search:
+            self.howManyLikeLabel.isHidden = true
+            self.backView.snp.makeConstraints {
+                $0.top.equalToSuperview().offset(10)
+            }
+            self.placeNameLabel.snp.makeConstraints {
+                $0.top.equalToSuperview().inset(22)
+            }
+            self.pinImage.snp.makeConstraints {
+                $0.top.equalTo(placeNameLabel.snp.bottom).offset(25)
+            }
+            self.phoneImage.snp.makeConstraints {
+                $0.top.equalTo(pinImage.snp.bottom).offset(22)
+            }
+        default: return
         }
     }
     
