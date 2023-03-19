@@ -61,7 +61,8 @@ struct Constants {
     static let KakaoURL = "https://dapi.kakao.com/v2/local/search/keyword.json?query="
     static let KakaoAuthorization = "KakaoAK " + "1167b82f504027f5cbddb0ba44492329"
     static let categoryCode = "&category_group_code=" + "FD6, CE7"
-    static let radius = "&radius=" + "1500"
+    static let seoulRadius = "&radius=" + "1500"
+    static let yonginRadius = "&radius=" + "3000"
     static let page = "&page="
     static let size = "&size=15"
     static let sort = "&sort=distance" //거리순

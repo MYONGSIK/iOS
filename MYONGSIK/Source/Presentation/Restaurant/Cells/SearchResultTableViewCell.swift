@@ -25,7 +25,7 @@ class SearchResultTableViewCell: UITableViewCell {
     
     // MARK: Views
     let howManyLikeLabel = UILabel().then {
-        $0.text = "명지대 학생 중 00명이 담았어요!"
+        $0.text = "명지대학생들이 00명이 담았어요!"
         $0.font = UIFont.NotoSansKR(size: 14, family: .Bold)
         $0.textColor = .signatureBlue
     }
@@ -276,7 +276,7 @@ class SearchResultTableViewCell: UITableViewCell {
         self.data = HeartListModel(placeName: data.name ?? nil,
                                    category: data.category ?? nil,
                                    placeUrl: data.urlAddress ?? nil)
-        if let count = data.scrapCount {self.howManyLikeLabel.text = "명지대 학생 중 \(count)명이 담았어요!"}
+        if let count = data.scrapCount {self.howManyLikeLabel.text = "명지대학생들이 \(count)명이 담았어요!"}
         if let placeName = data.name {self.placeNameLabel.text = placeName}
         if let category = data.category {self.placeCategoryLabel.text = category}
         if let distance = data.distance {

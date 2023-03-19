@@ -22,6 +22,8 @@ class RestaurantMainViewController: MainBaseViewController {
     }
 
     // MARK: Life Cycles
+    var campusInfo: CampusInfo = .seoul    // default값 - 인캠
+    
     var restaurantMainTableView: UITableView!
     var searchResult: [KakaoResultModel] = []
     
@@ -34,6 +36,7 @@ class RestaurantMainViewController: MainBaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        setCampusInfo()
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
@@ -62,6 +65,19 @@ class RestaurantMainViewController: MainBaseViewController {
     }
     
     // MARK: Functions
+    func setCampusInfo() {
+        if let userCampus  = UserDefaults.standard.value(forKey: "userCampus") {
+            switch userCampus as! String {
+            case CampusInfo.seoul.name:
+                campusInfo = .seoul
+            case CampusInfo.yongin.name:
+                campusInfo = .yongin
+            default:
+                return
+            }
+        }
+    }
+    
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
         restaurantMainTableView = UITableView()
         restaurantMainTableView.then{
@@ -307,13 +323,12 @@ extension RestaurantMainViewController {
     func fetchRankData() {
         let queryParam: Parameters = [
             "sort": "scrapCount,desc",
-            "campus" : "SEOUL",
+            "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
         ]
         APIManager.shared.getData(urlEndpointString: Constants.getStoreRank,
                                   dataType: StoreRankModel.self,
                                   parameter: queryParam,
                                   completionHandler: { [weak self] response in
-            print("fetchRankData 결과 - \(response)")
 
             if response.success {
                 self?.rankResults = response.data.content
