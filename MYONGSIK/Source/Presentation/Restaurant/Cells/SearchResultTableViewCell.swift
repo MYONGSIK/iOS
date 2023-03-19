@@ -216,6 +216,7 @@ class SearchResultTableViewCell: UITableViewCell {
         let webView = WebViewController()
         webView.campusInfo = campusInfo
         webView.storeData = storeData
+        print("웹뷰로 넘어가는 데이터 - \(storeData)")
         webView.webURL = link
         webView.placeName = placeName
         webView.category = category
@@ -253,6 +254,15 @@ class SearchResultTableViewCell: UITableViewCell {
         self.data = HeartListModel(placeName: data.place_name ?? nil,
                                    category: data.category_group_name ?? nil,
                                    placeUrl: data.place_url ?? nil)
+        self.storeData = StoreModel(address: data.road_address_name,
+                                    category: data.category_group_name,
+                                    code: data.category_group_code,
+                                    contact: data.phone,
+                                    distance: data.distance,
+                                    name: data.place_name,
+                                    scrapCount: nil,
+                                    storeId: Int(data.id!),
+                                    urlAddress: data.place_url)
 
         if let placeName = data.place_name {self.placeNameLabel.text = placeName}
         if let category = data.category_group_name {self.placeCategoryLabel.text = category}
