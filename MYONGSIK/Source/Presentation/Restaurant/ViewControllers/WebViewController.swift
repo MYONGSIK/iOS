@@ -158,13 +158,13 @@ class WebViewController: UIViewController, WKUIDelegate {
                                    name: storeData?.name,
                                    phoneId: phoneId,
                                    urlAddress: storeData?.urlAddress)
-        print("찜꽁 Param - \(bodyParam)")
+        
         APIManager.shared.postData(urlEndpointString: Constants.postHeart,
                                    dataType: HeartModel.self,
                                    responseType: HeartModel.self,
                                    parameter: bodyParam,
                                    completionHandler: { response in
-            print(bodyParam)
+            print("찜꽁 POST Param - \(bodyParam)")
             print(response)
         })
     }

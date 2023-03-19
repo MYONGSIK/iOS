@@ -164,8 +164,10 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.delegate = self
-        let itemIdx = indexPath.item
         
+        let itemIdx = indexPath.item
+        cell.setUpData(self.searchResult[itemIdx])
+        cell.campusInfo = self.campusInfo
         let data = StoreModel(address: self.searchResult[itemIdx].road_address_name,
                               category: self.searchResult[itemIdx].category_group_name,
                               code: self.searchResult[itemIdx].category_group_code,
