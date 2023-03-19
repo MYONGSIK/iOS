@@ -17,7 +17,7 @@ class SelectRestaurantViewController: MainBaseViewController {
         [YonginRestaurant.staff.rawValue, "중식 11:30~13:30  |  석식 17:30~18:30"],
         [YonginRestaurant.dormitory.rawValue, "중식 11:30~13:30  |  석식 17:00~18:30"],
         [YonginRestaurant.academy.rawValue, "조식 08:30~09:30  |  중식 10:00~15:00"],
-        [YonginRestaurant.myungjin.rawValue, "(미정)"]
+        [YonginRestaurant.myungjin.rawValue, "백반 11:30~14:30 \n샐러드,볶음밥 10:00~15:00"]
     ]
     
 //    let adImageView = UIView().then{
@@ -82,7 +82,14 @@ extension SelectRestaurantViewController: UITableViewDelegate, UITableViewDataSo
         // TODO: 선택된 식당의 학식 정보를 토대로 화면으로 전환 (MainVC) / 현재 화면 전환만 구현해둠
         let mainVC = MainViewController()
         mainVC.selectedResName = resInfo[indexPath.row][0]
-        mainVC.operatingTimeText = resInfo[indexPath.row][1]
+        if mainVC.selectedResName == YonginRestaurant.myungjin.rawValue {
+            mainVC.operatingTimeText = "백반 11:30~14:30 | 샐러드,볶음밥 10:00~15:00"
+        } else {
+            mainVC.operatingTimeText = resInfo[indexPath.row][1]
+        }
+        
+        
+        
         self.navigationController?.pushViewController(mainVC, animated: true)
     }
 }
