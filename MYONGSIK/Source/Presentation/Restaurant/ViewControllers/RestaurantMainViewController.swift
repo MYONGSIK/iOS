@@ -182,6 +182,7 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
                 cell.setUpData(self.searchResult[itemIdx])
                 cell.delegate = self
                 cell.selectionStyle = .none
+                cell.setupLayout(todo: .main)
             }
             return cell
         }
@@ -196,7 +197,7 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 2:
             return 46
         default:
-            return 170
+            return 190
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
