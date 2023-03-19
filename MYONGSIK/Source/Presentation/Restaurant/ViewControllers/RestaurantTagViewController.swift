@@ -108,6 +108,7 @@ extension RestaurantTagViewController: UITableViewDelegate, UITableViewDataSourc
         cell.delegate = self
         let itemIdx = indexPath.item
         cell.setUpData(self.tagResult[itemIdx])
+        cell.setupLayout(todo: .search)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
