@@ -135,9 +135,9 @@ class RestaurantSearchViewController: BaseViewController {
             make.centerY.equalToSuperview()
         }
         searchResultTableView.snp.makeConstraints { make in
+            make.top.equalTo(super.navigationView.snp.bottom).offset(22)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
-            make.top.equalTo(super.navigationView.snp.bottom).offset(22)
         }
     }
 }
@@ -164,54 +164,14 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.delegate = self
-        
         let itemIdx = indexPath.item
         cell.setUpData(self.searchResult[itemIdx])
         cell.campusInfo = self.campusInfo
-        let data = StoreModel(address: self.searchResult[itemIdx].road_address_name,
-                              category: self.searchResult[itemIdx].category_group_name,
-                              code: self.searchResult[itemIdx].id,
-                              contact: self.searchResult[itemIdx].phone,
-                              distance: self.searchResult[itemIdx].distance,
-                              name: self.searchResult[itemIdx].place_name,
-                              scrapCount: nil,
-                              storeId: Int(self.searchResult[itemIdx].id!),
-                              urlAddress: self.searchResult[itemIdx].place_url)
-        print("search data - \(data)")
-        cell.setUpDataWithRank(data)
-        cell.setUpData(self.searchResult[itemIdx])
         cell.setupLayout(todo: .search)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 170
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        UIDevice.vibrate()
-        
-        let itemIdx = indexPath.item
-        guard let link = self.searchResult[itemIdx].place_url else {return}
-        guard let placeName = self.searchResult[itemIdx].place_name else {return}
-        guard let category = self.searchResult[itemIdx].category_group_name else {return}
-        
-        let vc = WebViewController()
-        vc.campusInfo = self.campusInfo
-        vc.storeData = StoreModel(address: self.searchResult[itemIdx].road_address_name,
-                                  category: self.searchResult[itemIdx].category_group_name,
-                                  code: self.searchResult[itemIdx].category_group_code,
-                                  contact: self.searchResult[itemIdx].phone,
-                                  distance: self.searchResult[itemIdx].distance,
-                                  name: self.searchResult[itemIdx].place_name,
-                                  scrapCount: nil,
-                                  storeId: Int(self.searchResult[itemIdx].id!),
-                                  urlAddress: self.searchResult[itemIdx].place_url)
-        print("vc.storeData - \(vc.storeData)")
-        vc.webURL = link
-        vc.placeName = placeName
-        vc.category = category
-        self.navigationController!.pushViewController(vc, animated: true)
-        
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 // MARK: - UITextField delegate
