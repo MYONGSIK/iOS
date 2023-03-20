@@ -128,33 +128,6 @@ extension RestaurantTagViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 170
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        UIDevice.vibrate()
-        
-        let itemIdx = indexPath.item
-        guard let link = self.tagResult[itemIdx].place_url else {return}
-        guard let placeName = self.tagResult[itemIdx].place_name else {return}
-        guard let category = self.tagResult[itemIdx].category_group_name else {return}
-        
-        let vc = WebViewController()
-        vc.campusInfo = self.campusInfo
-        vc.storeData = StoreModel(address: self.tagResult[itemIdx].road_address_name,
-                                  category: self.tagResult[itemIdx].category_group_name,
-                                  code: self.tagResult[itemIdx].id,
-                                  contact: self.tagResult[itemIdx].phone,
-                                  distance: self.tagResult[itemIdx].distance,
-                                  name: self.tagResult[itemIdx].place_name,
-                                  scrapCount: nil,
-                                  storeId: Int(self.tagResult[itemIdx].id!),
-                                  urlAddress: self.tagResult[itemIdx].place_url)
-        print("vc.storeData - \(vc.storeData)")
-        vc.webURL = link
-        vc.placeName = placeName
-        vc.category = category
-        self.navigationController!.pushViewController(vc, animated: true)
-        
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
 }
 // MARK: - API Success
 extension RestaurantTagViewController {

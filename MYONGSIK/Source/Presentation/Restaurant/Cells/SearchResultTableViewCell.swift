@@ -73,7 +73,7 @@ class SearchResultTableViewCell: UITableViewCell {
     let pinImage = UIImageView().then{
         $0.image = UIImage(named: "pin")
     }
-    let locationButton = UIButton().then{
+    lazy var locationButton = UIButton().then{
         $0.setTitle("가게위치 가게위치 가게위치 가게위치 가게위치 가게위치", for: .normal)
         $0.titleLabel?.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.contentHorizontalAlignment  = .left
@@ -84,14 +84,14 @@ class SearchResultTableViewCell: UITableViewCell {
     let phoneImage = UIImageView().then{
         $0.image = UIImage(named: "phone")
     }
-    let phoneNumButton = UIButton().then{
+    lazy var phoneNumButton = UIButton().then{
         $0.setTitle("전화번호가 없습니다.", for: .normal)
         $0.titleLabel?.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.contentHorizontalAlignment  = .left
         $0.setTitleColor(UIColor.placeContentColor, for: .normal)
         $0.addTarget(self, action: #selector(didTapPhoneNumButton(_:)), for: .touchUpInside)
     }
-    let goLinkButton = UIButton().then{
+    lazy var goLinkButton = UIButton().then{
         $0.setTitle("바로 가기", for: .normal)
         $0.titleLabel?.font = UIFont.NotoSansKR(size: 16, family: .Bold)
 
@@ -209,6 +209,7 @@ class SearchResultTableViewCell: UITableViewCell {
     }
     
     @objc func didTapGoLinkButton() {
+        print("didTapGoLinkButton")
         guard let link = self.data?.placeUrl else {return}
         guard let placeName = self.data?.placeName else {return}
         guard let category = self.data?.category else {return}
@@ -216,7 +217,7 @@ class SearchResultTableViewCell: UITableViewCell {
         let webView = WebViewController()
         webView.campusInfo = campusInfo
         webView.storeData = storeData
-        print("웹뷰로 넘어가는 데이터 - \(storeData)")
+//        print("웹뷰로 넘어가는 데이터 - \(storeData)")
         webView.webURL = link
         webView.placeName = placeName
         webView.category = category
@@ -363,7 +364,6 @@ class SearchResultTableViewCell: UITableViewCell {
             self.phoneImage.snp.makeConstraints {
                 $0.top.equalTo(pinImage.snp.bottom).offset(22)
             }
-        default: return
         }
     }
     

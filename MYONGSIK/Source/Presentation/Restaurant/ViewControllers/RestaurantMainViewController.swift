@@ -228,26 +228,6 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
             return 200
         }
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        UIDevice.vibrate()
-        
-        let itemIdx = indexPath.item
-        if itemIdx > 2 {
-            guard let link = self.rankResults[itemIdx - 3].urlAddress else {return}
-            guard let placeName = self.rankResults[itemIdx - 3].name else {return}
-            guard let category = self.rankResults[itemIdx - 3].category else {return}
-            
-            let vc = WebViewController()
-            vc.storeData = self.rankResults[itemIdx - 3]
-            vc.campusInfo = self.campusInfo
-            vc.webURL = link
-            vc.placeName = placeName
-            vc.category = category
-            self.navigationController!.pushViewController(vc, animated: true)
-//            ScreenManager().linkTo(viewcontroller: self, link)
-        }
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
 }
 // MARK: - CollectionView delegate
 extension RestaurantMainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
@@ -334,7 +314,7 @@ extension RestaurantMainViewController {
                                   dataType: StoreRankModel.self,
                                   parameter: queryParam,
                                   completionHandler: { [weak self] response in
-
+//            print(response.data)
             if response.success {
                 self?.rankResults = response.data.content
             } else {
