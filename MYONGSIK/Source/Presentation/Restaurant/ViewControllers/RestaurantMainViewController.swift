@@ -49,7 +49,7 @@ class RestaurantMainViewController: MainBaseViewController {
 //            self.searchResult.removeAll()
             KakaoMapDataManager().randomMapDataManager(self)
 
-            self.rankResults.removeAll()
+//            self.rankResults.removeAll()
             self.fetchRankData()
             self.reloadDataAnimation()
         }
@@ -157,8 +157,9 @@ class RestaurantMainViewController: MainBaseViewController {
     @objc private func refreshContentView() {
         refreshControl.beginRefreshing()
         DispatchQueue.main.async {
-            self.searchResult.removeAll()
-            KakaoMapDataManager().randomMapDataManager(self)
+//            self.rankResults.removeAll()
+            self.fetchRankData()
+            self.reloadDataAnimation()
         }
         refreshControl.endRefreshing()
     }
