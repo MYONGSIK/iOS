@@ -170,7 +170,7 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         cell.campusInfo = self.campusInfo
         let data = StoreModel(address: self.searchResult[itemIdx].road_address_name,
                               category: self.searchResult[itemIdx].category_group_name,
-                              code: self.searchResult[itemIdx].category_group_code,
+                              code: self.searchResult[itemIdx].id,
                               contact: self.searchResult[itemIdx].phone,
                               distance: self.searchResult[itemIdx].distance,
                               name: self.searchResult[itemIdx].place_name,

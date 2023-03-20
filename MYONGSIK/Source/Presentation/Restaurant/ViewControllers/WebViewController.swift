@@ -152,7 +152,7 @@ class WebViewController: UIViewController, WKUIDelegate {
         let bodyParam = HeartModel(address: storeData?.address,
                                    campus: campus,
                                    category: storeData?.category,
-                                   code: storeData?.code,
+                                   code: String((storeData?.storeId)!),
                                    contact: storeData?.contact,
                                    distance: storeData?.distance,
                                    name: storeData?.name,

@@ -29,7 +29,7 @@ struct Data: Codable {
 
 // MARK: - Content
 struct StoreModel: Codable {
-    let address, category, code, contact: String?
+    var address, category, code, contact: String?
     let distance, name: String?
     let scrapCount, storeId: Int?
     let urlAddress: String?

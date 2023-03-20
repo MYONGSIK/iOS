@@ -140,7 +140,7 @@ extension RestaurantTagViewController: UITableViewDelegate, UITableViewDataSourc
         vc.campusInfo = self.campusInfo
         vc.storeData = StoreModel(address: self.tagResult[itemIdx].road_address_name,
                                   category: self.tagResult[itemIdx].category_group_name,
-                                  code: self.tagResult[itemIdx].category_group_code,
+                                  code: self.tagResult[itemIdx].id,
                                   contact: self.tagResult[itemIdx].phone,
                                   distance: self.tagResult[itemIdx].distance,
                                   name: self.tagResult[itemIdx].place_name,
