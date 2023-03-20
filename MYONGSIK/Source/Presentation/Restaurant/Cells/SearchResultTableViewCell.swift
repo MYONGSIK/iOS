@@ -256,7 +256,7 @@ class SearchResultTableViewCell: UITableViewCell {
                                    placeUrl: data.place_url ?? nil)
         self.storeData = StoreModel(address: data.road_address_name,
                                     category: data.category_group_name,
-                                    code: data.category_group_code,
+                                    code: data.id,
                                     contact: data.phone,
                                     distance: data.distance,
                                     name: data.place_name,
@@ -278,11 +278,17 @@ class SearchResultTableViewCell: UITableViewCell {
         }
         if let location  = data.road_address_name {
             self.locationButton.setTitle(location, for: .normal)
-            if location == "" {self.locationButton.setTitle("주소가 없습니다.", for: .normal)}
+            if location == "" {
+                self.locationButton.setTitle("주소가 없습니다.", for: .normal)
+                self.storeData?.address = "주소가 없습니다."
+            }
         }
         if let phone = data.phone {
             self.phoneNumButton.setTitle(phone, for: .normal)
-            if phone == "" {self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)}
+            if phone == "" {
+                self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)
+                self.storeData?.contact = "전화번호가 없습니다."
+            }
         }
     }
     func setUpDataWithRank(_ data: StoreModel) {
@@ -305,11 +311,17 @@ class SearchResultTableViewCell: UITableViewCell {
         }
         if let location  = data.address {
             self.locationButton.setTitle(location, for: .normal)
-            if location == "" {self.locationButton.setTitle("주소가 없습니다.", for: .normal)}
+            if location == "" {
+                self.locationButton.setTitle("주소가 없습니다.", for: .normal)
+                self.storeData?.address = "주소가 없습니다."
+            }
         }
         if let phone = data.contact {
             self.phoneNumButton.setTitle(phone, for: .normal)
-            if phone == "" {self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)}
+            if phone == "" {
+                self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)
+                self.storeData?.contact = "전화번호가 없습니다."
+            }
         }
     }
     
