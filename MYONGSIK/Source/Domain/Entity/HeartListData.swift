@@ -20,3 +20,15 @@ struct HeartListModel {
     let category: String!
     let placeUrl: String!
 }
+
+struct HeartModel: Codable {
+    var address: String! = "주소없음"
+    var campus: String?
+    var category: String?
+    var code: String?
+    var contact: String! = "전화번호없음"
+    var distance: String?
+    var name: String?
+    var phoneId: String?
+    var urlAddress: String?
+}

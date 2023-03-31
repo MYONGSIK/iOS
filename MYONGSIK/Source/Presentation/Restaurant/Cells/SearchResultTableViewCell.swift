@@ -12,15 +12,22 @@ protocol RestaurantCellDelegate {
     func showToast(message: String)
 }
 
+enum CellTodo {
+    case main
+    case search
+}
+
 // MARK: 검색 페이지 > 검색 결과 셀
 class SearchResultTableViewCell: UITableViewCell {
     let realm = try! Realm()
+    var campusInfo: CampusInfo?
+    var storeData: StoreModel?
     var data: HeartListModel?
     var delegate: RestaurantCellDelegate?
     
     // MARK: Views
     let howManyLikeLabel = UILabel().then {
-        $0.text = "명지대 학생 중 00명이 담았어요!"
+        $0.text = "명지대학생들이 00명이 담았어요!"
         $0.font = UIFont.NotoSansKR(size: 14, family: .Bold)
         $0.textColor = .signatureBlue
     }
@@ -66,7 +73,7 @@ class SearchResultTableViewCell: UITableViewCell {
     let pinImage = UIImageView().then{
         $0.image = UIImage(named: "pin")
     }
-    let locationButton = UIButton().then{
+    lazy var locationButton = UIButton().then{
         $0.setTitle("가게위치 가게위치 가게위치 가게위치 가게위치 가게위치", for: .normal)
         $0.titleLabel?.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.contentHorizontalAlignment  = .left
@@ -77,14 +84,14 @@ class SearchResultTableViewCell: UITableViewCell {
     let phoneImage = UIImageView().then{
         $0.image = UIImage(named: "phone")
     }
-    let phoneNumButton = UIButton().then{
+    lazy var phoneNumButton = UIButton().then{
         $0.setTitle("전화번호가 없습니다.", for: .normal)
         $0.titleLabel?.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.contentHorizontalAlignment  = .left
         $0.setTitleColor(UIColor.placeContentColor, for: .normal)
         $0.addTarget(self, action: #selector(didTapPhoneNumButton(_:)), for: .touchUpInside)
     }
-    let goLinkButton = UIButton().then{
+    lazy var goLinkButton = UIButton().then{
         $0.setTitle("바로 가기", for: .normal)
         $0.titleLabel?.font = UIFont.NotoSansKR(size: 16, family: .Bold)
 
@@ -114,7 +121,7 @@ class SearchResultTableViewCell: UITableViewCell {
     
     // MARK: Functions
     func setUpView() {
-//        self.contentView.addSubview(howManyLikeLabel)
+        self.contentView.addSubview(howManyLikeLabel)
         self.contentView.addSubview(backView)
         
         backView.addSubview(placeNameLabel)
@@ -131,17 +138,17 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.addSubview(phoneNumButton)
     }
     func setUpConstraint() {
-//        howManyLikeLabel.snp.makeConstraints {
-//            $0.top.leading.equalToSuperview().inset(15)
-//        }
+        howManyLikeLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(15)
+            $0.leading.equalToSuperview().inset(22)
+        }
         backView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(15)
-//            make.top.equalTo(howManyLikeLabel.snp.bottom).offset(5)
-            make.top.equalToSuperview().offset(10)
+            make.top.equalTo(howManyLikeLabel.snp.bottom).offset(5)
             make.bottom.equalToSuperview().inset(10)
         }
         placeNameLabel.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview().inset(22)
+            make.top.leading.equalToSuperview().inset(22)
         }
         dotLabel.snp.makeConstraints { make in
             make.leading.equalTo(placeNameLabel.snp.trailing)
@@ -179,7 +186,7 @@ class SearchResultTableViewCell: UITableViewCell {
         }
         phoneImage.snp.makeConstraints { make in
             make.width.height.equalTo(15)
-            make.top.equalTo(pinImage.snp.bottom).offset(24)
+            make.top.equalTo(pinImage.snp.bottom).offset(15)
             make.leading.equalTo(pinImage)
         }
         phoneNumButton.snp.makeConstraints { make in
@@ -199,15 +206,18 @@ class SearchResultTableViewCell: UITableViewCell {
             sender.tintColor = .lightGray
             deleteHeartData(data: self.data)    // 로컬에 찜 삭제
         }
-        // TODO: 식당 좋아요 정보 서버 POST -> 업데이트 예정
     }
     
     @objc func didTapGoLinkButton() {
+        print("didTapGoLinkButton")
         guard let link = self.data?.placeUrl else {return}
         guard let placeName = self.data?.placeName else {return}
         guard let category = self.data?.category else {return}
         
         let webView = WebViewController()
+        webView.campusInfo = campusInfo
+        webView.storeData = storeData
+//        print("웹뷰로 넘어가는 데이터 - \(storeData)")
         webView.webURL = link
         webView.placeName = placeName
         webView.category = category
@@ -245,7 +255,16 @@ class SearchResultTableViewCell: UITableViewCell {
         self.data = HeartListModel(placeName: data.place_name ?? nil,
                                    category: data.category_group_name ?? nil,
                                    placeUrl: data.place_url ?? nil)
-        
+        self.storeData = StoreModel(address: data.road_address_name,
+                                    category: data.category_group_name,
+                                    code: data.id,
+                                    contact: data.phone,
+                                    distance: data.distance,
+                                    name: data.place_name,
+                                    scrapCount: nil,
+                                    storeId: Int(data.id!),
+                                    urlAddress: data.place_url)
+
         if let placeName = data.place_name {self.placeNameLabel.text = placeName}
         if let category = data.category_group_name {self.placeCategoryLabel.text = category}
         if let distance = data.distance {
@@ -260,11 +279,50 @@ class SearchResultTableViewCell: UITableViewCell {
         }
         if let location  = data.road_address_name {
             self.locationButton.setTitle(location, for: .normal)
-            if location == "" {self.locationButton.setTitle("주소가 없습니다.", for: .normal)}
+            if location == "" {
+                self.locationButton.setTitle("주소가 없습니다.", for: .normal)
+                self.storeData?.address = "주소가 없습니다."
+            }
         }
         if let phone = data.phone {
             self.phoneNumButton.setTitle(phone, for: .normal)
-            if phone == "" {self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)}
+            if phone == "" {
+                self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)
+                self.storeData?.contact = "전화번호가 없습니다."
+            }
+        }
+    }
+    func setUpDataWithRank(_ data: StoreModel) {
+        self.storeData = data
+        self.data = HeartListModel(placeName: data.name ?? nil,
+                                   category: data.category ?? nil,
+                                   placeUrl: data.urlAddress ?? nil)
+        if let count = data.scrapCount {self.howManyLikeLabel.text = "명지대학생들이 \(count)명이 담았어요!"}
+        if let placeName = data.name {self.placeNameLabel.text = placeName}
+        if let category = data.category {self.placeCategoryLabel.text = category}
+        if let distance = data.distance {
+            guard let distanceInt = Int(distance) else {return}
+            if distanceInt >= 1000 {
+                let distanceKmFirst = distanceInt / 1000
+                let distanceKmSecond = (distanceInt % 1000) / 100
+                self.distanceLabel.text = "\(distanceKmFirst).\(distanceKmSecond)km"
+            } else {
+                self.distanceLabel.text = "\(distanceInt)m"
+            }
+        }
+        if let location  = data.address {
+            self.locationButton.setTitle(location, for: .normal)
+            if location == "" {
+                self.locationButton.setTitle("주소가 없습니다.", for: .normal)
+                self.storeData?.address = "주소가 없습니다."
+            }
+        }
+        if let phone = data.contact {
+            self.phoneNumButton.setTitle(phone, for: .normal)
+            if phone == "" {
+                self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)
+                self.storeData?.contact = "전화번호가 없습니다."
+            }
         }
     }
     
@@ -285,6 +343,27 @@ class SearchResultTableViewCell: UITableViewCell {
             let predicate = NSPredicate(format: "placeName = %@", data.placeName)
             let objc = realm.objects(HeartListData.self).filter(predicate)
             try! realm.write { realm.delete(objc) }
+        }
+    }
+    
+    func setupLayout(todo: CellTodo) {
+        switch todo {
+        case .main:
+            self.howManyLikeLabel.isHidden = false
+        case .search:
+            self.howManyLikeLabel.isHidden = true
+            self.backView.snp.makeConstraints {
+                $0.top.equalToSuperview().offset(10)
+            }
+            self.placeNameLabel.snp.makeConstraints {
+                $0.top.equalToSuperview().inset(22)
+            }
+            self.pinImage.snp.makeConstraints {
+                $0.top.equalTo(placeNameLabel.snp.bottom).offset(25)
+            }
+            self.phoneImage.snp.makeConstraints {
+                $0.top.equalTo(pinImage.snp.bottom).offset(22)
+            }
         }
     }
     

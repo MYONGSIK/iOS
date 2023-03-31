@@ -36,6 +36,10 @@ class RestaurantSearchViewController: BaseViewController {
     var searchKeyword: String = ""
     var searchResultTableView: UITableView!
     var searchResult: [KakaoResultModel] = []
+    
+    var searchStoreResult: [StoreModel] = []
+    var campusInfo: CampusInfo = .seoul    // default값 - 인캠
+    
     var pageNum: Int = 1
     
     override func viewDidLoad() {
@@ -44,6 +48,7 @@ class RestaurantSearchViewController: BaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
+        setCampusInfo()
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
@@ -77,6 +82,17 @@ class RestaurantSearchViewController: BaseViewController {
         KakaoMapDataManager().searchMapDataManager(text, pageNum, self)
     }
     // MARK: Functions
+    func setCampusInfo() {
+        if let userCampus  = UserDefaults.standard.value(forKey: "userCampus") {
+            switch userCampus as! String {
+            case CampusInfo.seoul.name:
+                campusInfo = .seoul
+            case CampusInfo.yongin.name:
+                campusInfo = .yongin
+            default: return
+            }
+        }
+    }
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
         searchResultTableView = UITableView()
         searchResultTableView.then{
@@ -119,9 +135,9 @@ class RestaurantSearchViewController: BaseViewController {
             make.centerY.equalToSuperview()
         }
         searchResultTableView.snp.makeConstraints { make in
+            make.top.equalTo(super.navigationView.snp.bottom).offset(22)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
-            make.top.equalTo(super.navigationView.snp.bottom).offset(22)
         }
     }
 }
@@ -149,28 +165,13 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         cell.selectionStyle = .none
         cell.delegate = self
         let itemIdx = indexPath.item
-        
         cell.setUpData(self.searchResult[itemIdx])
+        cell.campusInfo = self.campusInfo
+        cell.setupLayout(todo: .search)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 170
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        UIDevice.vibrate()
-        
-        let itemIdx = indexPath.item
-        guard let link = self.searchResult[itemIdx].place_url else {return}
-        guard let placeName = self.searchResult[itemIdx].place_name else {return}
-        guard let category = self.searchResult[itemIdx].category_group_name else {return}
-        
-        let vc = WebViewController()
-        vc.webURL = link
-        vc.placeName = placeName
-        vc.category = category
-        self.navigationController!.pushViewController(vc, animated: true)
-        
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 // MARK: - UITextField delegate

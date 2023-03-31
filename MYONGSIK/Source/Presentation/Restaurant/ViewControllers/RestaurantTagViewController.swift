@@ -24,6 +24,7 @@ class RestaurantTagViewController: BaseViewController {
     var tagResultTableView: UITableView!
     var tagKeyword: String!
     var tagResult: [KakaoResultModel] = []
+    var campusInfo: CampusInfo = .seoul    // default값 - 인캠
     var pageNum: Int = 1
     
     override func viewDidLoad() {
@@ -31,7 +32,8 @@ class RestaurantTagViewController: BaseViewController {
         self.view.backgroundColor = .white
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-
+        
+        setCampusInfo()
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
@@ -52,6 +54,17 @@ class RestaurantTagViewController: BaseViewController {
         self.navigationController?.popViewController(animated: true)
     }
     // MARK: - Functions
+    func setCampusInfo() {
+        if let userCampus  = UserDefaults.standard.value(forKey: "userCampus") {
+            switch userCampus as! String {
+            case CampusInfo.seoul.name:
+                campusInfo = .seoul
+            case CampusInfo.yongin.name:
+                campusInfo = .yongin
+            default: return
+            }
+        }
+    }
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
         tagResultTableView = UITableView()
         tagResultTableView.then{
@@ -108,26 +121,12 @@ extension RestaurantTagViewController: UITableViewDelegate, UITableViewDataSourc
         cell.delegate = self
         let itemIdx = indexPath.item
         cell.setUpData(self.tagResult[itemIdx])
+        cell.campusInfo = self.campusInfo
+        cell.setupLayout(todo: .search)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 170
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        UIDevice.vibrate()
-        
-        let itemIdx = indexPath.item
-        guard let link = self.tagResult[itemIdx].place_url else {return}
-        guard let placeName = self.tagResult[itemIdx].place_name else {return}
-        guard let category = self.tagResult[itemIdx].category_group_name else {return}
-        
-        let vc = WebViewController()
-        vc.webURL = link
-        vc.placeName = placeName
-        vc.category = category
-        self.navigationController!.pushViewController(vc, animated: true)
-        
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 // MARK: - API Success
