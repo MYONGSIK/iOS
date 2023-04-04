@@ -282,6 +282,11 @@ class SearchResultTableViewCell: UITableViewCell {
             if location == "" {
                 self.locationButton.setTitle("주소가 없습니다.", for: .normal)
                 self.storeData?.address = "주소가 없습니다."
+            } else {
+                let attributedString = NSMutableAttributedString.init(string: location)
+                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: location.count))
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.signatureGray, range: NSRange.init(location: 0, length: location.count))
+                self.locationButton.setAttributedTitle(attributedString, for: .normal)
             }
         }
         if let phone = data.phone {
@@ -289,6 +294,11 @@ class SearchResultTableViewCell: UITableViewCell {
             if phone == "" {
                 self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)
                 self.storeData?.contact = "전화번호가 없습니다."
+            } else {
+                let attributedString = NSMutableAttributedString.init(string: phone)
+                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: phone.count))
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.signatureGray, range: NSRange.init(location: 0, length: phone.count))
+                self.phoneNumButton.setAttributedTitle(attributedString, for: .normal)
             }
         }
     }
@@ -315,6 +325,11 @@ class SearchResultTableViewCell: UITableViewCell {
             if location == "" {
                 self.locationButton.setTitle("주소가 없습니다.", for: .normal)
                 self.storeData?.address = "주소가 없습니다."
+            } else {
+                let attributedString = NSMutableAttributedString.init(string: location)
+                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: location.count))
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.signatureGray, range: NSRange.init(location: 0, length: location.count))
+                self.locationButton.setAttributedTitle(attributedString, for: .normal)
             }
         }
         if let phone = data.contact {
@@ -322,6 +337,11 @@ class SearchResultTableViewCell: UITableViewCell {
             if phone == "" {
                 self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)
                 self.storeData?.contact = "전화번호가 없습니다."
+            } else {
+                let attributedString = NSMutableAttributedString.init(string: phone)
+                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: phone.count))
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.signatureGray, range: NSRange.init(location: 0, length: phone.count))
+                self.phoneNumButton.setAttributedTitle(attributedString, for: .normal)
             }
         }
     }
