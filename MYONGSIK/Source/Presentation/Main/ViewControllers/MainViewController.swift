@@ -444,6 +444,7 @@ class MainViewController: MainBaseViewController {
     
     @objc func submitButtonTapped(_ sender: UIButton){
         let submitViewController = SubmitViewController()
+        submitViewController.area = self.selectedResName
         submitViewController.modalPresentationStyle = .custom
         submitViewController.modalTransitionStyle = .crossDissolve
         self.present(submitViewController, animated: true)
