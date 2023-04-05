@@ -189,6 +189,7 @@ class SubmitViewController: UIViewController {
     
     func saveSubmit(input: String?) {
         if let submitted = self.inputTextView.text {
+            if area! == "학관식당" { area = "학생식당" }
             
             let phoneId = UIDevice.current.identifierForVendor!.uuidString
             
