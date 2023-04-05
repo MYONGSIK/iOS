@@ -120,39 +120,40 @@ class RestaurantMainViewController: MainBaseViewController {
             $0.font = UIFont.NotoSansKR(size: 22, family: .Bold)
         }
         
-//        let likeOrder = UIAction(title: "인기순", image: nil, handler: { _ in print("인기순 선택") })
-//        let distanceOrder = UIAction(title: "거리순", image: nil, handler: { _ in print("거리순 선택") })
-//
-//        let sortButton = UIButton(type: .system).then {
-//            $0.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-//            $0.semanticContentAttribute = .forceRightToLeft
-//            $0.tintColor = .gray
-//            $0.layer.cornerRadius = 15
-//
-//            $0.menu = UIMenu(
-//                title: "",
-//                image: nil,
-//                identifier: nil,
-//                options: .displayInline,
-//                children: [likeOrder, distanceOrder]
-//            )
-//            $0.showsMenuAsPrimaryAction = true
-//            $0.changesSelectionAsPrimaryAction = true
-//        }
+        let likeOrder = UIAction(title: "인기순 ", image: nil, handler: { _ in print("인기순 선택") })
+        let distanceOrder = UIAction(title: "거리순 ", image: nil, handler: { _ in print("거리순 선택") })
+        let bestOrder = UIAction(title: "추천순 ", image: nil, handler: { _ in print("추천순 선택") })
+
+        let sortButton = UIButton(type: .system).then {
+            $0.setImage(UIImage(named: "arrow_bottom"), for: .normal)
+            $0.semanticContentAttribute = .forceRightToLeft
+            $0.tintColor = .gray
+            $0.layer.cornerRadius = 15
+
+            $0.menu = UIMenu(
+                title: "",
+                image: nil,
+                identifier: nil,
+                options: .displayInline,
+                children: [likeOrder, distanceOrder, bestOrder]
+            )
+            $0.showsMenuAsPrimaryAction = true
+            $0.changesSelectionAsPrimaryAction = true
+        }
         cell.contentView.addSubview(titleLabel)
-//        cell.contentView.addSubview(sortButton)
+        cell.contentView.addSubview(sortButton)
         
         titleLabel.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(5)
             $0.leading.equalToSuperview().inset(15)
         }
         
-//        sortButton.snp.makeConstraints {
-//            $0.centerY.equalTo(titleLabel)
-//            $0.trailing.equalToSuperview().inset(15)
-//            $0.height.equalTo(30)
-//            $0.width.equalTo(80)
-//        }
+        sortButton.snp.makeConstraints {
+            $0.centerY.equalTo(titleLabel)
+            $0.trailing.equalToSuperview().inset(10)
+            $0.height.equalTo(30)
+            $0.width.equalTo(80)
+        }
     }
     @objc private func refreshContentView() {
         refreshControl.beginRefreshing()
