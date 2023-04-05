@@ -10,6 +10,7 @@ import SnapKit
 import Then
 import Toast
 import Alamofire
+import DropDown
 
 // MARK: '명지 맛집' 페이지
 class RestaurantMainViewController: MainBaseViewController {
@@ -22,11 +23,14 @@ class RestaurantMainViewController: MainBaseViewController {
     }
     
     let sortButton = UIButton(type: .system).then {
+        $0.setTitle("인기순 ", for: .normal)
         $0.setImage(UIImage(named: "arrow_bottom"), for: .normal)
         $0.semanticContentAttribute = .forceRightToLeft
         $0.tintColor = .gray
         $0.layer.cornerRadius = 15
     }
+    
+    let sortDropDown = DropDown()
 
     // MARK: Life Cycles
     var campusInfo: CampusInfo = .seoul    // default값 - 인캠
@@ -120,32 +124,36 @@ class RestaurantMainViewController: MainBaseViewController {
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
+    
+    @objc func didTapSortButton() {
+        sortDropDown.show()
+    }
     func setSortButtonCell(_ cell: UITableViewCell) {
+        sortDropDown.dataSource = ["인기순", "거리순"]
+        sortDropDown.selectedTextColor = .signatureBlue
+        sortDropDown.anchorView = sortButton
+        sortDropDown.bottomOffset = CGPoint(x: 0, y:(sortDropDown.anchorView?.plainView.bounds.height)!)
+        sortDropDown.width = 80
+        sortDropDown.cellHeight = 40
+        sortButton.addTarget(self, action: #selector(didTapSortButton), for: .touchUpInside)
+        sortDropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            self?.sortButton.setTitle(item, for: .normal)
+            switch item {
+            case "인기순":
+                self?.sortButton.setTitle("인기순 ", for: .normal)
+                self?.fetchDataWithSort(sort: "scrapCount,desc")
+            case "거리순":
+                self?.sortButton.setTitle("거리순 ", for: .normal)
+                self?.fetchDataWithSort(sort: "distance,asc")
+            default: return
+            }
+        }
+        
         let titleLabel = UILabel().then {
             $0.text = "#명지인이 선택한 맛집"
             $0.numberOfLines = 2
             $0.font = UIFont.NotoSansKR(size: 22, family: .Bold)
         }
-        
-        let scrapOrder = UIAction(title: "인기순 ", image: nil, handler: { [weak self] _ in
-            self?.sortButton.setTitle("인기순 ", for: .normal)
-            self?.fetchDataWithSort(sort: "scrapCount,desc")
-        })
-        let distanceOrder = UIAction(title: "거리순 ", image: nil, handler: { [weak self] _ in
-            self?.sortButton.setTitle("거리순 ", for: .normal)
-            self?.fetchDataWithSort(sort: "distance,asc")
-        })
-
-        
-        sortButton.menu = UIMenu(
-            title: "",
-            image: nil,
-            identifier: nil,
-            options: .displayInline,
-            children: [scrapOrder, distanceOrder]
-        )
-        sortButton.showsMenuAsPrimaryAction = true
-        sortButton.changesSelectionAsPrimaryAction = true
         
         cell.contentView.addSubview(titleLabel)
         cell.contentView.addSubview(sortButton)
