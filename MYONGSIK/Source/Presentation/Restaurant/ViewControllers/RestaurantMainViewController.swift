@@ -142,9 +142,11 @@ class RestaurantMainViewController: MainBaseViewController {
             case "인기순":
                 self?.sortButton.setTitle("인기순 ", for: .normal)
                 self?.fetchDataWithSort(sort: "scrapCount,desc")
+                UserDefaults.standard.set("scrapCount,desc", forKey: "restaurant_sort_value")
             case "거리순":
                 self?.sortButton.setTitle("거리순 ", for: .normal)
                 self?.fetchDataWithSort(sort: "distance,asc")
+                UserDefaults.standard.set("distance,asc", forKey: "restaurant_sort_value")
             default: return
             }
         }
@@ -323,10 +325,20 @@ extension RestaurantMainViewController: RestaurantCellDelegate {
 // MARK: - API extension
 extension RestaurantMainViewController {
     func fetchRankData() {
-        let queryParam: Parameters = [
-            "sort": "scrapCount,desc",  // defalut : 인기순
-            "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
-        ]
+        var queryParam: Parameters
+        if let sortValue = UserDefaults.standard.object(forKey: "restaurant_sort_value") {
+            sortButton.setTitle((sortValue as! String == "scrapCount,desc") ? "인기순 " : "거리순 ", for: .normal)
+            queryParam = [
+                "sort": sortValue as! String,  
+                "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
+            ]
+        } else {
+            queryParam = [
+                "sort": "scrapCount,desc",  // defalut : 인기순
+                "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
+            ]
+        }
+        
         APIManager.shared.getData(urlEndpointString: Constants.getStoreRank,
                                   dataType: StoreRankModel.self,
                                   parameter: queryParam,
