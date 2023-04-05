@@ -17,6 +17,7 @@ enum inputStatus {
 }
 class SubmitViewController: UIViewController {
     
+    var area: String?
     var submitStatus: inputStatus = .notSubmit
     
     // MARK: - Views
@@ -195,10 +196,12 @@ class SubmitViewController: UIViewController {
             formatter.dateFormat = "yyyy-MM-dd"
             let registeredAt = formatter.string(from: Date())
             
-            let param = SubmitModel(writerId: phoneId,
+            let param = SubmitModel(areaName: area!,
+                                    writerId: phoneId,
                                     registeredAt: registeredAt,
                                     content: submitted)
-            APIManager.shared.postData(urlEndpointString: Constants.postFoodReview,
+//            APIManager.shared.postData(urlEndpointString: Constants.postFoodReview,
+            APIManager.shared.postData(urlEndpointString: Constants.postFoodReviewWithArea,
                                        dataType: SubmitModel.self,
                                        responseType: SubmitResponseModel.self,
                                        parameter: param,

@@ -54,6 +54,7 @@ struct Constants {
     static let getWeekFood = "/api/v2/meals/week"
     static let postFoodEvaluate = "/api/v2/meals/evaluate"
     static let postFoodReview = "/api/v2/reviews"
+    static let postFoodReviewWithArea = "/api/v2/reviews/area"
     static let getStoreRank = "/api/v2/scraps/store"
     static let postHeart = "/api/v2/scraps"
     
