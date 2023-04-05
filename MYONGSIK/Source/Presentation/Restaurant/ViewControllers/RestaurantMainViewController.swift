@@ -10,6 +10,7 @@ import SnapKit
 import Then
 import Toast
 import Alamofire
+import DropDown
 
 // MARK: '명지 맛집' 페이지
 class RestaurantMainViewController: MainBaseViewController {
@@ -20,6 +21,16 @@ class RestaurantMainViewController: MainBaseViewController {
         $0.setImage(UIImage(named: "search_white"), for: .normal)
         $0.addTarget(self, action: #selector(goSearchButtonDidTap), for: .touchUpInside)
     }
+    
+    let sortButton = UIButton(type: .system).then {
+        $0.setTitle("인기순 ", for: .normal)
+        $0.setImage(UIImage(named: "arrow_bottom"), for: .normal)
+        $0.semanticContentAttribute = .forceRightToLeft
+        $0.tintColor = .gray
+        $0.layer.cornerRadius = 15
+    }
+    
+    let sortDropDown = DropDown()
 
     // MARK: Life Cycles
     var campusInfo: CampusInfo = .seoul    // default값 - 인캠
@@ -113,33 +124,37 @@ class RestaurantMainViewController: MainBaseViewController {
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
+    
+    @objc func didTapSortButton() {
+        sortDropDown.show()
+    }
     func setSortButtonCell(_ cell: UITableViewCell) {
+        sortDropDown.dataSource = ["인기순", "거리순"]
+        sortDropDown.selectedTextColor = .signatureBlue
+        sortDropDown.anchorView = sortButton
+        sortDropDown.bottomOffset = CGPoint(x: 0, y:(sortDropDown.anchorView?.plainView.bounds.height)!)
+        sortDropDown.width = 80
+        sortDropDown.cellHeight = 40
+        sortButton.addTarget(self, action: #selector(didTapSortButton), for: .touchUpInside)
+        sortDropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            self?.sortButton.setTitle(item, for: .normal)
+            switch item {
+            case "인기순":
+                self?.sortButton.setTitle("인기순 ", for: .normal)
+                self?.fetchDataWithSort(sort: "scrapCount,desc")
+            case "거리순":
+                self?.sortButton.setTitle("거리순 ", for: .normal)
+                self?.fetchDataWithSort(sort: "distance,asc")
+            default: return
+            }
+        }
+        
         let titleLabel = UILabel().then {
             $0.text = "#명지인이 선택한 맛집"
             $0.numberOfLines = 2
             $0.font = UIFont.NotoSansKR(size: 22, family: .Bold)
         }
         
-        let likeOrder = UIAction(title: "인기순 ", image: nil, handler: { _ in print("인기순 선택") })
-        let distanceOrder = UIAction(title: "거리순 ", image: nil, handler: { _ in print("거리순 선택") })
-        let bestOrder = UIAction(title: "추천순 ", image: nil, handler: { _ in print("추천순 선택") })
-
-        let sortButton = UIButton(type: .system).then {
-            $0.setImage(UIImage(named: "arrow_bottom"), for: .normal)
-            $0.semanticContentAttribute = .forceRightToLeft
-            $0.tintColor = .gray
-            $0.layer.cornerRadius = 15
-
-            $0.menu = UIMenu(
-                title: "",
-                image: nil,
-                identifier: nil,
-                options: .displayInline,
-                children: [likeOrder, distanceOrder, bestOrder]
-            )
-            $0.showsMenuAsPrimaryAction = true
-            $0.changesSelectionAsPrimaryAction = true
-        }
         cell.contentView.addSubview(titleLabel)
         cell.contentView.addSubview(sortButton)
         
@@ -309,16 +324,34 @@ extension RestaurantMainViewController: RestaurantCellDelegate {
 extension RestaurantMainViewController {
     func fetchRankData() {
         let queryParam: Parameters = [
-            "sort": "scrapCount,desc",
+            "sort": "scrapCount,desc",  // defalut : 인기순
             "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
         ]
         APIManager.shared.getData(urlEndpointString: Constants.getStoreRank,
                                   dataType: StoreRankModel.self,
                                   parameter: queryParam,
                                   completionHandler: { [weak self] response in
-//            print(response.data)
             if response.success {
                 self?.rankResults = response.data.content
+            } else {
+                self?.showAlert(message: "맛집 순위 정보를 가져올 수 없습니다.")
+            }
+
+        })
+    }
+    
+    func fetchDataWithSort(sort: String) {
+        let queryParam: Parameters = [
+            "sort": sort,
+            "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
+        ]
+        APIManager.shared.getData(urlEndpointString: Constants.getStoreRank,
+                                  dataType: StoreRankModel.self,
+                                  parameter: queryParam,
+                                  completionHandler: { [weak self] response in
+            if response.success {
+                self?.rankResults = response.data.content
+                self?.reloadDataAnimation()
             } else {
                 self?.showAlert(message: "맛집 순위 정보를 가져올 수 없습니다.")
             }

@@ -11,6 +11,7 @@ target 'MYONGSIK' do
 	pod 'Then'
 	pod 'Kingfisher'
 	pod 'Alamofire'
+	pod 'DropDown'
 
 	#RxSwift
     	pod 'RxSwift'
