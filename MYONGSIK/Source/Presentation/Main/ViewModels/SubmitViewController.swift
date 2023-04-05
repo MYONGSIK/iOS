@@ -200,7 +200,6 @@ class SubmitViewController: UIViewController {
                                     writerId: phoneId,
                                     registeredAt: registeredAt,
                                     content: submitted)
-//            APIManager.shared.postData(urlEndpointString: Constants.postFoodReview,
             APIManager.shared.postData(urlEndpointString: Constants.postFoodReviewWithArea,
                                        dataType: SubmitModel.self,
                                        responseType: SubmitResponseModel.self,
