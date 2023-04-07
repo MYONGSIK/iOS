@@ -252,6 +252,7 @@ class SearchResultTableViewCell: UITableViewCell {
     
     // MARK: 서버에서 데이터를 받아온 후 출력시킵니다.
     func setUpData(_ data: KakaoResultModel) {
+        print("setUpData called --> \(data)")
         self.data = HeartListModel(placeName: data.place_name ?? nil,
                                    category: data.category_group_name ?? nil,
                                    placeUrl: data.place_url ?? nil)

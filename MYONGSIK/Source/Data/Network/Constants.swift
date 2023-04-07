@@ -65,6 +65,6 @@ struct Constants {
     static let seoulRadius = "&radius=" + "1500"
     static let yonginRadius = "&radius=" + "3000"
     static let page = "&page="
-    static let size = "&size=15"
+    static let size = "&size=20"
     static let sort = "&sort=distance" //거리순
 }
