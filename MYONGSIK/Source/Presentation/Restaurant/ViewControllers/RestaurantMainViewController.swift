@@ -12,6 +12,11 @@ import Toast
 import Alamofire
 import DropDown
 
+enum CellMode {
+    case kakaoCell
+    case rankCell
+}
+
 // MARK: '명지 맛집' 페이지
 class RestaurantMainViewController: MainBaseViewController {
     lazy var refreshControl = UIRefreshControl().then {
@@ -33,6 +38,7 @@ class RestaurantMainViewController: MainBaseViewController {
     let sortDropDown = DropDown()
 
     // MARK: Life Cycles
+    var cellMode: CellMode = .rankCell
     var campusInfo: CampusInfo = .seoul    // default값 - 인캠
     
     var restaurantMainTableView: UITableView!
@@ -129,7 +135,7 @@ class RestaurantMainViewController: MainBaseViewController {
         sortDropDown.show()
     }
     func setSortButtonCell(_ cell: UITableViewCell) {
-        sortDropDown.dataSource = ["인기순", "거리순"]
+        sortDropDown.dataSource = ["인기순", "거리순", "추천순"]
         sortDropDown.selectedTextColor = .signatureBlue
         sortDropDown.anchorView = sortButton
         sortDropDown.bottomOffset = CGPoint(x: 0, y:(sortDropDown.anchorView?.plainView.bounds.height)!)
@@ -146,6 +152,10 @@ class RestaurantMainViewController: MainBaseViewController {
             case "거리순":
                 self?.sortButton.setTitle("거리순 ", for: .normal)
                 self?.fetchDataWithSort(sort: "distance,asc")
+                UserDefaults.standard.set("distance,asc", forKey: "restaurant_sort_value")
+            case "추천순":
+                self?.sortButton.setTitle("추천순 ", for: .normal)
+                self?.getRandomRestaurants()
                 UserDefaults.standard.set("distance,asc", forKey: "restaurant_sort_value")
             default: return
             }
@@ -181,6 +191,13 @@ class RestaurantMainViewController: MainBaseViewController {
         }
         refreshControl.endRefreshing()
     }
+    
+    private func getRandomRestaurants() {
+        KakaoMapDataManager().randomMapDataManager(self)
+        self.kakaoRandomMapSuccessAPI(self.searchResult)
+        self.cellMode = .kakaoCell
+        self.reloadDataAnimation()
+    }
 }
 // MARK: - TableView delegate
 /*
@@ -192,8 +209,16 @@ class RestaurantMainViewController: MainBaseViewController {
  */
 extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = self.rankResults.count ?? 0
-        return count + 3
+        switch self.cellMode {
+        case .rankCell:
+            let count = self.rankResults.count ?? 0
+            return count + 3
+        case .kakaoCell:
+            let count = self.searchResult.count ?? 0
+            return count + 3
+        }
+//        let count = self.rankResults.count ?? 0
+//        return count + 3
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tag = indexPath.row
@@ -226,10 +251,16 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
             DispatchQueue.main.async {
                 let itemIdx = indexPath.item - 3
                 cell.campusInfo = self.campusInfo
-                cell.setUpDataWithRank(self.rankResults[itemIdx])
+                
+                switch self.cellMode {
+                case .rankCell: cell.setUpDataWithRank(self.rankResults[itemIdx])
+                case .kakaoCell: cell.setUpData(self.searchResult[itemIdx])
+                }
+                
                 cell.delegate = self
                 cell.selectionStyle = .none
                 cell.setupLayout(todo: .main)
+                
             }
             return cell
         }
@@ -293,8 +324,9 @@ extension RestaurantMainViewController: UICollectionViewDelegate, UICollectionVi
 // MARK: - API Success
 extension RestaurantMainViewController {
     func kakaoRandomMapSuccessAPI(_ result: [KakaoResultModel]) {
+        print("result count -> \(result.count)")
         let resultCount = result.count ?? 0
-        if resultCount >= 10 {self.searchResult = Array(result[0..<10])}
+        if resultCount >= 20 {self.searchResult = Array(result[0..<20])}
         else {self.searchResult = result}
         
         reloadDataAnimation()
@@ -353,6 +385,7 @@ extension RestaurantMainViewController {
     }
     
     func fetchDataWithSort(sort: String) {
+        self.cellMode = .rankCell
         let queryParam: Parameters = [
             "sort": sort,
             "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
