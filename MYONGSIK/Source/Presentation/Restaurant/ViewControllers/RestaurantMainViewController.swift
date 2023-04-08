@@ -259,15 +259,15 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
                 switch self.cellMode {
                 case .rankCell:
                     cell.setUpDataWithRank(self.rankResults[itemIdx])
-//                    cell.howManyLabelShow = true
+                    cell.delegate = self
+                    cell.selectionStyle = .none
+                    cell.setupLayout(todo: .main)
                 case .kakaoCell:
                     cell.setUpData(self.searchResult[itemIdx])
-//                    cell.howManyLabelShow = false
+                    cell.delegate = self
+                    cell.selectionStyle = .none
+                    cell.setupLayout(todo: .random)
                 }
-                
-                cell.delegate = self
-                cell.selectionStyle = .none
-                cell.setupLayout(todo: .main)
                 
             }
             return cell
@@ -283,6 +283,10 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 2:
             return 46
         default:
+//            switch self.cellMode {
+//            case .rankCell: return 200
+//            case .kakaoCell: return 170
+//            }
             return 200
         }
     }
