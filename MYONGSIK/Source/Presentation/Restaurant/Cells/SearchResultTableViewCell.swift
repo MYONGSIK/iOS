@@ -14,6 +14,7 @@ protocol RestaurantCellDelegate {
 
 enum CellTodo {
     case main
+    case random
     case search
 }
 
@@ -145,6 +146,7 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(15)
             make.top.equalTo(howManyLikeLabel.snp.bottom).offset(5)
+//            make.top.equalToSuperview().offset(40)
             make.bottom.equalToSuperview().inset(10)
         }
         placeNameLabel.snp.makeConstraints { make in
@@ -371,6 +373,23 @@ class SearchResultTableViewCell: UITableViewCell {
         switch todo {
         case .main:
             self.howManyLikeLabel.isHidden = false
+            self.howManyLikeLabel.textColor = .signatureBlue
+        case .random:
+            self.howManyLikeLabel.isHidden = false
+            self.howManyLikeLabel.textColor = .white
+//            self.howManyLikeLabel.isHidden = true
+//            self.backView.snp.makeConstraints {
+//                $0.top.equalToSuperview().offset(10)
+//            }
+//            self.placeNameLabel.snp.makeConstraints {
+//                $0.top.equalToSuperview().inset(22)
+//            }
+//            self.pinImage.snp.makeConstraints {
+//                $0.top.equalTo(placeNameLabel.snp.bottom).offset(25)
+//            }
+//            self.phoneImage.snp.makeConstraints {
+//                $0.top.equalTo(pinImage.snp.bottom).offset(22)
+//            }
         case .search:
             self.howManyLikeLabel.isHidden = true
             self.backView.snp.makeConstraints {

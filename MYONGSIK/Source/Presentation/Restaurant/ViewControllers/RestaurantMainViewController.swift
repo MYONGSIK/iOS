@@ -156,7 +156,7 @@ class RestaurantMainViewController: MainBaseViewController {
             case "추천순":
                 self?.sortButton.setTitle("추천순 ", for: .normal)
                 self?.getRandomRestaurants()
-                UserDefaults.standard.set("distance,asc", forKey: "restaurant_sort_value")
+                UserDefaults.standard.set("kakaoRandom", forKey: "restaurant_sort_value")
             default: return
             }
         }
@@ -186,7 +186,11 @@ class RestaurantMainViewController: MainBaseViewController {
         refreshControl.beginRefreshing()
         DispatchQueue.main.async {
 //            self.rankResults.removeAll()
-            self.fetchRankData()
+            switch self.cellMode {
+            case .rankCell: self.fetchRankData()
+            case .kakaoCell: self.getRandomRestaurants()
+            }
+            
             self.reloadDataAnimation()
         }
         refreshControl.endRefreshing()
@@ -253,13 +257,17 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
                 cell.campusInfo = self.campusInfo
                 
                 switch self.cellMode {
-                case .rankCell: cell.setUpDataWithRank(self.rankResults[itemIdx])
-                case .kakaoCell: cell.setUpData(self.searchResult[itemIdx])
+                case .rankCell:
+                    cell.setUpDataWithRank(self.rankResults[itemIdx])
+                    cell.delegate = self
+                    cell.selectionStyle = .none
+                    cell.setupLayout(todo: .main)
+                case .kakaoCell:
+                    cell.setUpData(self.searchResult[itemIdx])
+                    cell.delegate = self
+                    cell.selectionStyle = .none
+                    cell.setupLayout(todo: .random)
                 }
-                
-                cell.delegate = self
-                cell.selectionStyle = .none
-                cell.setupLayout(todo: .main)
                 
             }
             return cell
@@ -275,6 +283,10 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 2:
             return 46
         default:
+//            switch self.cellMode {
+//            case .rankCell: return 200
+//            case .kakaoCell: return 170
+//            }
             return 200
         }
     }
@@ -359,7 +371,17 @@ extension RestaurantMainViewController {
     func fetchRankData() {
         var queryParam: Parameters
         if let sortValue = UserDefaults.standard.object(forKey: "restaurant_sort_value") {
-            sortButton.setTitle((sortValue as! String == "scrapCount,desc") ? "인기순 " : "거리순 ", for: .normal)
+
+            switch sortValue as! String {
+            case "scrapCount,desc":
+                sortButton.setTitle("인기순 ", for: .normal)
+            case "distance,asc":
+                sortButton.setTitle("거리순 ", for: .normal)
+            case "kakaoRandom":
+                sortButton.setTitle("추천순 ", for: .normal)
+            default: return
+            }
+            
             queryParam = [
                 "sort": sortValue as! String,  
                 "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
