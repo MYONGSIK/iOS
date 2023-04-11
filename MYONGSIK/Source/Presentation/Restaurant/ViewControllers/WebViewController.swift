@@ -155,6 +155,8 @@ class WebViewController: UIViewController, WKUIDelegate {
                                    code: storeData?.code,
                                    contact: storeData?.contact,
                                    distance: storeData?.distance,
+                                   longitude: storeData?.x,
+                                   latitude: storeData?.y,
                                    name: storeData?.name,
                                    phoneId: phoneId,
                                    urlAddress: storeData?.urlAddress)

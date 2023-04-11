@@ -28,6 +28,8 @@ struct HeartModel: Codable {
     var code: String?
     var contact: String! = "전화번호없음"
     var distance: String?
+    var longitude: String?  // 경도, x
+    var latitude: String?   // 위도, y
     var name: String?
     var phoneId: String?
     var urlAddress: String?
