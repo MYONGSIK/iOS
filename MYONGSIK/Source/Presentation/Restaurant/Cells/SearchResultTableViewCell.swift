@@ -267,8 +267,8 @@ class SearchResultTableViewCell: UITableViewCell {
                                     scrapCount: nil,
                                     storeId: Int(data.id!),
                                     urlAddress: data.place_url,
-                                    x: data.x,
-                                    y: data.y)
+                                    longitude: data.x,
+                                    latitude: data.y)
 
         if let placeName = data.place_name {self.placeNameLabel.text = placeName}
         if let category = data.category_group_name {self.placeCategoryLabel.text = category}
@@ -349,8 +349,8 @@ class SearchResultTableViewCell: UITableViewCell {
                 self.phoneNumButton.setAttributedTitle(attributedString, for: .normal)
             }
         }
-        if let longitude = data.x { self.storeData?.x = longitude }
-        if let latitude = data.y { self.storeData?.y = latitude }
+        if let longitude = data.longitude { self.storeData?.longitude = longitude }
+        if let latitude = data.latitude { self.storeData?.latitude = latitude }
     }
     
     func addHeartData(data: HeartListModel?) {

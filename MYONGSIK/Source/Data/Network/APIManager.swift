@@ -50,6 +50,7 @@ class APIManager {
                                completionHandler: @escaping (T)->Void) {
         
         let urlString = Constants.BaseURL + urlEndpointString
+        print("url -> \(urlString)")
         if let encodedUrlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
             guard let url = URL(string: encodedUrlString) else { return }
             

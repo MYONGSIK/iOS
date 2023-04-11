@@ -41,6 +41,7 @@ class HeartViewController: MainBaseViewController {
         // DATA
         self.heartListData.removeAll()
         getHeartData()
+        fetchHeartData()
         setUpView()
         setUpConstraint()
     }
@@ -133,6 +134,15 @@ extension HeartViewController {
             self.heartListData.append(HeartListModel(placeName: heart.placeName, category: heart.category, placeUrl: heart.placeUrl))
         }
         reloadDataAnimation()
+    }
+    func fetchHeartData() {
+        let phoneId = UIDevice.current.identifierForVendor!.uuidString
+        APIManager.shared.getData(urlEndpointString: Constants.postHeart + "/" + phoneId,
+                                  dataType: APIModel<Data>.self,
+                                  parameter: nil,
+                                  completionHandler: { _ in
+//            print(response)
+        })
     }
     func reloadDataAnimation() {
         // reload data with animation

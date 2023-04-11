@@ -33,7 +33,7 @@ struct StoreModel: Codable {
     let distance, name: String?
     let scrapCount, storeId: Int?
     let urlAddress: String?
-    var x, y: String?
+    var longitude, latitude: String?
 }
 
 // MARK: - Pageable
