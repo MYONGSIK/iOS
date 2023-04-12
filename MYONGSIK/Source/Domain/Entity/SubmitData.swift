@@ -14,7 +14,15 @@ class SubmitData: Object {
     @objc dynamic var opinion = ""
 }
 
-struct SubmitModel {
-    let submittedDate: Date!
-    let opinion: String!
+struct SubmitModel: Codable {
+//    let submittedDate: Date!
+//    let opinion: String!
+    let areaName: String
+    let writerId: String
+    let registeredAt: String
+    let content: String
+}
+
+struct SubmitResponseModel: Codable {
+    
 }
