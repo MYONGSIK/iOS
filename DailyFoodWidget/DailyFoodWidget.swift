@@ -39,7 +39,7 @@ struct Provider: TimelineProvider {
         getMealData(completion: { data in
             print(data)
             
-            let entry = FoodEntry(date: Date(), mealData: data, restaurantName: "")
+            let entry = FoodEntry(date: Date(), mealData: data.data ?? [], restaurantName: "")
             completion(entry)
         })
     }
@@ -47,14 +47,14 @@ struct Provider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         getMealData { data in
             let currentDate = Date()
-            let entry = FoodEntry(date: currentDate, mealData: data, restaurantName: "MCC식당")
+            let entry = FoodEntry(date: currentDate, mealData: data.data ?? [], restaurantName: "MCC식당")
             let nextRefresh = Calendar.current.date(byAdding: .minute, value: 1, to: currentDate)!
             let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
             completion(timeline)
         }
     }
     
-    func getMealData(completion: @escaping ([DayFoodModel]) -> ()) {
+    func getMealData(completion: @escaping (WidgetAPIModel) -> ()) {
         print("getMealData called")
         let selectedRes = "MCC식당"
         let urlString = baseURL + selectedRes
@@ -66,7 +66,7 @@ struct Provider: TimelineProvider {
                 let data = data,
                 let foodModel = try? JSONDecoder().decode(WidgetAPIModel.self, from: data)
               else { return }
-                completion(foodModel.data!)
+                completion(foodModel)
             }.resume()
         }
         
@@ -106,25 +106,31 @@ struct DailyFoodWidgetEntryView : View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10, content: {
-            Text(entry.restaurantName).bold()
+            Text("MCC식당").bold()
 
-            ForEach(0..<entry.mealData.count, content: { idx in
-                LazyVStack(alignment: .leading, content: {
-                    Text(entry.getFoodTypeStr(type: entry.mealData[idx].mealType ?? ""))
-                        .font(.body)
-                        .bold()
-                        .foregroundColor(.blue)
-                        .padding(EdgeInsets(top: 3, leading: 10, bottom: 3, trailing: 10))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 14)
-                                .stroke(Color.blue, lineWidth: 1.5)
-                        )
-                    
-                    Text(entry.getFoodStr(type: entry.mealData[idx].mealType ?? "정보를 찾을 수 없음")).font(.body).foregroundColor(.gray)
-                        .padding(EdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10))
-                }).padding(EdgeInsets(top: 0, leading: 25, bottom: 5, trailing: 25))
+            if entry.mealData.count > 0 {
+                ForEach(0..<entry.mealData.count, content: { idx in
+                    LazyVStack(alignment: .leading, content: {
+                        Text(entry.getFoodTypeStr(type: entry.mealData[idx].mealType ?? ""))
+                            .font(.body)
+                            .bold()
+                            .foregroundColor(.blue)
+                            .padding(EdgeInsets(top: 3, leading: 10, bottom: 3, trailing: 10))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 14)
+                                    .stroke(Color.blue, lineWidth: 1.5)
+                            )
+                        
+                        Text(entry.getFoodStr(type: entry.mealData[idx].mealType ?? "정보를 찾을 수 없음")).font(.body).foregroundColor(.gray)
+                            .padding(EdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10))
+                    }).padding(EdgeInsets(top: 0, leading: 25, bottom: 5, trailing: 25))
 
-            })
+                })
+            } else {
+                Text("금일 학생식당을 운영하지 않습니다.")
+                    .bold()
+                    .foregroundColor(.gray)
+            }
             
         })
     }
