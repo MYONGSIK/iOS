@@ -12,7 +12,7 @@ class MapViewController: UIViewController {
     
     var mapView: MTMapView!
     
-    private var campusInfo: CampusInfo = .seoul
+    private var campusInfo: CampusInfo = .yongin
     private var resList: [StoreModel] = []
     private var pinList: [MTMapPOIItem] = []
 
@@ -27,7 +27,7 @@ class MapViewController: UIViewController {
     
     private func setup() {
         mapView = MTMapView(frame: self.view.frame)
-        mapView.setMapCenter(.init(geoCoord: .init(latitude: 37.5799602085862, longitude: 126.92324331937944)), animated: true)
+        mapView.setMapCenter(.init(geoCoord: .init(latitude: campusInfo.longitude, longitude: campusInfo.latitude)), animated: true)
         mapView.delegate = self
         mapView.baseMapType = .standard
         setupPin()
