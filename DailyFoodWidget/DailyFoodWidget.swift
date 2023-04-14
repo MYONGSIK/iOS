@@ -8,7 +8,7 @@
 import WidgetKit
 import SwiftUI
 
-// MARK: api 통신을 위한 구조체 추가
+// MARK: api 통신을 위한 구조체 및 전역 상수 추가
 struct WidgetAPIModel: Decodable {
     let success: Bool?
     let httpCode: Int?
@@ -25,6 +25,8 @@ struct DayFoodModel: Decodable {
     let statusType: String?
     let toDay: String?
 }
+
+let baseURL = "http://43.201.72.185:8085/api/v2/meals/"
 
 // MARK: 위젯을 새로고침할 타임라인을 결정하는 객체
 struct Provider: TimelineProvider {
@@ -55,10 +57,10 @@ struct Provider: TimelineProvider {
     func getMealData(completion: @escaping ([DayFoodModel]) -> ()) {
         print("getMealData called")
         let selectedRes = "MCC식당"
-        guard
-//              let url = URL(string: "http://13.209.50.30/api/v2/meals/\(selectedRes)")
-              let url = URL(string: "http://43.201.72.185:8085/api/v2/meals/MCC%EC%8B%9D%EB%8B%B9")
-            else { return }
+        let urlString = baseURL + selectedRes
+        if let encodedUrlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+            guard let url = URL(string: encodedUrlString) else { return }
+
             URLSession.shared.dataTask(with: url) { data, response, error in
               guard
                 let data = data,
@@ -66,6 +68,8 @@ struct Provider: TimelineProvider {
               else { return }
                 completion(foodModel.data!)
             }.resume()
+        }
+        
     }
 }
 
