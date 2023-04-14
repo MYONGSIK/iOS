@@ -37,7 +37,10 @@ class MapViewController: UIViewController {
     private func setupPin() {
         for i in 0..<resList.count {
             let pin = MTMapPOIItem()
-            pin.markerType = .bluePin
+            pin.markerType = .customImage
+            pin.markerSelectedType = .customImage
+            pin.customImage = pinImage(text: resList[i].scrapCount!.description)
+            pin.customSelectedImage = selectedPinImage(text: resList[i].scrapCount!.description)
             guard let latitude = resList[i].latitude else {return}
             guard let longitude = resList[i].longitude else {return}
             
@@ -50,6 +53,77 @@ class MapViewController: UIViewController {
             mapView.add(pin)
         }
     }
+    
+    func imageResize(image: UIImage, newWidth: CGFloat, newHeight: CGFloat) -> UIImage {
+           let size = CGSize(width: newWidth, height: newHeight)
+           let render = UIGraphicsImageRenderer(size: size)
+           let renderImage = render.image { context in
+               image.draw(in: CGRect(origin: .zero, size: size))
+           }
+           
+           return renderImage
+       }
+    
+    
+    func pinImage(text: String) -> UIImage? {
+        let image = imageResize(image: UIImage(named: "mapPin")!, newWidth: 65, newHeight: 80)
+        let imageSize = image.size
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: imageSize.width, height: imageSize.height), false, 1.0)
+        let currentView = UIView(frame: CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height))
+        let currentImage = UIImageView(image: image)
+        currentImage.frame = CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height)
+        currentView.addSubview(currentImage)
+
+        let label = UILabel()
+        label.frame = currentView.frame
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 35)
+        label.textColor = .white
+        label.text = text
+        label.center = currentView.center
+        currentView.addSubview(label)
+
+        guard let currentContext = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        currentView.layer.render(in: currentContext)
+        let img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return img
+    }
+    
+    func selectedPinImage(text: String) -> UIImage? {
+        let image = imageResize(image: UIImage(named: "selectedMapPin")!, newWidth: 130, newHeight: 150)
+        let imageSize = image.size
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: imageSize.width, height: imageSize.height), false, 1.0)
+        let currentView = UIView(frame: CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height))
+        let currentImage = UIImageView(image: image)
+        currentImage.frame = CGRect(x: -15, y: 0, width: imageSize.width, height: imageSize.height)
+        currentView.addSubview(currentImage)
+
+        let label = UILabel()
+        currentView.addSubview(label)
+        label.frame = CGRect(x: -15, y: 0, width: currentView.frame.width, height: currentView.frame.height-30)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 50)
+        label.textColor = .black
+        label.text = text
+        
+
+        guard let currentContext = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        currentView.layer.render(in: currentContext)
+        let img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return img
+    }
+    
+    
     
     
     func setCampusInfo() {
