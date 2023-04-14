@@ -48,7 +48,7 @@ struct Provider: TimelineProvider {
         getMealData { data in
             let currentDate = Date()
             let entry = FoodEntry(date: currentDate, mealData: data.data ?? [], restaurantName: "MCC식당")
-            let nextRefresh = Calendar.current.date(byAdding: .minute, value: 1, to: currentDate)!
+            let nextRefresh = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate)!
             let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
             completion(timeline)
         }
