@@ -170,7 +170,7 @@ extension MapViewController: MTMapViewDelegate {
             }
         }
         
-        storeInfoVC.configure(storeModel: resList[poiItem.tag], isHeart: isHeart)
+        storeInfoVC.configure(storeModel: resList[poiItem.tag], isHeart: isHeart, delegate: self)
         storeInfoVC.modalPresentationStyle = .overFullScreen
         
         self.present(storeInfoVC, animated: true)
@@ -202,11 +202,63 @@ extension MapViewController {
     }
     
     func getHeartData() {
-        // 모든 객체 얻기
+        heartList.removeAll()
         let hearts = realm.objects(HeartListData.self)
         for heart in hearts {
-            print(heart)
             heartList.append(HeartListModel(placeName: heart.placeName, category: heart.category, placeUrl: heart.placeUrl))
         }
     }
+}
+
+extension MapViewController: MapStoreDelegate {
+    func addHeart(placeName: String, category: String, url: String) {
+        let heartData = HeartListData()
+        heartData.placeName = placeName
+        heartData.category = category
+        heartData.placeUrl = url
+        
+        try! realm.write { //렘(DB)에 저장
+              realm.add(heartData)
+        }
+        getHeartData()
+    }
+    
+    func removeHeart(placeName: String) {
+        let predicate = NSPredicate(format: "placeName = %@", placeName)
+        let obj = realm.objects(HeartListData.self).filter(predicate)
+        print(obj)
+        try! realm.write { //렘(DB)에서 삭제
+            realm.delete(obj)
+        }
+        getHeartData()
+    }
+    
+    func requestAddHeart(storeModel: StoreModel) {
+        // TODO: 찜꽁 리스트 추가 POST
+        let campus = (campusInfo == .seoul) ? "SEOUL" : "YONGIN"
+        let phoneId = UIDevice.current.identifierForVendor!.uuidString
+        
+        let bodyParam = HeartModel(address: storeModel.address,
+                                   campus: campus,
+                                   category: storeModel.category,
+                                   code: storeModel.code,
+                                   contact: storeModel.contact,
+                                   distance: storeModel.distance,
+                                   longitude: storeModel.latitude,
+                                   latitude: storeModel.longitude,
+                                   name: storeModel.name,
+                                   phoneId: phoneId,
+                                   urlAddress: storeModel.urlAddress)
+        
+        APIManager.shared.postData(urlEndpointString: Constants.postHeart,
+                                   dataType: HeartModel.self,
+                                   responseType: HeartModel.self,
+                                   parameter: bodyParam,
+                                   completionHandler: { response in
+            print("찜꽁 POST Param - \(bodyParam)")
+            print(response)
+        })
+    }
+    
+    
 }

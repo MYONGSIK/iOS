@@ -6,12 +6,20 @@
 //
 
 import UIKit
+import Toast
+
+protocol MapStoreDelegate {
+    func addHeart(placeName: String, category: String, url: String)
+    func removeHeart(placeName: String)
+    func requestAddHeart(storeModel: StoreModel)
+}
+
 
 class MapStoreViewController: UIViewController {
     
     private var storeModel: StoreModel?
-    
     private var isHeart: Bool = false
+    private var delegate: MapStoreDelegate?
     
     private let storeView = UIView().then {
         $0.backgroundColor = .white
@@ -103,9 +111,10 @@ class MapStoreViewController: UIViewController {
         }
     }
     
-    func configure(storeModel: StoreModel, isHeart: Bool) {
+    func configure(storeModel: StoreModel, isHeart: Bool, delegate: MapStoreDelegate) {
         self.storeModel = storeModel
         self.isHeart = isHeart
+        self.delegate = delegate
         
         storeNameLabel.text = storeModel.name
         categoryLabel.text = storeModel.category
@@ -131,14 +140,32 @@ class MapStoreViewController: UIViewController {
     
     @objc func heartButtonTap() {
         if isHeart {
+            removeHeartAnimation()
             
+            guard let placeName = storeModel?.name else {return}
+            delegate?.removeHeart(placeName: placeName)
         }else {
+            addHeartAnimation()
+            guard let placeName = storeModel?.name else {return}
+            guard let category = storeModel?.category else {return}
+            guard let url = storeModel?.urlAddress else {return}
             
+            delegate?.addHeart(placeName: placeName, category: category, url: url)
+            delegate?.requestAddHeart(storeModel: storeModel!)
         }
     }
     
     @objc func phoneButtonTap() {
-        
+        if let phoneNum = storeModel?.contact {
+            let url = "tel://\(phoneNum)"
+            
+            if let openApp = URL(string: url), UIApplication.shared.canOpenURL(openApp) {
+                if #available(iOS 10.0, *) { UIApplication.shared.open(openApp, options: [:], completionHandler: nil) }
+                else { UIApplication.shared.openURL(openApp) }
+            }
+            else { showToast(message: "번호가 등록되어있지 않습니다!") }
+        }
+        else { showToast(message: "번호가 등록되어있지 않습니다!") }
     }
     
     private func setUpInitialSubView() {
@@ -215,6 +242,34 @@ class MapStoreViewController: UIViewController {
     }
     
     
+    func showToast(message: String) {
+        self.view.makeToast(message, duration: 1.0, position: .center)
+    }
+    
+    
     
         
+}
+
+extension MapStoreViewController {
+    func addHeartAnimation() {
+        showToast(message: "찜꽁리스트에 추가되었습니다.💙")
+        UIView.transition(with: self.heartButton,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { () -> Void in
+            self.heartButton.setImage(UIImage(named: "heartFillButton"), for: .normal)},
+                          completion: nil);
+    }
+    func removeHeartAnimation() {
+        showToast(message: "찜꽁리스트에서 삭제되었습니다.🥲")
+        UIView.transition(with: self.heartButton,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { () -> Void in
+            self.heartButton.setImage(UIImage(named: "heartButton"), for: .normal)},
+                          completion: nil);
+    }
+    
+    
 }
