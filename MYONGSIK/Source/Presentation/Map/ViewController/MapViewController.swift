@@ -7,6 +7,7 @@
 
 import UIKit
 import Alamofire
+import RealmSwift
 
 class MapViewController: UIViewController {
     
@@ -14,16 +15,24 @@ class MapViewController: UIViewController {
     
     private var campusInfo: CampusInfo = .yongin
     private var resList: [StoreModel] = []
+    private var heartList: [HeartListModel] = []
     private var pinList: [MTMapPOIItem] = []
 
+    let realm = try! Realm()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setCampusInfo()
         fetchResData()
         setup()
-        
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getHeartData()
+    }
+    
     
     private func setup() {
         mapView = MTMapView(frame: self.view.frame)
@@ -41,10 +50,12 @@ class MapViewController: UIViewController {
             pin.markerSelectedType = .customImage
             pin.customImage = pinImage(text: resList[i].scrapCount!.description)
             pin.customSelectedImage = selectedPinImage(text: resList[i].scrapCount!.description)
+            
+            
+            
+            
             guard let latitude = resList[i].latitude else {return}
             guard let longitude = resList[i].longitude else {return}
-            
-            print(latitude + ", " + longitude)
             
             pin.mapPoint = MTMapPoint.init(geoCoord: .init(latitude: Double(longitude)!, longitude: Double(latitude)!))
             pin.tag = i
@@ -54,7 +65,8 @@ class MapViewController: UIViewController {
         }
     }
     
-    func imageResize(image: UIImage, newWidth: CGFloat, newHeight: CGFloat) -> UIImage {
+    
+    private func imageResize(image: UIImage, newWidth: CGFloat, newHeight: CGFloat) -> UIImage {
            let size = CGSize(width: newWidth, height: newHeight)
            let render = UIGraphicsImageRenderer(size: size)
            let renderImage = render.image { context in
@@ -65,7 +77,7 @@ class MapViewController: UIViewController {
        }
     
     
-    func pinImage(text: String) -> UIImage? {
+    private func pinImage(text: String) -> UIImage? {
         let image = imageResize(image: UIImage(named: "mapPin")!, newWidth: 65, newHeight: 80)
         let imageSize = image.size
         
@@ -94,7 +106,7 @@ class MapViewController: UIViewController {
         return img
     }
     
-    func selectedPinImage(text: String) -> UIImage? {
+    private func selectedPinImage(text: String) -> UIImage? {
         let image = imageResize(image: UIImage(named: "selectedMapPin")!, newWidth: 130, newHeight: 150)
         let imageSize = image.size
         
@@ -110,7 +122,7 @@ class MapViewController: UIViewController {
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 50)
-        label.textColor = .black
+        label.textColor = UIColor(red: 10 / 255, green: 69 / 255, blue: 202 / 255, alpha: 1)
         label.text = text
         
 
@@ -126,7 +138,7 @@ class MapViewController: UIViewController {
     
     
     
-    func setCampusInfo() {
+    private func setCampusInfo() {
         if let userCampus  = UserDefaults.standard.value(forKey: "userCampus") {
             switch userCampus as! String {
             case CampusInfo.seoul.name:
@@ -139,7 +151,7 @@ class MapViewController: UIViewController {
         }
     }
     
-    func showAlert(message: String) {
+    private func showAlert(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default))
         present(alert, animated: true)
@@ -148,7 +160,22 @@ class MapViewController: UIViewController {
 
 
 extension MapViewController: MTMapViewDelegate {
-    
+    func mapView(_ mapView: MTMapView!, selectedPOIItem poiItem: MTMapPOIItem!) -> Bool {
+        let storeInfoVC = MapStoreViewController()
+        var isHeart = false
+        
+        heartList.forEach { heart in
+            if resList[poiItem.tag].name == heart.placeName {
+                isHeart = true
+            }
+        }
+        
+        storeInfoVC.configure(storeModel: resList[poiItem.tag], isHeart: isHeart)
+        storeInfoVC.modalPresentationStyle = .overFullScreen
+        
+        self.present(storeInfoVC, animated: true)
+        return false
+    }
 }
 
 
@@ -172,5 +199,14 @@ extension MapViewController {
                 self?.showAlert(message: "맛집 지도 정보를 가져올 수 없습니다.")
             }
         })
+    }
+    
+    func getHeartData() {
+        // 모든 객체 얻기
+        let hearts = realm.objects(HeartListData.self)
+        for heart in hearts {
+            print(heart)
+            heartList.append(HeartListModel(placeName: heart.placeName, category: heart.category, placeUrl: heart.placeUrl))
+        }
     }
 }
