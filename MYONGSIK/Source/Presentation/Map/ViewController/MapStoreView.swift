@@ -85,6 +85,7 @@ class MapStoreView: UIView {
     func configure(storeModel: StoreModel, isHeart: Bool, delegate: MapStoreDelegate) -> UIView {
         setUpInitialSubView()
         
+        self.isHeart = isHeart
         
         self.storeModel = storeModel
         self.isHeart = isHeart
@@ -106,7 +107,7 @@ class MapStoreView: UIView {
             }
         }
         
-        if isHeart {
+        if self.isHeart {
             heartButton.setImage(UIImage(named: "heartFillButton"), for: .normal)
         }
         
@@ -115,7 +116,7 @@ class MapStoreView: UIView {
     
     
     @objc func heartButtonTap() {
-        if isHeart {
+        if self.isHeart {
             removeHeartAnimation()
             
             guard let placeName = storeModel?.name else {return}
