@@ -8,10 +8,13 @@
 import UIKit
 import Alamofire
 import RealmSwift
+import Toast
 
 class MapViewController: UIViewController {
     
     var mapView: MTMapView!
+    
+    var storeInfoView: UIView!
     
     private var campusInfo: CampusInfo = .yongin
     private var resList: [StoreModel] = []
@@ -41,6 +44,20 @@ class MapViewController: UIViewController {
         mapView.baseMapType = .standard
         setupPin()
         self.view.addSubview(mapView)
+    }
+    
+    
+    
+
+    
+    @objc func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .down {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.storeInfoView.alpha = 0
+            }, completion: { _ in
+                self.storeInfoView.removeFromSuperview()
+            })
+        }
     }
     
     private func setupPin() {
@@ -161,7 +178,7 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MTMapViewDelegate {
     func mapView(_ mapView: MTMapView!, selectedPOIItem poiItem: MTMapPOIItem!) -> Bool {
-        let storeInfoVC = MapStoreViewController()
+        let storeInfoView = MapStoreView()
         var isHeart = false
         
         heartList.forEach { heart in
@@ -170,10 +187,26 @@ extension MapViewController: MTMapViewDelegate {
             }
         }
         
-        storeInfoVC.configure(storeModel: resList[poiItem.tag], isHeart: isHeart, delegate: self)
-        storeInfoVC.modalPresentationStyle = .overFullScreen
+        if self.storeInfoView != nil {
+            self.storeInfoView.removeFromSuperview()
+        }
         
-        self.present(storeInfoVC, animated: true)
+        
+        self.storeInfoView = storeInfoView.configure(storeModel: resList[poiItem.tag], isHeart: isHeart, delegate: self)
+        
+        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
+        swipeDownGesture.direction = .down
+        self.storeInfoView.addGestureRecognizer(swipeDownGesture)
+        
+        
+        self.view.addSubview(self.storeInfoView)
+        self.storeInfoView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(280)
+        }
+        
         return false
     }
 }
@@ -261,4 +294,13 @@ extension MapViewController: MapStoreDelegate {
     }
     
     
+    func showToast(message: String) {
+        self.view.makeToast(message, duration: 1.0, position: .center)
+    }
+    
+    
+    
+    
+    
 }
+

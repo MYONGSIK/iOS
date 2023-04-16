@@ -12,27 +12,16 @@ protocol MapStoreDelegate {
     func addHeart(placeName: String, category: String, url: String)
     func removeHeart(placeName: String)
     func requestAddHeart(storeModel: StoreModel)
+    func showToast(message: String)
 }
 
 
-class MapStoreViewController: UIViewController {
+class MapStoreView: UIView {
     
     private var storeModel: StoreModel?
     private var isHeart: Bool = false
     private var delegate: MapStoreDelegate?
     
-    private let storeView = UIView().then {
-        $0.backgroundColor = .white
-        
-        $0.layer.cornerRadius = 20
-        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        $0.layer.masksToBounds = true
-        
-        $0.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
-        $0.layer.shadowOpacity = 1
-        $0.layer.shadowRadius = 40
-        $0.layer.shadowOffset = CGSize(width: 0, height: 4)
-    }
     
     private let closeView = UIView().then {
         $0.backgroundColor = UIColor(red: 0.81, green: 0.8, blue: 0.832, alpha: 1)
@@ -92,26 +81,11 @@ class MapStoreViewController: UIViewController {
     }
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupGesture()
+    
+    func configure(storeModel: StoreModel, isHeart: Bool, delegate: MapStoreDelegate) -> UIView {
         setUpInitialSubView()
-    }
-    
-    func setupGesture() {
-        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
-        swipeDownGesture.direction = .down
-        view.addGestureRecognizer(swipeDownGesture)
-    }
-    
-    @objc func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == .down {
-            dismiss(animated: true, completion: nil)
-        }
-    }
-    
-    func configure(storeModel: StoreModel, isHeart: Bool, delegate: MapStoreDelegate) {
+        
+        
         self.storeModel = storeModel
         self.isHeart = isHeart
         self.delegate = delegate
@@ -121,13 +95,14 @@ class MapStoreViewController: UIViewController {
         addressLabel.text = storeModel.address
         
         if let distance = storeModel.distance {
-            guard let distanceInt = Int(distance) else {return}
-            if distanceInt >= 1000 {
-                let distanceKmFirst = distanceInt / 1000
-                let distanceKmSecond = (distanceInt % 1000) / 100
-                meterLabel.text = "\(distanceKmFirst).\(distanceKmSecond)km"
-            } else {
-                meterLabel.text = "\(distanceInt)m"
+            if let distanceInt = Int(distance){
+                if distanceInt >= 1000 {
+                    let distanceKmFirst = distanceInt / 1000
+                    let distanceKmSecond = (distanceInt % 1000) / 100
+                    meterLabel.text = "\(distanceKmFirst).\(distanceKmSecond)km"
+                } else {
+                    meterLabel.text = "\(distanceInt)m"
+                }
             }
         }
         
@@ -135,6 +110,7 @@ class MapStoreViewController: UIViewController {
             heartButton.setImage(UIImage(named: "heartFillButton"), for: .normal)
         }
         
+        return self
     }
     
     
@@ -146,6 +122,7 @@ class MapStoreViewController: UIViewController {
             delegate?.removeHeart(placeName: placeName)
         }else {
             addHeartAnimation()
+            
             guard let placeName = storeModel?.name else {return}
             guard let category = storeModel?.category else {return}
             guard let url = storeModel?.urlAddress else {return}
@@ -163,23 +140,26 @@ class MapStoreViewController: UIViewController {
                 if #available(iOS 10.0, *) { UIApplication.shared.open(openApp, options: [:], completionHandler: nil) }
                 else { UIApplication.shared.openURL(openApp) }
             }
-            else { showToast(message: "번호가 등록되어있지 않습니다!") }
+            else { delegate?.showToast(message: "번호가 등록되어있지 않습니다!") }
         }
-        else { showToast(message: "번호가 등록되어있지 않습니다!") }
+        else { delegate?.showToast(message: "번호가 등록되어있지 않습니다!") }
     }
     
     private func setUpInitialSubView() {
-        self.view.backgroundColor = .clear
+        self.backgroundColor = .white
         
-        self.view.addSubview(storeView)
-        storeView.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.height.equalTo(220)
-        }
+        self.layer.cornerRadius = 20
+        self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        self.layer.masksToBounds = true
         
-        storeView.addSubview(closeView)
+        self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        self.layer.shadowOpacity = 1
+        self.layer.shadowRadius = 40
+        self.layer.shadowOffset = CGSize(width: 0, height: 4)
+        
+        
+        
+        self.addSubview(closeView)
         closeView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(11)
             $0.centerX.equalToSuperview()
@@ -187,28 +167,28 @@ class MapStoreViewController: UIViewController {
             $0.height.equalTo(5)
         }
         
-        storeView.addSubview(storeNameLabel)
+        self.addSubview(storeNameLabel)
         storeNameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(29)
             $0.top.equalToSuperview().offset(31)
             $0.height.equalTo(29)
         }
         
-        storeView.addSubview(meterLabel)
+        self.addSubview(meterLabel)
         meterLabel.snp.makeConstraints {
             $0.leading.equalTo(storeNameLabel.snp.trailing).offset(11)
             $0.top.equalToSuperview().offset(39)
             $0.height.equalTo(15)
         }
         
-        storeView.addSubview(categoryLabel)
+        self.addSubview(categoryLabel)
         categoryLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(29)
             $0.top.equalTo(storeNameLabel.snp.bottom).offset(1)
             $0.height.equalTo(20)
         }
         
-        storeView.addSubview(pinImageView)
+        self.addSubview(pinImageView)
         pinImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(26)
             $0.top.equalTo(categoryLabel.snp.bottom).offset(8)
@@ -216,14 +196,14 @@ class MapStoreViewController: UIViewController {
             $0.height.equalTo(19)
         }
         
-        storeView.addSubview(addressLabel)
+        self.addSubview(addressLabel)
         addressLabel.snp.makeConstraints {
             $0.leading.equalTo(pinImageView.snp.trailing).offset(0)
             $0.top.equalTo(categoryLabel.snp.bottom).offset(7)
             $0.height.equalTo(20)
         }
         
-        storeView.addSubview(heartButton)
+        self.addSubview(heartButton)
         heartButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(15)
             $0.top.equalTo(addressLabel.snp.bottom).offset(12)
@@ -231,7 +211,7 @@ class MapStoreViewController: UIViewController {
             $0.height.equalTo(48)
         }
         
-        storeView.addSubview(phoneButton)
+        self.addSubview(phoneButton)
         phoneButton.snp.makeConstraints {
             $0.leading.equalTo(heartButton.snp.trailing).offset(6)
             $0.top.equalTo(addressLabel.snp.bottom).offset(12)
@@ -241,19 +221,12 @@ class MapStoreViewController: UIViewController {
         
     }
     
-    
-    func showToast(message: String) {
-        self.view.makeToast(message, duration: 1.0, position: .center)
-    }
-    
-    
-    
-        
+
 }
 
-extension MapStoreViewController {
+extension MapStoreView {
     func addHeartAnimation() {
-        showToast(message: "찜꽁리스트에 추가되었습니다.💙")
+        delegate?.showToast(message: "찜꽁리스트에 추가되었습니다.💙")
         UIView.transition(with: self.heartButton,
                           duration: 0.35,
                           options: .transitionCrossDissolve,
@@ -262,7 +235,7 @@ extension MapStoreViewController {
                           completion: nil);
     }
     func removeHeartAnimation() {
-        showToast(message: "찜꽁리스트에서 삭제되었습니다.🥲")
+        delegate?.showToast(message: "찜꽁리스트에서 삭제되었습니다.🥲")
         UIView.transition(with: self.heartButton,
                           duration: 0.35,
                           options: .transitionCrossDissolve,
