@@ -94,13 +94,34 @@ struct FoodEntry: TimelineEntry {
         }
     }
     
+    func getAttributedFoodsStr(type: String) -> AttributedString {
+        var result = AttributedString(getMainFoodStr(type: type))
+        result.font = .system(size: 13).bold()
+        result.foregroundColor = Color(uiColor: UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1))
+        if result != "" {
+            result += " " + AttributedString(getFoodsStr(type: type))
+        } else {
+            result += AttributedString(getFoodsStr(type: type))
+        }
+        
+        return result
+    }
+    
+    func getMainFoodStr(type: String) -> String {
+        var mainFood: String = ""
+        mealData.forEach { data in
+            if data.mealType == type {
+                mainFood += data.meals![0]
+            }
+        }
+        return mainFood
+    }
+    
     func getFoodsStr(type: String) -> String {
         var foodStr: String = ""
         mealData.forEach { data in
             if data.mealType == type {
-                data.meals?.forEach { meal in
-                    foodStr += meal
-                }
+                foodStr += data.meals![1]
             }
         }
         return foodStr
@@ -153,7 +174,8 @@ struct DailyFoodWidgetEntryView : View {
                             
                             LazyVStack(alignment: .leading, content: {
                                 
-                                Text(entry.getFoodsStr(type: entry.mealData[idx].mealType ?? "정보를 찾을 수 없음"))
+//                                Text(entry.getFoodsStr(type: entry.mealData[idx].mealType ?? "정보를 찾을 수 없음"))
+                                Text(entry.getAttributedFoodsStr(type: entry.mealData[idx].mealType!))
                                     .font(.system(size: 13))
                                     .foregroundColor(.black)
                                     .padding(EdgeInsets(top: 0, leading: -5, bottom: 1, trailing: 0))
