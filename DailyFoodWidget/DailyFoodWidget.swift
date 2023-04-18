@@ -242,63 +242,6 @@ struct DailyFoodWidgetEntryView : View {
                     .bold()
                     .foregroundColor(.blue)
             }
-               
-                // 원본
-//            if entry.mealData.count > 0 {
-//                LazyVStack(content: {
-//                ForEach(0..<entry.mealData.count, content: { idx in
-//                    LazyVStack(alignment: .leading, content: {
-//                        Text(entry.getFoodTypeStr(type: entry.mealData[idx].mealType ?? ""))
-//                            .font(.body)
-//                            .bold()
-//                            .foregroundColor(.blue)
-//                            .padding(EdgeInsets(top: 3, leading: 10, bottom: 3, trailing: 10))
-//                            .overlay(
-//                                RoundedRectangle(cornerRadius: 14)
-//                                    .stroke(Color.blue, lineWidth: 1.5)
-//                            )
-//
-//                        Text(entry.getFoodStr(type: entry.mealData[idx].mealType ?? "정보를 찾을 수 없음")).font(.body).foregroundColor(.gray)
-//                            .padding(EdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10))
-//                    }).padding(EdgeInsets(top: 0, leading: 25, bottom: 5, trailing: 25))
-                    
-//
-//                        LazyHStack(alignment: .top, content: {
-//                            VStack(content: {
-//                                Text(entry.getFoodTypeStr(type: entry.mealData[idx].mealType ?? ""))
-//                                    .font(.system(size: 14))
-//                                    .bold()
-//                                    .foregroundColor(Color(uiColor: UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)))
-//                            })
-////                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
-//                                .background(Color.brown)
-//
-//                            Spacer()
-//                            LazyVStack(alignment: .leading, content: {
-//
-//                                Text("식단 내용 어쩌고 저쩌고 식단 내용 어쩌고 저쩌고 식단 내용 어쩌고 저쩌고")
-//                                    .font(.system(size: 14))
-//                                    .foregroundColor(.gray)
-//                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
-//
-//                                Text("운영시간 00:00 ~ 00:00")
-//                                    .font(.system(size: 8))
-//                                    .foregroundColor(.gray)
-//
-//                            }).padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
-//                                .frame(width: 210)
-//                                .background(Color.red)
-//
-//                        }).background(Color.orange)
-
-//                })
-//
-//            } else {
-//                Text("금일 학생식당을 운영하지 않습니다.")
-//                    .bold()
-//                    .foregroundColor(.blue)
-//            }
-            
         })
     }
 }
