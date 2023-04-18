@@ -98,12 +98,7 @@ struct FoodEntry: TimelineEntry {
         var result = AttributedString(getMainFoodStr(type: type))
         result.font = .system(size: 13).bold()
         result.foregroundColor = Color(uiColor: UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1))
-        if result != "" {
-            result += " " + AttributedString(getFoodsStr(type: type))
-        } else {
-            result += AttributedString(getFoodsStr(type: type))
-        }
-        
+        result += " " + AttributedString(getFoodsStr(type: type))
         return result
     }
     
@@ -174,7 +169,6 @@ struct DailyFoodWidgetEntryView : View {
                             
                             LazyVStack(alignment: .leading, content: {
                                 
-//                                Text(entry.getFoodsStr(type: entry.mealData[idx].mealType ?? "정보를 찾을 수 없음"))
                                 Text(entry.getAttributedFoodsStr(type: entry.mealData[idx].mealType!))
                                     .font(.system(size: 13))
                                     .foregroundColor(.black)
@@ -214,7 +208,7 @@ struct DailyFoodWidgetEntryView : View {
                         
                         LazyVStack(alignment: .leading, content: {
                             
-                            Text(entry.getFoodsStr(type: entry.mealData[entry.mealData.count-1].mealType ?? "정보를 찾을 수 없음"))
+                            Text(entry.getAttributedFoodsStr(type: entry.mealData[entry.mealData.count-1].mealType!))
                                 .font(.system(size: 13))
                                 .foregroundColor(.black)
                                 .padding(EdgeInsets(top: 0, leading: -5, bottom: 4, trailing: 0))
