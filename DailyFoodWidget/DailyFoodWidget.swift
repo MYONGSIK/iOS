@@ -138,7 +138,9 @@ struct FoodEntry: TimelineEntry {
         var result = AttributedString(getMainFoodStr(type: type))
         result.font = .system(size: 13).bold()
         result.foregroundColor = Color(uiColor: UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1))
-        result += " " + AttributedString(getFoodsStr(type: type))
+        if result != "" { result += " " }
+        else { result += "" }
+        result += AttributedString(getFoodsStr(type: type))
         return result
     }
     
@@ -198,6 +200,9 @@ struct FoodEntry: TimelineEntry {
 // MARK: Widget의 content를 보여주는 SwiftUI View
 struct DailyFoodWidgetEntryView : View {
     var entry: Provider.Entry
+    
+    let mealTypeTextWidth: CGFloat = 60
+    let cellViewHeight: CGFloat = 93
 
     var body: some View {
         VStack(alignment: .center, spacing: 10, content: {
@@ -228,10 +233,11 @@ struct DailyFoodWidgetEntryView : View {
                                .font(.system(size: 14))
                                .bold()
                                .foregroundColor(Color(uiColor: UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)))
-                               .padding(EdgeInsets(top: 8, leading: 10, bottom: 0, trailing: 10))
-                            
+                               .frame(width: mealTypeTextWidth)
+                               .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 0))
+
                             Image("separator")
-                                .padding(EdgeInsets(top: 7, leading: 0, bottom: 0, trailing: 0))
+                                .padding(EdgeInsets(top: 12, leading: 0, bottom: 0, trailing: 0))
                             
                             LazyVStack(alignment: .leading, content: {
                                 
@@ -243,13 +249,14 @@ struct DailyFoodWidgetEntryView : View {
                                 Text(entry.getLanchOperatingTimeStr(typeName: entry.restaurantName))
                                     .font(.system(size: 8))
                                     .foregroundColor(.gray)
+                                    .padding(EdgeInsets(top: 0, leading: -5, bottom: 0, trailing: 0))
                                 
                             })
                             .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
-                            .frame(width: 210, height: 83)
+                            .frame(width: 210, height: cellViewHeight)
                             
                         })
-                        .frame(height: 83)
+                        .frame(height: cellViewHeight)
                         .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                                 
                     })
@@ -267,11 +274,12 @@ struct DailyFoodWidgetEntryView : View {
                            .font(.system(size: 14))
                            .bold()
                            .foregroundColor(Color(uiColor: UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)))
-                           .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 18))
-                        
+                           .frame(width: mealTypeTextWidth)
+                           .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 0))
+
                         Image("separator")
-                            .padding(EdgeInsets(top: 7, leading: 0, bottom: 0, trailing: 0))
-                        
+                            .padding(EdgeInsets(top: 12, leading: 0, bottom: 0, trailing: 0))
+
                         LazyVStack(alignment: .leading, content: {
                             
                             Text(entry.getAttributedFoodsStr(type: entry.mealData[entry.mealData.count-1].mealType!))
@@ -282,13 +290,14 @@ struct DailyFoodWidgetEntryView : View {
                             Text(entry.getDinnerOperatingTimeStr(typeName: entry.restaurantName))
                                 .font(.system(size: 8))
                                 .foregroundColor(.gray)
+                                .padding(EdgeInsets(top: 0, leading: -5, bottom: 0, trailing: 0))
                             
                         })
                         .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
-                        .frame(width: 210, height: 83)
+                        .frame(width: 210, height: cellViewHeight)
                         
                     })
-                    .frame(height: 83)
+                    .frame(height: cellViewHeight)
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                     
                 })
