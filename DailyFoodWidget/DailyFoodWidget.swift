@@ -161,7 +161,7 @@ struct DailyFoodWidgetEntryView : View {
                     .foregroundColor(Color(uiColor: UIColor(red: 101/255, green: 101/255, blue: 101/255, alpha: 1)))
                     .font(.system(size: 11))
                 Spacer()
-                Text(entry.restaurantName)
+                Text((entry.restaurantName == "학생식당") ? "학관식당" : entry.restaurantName)
                     .bold()
                     .foregroundColor(Color(uiColor: UIColor(red: 101/255, green: 101/255, blue: 101/255, alpha: 1)))
                     .font(.system(size: 11))
