@@ -117,11 +117,20 @@ struct FoodEntry: TimelineEntry {
     var restaurantName: String
     
     func getFoodTypeStr(type: String) -> String {
-        switch type {
-        case "LUNCH_A": return "중식A"
-        case "LUNCH_B": return "중식B"
-        case "DINNER": return "석식"
-        default: return "알 수 없음"
+        if restaurantName == "명진당식당" {
+            switch type {
+            case "LUNCH_A": return "샐러드"
+            case "LUNCH_B": return "백반"
+            case "DINNER": return "볶음밥"
+            default: return "알 수 없음"
+            }
+        } else {
+            switch type {
+            case "LUNCH_A": return (mealData.count > 2) ? "중식A" : "중식"
+            case "LUNCH_B": return "중식B"
+            case "DINNER": return "석식"
+            default: return "알 수 없음"
+            }
         }
     }
     
