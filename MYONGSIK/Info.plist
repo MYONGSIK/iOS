@@ -6,6 +6,10 @@
 	<array>
 		<string>nmap</string>
 	</array>
+	<key>KAKAO_APP_KEY</key>
+	<string>e29222d0f452b6f56a7bca329249ec61</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>13.0.0</string>
 	<key>NSAppTransportSecurity</key>
@@ -54,5 +58,9 @@
 			</array>
 		</dict>
 	</dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>nmap</string>
+	</array>
 </dict>
 </plist>

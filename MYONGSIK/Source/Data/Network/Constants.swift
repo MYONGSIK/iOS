@@ -44,6 +44,20 @@ enum CampusInfo {
             case .yongin: return "용인 명지대 "
         }
     }
+    
+    var latitude: Double {
+        switch self {
+        case .seoul: return 126.9230255
+        case .yongin: return 127.1856568
+        }
+    }
+    
+    var longitude: Double {
+        switch self {
+        case .seoul: return 37.5805970
+        case .yongin: return 37.2217101
+        }
+    }
 }
 
 struct Constants {
