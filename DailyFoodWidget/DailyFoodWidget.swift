@@ -10,8 +10,21 @@ import SwiftUI
 
 // MARK: Constants
 struct OperatingTimeStr {
+    /// MCC 식당
     static let mccLanch = "중식 운영 시간 11:30~14:00"
     static let mccDinner = "석식 운영 시간 17:30~19:00"
+    /// 교직원 식당
+    static let staffLanch = "중식 운영 시간 11:30~13:30"
+    static let staffDinner = "석식 운영 시간 17:30~18:30"
+    /// 생활관 식당
+    static let dormitoryLanch = "중식 운영 시간 11:30~13:30"
+    static let dormitoryDinner = "석식 운영 시간 17:00~18:30"
+    /// 학관 식당
+    static let studentLanch = "조식 운영 시간 08:30~09:30"
+    static let studentDinner = "중식 운영 시간 10:00~15:00"
+    /// 명진당 식당
+    static let myounginLanch = "백반 운영 시간 11:30~14:30"
+    static let myounginDinner = "샐러드/볶음밥 운영 시간 10:00~15:00"
 }
 
 
@@ -145,6 +158,32 @@ struct FoodEntry: TimelineEntry {
         formatter.dateFormat = "yyyy.MM.dd"
         return formatter.string(from: Date())
     }
+    
+    func getLanchOperatingTimeStr(typeName: String) -> String {
+        var operatingTime = ""
+        switch typeName {
+            case "MCC식당": operatingTime = OperatingTimeStr.mccLanch
+            case "교직원식당": operatingTime = OperatingTimeStr.staffLanch
+            case "생활관식당": operatingTime = OperatingTimeStr.dormitoryLanch
+            case "학관식당": operatingTime = OperatingTimeStr.studentLanch
+            case "명진당식당": operatingTime = OperatingTimeStr.myounginLanch
+            default: return operatingTime
+        }
+        return operatingTime
+    }
+    
+    func getDinnerOperatingTimeStr(typeName: String) -> String {
+        var operatingTime = ""
+        switch typeName {
+            case "MCC식당": operatingTime = OperatingTimeStr.mccDinner
+            case "교직원식당": operatingTime = OperatingTimeStr.staffDinner
+            case "생활관식당": operatingTime = OperatingTimeStr.dormitoryDinner
+            case "학관식당": operatingTime = OperatingTimeStr.studentDinner
+            case "명진당식당": operatingTime = OperatingTimeStr.myounginDinner
+            default: return operatingTime
+        }
+        return operatingTime
+    }
 }
 
 // MARK: Widget의 content를 보여주는 SwiftUI View
@@ -192,7 +231,7 @@ struct DailyFoodWidgetEntryView : View {
                                     .foregroundColor(.black)
                                     .padding(EdgeInsets(top: 0, leading: -5, bottom: 1, trailing: 0))
                                 
-                                Text(OperatingTimeStr.mccLanch)
+                                Text(entry.getLanchOperatingTimeStr(typeName: entry.restaurantName))
                                     .font(.system(size: 8))
                                     .foregroundColor(.gray)
                                 
@@ -231,7 +270,7 @@ struct DailyFoodWidgetEntryView : View {
                                 .foregroundColor(.black)
                                 .padding(EdgeInsets(top: 0, leading: -5, bottom: 4, trailing: 0))
                             
-                            Text(OperatingTimeStr.mccDinner)
+                            Text(entry.getDinnerOperatingTimeStr(typeName: entry.restaurantName))
                                 .font(.system(size: 8))
                                 .foregroundColor(.gray)
                             
