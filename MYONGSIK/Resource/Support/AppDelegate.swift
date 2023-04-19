@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("변경 사항 없음")
         }
         
+        FirebaseApp.configure()
         return true
     }
 

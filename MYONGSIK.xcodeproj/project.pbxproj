@@ -52,6 +52,8 @@
 		23E6ACA9290130C50091D803 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6ACA8290130C50091D803 /* UIDevice.swift */; };
 		58A23E1C2028CBEE0CA8BC47 /* Pods_MYONGSIKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */; };
 		73178AC129EAFC3A001C3AA4 /* MapStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */; };
+		73178AD829EED14A001C3AA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */; };
+		73178ADB29EED194001C3AA4 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 73178ADA29EED194001C3AA4 /* FirebaseAnalytics */; };
 		736A8DF829E999E200D30A35 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736A8DF729E999E200D30A35 /* MapViewController.swift */; };
 		736A8DFC29E9A01700D30A35 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFB29E9A01700D30A35 /* Metal.framework */; };
 		736A8DFE29E9A02000D30A35 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFD29E9A02000D30A35 /* SystemConfiguration.framework */; };
@@ -178,6 +180,7 @@
 		5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStoreView.swift; sourceTree = "<group>"; };
+		73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		736A8DF729E999E200D30A35 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		736A8DFB29E9A01700D30A35 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		736A8DFD29E9A02000D30A35 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -249,6 +252,7 @@
 			files = (
 				736A8E0829E9A07800D30A35 /* libsqlite3.tbd in Frameworks */,
 				736A8E0029E9A02F00D30A35 /* CoreLocation.framework in Frameworks */,
+				73178ADB29EED194001C3AA4 /* FirebaseAnalytics in Frameworks */,
 				A202857F29C5B339008A7853 /* Toast in Frameworks */,
 				736A8E0629E9A06800D30A35 /* libc++.tbd in Frameworks */,
 				736A8E0229E9A03800D30A35 /* QuartzCore.framework in Frameworks */,
@@ -319,6 +323,7 @@
 		23166A7028FECD9D002AEFB7 /* MYONGSIK */ = {
 			isa = PBXGroup;
 			children = (
+				73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */,
 				2373E4E9290AD18A00D51B8E /* Resource */,
 				2373E4E8290AD18500D51B8E /* Source */,
 				23166A7A28FECD9E002AEFB7 /* Assets.xcassets */,
@@ -725,6 +730,7 @@
 			name = MYONGSIK;
 			packageProductDependencies = (
 				A202857E29C5B339008A7853 /* Toast */,
+				73178ADA29EED194001C3AA4 /* FirebaseAnalytics */,
 			);
 			productName = MYONGSIK;
 			productReference = 23166A6E28FECD9C002AEFB7 /* MYONGSIK.app */;
@@ -804,6 +810,7 @@
 			mainGroup = 23166A6528FECD9C002AEFB7;
 			packageReferences = (
 				A202857D29C5B339008A7853 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				73178AD929EED194001C3AA4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 23166A6F28FECD9D002AEFB7 /* Products */;
 			projectDirPath = "";
@@ -848,6 +855,7 @@
 				736A92B729E9A8E300D30A35 /* noimage.png in Resources */,
 				23735AFC28FEDA6100599221 /* NotoSansKR-Regular.otf in Resources */,
 				736A92B829E9A8E300D30A35 /* map_present_background_update.png in Resources */,
+				73178AD829EED14A001C3AA4 /* GoogleService-Info.plist in Resources */,
 				736A92B929E9A8E300D30A35 /* daum_th_line.png in Resources */,
 				736A92B429E9A8E300D30A35 /* map_present_direction.png in Resources */,
 				736A92B129E9A8E300D30A35 /* map_pinup_custom.png in Resources */,
@@ -1219,7 +1227,7 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 643M65W7HH;
+				DEVELOPMENT_TEAM = 5XGLRW6VG4;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1261,7 +1269,7 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 643M65W7HH;
+				DEVELOPMENT_TEAM = 5XGLRW6VG4;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1411,6 +1419,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		73178AD929EED194001C3AA4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 		A202857D29C5B339008A7853 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
@@ -1422,6 +1438,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		73178ADA29EED194001C3AA4 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 73178AD929EED194001C3AA4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
 		A202857E29C5B339008A7853 /* Toast */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A202857D29C5B339008A7853 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
