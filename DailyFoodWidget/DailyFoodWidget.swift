@@ -36,34 +36,40 @@ struct DayFoodModel: Decodable {
 let baseURL = "http://43.201.72.185:8085/api/v2/meals/"
 
 // MARK: 위젯을 새로고침할 타임라인을 결정하는 객체
-struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> FoodEntry {
-        FoodEntry(date: Date(), mealData: [], restaurantName: "선택된 식당 없음")
-    }
-
-    func getSnapshot(in context: Context, completion: @escaping (FoodEntry) -> ()) {
-        print("getSnapshot called")
-        getMealData(completion: { data in
+struct Provider: IntentTimelineProvider {
+    func getSnapshot(for configuration: RestaurantListIntent, in context: Context, completion: @escaping (FoodEntry) -> Void) {
+        
+        let resName = getRestaurantName(typeName: configuration.restaurantName)
+        getMealData(resName: resName, completion: { data in
             print(data)
             
-            let entry = FoodEntry(date: Date(), mealData: data.data ?? [], restaurantName: "")
+            let entry = FoodEntry(date: Date(), mealData: data.data ?? [], restaurantName: resName)
             completion(entry)
         })
     }
-
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        getMealData { data in
+    
+    func getTimeline(for configuration: RestaurantListIntent, in context: Context, completion: @escaping (Timeline<FoodEntry>) -> Void) {
+        
+        let resName = getRestaurantName(typeName: configuration.restaurantName)
+        getMealData(resName: resName) { data in
             let currentDate = Date()
-            let entry = FoodEntry(date: currentDate, mealData: data.data ?? [], restaurantName: "MCC식당")
+            let entry = FoodEntry(date: currentDate, mealData: data.data ?? [], restaurantName: resName)
             let nextRefresh = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate)!
             let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
             completion(timeline)
         }
     }
     
-    func getMealData(completion: @escaping (WidgetAPIModel) -> ()) {
-        print("getMealData called")
-        let selectedRes = "MCC식당"
+    typealias Intent = RestaurantListIntent
+    typealias Entry = FoodEntry
+    
+    func placeholder(in context: Context) -> FoodEntry {
+        FoodEntry(date: Date(), mealData: [], restaurantName: "선택된 식당 없음")
+    }
+    
+    func getMealData(resName: String, completion: @escaping (WidgetAPIModel) -> ()) {
+        
+        let selectedRes = resName
         let urlString = baseURL + selectedRes
         if let encodedUrlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
             guard let url = URL(string: encodedUrlString) else { return }
@@ -76,13 +82,25 @@ struct Provider: TimelineProvider {
                 completion(foodModel)
             }.resume()
         }
-        
+    }
+    
+    func getRestaurantName(typeName: Restaurants) -> String {
+        var name = "MCC식당"
+        switch typeName {
+            case .mcc: name = "MCC식당"
+            case .staff: name = "교직원식당"
+            case .dormitory: name = "생활관식당"
+            case .student: name = "학생식당"
+            case .myoungin: name = "명진당식당"
+            default: name = "MCC식당"
+        }
+        return name
     }
 }
 
 struct FoodEntry: TimelineEntry {
     let date: Date
-    var mealData: [DayFoodModel]
+    var mealData: [DayFoodModel] = []
     var restaurantName: String
     
     func getFoodTypeStr(type: String) -> String {
@@ -143,7 +161,7 @@ struct DailyFoodWidgetEntryView : View {
                     .foregroundColor(Color(uiColor: UIColor(red: 101/255, green: 101/255, blue: 101/255, alpha: 1)))
                     .font(.system(size: 11))
                 Spacer()
-                Text("MCC식당")
+                Text(entry.restaurantName)
                     .bold()
                     .foregroundColor(Color(uiColor: UIColor(red: 101/255, green: 101/255, blue: 101/255, alpha: 1)))
                     .font(.system(size: 11))
@@ -241,14 +259,14 @@ struct DailyFoodWidgetEntryView : View {
 }
 
 struct DailyFoodWidget: Widget {
-    let kind: String = "DailyFoodWidget"
+    static let kind: String = "DailyFoodWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+        IntentConfiguration(kind: DailyFoodWidget.kind,
+                            intent: RestaurantListIntent.self,
+                            provider: Provider()) { entry in
             DailyFoodWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
     }
 }
 

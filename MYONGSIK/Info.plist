@@ -2,8 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIUserInterfaceStyle</key>
-	<string>Light</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>nmap</string>
+	</array>
 	<key>LSMinimumSystemVersion</key>
 	<string>13.0.0</string>
 	<key>NSAppTransportSecurity</key>
@@ -23,6 +25,10 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>RestaurantListIntent</string>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NotoSansKR-Bold.otf</string>
@@ -48,9 +54,5 @@
 			</array>
 		</dict>
 	</dict>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>nmap</string>
-    </array>
 </dict>
 </plist>
