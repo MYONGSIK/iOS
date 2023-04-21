@@ -21,6 +21,8 @@ class HeartViewController: MainBaseViewController {
     }
     var heartTableView: UITableView!
     var heartListData: [HeartListModel] = []
+    var storeListData: [StoreModel] = []
+    var isSelectedCell: [Bool] = []
     let realm = try! Realm()
     
     override func viewDidLoad() {
@@ -32,19 +34,16 @@ class HeartViewController: MainBaseViewController {
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
         setUpTableView(dataSourceDelegate: self)
+        getHeartData()
         setUpView()
         setUpConstraint()
         
     }
-    override func viewDidAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = false
-        // DATA
-        self.heartListData.removeAll()
+    
+    override func viewWillAppear(_ animated: Bool) {
         getHeartData()
-        fetchHeartData()
-        setUpView()
-        setUpConstraint()
     }
+    
     // MARK: Functions
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
         heartTableView = UITableView()
@@ -53,12 +52,14 @@ class HeartViewController: MainBaseViewController {
             $0.dataSource = dataSourceDelegate
             $0.register(HeartListTableViewCell.self, forCellReuseIdentifier: "HeartListTableViewCell")
             $0.backgroundColor = .white
+            $0.showsVerticalScrollIndicator = false
+            $0.separatorStyle = .none
 
             // autoHeight
             $0.rowHeight = UITableView.automaticDimension
-            $0.estimatedRowHeight = UITableView.automaticDimension
-            $0.separatorStyle = .none
-            $0.showsVerticalScrollIndicator = false
+//            $0.estimatedRowHeight = UITableView.automaticDimension
+            
+            
         }
     }
     func setUpView() {
@@ -89,59 +90,72 @@ class HeartViewController: MainBaseViewController {
             }
         }
     }
+    
+
 }
 // MARK: - TableView delegate
 extension HeartViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = self.heartListData.count ?? 0
+        let count = self.heartListData.count
         return count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HeartListTableViewCell", for: indexPath) as? HeartListTableViewCell else { return UITableViewCell() }
-        let itemIdx = indexPath.item
         cell.delegate = self
-        cell.setUpData(self.heartListData[itemIdx])
+        storeListData.forEach { store in
+            if store.name == self.heartListData[indexPath.row].placeName {
+                cell.setUpData(store, isSelect: isSelectedCell[indexPath.row])
+            }
+        }
         cell.selectionStyle = .none
         return cell
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+        if isSelectedCell[indexPath.row] {
+            return 150
+        }else {
+            return 90
+        }
     }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         UIDevice.vibrate()
         
-        let itemIdx = indexPath.item
-        
-        guard let link = self.heartListData[itemIdx].placeUrl else {return}
-        guard let placeName = self.heartListData[itemIdx].placeName else {return}
-        guard let category = self.heartListData[itemIdx].category else {return}
-        
-        let vc = WebViewController()
-        vc.webURL = link
-        vc.placeName = placeName
-        vc.category = category
-        self.navigationController!.pushViewController(vc, animated: true)
-        
-        tableView.deselectRow(at: indexPath, animated: true)
+        isSelectedCell[indexPath.row].toggle()
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+//        let vc = WebViewController()
+//        vc.webURL = link
+//        vc.placeName = placeName
+//        vc.category = category
+//        self.navigationController!.pushViewController(vc, animated: true)
     }
 }
 // MARK: - Get Realm datas
 extension HeartViewController {
     func getHeartData() {
-        // 모든 객체 얻기
+        self.heartListData.removeAll()
+        
         let hearts = realm.objects(HeartListData.self)
         for heart in hearts {
             self.heartListData.append(HeartListModel(placeName: heart.placeName, category: heart.category, placeUrl: heart.placeUrl))
         }
-        reloadDataAnimation()
+        
+        heartListData.forEach { _ in
+            isSelectedCell.append(false)
+        }
+        
+        fetchHeartData()
     }
     func fetchHeartData() {
-        let phoneId = UIDevice.current.identifierForVendor!.uuidString
+        let phoneId = RegisterUUID.shared.getDeviceID()
         APIManager.shared.getData(urlEndpointString: Constants.postHeart + "/" + phoneId,
                                   dataType: APIModel<Data>.self,
                                   parameter: nil,
-                                  completionHandler: { _ in
-//            print(response)
+                                  completionHandler: { response in
+            print(response.data!.content)
+            self.storeListData = response.data!.content
+            self.reloadDataAnimation()
         })
     }
     func reloadDataAnimation() {
@@ -170,6 +184,14 @@ extension HeartViewController: HeartListDelegate {
     
     func reloadTableView() {
         self.heartTableView.reloadData()
+    }
+    
+    func moveToWebVC(link: String) {
+        let vc = WebViewController()
+        vc.webURL = link
+        vc.heartButton.isHidden = true
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
