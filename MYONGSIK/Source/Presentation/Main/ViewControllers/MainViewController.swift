@@ -242,12 +242,9 @@ class MainViewController: MainBaseViewController {
         
         self.view.addSubview(scrolleView)
         scrolleView.addSubview(contentView)
-//        contentView.addSubview(adImageView)
         contentView.addSubview(titleView)
         contentView.addSubview(changeDayButtonView)
         contentView.addSubview(tableView)
-//        contentView.addSubview(tablePageControl)
-//        contentView.addSubview(submitButton)
         contentView.addSubview(isEmptyDataLabel)
 
         titleView.addSubview(titleLabel)
@@ -273,12 +270,6 @@ class MainViewController: MainBaseViewController {
             $0.height.equalTo(1000)
         }
 
-//        adImageView.snp.makeConstraints {
-//            $0.top.equalToSuperview()
-//            $0.leading.equalToSuperview().offset(15)
-//            $0.trailing.equalToSuperview().inset(15)
-//            $0.height.equalTo(70)
-//        }
         
         titleView.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -317,23 +308,9 @@ class MainViewController: MainBaseViewController {
         tableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(titleView.snp.bottom)
-//            $0.height.equalTo(600)
             $0.bottom.equalToSuperview()
         }
-        
-//        tablePageControl.snp.makeConstraints {
-//            $0.top.equalTo(tableView.snp.bottom).offset(5)
-//            $0.centerX.equalToSuperview()
-//        }
-//
-//        submitButton.snp.makeConstraints {
-//            $0.leading.trailing.equalToSuperview().inset(69)
-//            $0.top.equalTo(tablePageControl.snp.bottom).offset(50)
-//            $0.bottom.equalToSuperview().inset(100)
-//            $0.height.equalTo(50)
-//            $0.centerX.equalToSuperview()
-////            $0.bottom.equalToSuperview()
-//        }
+
         isEmptyDataLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(120)
             $0.centerX.equalToSuperview()
@@ -349,10 +326,6 @@ class MainViewController: MainBaseViewController {
             tablePageControl.isHidden = false
             submitButton.isHidden = false
             isEmptyDataLabel.isHidden = true
-            
-//            tableView.snp.updateConstraints{
-//                $0.height.equalTo(foodData!.count * 180)
-//            }
         }
     }
     
@@ -501,84 +474,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
 
     }
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//    }
 
 }
 
 // MARK: - API Success
 extension MainViewController {
-//    // 데이터 처리
-//    func getResultAPI(_ result: APIModel<[DayFoodModel]>) {
-//        let statusCode = result.httpCode
-//        switch statusCode {
-//        case 200:
-//            getDayFoodAPISuccess(result.data!)
-//        case 405, 500:
-//            noFoodAPI(result)
-//        default: fatalError()
-//        }
-//    }
-//
-//    //일간 조회
-//    func getDayFoodAPISuccess(_ result: [DayFoodModel]) {
-//        self.foodData = result
-//        hideEmptyView()
-//        mainTableView.reloadData()
-//    }
-    // 405 error : 공휴일 X
-//    func noFoodAPI(_ result: APIModel<[DayFoodModel]>) {
-//        showEmptyView(result)
-//        mainTableView.reloadData()
-//    }
-//
-//    // Tableview
-//    func showEmptyView(_ result: APIModel<[DayFoodModel]>) {
-//        let backView = UIView().then{
-//            $0.backgroundColor = .white
-//            $0.clipsToBounds = true
-//            $0.layer.cornerRadius = 10
-//            $0.layer.borderColor = UIColor.borderColor.cgColor
-//            $0.layer.borderWidth = 1
-//        }
-//        let date = UILabel().then{
-//            if let localDateTime = result.localDateTime {
-//                $0.text = FormatManager().localDateTimeToDate(localDateTime: localDateTime)
-//            }
-//            $0.font = UIFont.NotoSansKR()
-//            $0.textColor = .signatureBlue
-//        }
-//        let messageLabel = UILabel().then{
-//            if let message = result.message {$0.text = message}
-//            $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
-//            $0.numberOfLines = 0
-//        }
-//        let backgroudView = UIView(frame: CGRect(x: 0, y: 0, width: mainTableView.bounds.width, height: mainTableView.bounds.height))
-//        backgroudView.addSubview(backView)
-//        backView.addSubview(date)
-//        backView.addSubview(messageLabel)
-//
-//        backView.snp.makeConstraints { make in
-//            make.centerY.centerX.equalToSuperview()
-//            make.leading.trailing.equalToSuperview().inset(21)
-//            make.height.equalTo(178)
-//        }
-//        date.snp.makeConstraints { make in
-//            make.leading.equalToSuperview().offset(23)
-//            make.top.equalToSuperview().offset(19)
-//        }
-//        messageLabel.snp.makeConstraints { make in
-//            make.centerX.centerY.equalToSuperview()
-//        }
-//
-//        mainTableView.backgroundView = backgroudView
-//    }
-//    func hideEmptyView() {
-//        mainTableView.backgroundView?.isHidden = true
-//    }
-//
-    
     func getTodayDataText(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM월 dd일"
@@ -617,7 +517,6 @@ extension MainViewController {
             tablePageControl.currentPage = 4
             showAlert(message: "주말에는 학생식당을 운영하지 않습니다.")
         case "일":
-            isWeekend = true
             isSunday = true
             startDay = Calendar.current.date(byAdding: .day, value: 1, to: today)
             tablePageControl.currentPage = 0
@@ -642,7 +541,14 @@ extension MainViewController {
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone(identifier: "UTC")
         formatter.dateFormat = "yyyy-MM-dd"
-        let filterDate = formatter.string(from: date)
+        
+        var filterDate = ""
+        
+        if isSunday {
+            filterDate = formatter.string(from: date+1)
+        }else {
+            filterDate = formatter.string(from: date)
+        }
         
         if var weekFoodData = self.weekFoodData {
             weekFoodData = weekFoodData.filter { $0.toDay == filterDate }

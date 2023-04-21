@@ -249,6 +249,17 @@ class HeartListTableViewCell: UITableViewCell {
         if let placeUrl = data.urlAddress {self.placeUrl = placeUrl}
         if let address = data.address {self.addressLabel.text = address}
         if let phoneNum = data.contact {self.phoneNumLabel.text = phoneNum}
+        if let distance = data.distance {
+            if let distanceInt = Int(distance){
+                if distanceInt >= 1000 {
+                    let distanceKmFirst = distanceInt / 1000
+                    let distanceKmSecond = (distanceInt % 1000) / 100
+                    meterLabel.text = "\(distanceKmFirst).\(distanceKmSecond)km"
+                } else {
+                    meterLabel.text = "\(distanceInt)m"
+                }
+            }
+        }
         
         self.isSelect = isSelect
         self.store = data
