@@ -29,14 +29,10 @@ class MapViewController: UIViewController {
 
         setCampusInfo()
         fetchResData()
+        getHeartData()
         setup()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        getHeartData()
-    }
-    
-    
+
     private func setup() {
         mapView = MTMapView(frame: self.view.frame)
         mapView.setMapCenter(.init(geoCoord: .init(latitude: campusInfo.longitude, longitude: campusInfo.latitude)), animated: true)
@@ -45,10 +41,6 @@ class MapViewController: UIViewController {
         setupPin()
         self.view.addSubview(mapView)
     }
-    
-    
-    
-
     
     @objc func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
         if gesture.direction == .down {
@@ -61,15 +53,13 @@ class MapViewController: UIViewController {
     }
     
     private func setupPin() {
+        mapView.removeAllPOIItems()
         for i in 0..<resList.count {
             let pin = MTMapPOIItem()
             pin.markerType = .customImage
             pin.markerSelectedType = .customImage
             pin.customImage = pinImage(text: resList[i].scrapCount!.description)
             pin.customSelectedImage = selectedPinImage(text: resList[i].scrapCount!.description)
-            
-            
-            
             
             guard let latitude = resList[i].latitude else {return}
             guard let longitude = resList[i].longitude else {return}
@@ -191,7 +181,6 @@ extension MapViewController: MTMapViewDelegate {
             self.storeInfoView.removeFromSuperview()
         }
         
-        
         self.storeInfoView = storeInfoView.configure(storeModel: resList[poiItem.tag], isHeart: isHeart, delegate: self)
         
         let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
@@ -240,6 +229,7 @@ extension MapViewController {
         for heart in hearts {
             heartList.append(HeartListModel(placeName: heart.placeName, category: heart.category, placeUrl: heart.placeUrl))
         }
+        fetchResData()
     }
 }
 
@@ -269,7 +259,7 @@ extension MapViewController: MapStoreDelegate {
     func requestAddHeart(storeModel: StoreModel) {
         // TODO: 찜꽁 리스트 추가 POST
         let campus = (campusInfo == .seoul) ? "SEOUL" : "YONGIN"
-        let phoneId = UIDevice.current.identifierForVendor!.uuidString
+        let phoneId = RegisterUUID.shared.getDeviceID()
         
         let bodyParam = HeartModel(address: storeModel.address,
                                    campus: campus,

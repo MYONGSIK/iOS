@@ -191,7 +191,7 @@ class SubmitViewController: UIViewController {
         if let submitted = self.inputTextView.text {
             if area! == "학관식당" { area = "학생식당" }
             
-            let phoneId = UIDevice.current.identifierForVendor!.uuidString
+            let phoneId = RegisterUUID.shared.getDeviceID()
             
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"

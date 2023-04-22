@@ -9,7 +9,9 @@ import Foundation
 import Security
 import UIKit
 
-class S_Keychain {
+class RegisterUUID {
+    static let shared = RegisterUUID()
+    
     private let account = "ServiceSaveKey"
     private let service = Bundle.main.bundleIdentifier
     
