@@ -51,8 +51,11 @@ let baseURL = "http://43.201.72.185:8085/api/v2/meals/"
 // MARK: 위젯을 새로고침할 타임라인을 결정하는 객체
 struct Provider: IntentTimelineProvider {
     func getSnapshot(for configuration: RestaurantListIntent, in context: Context, completion: @escaping (FoodEntry) -> Void) {
+        UserDefaults.standard.dictionaryRepresentation().forEach { (key, value) in
+            UserDefaults.shared.set(value, forKey: key)
+        }
         
-        let resName = getRestaurantName(typeName: configuration.restaurantName)
+        let resName = getRestaurantName()
         getMealData(resName: resName, completion: { data in
             print(data)
             
@@ -62,15 +65,34 @@ struct Provider: IntentTimelineProvider {
     }
     
     func getTimeline(for configuration: RestaurantListIntent, in context: Context, completion: @escaping (Timeline<FoodEntry>) -> Void) {
-        
-        let resName = getRestaurantName(typeName: configuration.restaurantName)
-        getMealData(resName: resName) { data in
-            let currentDate = Date()
-            let entry = FoodEntry(date: currentDate, mealData: data.data ?? [], restaurantName: resName)
-            let nextRefresh = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate)!
-            let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
-            completion(timeline)
+        UserDefaults.standard.dictionaryRepresentation().forEach { (key, value) in
+            UserDefaults.shared.set(value, forKey: key)
         }
+        
+        if let userCampus  = UserDefaults.shared.value(forKey: "userCampus") {
+            switch userCampus as! String {
+            case "인문캠퍼스":
+                // MCC 설정
+                getMealData(resName: "MCC식당") { data in
+                    let currentDate = Date()
+                    let entry = FoodEntry(date: currentDate, mealData: data.data ?? [], restaurantName: "MCC식당")
+                    let nextRefresh = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate)!
+                    let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
+                    completion(timeline)
+                }
+            case "자연캠퍼스":
+                let resName = getYonginRestaurantName()
+                getMealData(resName: resName) { data in
+                    let currentDate = Date()
+                    let entry = FoodEntry(date: currentDate, mealData: data.data ?? [], restaurantName: resName)
+                    let nextRefresh = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate)!
+                    let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
+                    completion(timeline)
+                }
+            default: return
+            }
+        }
+
     }
     
     typealias Intent = RestaurantListIntent
@@ -97,17 +119,22 @@ struct Provider: IntentTimelineProvider {
         }
     }
     
-    func getRestaurantName(typeName: Restaurants) -> String {
-        var name = "MCC식당"
-        switch typeName {
-            case .mcc: name = "MCC식당"
-            case .staff: name = "교직원식당"
-            case .dormitory: name = "생활관식당"
-            case .student: name = "학생식당"
-            case .myoungin: name = "명진당식당"
-            default: name = "MCC식당"
+    func getRestaurantName() -> String {
+        if let userCampus  = UserDefaults.shared.value(forKey: "userCampus") {
+            switch userCampus as! String {
+            case "인문캠퍼스": return "MCC식당"
+            case "자연캠퍼스": return "생활관식당"
+            default: return ""
+            }
         }
-        return name
+        return "식당 미선택"
+    }
+    
+    func getYonginRestaurantName() -> String {
+        if let res = UserDefaults.shared.value(forKey: "yongin_widget_res_name") {
+            return res as! String
+        }
+        return "MCC식당" // 오류방지용
     }
 }
 

@@ -63,6 +63,8 @@ class SettingResTableViewCell: UITableViewCell {
     
     public func configureName(name: String) { self.nameLabel.text = name }
     
+    public func setSelectedRes() { selectedButton.tintColor = .signatureBlue }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         selectedButton.tintColor = selected ? .signatureBlue : .systemGray5

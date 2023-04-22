@@ -11,6 +11,7 @@ import Then
 
 // MARK: 위젯용 식당 설정 페이지
 class SettingRestautrantViewController: BaseViewController {
+    var savedName = ""
     let restaurants = [ "생활관식당", "명진당", "학생회관", "교직원식당" ]
     
     
@@ -31,6 +32,7 @@ class SettingRestautrantViewController: BaseViewController {
     // MARK: Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkSavedName()
         setUpTableView(dataSourceDelegate: self)
         setupView()
         setupConstraints()
@@ -49,6 +51,21 @@ class SettingRestautrantViewController: BaseViewController {
             $0.rowHeight = UITableView.automaticDimension
             $0.estimatedRowHeight = UITableView.automaticDimension
             $0.separatorStyle = .none
+        }
+    }
+    
+    private func checkSavedName() {
+        if let saved = UserDefaults.shared.value(forKey: "yongin_widget_res_name") {
+            print("saved --> \(saved as! String)")
+//            print("saved campus info --> \(UserDefaults.shared.value(forKey: "userCampus") as! String)")
+            
+            switch saved as! String {
+            case "생활관식당": savedName = "생활관식당"
+            case "명진당식당": savedName = "명진당"
+            case "학관식당": savedName = "학생회관"
+            case "교직원식당": savedName = "교직원식당"
+            default: return
+            }
         }
     }
     
@@ -85,7 +102,7 @@ class SettingRestautrantViewController: BaseViewController {
         case "교직원식당": saveName = "교직원식당"
         default: return
         }
-        UserDefaults.standard.set(saveName, forKey: "yongin_widget_res_name")
+        UserDefaults.shared.set(saveName, forKey: "yongin_widget_res_name")
     }
     
     @objc private func didTapBackButton() {
@@ -101,6 +118,7 @@ extension SettingRestautrantViewController: UITableViewDelegate, UITableViewData
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingResTableViewCell", for: indexPath) as? SettingResTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.configureName(name: restaurants[indexPath.row])
+        if savedName == restaurants[indexPath.row] { cell.selectedButton.tintColor = .signatureBlue }
         return cell
     }
     

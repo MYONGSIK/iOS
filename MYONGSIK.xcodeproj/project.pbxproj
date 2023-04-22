@@ -117,6 +117,8 @@
 		A2EA100729F3F58A000D600B /* RestaurantIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100529F3F58A000D600B /* RestaurantIntent.intentdefinition */; };
 		A2EA100929F3F855000D600B /* SettingRestautrantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */; };
 		A2EA100B29F3FAD4000D600B /* SettingResTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */; };
+		A2EA100E29F41162000D600B /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100D29F41162000D600B /* UserDefaults+.swift */; };
+		A2EA100F29F412AA000D600B /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100D29F41162000D600B /* UserDefaults+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -285,6 +287,9 @@
 		A2EA100529F3F58A000D600B /* RestaurantIntent.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = RestaurantIntent.intentdefinition; sourceTree = "<group>"; };
 		A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRestautrantViewController.swift; sourceTree = "<group>"; };
 		A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingResTableViewCell.swift; sourceTree = "<group>"; };
+		A2EA100C29F41130000D600B /* MYONGSIK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MYONGSIK.entitlements; sourceTree = "<group>"; };
+		A2EA100D29F41162000D600B /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
+		A2EA101229F4264A000D600B /* DailyFoodWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DailyFoodWidgetExtension.entitlements; sourceTree = "<group>"; };
 		AE9F16CCD51F90ED1842BEA4 /* Pods-MYONGSIK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -352,6 +357,7 @@
 		23166A6528FECD9C002AEFB7 = {
 			isa = PBXGroup;
 			children = (
+				A2EA101229F4264A000D600B /* DailyFoodWidgetExtension.entitlements */,
 				736A8E0E29E9A3DC00D30A35 /* Kakao-Map-Bridge-Header.h */,
 				23166A7028FECD9D002AEFB7 /* MYONGSIK */,
 				23166A8728FECD9F002AEFB7 /* MYONGSIKTests */,
@@ -377,6 +383,7 @@
 		23166A7028FECD9D002AEFB7 /* MYONGSIK */ = {
 			isa = PBXGroup;
 			children = (
+				A2EA100C29F41130000D600B /* MYONGSIK.entitlements */,
 				73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */,
 				2373E4E9290AD18A00D51B8E /* Resource */,
 				2373E4E8290AD18500D51B8E /* Source */,
@@ -743,6 +750,7 @@
 			children = (
 				A2431C8B29A3473D00D8E493 /* String+.swift */,
 				A2431C8D29A347C300D8E493 /* CALayer+.swift */,
+				A2EA100D29F41162000D600B /* UserDefaults+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1093,6 +1101,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2373E4E7290ACB7D00D51B8E /* Constants.swift in Sources */,
+				A2EA100E29F41162000D600B /* UserDefaults+.swift in Sources */,
 				2324102A28FF0DD50095C0CC /* PaddingLabel.swift in Sources */,
 				2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */,
 				2311611A2911807A00AD73D2 /* HeartListData.swift in Sources */,
@@ -1168,6 +1177,7 @@
 			files = (
 				A258497429E687C900E75568 /* DailyFoodWidget.swift in Sources */,
 				A258497229E687C900E75568 /* DailyFoodWidgetLiveActivity.swift in Sources */,
+				A2EA100F29F412AA000D600B /* UserDefaults+.swift in Sources */,
 				A258497029E687C900E75568 /* DailyFoodWidgetBundle.swift in Sources */,
 				A2EA100729F3F58A000D600B /* RestaurantIntent.intentdefinition in Sources */,
 			);
@@ -1347,6 +1357,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = MYONGSIK/MYONGSIK.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5XGLRW6VG4;
@@ -1390,6 +1401,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = MYONGSIK/MYONGSIK.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5XGLRW6VG4;
@@ -1506,6 +1518,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = DailyFoodWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5XGLRW6VG4;
@@ -1535,6 +1548,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = DailyFoodWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5XGLRW6VG4;
