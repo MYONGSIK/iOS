@@ -25,7 +25,7 @@ class SettingResTableViewCell: UITableViewCell {
     
     let selectedButton = UIButton().then {
         $0.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
-        $0.tintColor = .lightGray
+        $0.tintColor = .systemGray5
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -61,15 +61,10 @@ class SettingResTableViewCell: UITableViewCell {
         }
     }
     
-    public func configureName(name: String) {
-        self.nameLabel.text = name
-    }
+    public func configureName(name: String) { self.nameLabel.text = name }
     
-    public func setupSelectedButton(selected: Bool) {
-        if selected {
-            selectedButton.tintColor = .signatureBlue
-        } else {
-            selectedButton.tintColor = .signatureGray
-        }
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        selectedButton.tintColor = selected ? .signatureBlue : .systemGray5
     }
 }

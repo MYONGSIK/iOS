@@ -86,7 +86,6 @@ class SettingRestautrantViewController: BaseViewController {
         default: return
         }
         UserDefaults.standard.set(saveName, forKey: "yongin_widget_res_name")
-        print("저장된 식당명 --> \(UserDefaults.standard.value(forKey: "yongin_widget_res_name"))")
     }
     
     @objc private func didTapBackButton() {
@@ -96,26 +95,18 @@ class SettingRestautrantViewController: BaseViewController {
 }
 
 extension SettingRestautrantViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return restaurants.count
-    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return restaurants.count }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingResTableViewCell", for: indexPath) as? SettingResTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.configureName(name: restaurants[indexPath.row])
-        
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
-    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { return 70 }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        print("didSelectRowAt called --> \(restaurants[indexPath.row])")
-        
         self.setRestaurantInfo(name: restaurants[indexPath.row])
     }
 }
