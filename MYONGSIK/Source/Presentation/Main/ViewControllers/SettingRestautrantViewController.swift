@@ -30,7 +30,6 @@ class SettingRestautrantViewController: BaseViewController {
     // MARK: Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkSavedName()
         setUpTableView(dataSourceDelegate: self)
         setupView()
         setupConstraints()
@@ -101,7 +100,6 @@ extension SettingRestautrantViewController: UITableViewDelegate, UITableViewData
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingResTableViewCell", for: indexPath) as? SettingResTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.configureName(name: restaurants[indexPath.row])
-        if savedName == restaurants[indexPath.row] { cell.selectedButton.tintColor = .signatureBlue }
         return cell
     }
     
