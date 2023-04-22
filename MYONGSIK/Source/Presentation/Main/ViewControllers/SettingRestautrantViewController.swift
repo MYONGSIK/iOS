@@ -52,18 +52,6 @@ class SettingRestautrantViewController: BaseViewController {
         }
     }
     
-    private func checkSavedName() {
-        if let saved = UserDefaults.shared.value(forKey: "yongin_widget_res_name") {            
-            switch saved as! String {
-            case "생활관식당": savedName = "생활관식당"
-            case "명진당식당": savedName = "명진당"
-            case "학관식당": savedName = "학생회관"
-            case "교직원식당": savedName = "교직원식당"
-            default: return
-            }
-        }
-    }
-    
     private func setupView() {
         super.navigationView.addSubview(backButton)
         super.navigationView.addSubview(vcTitleLabel)
