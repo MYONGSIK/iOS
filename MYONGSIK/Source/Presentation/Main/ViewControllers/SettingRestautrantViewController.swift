@@ -11,9 +11,7 @@ import Then
 
 // MARK: 위젯용 식당 설정 페이지
 class SettingRestautrantViewController: BaseViewController {
-    var savedName = ""
     let restaurants = [ "생활관식당", "명진당", "학생회관", "교직원식당" ]
-    
     
     // MARK: Views
     var restaurantsTableView: UITableView!
@@ -55,10 +53,7 @@ class SettingRestautrantViewController: BaseViewController {
     }
     
     private func checkSavedName() {
-        if let saved = UserDefaults.shared.value(forKey: "yongin_widget_res_name") {
-            print("saved --> \(saved as! String)")
-//            print("saved campus info --> \(UserDefaults.shared.value(forKey: "userCampus") as! String)")
-            
+        if let saved = UserDefaults.shared.value(forKey: "yongin_widget_res_name") {            
             switch saved as! String {
             case "생활관식당": savedName = "생활관식당"
             case "명진당식당": savedName = "명진당"
