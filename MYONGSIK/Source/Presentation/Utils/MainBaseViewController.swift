@@ -23,13 +23,12 @@ class MainBaseViewController: UIViewController {
         $0.clipsToBounds = true
     }
     
-    // 캠퍼스 선택 화면으로 전환되는 버튼
+    // (자연캠인 경우) 위젯용 식당을 선택하기 위한 화면으로 넘어가는 설정 버튼
     let setCampusButton = UIButton().then{
-        $0.setImage(UIImage(systemName: "person.circle"), for: .normal)
-        $0.addTarget(self, action: #selector(goSplashView(_:)), for: .touchUpInside)
-        // 버튼 임시 삭제 처리
+        $0.setImage(UIImage(systemName: "gearshape"), for: .normal)
+        $0.tintColor = .white
+        $0.addTarget(self, action: #selector(goSettingRestaurant(_:)), for: .touchUpInside)
         $0.isHidden = true
-        $0.isEnabled = false
     }
 
     // MARK: - Life Cycles
@@ -58,15 +57,13 @@ class MainBaseViewController: UIViewController {
         setCampusButton.snp.makeConstraints {
             $0.width.height.equalTo(25)
             $0.centerY.equalTo(topLogoImg)
-            $0.leading.equalToSuperview().inset(22)
+            $0.trailing.equalToSuperview().inset(22)
         }
     }
     
-    @objc func goSplashView(_ sender: UIButton) {
+    @objc func goSettingRestaurant(_ sender: UIButton) {
         UIDevice.vibrate()
-        let splash = SplashViewController()
-        splash.modalPresentationStyle = .fullScreen
-        splash.modalTransitionStyle = .crossDissolve
-        present(splash, animated: true)
+        let settingVC = SettingRestautrantViewController()
+        self.navigationController?.pushViewController(settingVC, animated: true)
     }
 }

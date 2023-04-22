@@ -155,6 +155,7 @@ class MainViewController: MainBaseViewController {
             case CampusInfo.yongin.name:
                 print("operatingTimeText - \(operatingTimeText)")
                 backItemButton.isHidden = false
+                super.setCampusButton.isHidden = false
                 return
             default: return
             }

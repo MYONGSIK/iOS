@@ -113,6 +113,10 @@
 		A258497629E687CA00E75568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A258497529E687CA00E75568 /* Assets.xcassets */; };
 		A258497A29E687CA00E75568 /* DailyFoodWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A258496929E687C900E75568 /* DailyFoodWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A2A7966529A4702100A2F2E2 /* SelectRestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7966429A4702100A2F2E2 /* SelectRestaurantViewController.swift */; };
+		A2EA100629F3F58A000D600B /* RestaurantIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100529F3F58A000D600B /* RestaurantIntent.intentdefinition */; };
+		A2EA100729F3F58A000D600B /* RestaurantIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100529F3F58A000D600B /* RestaurantIntent.intentdefinition */; };
+		A2EA100929F3F855000D600B /* SettingRestautrantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */; };
+		A2EA100B29F3FAD4000D600B /* SettingResTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -278,6 +282,9 @@
 		A258497529E687CA00E75568 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A258497729E687CA00E75568 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2A7966429A4702100A2F2E2 /* SelectRestaurantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRestaurantViewController.swift; sourceTree = "<group>"; };
+		A2EA100529F3F58A000D600B /* RestaurantIntent.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = RestaurantIntent.intentdefinition; sourceTree = "<group>"; };
+		A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRestautrantViewController.swift; sourceTree = "<group>"; };
+		A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingResTableViewCell.swift; sourceTree = "<group>"; };
 		AE9F16CCD51F90ED1842BEA4 /* Pods-MYONGSIK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -560,6 +567,7 @@
 				23166A7528FECD9D002AEFB7 /* MainViewController.swift */,
 				A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */,
 				A2A7966429A4702100A2F2E2 /* SelectRestaurantViewController.swift */,
+				A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -569,6 +577,7 @@
 			children = (
 				23735B0328FEE24900599221 /* MainTableViewCell.swift */,
 				A23DA70C29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift */,
+				A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -744,6 +753,7 @@
 				A258496F29E687C900E75568 /* DailyFoodWidgetBundle.swift */,
 				A258497129E687C900E75568 /* DailyFoodWidgetLiveActivity.swift */,
 				A258497329E687C900E75568 /* DailyFoodWidget.swift */,
+				A2EA100529F3F58A000D600B /* RestaurantIntent.intentdefinition */,
 				A258497529E687CA00E75568 /* Assets.xcassets */,
 				A258497729E687CA00E75568 /* Info.plist */,
 			);
@@ -1100,6 +1110,7 @@
 				23B9E89B29114532009B6D8F /* TagCollectionViewCell.swift in Sources */,
 				2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */,
 				2311611829117F9D00AD73D2 /* HeartListTableViewCell.swift in Sources */,
+				A2EA100929F3F855000D600B /* SettingRestautrantViewController.swift in Sources */,
 				A23DA70929A7F1AD003FDA56 /* UserModel.swift in Sources */,
 				23C993AA2910945400B8D1E4 /* UITextField.swift in Sources */,
 				238F562D2910A54C0044214F /* KakaoMapDataManager.swift in Sources */,
@@ -1113,6 +1124,8 @@
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				A202858129C7520C008A7853 /* StoreModel.swift in Sources */,
 				23B9E8992911356D009B6D8F /* ScreenManager.swift in Sources */,
+				A2EA100629F3F58A000D600B /* RestaurantIntent.intentdefinition in Sources */,
+				A2EA100B29F3FAD4000D600B /* SettingResTableViewCell.swift in Sources */,
 				23C993A629108F7800B8D1E4 /* HeartViewController.swift in Sources */,
 				A258490329E6812A00E75568 /* SubmitData.swift in Sources */,
 				2373E4E5290AC93000D51B8E /* APIManager.swift in Sources */,
@@ -1156,6 +1169,7 @@
 				A258497429E687C900E75568 /* DailyFoodWidget.swift in Sources */,
 				A258497229E687C900E75568 /* DailyFoodWidgetLiveActivity.swift in Sources */,
 				A258497029E687C900E75568 /* DailyFoodWidgetBundle.swift in Sources */,
+				A2EA100729F3F58A000D600B /* RestaurantIntent.intentdefinition in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1361,7 +1375,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/yoosang/Desktop/Myongsik_iOS/Kakao-Map-Bridge-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/gimchowon/Desktop/Kakao-Map-Bridge-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1404,7 +1418,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/yoosang/Desktop/Myongsik_iOS/Kakao-Map-Bridge-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/gimchowon/Desktop/Kakao-Map-Bridge-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
