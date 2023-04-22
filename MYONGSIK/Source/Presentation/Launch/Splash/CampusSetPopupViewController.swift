@@ -28,7 +28,6 @@ class CampusSetPopupViewController: PopupBaseVIewController {
             print("ERROR :: fail to set campus")
             return
         }
-//        print("선택된 캠퍼스 : \(UserDefaults.standard.value(forKey: "userCampus")!)")
 
         let main = TabBarViewController()
         main.modalPresentationStyle = .fullScreen

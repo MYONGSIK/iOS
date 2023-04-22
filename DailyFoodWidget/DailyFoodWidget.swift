@@ -57,8 +57,6 @@ struct Provider: IntentTimelineProvider {
         
         let resName = getRestaurantName()
         getMealData(resName: resName, completion: { data in
-            print(data)
-            
             let entry = FoodEntry(date: Date(), mealData: data.data ?? [], restaurantName: resName)
             completion(entry)
         })
