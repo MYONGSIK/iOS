@@ -8,10 +8,12 @@
 import UIKit
 import SnapKit
 import Then
+import WidgetKit
 
 // MARK: 위젯용 식당 설정 페이지
 class SettingRestautrantViewController: BaseViewController {
     let restaurants = [ "생활관식당", "명진당", "학생회관", "교직원식당" ]
+    var selectedResName = "생활관식당"
     
     // MARK: Views
     var restaurantsTableView: UITableView!
@@ -30,7 +32,7 @@ class SettingRestautrantViewController: BaseViewController {
     // MARK: Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let saved = UserDefaults.shared.value(forKey: "yongin_widget_res_name") {}
+        if let _ = UserDefaults.shared.value(forKey: "yongin_widget_res_name") {}
         else { UserDefaults.shared.set("생활관식당", forKey: "yongin_widget_res_name") }
         setUpTableView(dataSourceDelegate: self)
         setupView()
@@ -86,7 +88,7 @@ class SettingRestautrantViewController: BaseViewController {
         switch name {
         case "생활관식당": saveName = "생활관식당"
         case "명진당": saveName = "명진당식당"
-        case "학생회관": saveName = "학관식당"
+        case "학생회관": saveName = "학생식당"
         case "교직원식당": saveName = "교직원식당"
         default: return
         }
@@ -95,7 +97,11 @@ class SettingRestautrantViewController: BaseViewController {
     
     private func checkIsSavedName(name: String) -> Bool {
         if let saved = UserDefaults.shared.value(forKey: "yongin_widget_res_name") {
-            if saved as! String == name { return true }
+            var savedStr = saved as! String
+            if savedStr == "명진당식당" { savedStr = "명진당" }
+            else if savedStr == "학생식당" { savedStr = "학생회관" }
+            
+            if savedStr == name { return true }
         }
         return false
     }
@@ -113,7 +119,9 @@ extension SettingRestautrantViewController: UITableViewDelegate, UITableViewData
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingResTableViewCell", for: indexPath) as? SettingResTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.configureName(name: restaurants[indexPath.row])
-        if checkIsSavedName(name: restaurants[indexPath.row]) { cell.setSelectedRes() }
+        if checkIsSavedName(name: restaurants[indexPath.row]) { cell.setSelectedRes(selected: true) }
+        else { cell.setSelectedRes(selected: false) }
+
         return cell
     }
     
@@ -121,5 +129,7 @@ extension SettingRestautrantViewController: UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.setRestaurantInfo(name: restaurants[indexPath.row])
+        WidgetCenter.shared.reloadAllTimelines()
+        tableView.reloadData()
     }
 }

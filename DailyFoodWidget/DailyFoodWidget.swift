@@ -24,7 +24,7 @@ struct OperatingTimeStr {
     static let studentDinner = "중식 운영 시간 10:00~15:00"
     /// 명진당 식당
     static let myounginLanch = "백반 운영 시간 11:30~14:30"
-    static let myounginDinner = "샐러드/볶음밥 운영 시간 10:00~15:00"
+    static let myounginDinner = "샐러드•볶음밥 11:00-16:00"
 }
 
 
