@@ -106,7 +106,18 @@
 		A2431C8E29A347C300D8E493 /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2431C8D29A347C300D8E493 /* CALayer+.swift */; };
 		A2431C9029A34FBA00D8E493 /* PopupBaseVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2431C8F29A34FBA00D8E493 /* PopupBaseVIewController.swift */; };
 		A258490329E6812A00E75568 /* SubmitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258490229E6812A00E75568 /* SubmitData.swift */; };
+		A258496B29E687C900E75568 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A258496A29E687C900E75568 /* WidgetKit.framework */; };
+		A258496D29E687C900E75568 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A258496C29E687C900E75568 /* SwiftUI.framework */; };
+		A258497029E687C900E75568 /* DailyFoodWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258496F29E687C900E75568 /* DailyFoodWidgetBundle.swift */; };
+		A258497229E687C900E75568 /* DailyFoodWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258497129E687C900E75568 /* DailyFoodWidgetLiveActivity.swift */; };
+		A258497429E687C900E75568 /* DailyFoodWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258497329E687C900E75568 /* DailyFoodWidget.swift */; };
+		A258497629E687CA00E75568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A258497529E687CA00E75568 /* Assets.xcassets */; };
+		A258497A29E687CA00E75568 /* DailyFoodWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A258496929E687C900E75568 /* DailyFoodWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A2A7966529A4702100A2F2E2 /* SelectRestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7966429A4702100A2F2E2 /* SelectRestaurantViewController.swift */; };
+		A2EA100929F3F855000D600B /* SettingRestautrantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */; };
+		A2EA100B29F3FAD4000D600B /* SettingResTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */; };
+		A2EA100E29F41162000D600B /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100D29F41162000D600B /* UserDefaults+.swift */; };
+		A2EA100F29F412AA000D600B /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100D29F41162000D600B /* UserDefaults+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,7 +135,28 @@
 			remoteGlobalIDString = 23166A6D28FECD9C002AEFB7;
 			remoteInfo = MYONGSIK;
 		};
+		A258497829E687CA00E75568 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 23166A6628FECD9C002AEFB7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A258496829E687C900E75568;
+			remoteInfo = DailyFoodWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A258497B29E687CA00E75568 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A258497A29E687CA00E75568 /* DailyFoodWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		05499D88CFD8F6094E3854DF /* Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -243,7 +275,20 @@
 		A2431C8D29A347C300D8E493 /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 		A2431C8F29A34FBA00D8E493 /* PopupBaseVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBaseVIewController.swift; sourceTree = "<group>"; };
 		A258490229E6812A00E75568 /* SubmitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitData.swift; sourceTree = "<group>"; };
+		A258496929E687C900E75568 /* DailyFoodWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DailyFoodWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A258496A29E687C900E75568 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		A258496C29E687C900E75568 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		A258496F29E687C900E75568 /* DailyFoodWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyFoodWidgetBundle.swift; sourceTree = "<group>"; };
+		A258497129E687C900E75568 /* DailyFoodWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyFoodWidgetLiveActivity.swift; sourceTree = "<group>"; };
+		A258497329E687C900E75568 /* DailyFoodWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyFoodWidget.swift; sourceTree = "<group>"; };
+		A258497529E687CA00E75568 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A258497729E687CA00E75568 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2A7966429A4702100A2F2E2 /* SelectRestaurantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRestaurantViewController.swift; sourceTree = "<group>"; };
+		A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRestautrantViewController.swift; sourceTree = "<group>"; };
+		A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingResTableViewCell.swift; sourceTree = "<group>"; };
+		A2EA100C29F41130000D600B /* MYONGSIK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MYONGSIK.entitlements; sourceTree = "<group>"; };
+		A2EA100D29F41162000D600B /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
+		A2EA101229F4264A000D600B /* DailyFoodWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DailyFoodWidgetExtension.entitlements; sourceTree = "<group>"; };
 		AE9F16CCD51F90ED1842BEA4 /* Pods-MYONGSIK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -283,6 +328,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A258496629E687C900E75568 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A258496D29E687C900E75568 /* SwiftUI.framework in Frameworks */,
+				A258496B29E687C900E75568 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -302,10 +356,12 @@
 		23166A6528FECD9C002AEFB7 = {
 			isa = PBXGroup;
 			children = (
+				A2EA101229F4264A000D600B /* DailyFoodWidgetExtension.entitlements */,
 				736A8E0E29E9A3DC00D30A35 /* Kakao-Map-Bridge-Header.h */,
 				23166A7028FECD9D002AEFB7 /* MYONGSIK */,
 				23166A8728FECD9F002AEFB7 /* MYONGSIKTests */,
 				23166A9128FECD9F002AEFB7 /* MYONGSIKUITests */,
+				A258496E29E687C900E75568 /* DailyFoodWidget */,
 				23166A6F28FECD9D002AEFB7 /* Products */,
 				16E3901AD54B7620460C0BD2 /* Pods */,
 				C3E767C8B313A0328B6C34CF /* Frameworks */,
@@ -318,6 +374,7 @@
 				23166A6E28FECD9C002AEFB7 /* MYONGSIK.app */,
 				23166A8428FECD9E002AEFB7 /* MYONGSIKTests.xctest */,
 				23166A8E28FECD9F002AEFB7 /* MYONGSIKUITests.xctest */,
+				A258496929E687C900E75568 /* DailyFoodWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -325,6 +382,7 @@
 		23166A7028FECD9D002AEFB7 /* MYONGSIK */ = {
 			isa = PBXGroup;
 			children = (
+				A2EA100C29F41130000D600B /* MYONGSIK.entitlements */,
 				73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */,
 				2373E4E9290AD18A00D51B8E /* Resource */,
 				2373E4E8290AD18500D51B8E /* Source */,
@@ -516,6 +574,7 @@
 				A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */,
 				A2A7966429A4702100A2F2E2 /* SelectRestaurantViewController.swift */,
 				73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */,
+				A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -525,6 +584,7 @@
 			children = (
 				23735B0328FEE24900599221 /* MainTableViewCell.swift */,
 				A23DA70C29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift */,
+				A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -690,8 +750,21 @@
 			children = (
 				A2431C8B29A3473D00D8E493 /* String+.swift */,
 				A2431C8D29A347C300D8E493 /* CALayer+.swift */,
+				A2EA100D29F41162000D600B /* UserDefaults+.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A258496E29E687C900E75568 /* DailyFoodWidget */ = {
+			isa = PBXGroup;
+			children = (
+				A258496F29E687C900E75568 /* DailyFoodWidgetBundle.swift */,
+				A258497129E687C900E75568 /* DailyFoodWidgetLiveActivity.swift */,
+				A258497329E687C900E75568 /* DailyFoodWidget.swift */,
+				A258497529E687CA00E75568 /* Assets.xcassets */,
+				A258497729E687CA00E75568 /* Info.plist */,
+			);
+			path = DailyFoodWidget;
 			sourceTree = "<group>";
 		};
 		C3E767C8B313A0328B6C34CF /* Frameworks */ = {
@@ -709,6 +782,8 @@
 				6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */,
 				0F3766A332C9FBAAF6A71FF8 /* Pods_MYONGSIK_MYONGSIKUITests.framework */,
 				5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */,
+				A258496A29E687C900E75568 /* WidgetKit.framework */,
+				A258496C29E687C900E75568 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -725,10 +800,12 @@
 				23166A6B28FECD9C002AEFB7 /* Frameworks */,
 				23166A6C28FECD9C002AEFB7 /* Resources */,
 				EEDDC5406744A29A22DEECDA /* [CP] Embed Pods Frameworks */,
+				A258497B29E687CA00E75568 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A258497929E687CA00E75568 /* PBXTargetDependency */,
 			);
 			name = MYONGSIK;
 			packageProductDependencies = (
@@ -778,6 +855,23 @@
 			productReference = 23166A8E28FECD9F002AEFB7 /* MYONGSIKUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		A258496829E687C900E75568 /* DailyFoodWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A258497E29E687CA00E75568 /* Build configuration list for PBXNativeTarget "DailyFoodWidgetExtension" */;
+			buildPhases = (
+				A258496529E687C900E75568 /* Sources */,
+				A258496629E687C900E75568 /* Frameworks */,
+				A258496729E687C900E75568 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DailyFoodWidgetExtension;
+			productName = DailyFoodWidgetExtension;
+			productReference = A258496929E687C900E75568 /* DailyFoodWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -785,7 +879,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					23166A6D28FECD9C002AEFB7 = {
@@ -798,6 +892,9 @@
 					23166A8D28FECD9F002AEFB7 = {
 						CreatedOnToolsVersion = 13.4.1;
 						TestTargetID = 23166A6D28FECD9C002AEFB7;
+					};
+					A258496829E687C900E75568 = {
+						CreatedOnToolsVersion = 14.1;
 					};
 				};
 			};
@@ -822,6 +919,7 @@
 				23166A6D28FECD9C002AEFB7 /* MYONGSIK */,
 				23166A8328FECD9E002AEFB7 /* MYONGSIKTests */,
 				23166A8D28FECD9F002AEFB7 /* MYONGSIKUITests */,
+				A258496829E687C900E75568 /* DailyFoodWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -880,6 +978,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A258496729E687C900E75568 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A258497629E687CA00E75568 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,6 +1100,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2373E4E7290ACB7D00D51B8E /* Constants.swift in Sources */,
+				A2EA100E29F41162000D600B /* UserDefaults+.swift in Sources */,
 				2324102A28FF0DD50095C0CC /* PaddingLabel.swift in Sources */,
 				2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */,
 				2311611A2911807A00AD73D2 /* HeartListData.swift in Sources */,
@@ -1012,6 +1119,7 @@
 				23B9E89B29114532009B6D8F /* TagCollectionViewCell.swift in Sources */,
 				2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */,
 				2311611829117F9D00AD73D2 /* HeartListTableViewCell.swift in Sources */,
+				A2EA100929F3F855000D600B /* SettingRestautrantViewController.swift in Sources */,
 				A23DA70929A7F1AD003FDA56 /* UserModel.swift in Sources */,
 				23C993AA2910945400B8D1E4 /* UITextField.swift in Sources */,
 				238F562D2910A54C0044214F /* KakaoMapDataManager.swift in Sources */,
@@ -1025,6 +1133,7 @@
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				A202858129C7520C008A7853 /* StoreModel.swift in Sources */,
 				23B9E8992911356D009B6D8F /* ScreenManager.swift in Sources */,
+				A2EA100B29F3FAD4000D600B /* SettingResTableViewCell.swift in Sources */,
 				23C993A629108F7800B8D1E4 /* HeartViewController.swift in Sources */,
 				A258490329E6812A00E75568 /* SubmitData.swift in Sources */,
 				2373E4E5290AC93000D51B8E /* APIManager.swift in Sources */,
@@ -1061,6 +1170,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A258496529E687C900E75568 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A258497429E687C900E75568 /* DailyFoodWidget.swift in Sources */,
+				A258497229E687C900E75568 /* DailyFoodWidgetLiveActivity.swift in Sources */,
+				A2EA100F29F412AA000D600B /* UserDefaults+.swift in Sources */,
+				A258497029E687C900E75568 /* DailyFoodWidgetBundle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1073,6 +1193,11 @@
 			isa = PBXTargetDependency;
 			target = 23166A6D28FECD9C002AEFB7 /* MYONGSIK */;
 			targetProxy = 23166A8F28FECD9F002AEFB7 /* PBXContainerItemProxy */;
+		};
+		A258497929E687CA00E75568 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A258496829E687C900E75568 /* DailyFoodWidgetExtension */;
+			targetProxy = A258497829E687CA00E75568 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1225,10 +1350,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 77CEA1CD0123C0563A94A6E1 /* Pods-MYONGSIK.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = MYONGSIK/MYONGSIK.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5XGLRW6VG4;
@@ -1257,7 +1384,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/yoosang/Desktop/Myongsik_iOS/Kakao-Map-Bridge-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/gimchowon/Desktop/Kakao-Map-Bridge-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1267,10 +1394,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AE9F16CCD51F90ED1842BEA4 /* Pods-MYONGSIK.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = MYONGSIK/MYONGSIK.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5XGLRW6VG4;
@@ -1299,7 +1428,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/yoosang/Desktop/Myongsik_iOS/Kakao-Map-Bridge-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/gimchowon/Desktop/Kakao-Map-Bridge-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1381,6 +1510,66 @@
 			};
 			name = Release;
 		};
+		A258497C29E687CA00E75568 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = DailyFoodWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5XGLRW6VG4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DailyFoodWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DailyFoodWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gomin.MYONGSIK.DailyFoodWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A258497D29E687CA00E75568 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = DailyFoodWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5XGLRW6VG4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DailyFoodWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DailyFoodWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gomin.MYONGSIK.DailyFoodWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1416,6 +1605,15 @@
 			buildConfigurations = (
 				23166A9F28FECD9F002AEFB7 /* Debug */,
 				23166AA028FECD9F002AEFB7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A258497E29E687CA00E75568 /* Build configuration list for PBXNativeTarget "DailyFoodWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A258497C29E687CA00E75568 /* Debug */,
+				A258497D29E687CA00E75568 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

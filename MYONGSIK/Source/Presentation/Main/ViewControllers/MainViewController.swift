@@ -165,10 +165,11 @@ class MainViewController: MainBaseViewController {
             case CampusInfo.seoul.name:
                 selectedResName = SeoulRestaurant.mcc.rawValue
                 operatingTimeText = "중식 11:30~14:00  |  석식 17:30~19:00"
-                backItemButton.isHidden = true
+//                backItemButton.isHidden = true
             case CampusInfo.yongin.name:
                 print("operatingTimeText - \(operatingTimeText)")
                 backItemButton.isHidden = false
+//                super.setCampusButton.isHidden = false
                 return
             default: return
             }
