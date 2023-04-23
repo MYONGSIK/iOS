@@ -90,6 +90,7 @@
 		736A92B929E9A8E300D30A35 /* daum_th_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929D29E9A8E300D30A35 /* daum_th_line.png */; };
 		736A92BA29E9A8E300D30A35 /* map_pin_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929E29E9A8E300D30A35 /* map_pin_shadow.png */; };
 		736A92BB29E9A8E300D30A35 /* DaumMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A929F29E9A8E300D30A35 /* DaumMap.framework */; };
+		73C5B24C29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */; };
 		92033E7EAD47D14ADA175F1B /* Pods_MYONGSIK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */; };
 		A202857F29C5B339008A7853 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = A202857E29C5B339008A7853 /* Toast */; };
 		A202858129C7520C008A7853 /* StoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A202858029C7520C008A7853 /* StoreModel.swift */; };
@@ -258,6 +259,7 @@
 		736A929D29E9A8E300D30A35 /* daum_th_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = daum_th_line.png; sourceTree = "<group>"; };
 		736A929E29E9A8E300D30A35 /* map_pin_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin_shadow.png; sourceTree = "<group>"; };
 		736A929F29E9A8E300D30A35 /* DaumMap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DaumMap.framework; sourceTree = "<group>"; };
+		73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBottomAlertViewController.swift; sourceTree = "<group>"; };
 		7595CF6EE606B781645AD9EB /* Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; sourceTree = "<group>"; };
 		77CEA1CD0123C0563A94A6E1 /* Pods-MYONGSIK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.debug.xcconfig"; sourceTree = "<group>"; };
 		A202858029C7520C008A7853 /* StoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModel.swift; sourceTree = "<group>"; };
@@ -571,6 +573,7 @@
 				23166A7528FECD9D002AEFB7 /* MainViewController.swift */,
 				A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */,
 				A2A7966429A4702100A2F2E2 /* SelectRestaurantViewController.swift */,
+				73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */,
 				A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */,
 			);
 			path = ViewControllers;
@@ -1112,6 +1115,7 @@
 				A2431C8E29A347C300D8E493 /* CALayer+.swift in Sources */,
 				23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */,
 				23C993A429108F6F00B8D1E4 /* RestaurantSearchViewController.swift in Sources */,
+				73C5B24C29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift in Sources */,
 				23B9E89B29114532009B6D8F /* TagCollectionViewCell.swift in Sources */,
 				2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */,
 				2311611829117F9D00AD73D2 /* HeartListTableViewCell.swift in Sources */,

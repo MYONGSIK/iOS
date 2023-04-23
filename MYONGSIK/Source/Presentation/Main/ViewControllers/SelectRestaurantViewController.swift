@@ -31,6 +31,18 @@ class SelectRestaurantViewController: MainBaseViewController {
         super.viewDidLoad()
         setUpTableView(delegate: self)
         setup()
+        
+        showUpdateAlert()
+    }
+    
+    private func showUpdateAlert() {
+        if UserDefaults.standard.value(forKey: "StopAlert") == nil {
+            let updateAlert = UpdateBottomAlertViewController()
+            
+            updateAlert.modalPresentationStyle = .overFullScreen
+            
+            self.present(updateAlert, animated: true)
+        }
     }
     
     func setUpTableView(delegate: UITableViewDelegate & UITableViewDataSource) {

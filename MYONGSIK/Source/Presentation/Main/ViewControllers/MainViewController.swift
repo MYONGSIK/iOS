@@ -132,6 +132,9 @@ class MainViewController: MainBaseViewController {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
       
+        
+        showUpdateAlert()
+        
         setSelectedRes()
         setWeekDateData()
         
@@ -141,6 +144,17 @@ class MainViewController: MainBaseViewController {
         
         fetchDailyData()
         fetchWeekData()
+    }
+    
+    private func showUpdateAlert() {
+        print(UserDefaults.standard.value(forKey: "StopAlert"))
+        if UserDefaults.standard.value(forKey: "StopAlert") == nil {
+            let updateAlert = UpdateBottomAlertViewController()
+            
+            updateAlert.modalPresentationStyle = .overFullScreen
+            
+            self.present(updateAlert, animated: true)
+        }
     }
     
 
