@@ -65,14 +65,32 @@ class RestaurantMainViewController: MainBaseViewController {
         DispatchQueue.main.async {
 //            self.searchResult.removeAll()
             KakaoMapDataManager().randomMapDataManager(self)
-            self.getRandomRestaurants()
+//            self.getRandomRestaurants()
 
 //            self.rankResults.removeAll()
-            self.fetchRankData()
-            self.reloadDataAnimation()
+            
+//            self.fetchRankData()
+//            self.reloadDataAnimation()
+            self.checkSortMode()
         }
     }
     
+    func checkSortMode() {
+        if let sortValue = UserDefaults.standard.object(forKey: "restaurant_sort_value") {
+            self.fetchRankData()
+            switch sortValue as! String {
+            case "scrapCount,desc":
+                cellMode = .rankCell
+            case "distance,asc":
+                cellMode = .rankCell
+            case "kakaoRandom":
+                cellMode = .kakaoCell
+                self.getRandomRestaurants()
+            default: return
+            }
+            self.reloadDataAnimation()
+        }
+    }
     
     
     // MARK: Actions
@@ -400,6 +418,7 @@ extension RestaurantMainViewController {
                                   completionHandler: { [weak self] response in
             if response.success {
                 self?.rankResults = response.data.content
+                self?.reloadDataAnimation()
             } else {
                 self?.showAlert(message: "맛집 순위 정보를 가져올 수 없습니다.")
             }

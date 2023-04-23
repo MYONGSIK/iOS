@@ -121,5 +121,7 @@ extension SettingRestautrantViewController: UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.setRestaurantInfo(name: restaurants[indexPath.row])
+        print("selected --> \( restaurants[indexPath.row])")
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
 }

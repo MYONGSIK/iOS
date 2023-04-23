@@ -9,7 +9,7 @@ import UIKit
 
 class SettingResTableViewCell: UITableViewCell {
     var name: String?
-    var isSaved = false
+    var isSelectedRes = false
     
     let backView = UIView().then {
         $0.backgroundColor = .white
@@ -69,8 +69,8 @@ class SettingResTableViewCell: UITableViewCell {
         self.selectedImgView.image = UIImage(named: "check_blue")
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        selectedImgView.image = selected ? UIImage(named: "check_blue") : UIImage(named: "check_gray")
-    }
+//    override func setSelected(_ selected: Bool, animated: Bool) {
+//        super.setSelected(selected, animated: animated)
+//        selectedImgView.image = selected ? UIImage(named: "check_blue") : UIImage(named: "check_gray")
+//    }
 }
