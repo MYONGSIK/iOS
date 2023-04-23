@@ -47,6 +47,7 @@ class SelectRestaurantViewController: MainBaseViewController {
     
     func setup() {
 //        self.view.addSubview(adImageView)
+        super.setCampusButton.isHidden = false
         self.view.addSubview(buttonTableView)
         
 //        adImageView.snp.makeConstraints {

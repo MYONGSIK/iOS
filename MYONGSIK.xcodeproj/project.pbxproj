@@ -113,8 +113,6 @@
 		A258497629E687CA00E75568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A258497529E687CA00E75568 /* Assets.xcassets */; };
 		A258497A29E687CA00E75568 /* DailyFoodWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A258496929E687C900E75568 /* DailyFoodWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A2A7966529A4702100A2F2E2 /* SelectRestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7966429A4702100A2F2E2 /* SelectRestaurantViewController.swift */; };
-		A2EA100629F3F58A000D600B /* RestaurantIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100529F3F58A000D600B /* RestaurantIntent.intentdefinition */; };
-		A2EA100729F3F58A000D600B /* RestaurantIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100529F3F58A000D600B /* RestaurantIntent.intentdefinition */; };
 		A2EA100929F3F855000D600B /* SettingRestautrantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */; };
 		A2EA100B29F3FAD4000D600B /* SettingResTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */; };
 		A2EA100E29F41162000D600B /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100D29F41162000D600B /* UserDefaults+.swift */; };
@@ -284,7 +282,6 @@
 		A258497529E687CA00E75568 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A258497729E687CA00E75568 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2A7966429A4702100A2F2E2 /* SelectRestaurantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRestaurantViewController.swift; sourceTree = "<group>"; };
-		A2EA100529F3F58A000D600B /* RestaurantIntent.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = RestaurantIntent.intentdefinition; sourceTree = "<group>"; };
 		A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRestautrantViewController.swift; sourceTree = "<group>"; };
 		A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingResTableViewCell.swift; sourceTree = "<group>"; };
 		A2EA100C29F41130000D600B /* MYONGSIK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MYONGSIK.entitlements; sourceTree = "<group>"; };
@@ -761,7 +758,6 @@
 				A258496F29E687C900E75568 /* DailyFoodWidgetBundle.swift */,
 				A258497129E687C900E75568 /* DailyFoodWidgetLiveActivity.swift */,
 				A258497329E687C900E75568 /* DailyFoodWidget.swift */,
-				A2EA100529F3F58A000D600B /* RestaurantIntent.intentdefinition */,
 				A258497529E687CA00E75568 /* Assets.xcassets */,
 				A258497729E687CA00E75568 /* Info.plist */,
 			);
@@ -1133,7 +1129,6 @@
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				A202858129C7520C008A7853 /* StoreModel.swift in Sources */,
 				23B9E8992911356D009B6D8F /* ScreenManager.swift in Sources */,
-				A2EA100629F3F58A000D600B /* RestaurantIntent.intentdefinition in Sources */,
 				A2EA100B29F3FAD4000D600B /* SettingResTableViewCell.swift in Sources */,
 				23C993A629108F7800B8D1E4 /* HeartViewController.swift in Sources */,
 				A258490329E6812A00E75568 /* SubmitData.swift in Sources */,
@@ -1179,7 +1174,6 @@
 				A258497229E687C900E75568 /* DailyFoodWidgetLiveActivity.swift in Sources */,
 				A2EA100F29F412AA000D600B /* UserDefaults+.swift in Sources */,
 				A258497029E687C900E75568 /* DailyFoodWidgetBundle.swift in Sources */,
-				A2EA100729F3F58A000D600B /* RestaurantIntent.intentdefinition in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -30,6 +30,10 @@ class SettingRestautrantViewController: BaseViewController {
     // MARK: Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let saved = UserDefaults.shared.value(forKey: "yongin_widget_res_name") {}
+        else {
+            UserDefaults.shared.set("생활관식당", forKey: "yongin_widget_res_name")
+        }
         setUpTableView(dataSourceDelegate: self)
         setupView()
         setupConstraints()
@@ -87,6 +91,13 @@ class SettingRestautrantViewController: BaseViewController {
         UserDefaults.shared.set(saveName, forKey: "yongin_widget_res_name")
     }
     
+    private func checkIsSavedName(name: String) -> Bool {
+        if let saved = UserDefaults.shared.value(forKey: "yongin_widget_res_name") {
+            if saved as! String == name { return true }
+        }
+        return false
+    }
+    
     @objc private func didTapBackButton() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -100,6 +111,10 @@ extension SettingRestautrantViewController: UITableViewDelegate, UITableViewData
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingResTableViewCell", for: indexPath) as? SettingResTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.configureName(name: restaurants[indexPath.row])
+//        if checkIsSavedName(name: restaurants[indexPath.row]) { cell.nameLabel.textColor = .signatureBlue }
+        
+        if checkIsSavedName(name: restaurants[indexPath.row]) { cell.selectedImgView.image = UIImage(named: "check_blue") }
+//        else { cell.selectedImgView.image = UIImage(named: "check_gray") }
         return cell
     }
     

@@ -49,8 +49,9 @@ struct DayFoodModel: Decodable {
 let baseURL = "http://43.201.72.185:8085/api/v2/meals/"
 
 // MARK: 위젯을 새로고침할 타임라인을 결정하는 객체
-struct Provider: IntentTimelineProvider {
-    func getSnapshot(for configuration: RestaurantListIntent, in context: Context, completion: @escaping (FoodEntry) -> Void) {
+//struct Provider: IntentTimelineProvider {
+struct Provider: TimelineProvider {
+    func getSnapshot(in context: Context, completion: @escaping (FoodEntry) -> Void) {
         UserDefaults.standard.dictionaryRepresentation().forEach { (key, value) in
             UserDefaults.shared.set(value, forKey: key)
         }
@@ -62,7 +63,7 @@ struct Provider: IntentTimelineProvider {
         })
     }
     
-    func getTimeline(for configuration: RestaurantListIntent, in context: Context, completion: @escaping (Timeline<FoodEntry>) -> Void) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<FoodEntry>) -> Void) {
         UserDefaults.standard.dictionaryRepresentation().forEach { (key, value) in
             UserDefaults.shared.set(value, forKey: key)
         }
@@ -90,11 +91,53 @@ struct Provider: IntentTimelineProvider {
             default: return
             }
         }
-
     }
     
-    typealias Intent = RestaurantListIntent
-    typealias Entry = FoodEntry
+//    func getSnapshot(for configuration: RestaurantListIntent, in context: Context, completion: @escaping (FoodEntry) -> Void) {
+//        UserDefaults.standard.dictionaryRepresentation().forEach { (key, value) in
+//            UserDefaults.shared.set(value, forKey: key)
+//        }
+//
+//        let resName = getRestaurantName()
+//        getMealData(resName: resName, completion: { data in
+//            let entry = FoodEntry(date: Date(), mealData: data.data ?? [], restaurantName: resName)
+//            completion(entry)
+//        })
+//    }
+    
+//    func getTimeline(for configuration: RestaurantListIntent, in context: Context, completion: @escaping (Timeline<FoodEntry>) -> Void) {
+//        UserDefaults.standard.dictionaryRepresentation().forEach { (key, value) in
+//            UserDefaults.shared.set(value, forKey: key)
+//        }
+//
+//        if let userCampus  = UserDefaults.shared.value(forKey: "userCampus") {
+//            switch userCampus as! String {
+//            case "인문캠퍼스":
+//                // MCC 설정
+//                getMealData(resName: "MCC식당") { data in
+//                    let currentDate = Date()
+//                    let entry = FoodEntry(date: currentDate, mealData: data.data ?? [], restaurantName: "MCC식당")
+//                    let nextRefresh = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate)!
+//                    let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
+//                    completion(timeline)
+//                }
+//            case "자연캠퍼스":
+//                let resName = getYonginRestaurantName()
+//                getMealData(resName: resName) { data in
+//                    let currentDate = Date()
+//                    let entry = FoodEntry(date: currentDate, mealData: data.data ?? [], restaurantName: resName)
+//                    let nextRefresh = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate)!
+//                    let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
+//                    completion(timeline)
+//                }
+//            default: return
+//            }
+//        }
+//
+//    }
+    
+//    typealias Intent = RestaurantListIntent
+//    typealias Entry = FoodEntry
     
     func placeholder(in context: Context) -> FoodEntry {
         FoodEntry(date: Date(), mealData: [], restaurantName: "선택된 식당 없음")
@@ -132,7 +175,7 @@ struct Provider: IntentTimelineProvider {
         if let res = UserDefaults.shared.value(forKey: "yongin_widget_res_name") {
             return res as! String
         }
-        return "MCC식당" // 오류방지용
+        else { return "생활관식당" }
     }
 }
 
@@ -341,14 +384,14 @@ struct DailyFoodWidgetEntryView : View {
 }
 
 struct DailyFoodWidget: Widget {
-    static let kind: String = "DailyFoodWidget"
+    let kind: String = "DailyFoodWidget"
 
     var body: some WidgetConfiguration {
-        IntentConfiguration(kind: DailyFoodWidget.kind,
-                            intent: RestaurantListIntent.self,
-                            provider: Provider()) { entry in
-            DailyFoodWidgetEntryView(entry: entry)
-        }
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+                     DailyFoodWidgetEntryView(entry: entry)
+                 }
+                 .configurationDisplayName("My Widget")
+                 .description("This is an example widget.")
     }
 }
 
