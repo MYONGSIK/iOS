@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import WidgetKit
 
 // MARK: 위젯용 식당 설정 페이지
 class SettingRestautrantViewController: BaseViewController {
@@ -113,7 +114,8 @@ extension SettingRestautrantViewController: UITableViewDelegate, UITableViewData
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingResTableViewCell", for: indexPath) as? SettingResTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.configureName(name: restaurants[indexPath.row])
-        if checkIsSavedName(name: restaurants[indexPath.row]) { cell.setSelectedRes() }
+        if checkIsSavedName(name: restaurants[indexPath.row]) { cell.selectedImgView.image = UIImage(named: "check_blue") }
+        else { cell.selectedImgView.image = UIImage(named: "check_gray") }
         return cell
     }
     
@@ -121,7 +123,7 @@ extension SettingRestautrantViewController: UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.setRestaurantInfo(name: restaurants[indexPath.row])
+        WidgetCenter.shared.reloadAllTimelines()
         print("selected --> \( restaurants[indexPath.row])")
-        tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
