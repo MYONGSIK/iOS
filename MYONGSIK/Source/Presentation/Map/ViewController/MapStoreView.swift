@@ -204,19 +204,22 @@ class MapStoreView: UIView {
             $0.height.equalTo(20)
         }
         
+        let buttonWidth = (UIScreen.main.bounds.width / 2) - 10
+        
         self.addSubview(heartButton)
         heartButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(15)
+            $0.leading.equalToSuperview().offset(12)
             $0.top.equalTo(addressLabel.snp.bottom).offset(12)
-            $0.width.equalTo(181)
+            $0.width.equalTo(buttonWidth)
             $0.height.equalTo(48)
         }
         
         self.addSubview(phoneButton)
         phoneButton.snp.makeConstraints {
             $0.leading.equalTo(heartButton.snp.trailing).offset(6)
+            $0.trailing.equalToSuperview().inset(12)
             $0.top.equalTo(addressLabel.snp.bottom).offset(12)
-            $0.width.equalTo(181)
+//            $0.width.equalTo(buttonWidth)
             $0.height.equalTo(48)
         }
         
