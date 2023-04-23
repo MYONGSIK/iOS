@@ -9,6 +9,7 @@ import UIKit
 
 class SettingResTableViewCell: UITableViewCell {
     var name: String?
+    var isSaved = false
     
     let backView = UIView().then {
         $0.backgroundColor = .white
@@ -23,9 +24,11 @@ class SettingResTableViewCell: UITableViewCell {
         $0.textColor = .black
     }
     
-    let selectedButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
-        $0.tintColor = .systemGray5
+    lazy var selectedImgView = UIImageView().then {
+//        $0.image = UIImage(systemName: "checkmark.circle")?.withRenderingMode(.alwaysTemplate)
+        $0.image = isSaved ? UIImage(named: "check_blue") : UIImage(named: "check_gray")
+//        $0.setImage(UIImage(systemName: "checkmark.circle")?.withRenderingMode(.alwaysTemplate), for: .normal)
+//        $0.tintColor = .systemGray5
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -42,7 +45,7 @@ class SettingResTableViewCell: UITableViewCell {
     private func setUpView() {
         self.contentView.addSubview(backView)
         backView.addSubview(nameLabel)
-        backView.addSubview(selectedButton)
+        backView.addSubview(selectedImgView)
     }
 
     private func setUpConstraint() {
@@ -54,8 +57,8 @@ class SettingResTableViewCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().inset(20)
         }
-        selectedButton.snp.makeConstraints { make in
-            make.height.equalTo(30)
+        selectedImgView.snp.makeConstraints { make in
+            make.width.height.equalTo(20)
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().inset(20)
         }
@@ -63,10 +66,15 @@ class SettingResTableViewCell: UITableViewCell {
     
     public func configureName(name: String) { self.nameLabel.text = name }
     
-    public func setSelectedRes() { selectedButton.tintColor = .signatureBlue }
+    public func setSelectedRes() {
+//        self.isSaved = true
+//        self.selectedImgView.image = UIImage(named: "check_blue")
+        self.nameLabel.textColor = .signatureBlue
+    }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        selectedButton.tintColor = selected ? .signatureBlue : .systemGray5
+//        selectedImgView.tintColor = selected ? .signatureBlue : .systemGray5
+        selectedImgView.image = selected ? UIImage(named: "check_blue") : UIImage(named: "check_gray")
     }
 }
