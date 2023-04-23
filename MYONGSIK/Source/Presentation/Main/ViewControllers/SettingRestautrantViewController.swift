@@ -31,12 +31,14 @@ class SettingRestautrantViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let saved = UserDefaults.shared.value(forKey: "yongin_widget_res_name") {}
-        else {
-            UserDefaults.shared.set("생활관식당", forKey: "yongin_widget_res_name")
-        }
+        else { UserDefaults.shared.set("생활관식당", forKey: "yongin_widget_res_name") }
         setUpTableView(dataSourceDelegate: self)
         setupView()
         setupConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        restaurantsTableView.reloadData()
     }
     
     private func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
@@ -111,10 +113,7 @@ extension SettingRestautrantViewController: UITableViewDelegate, UITableViewData
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingResTableViewCell", for: indexPath) as? SettingResTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.configureName(name: restaurants[indexPath.row])
-//        if checkIsSavedName(name: restaurants[indexPath.row]) { cell.nameLabel.textColor = .signatureBlue }
-        
-        if checkIsSavedName(name: restaurants[indexPath.row]) { cell.selectedImgView.image = UIImage(named: "check_blue") }
-//        else { cell.selectedImgView.image = UIImage(named: "check_gray") }
+        if checkIsSavedName(name: restaurants[indexPath.row]) { cell.setSelectedRes() }
         return cell
     }
     
