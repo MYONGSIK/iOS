@@ -24,9 +24,8 @@ class SettingResTableViewCell: UITableViewCell {
         $0.textColor = .black
     }
     
-    lazy var selectedImgView = UIImageView().then {
-//        $0.image = UIImage(systemName: "checkmark.circle")?.withRenderingMode(.alwaysTemplate)
-        $0.image = isSaved ? UIImage(named: "check_blue") : UIImage(named: "check_gray")
+    let selectedImgView = UIImageView().then {
+        $0.image = UIImage(named: "check_gray")
 //        $0.setImage(UIImage(systemName: "checkmark.circle")?.withRenderingMode(.alwaysTemplate), for: .normal)
 //        $0.tintColor = .systemGray5
     }
@@ -67,14 +66,11 @@ class SettingResTableViewCell: UITableViewCell {
     public func configureName(name: String) { self.nameLabel.text = name }
     
     public func setSelectedRes() {
-//        self.isSaved = true
-//        self.selectedImgView.image = UIImage(named: "check_blue")
-        self.nameLabel.textColor = .signatureBlue
+        self.selectedImgView.image = UIImage(named: "check_blue")
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-//        selectedImgView.tintColor = selected ? .signatureBlue : .systemGray5
         selectedImgView.image = selected ? UIImage(named: "check_blue") : UIImage(named: "check_gray")
     }
 }

@@ -86,7 +86,7 @@ class SettingRestautrantViewController: BaseViewController {
         switch name {
         case "생활관식당": saveName = "생활관식당"
         case "명진당": saveName = "명진당식당"
-        case "학생회관": saveName = "학관식당"
+        case "학생회관": saveName = "학생식당"
         case "교직원식당": saveName = "교직원식당"
         default: return
         }
