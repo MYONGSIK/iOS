@@ -194,9 +194,13 @@ struct FoodEntry: TimelineEntry {
             }
         } else {
             switch type {
-            case "LUNCH_A": return (mealData.count > 2) ? "중식A" : "중식"
+            case "LUNCH_A":
+                if restaurantName == "학생식당" { return "조식" }
+                else { return (mealData.count > 2) ? "중식A" : "중식" }
             case "LUNCH_B": return "중식B"
-            case "DINNER": return "석식"
+            case "DINNER":
+                if restaurantName == "학생식당" { return "중식" }
+                else { return "석식" }
             default: return "알 수 없음"
             }
         }
