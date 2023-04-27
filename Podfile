@@ -12,7 +12,6 @@ target 'MYONGSIK' do
 	pod 'Kingfisher'
 	pod 'Alamofire'
 	pod 'DropDown'
-	pod 'T'
 
 	#RxSwift
     	pod 'RxSwift'
