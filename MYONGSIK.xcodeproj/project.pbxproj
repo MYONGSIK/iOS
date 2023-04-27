@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		16E35826E03E14564D74F8D8 /* Pods_MYONGSIK_MYONGSIKUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F3766A332C9FBAAF6A71FF8 /* Pods_MYONGSIK_MYONGSIKUITests.framework */; };
 		2311611829117F9D00AD73D2 /* HeartListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2311611729117F9D00AD73D2 /* HeartListTableViewCell.swift */; };
 		2311611A2911807A00AD73D2 /* HeartListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231161192911807A00AD73D2 /* HeartListData.swift */; };
 		2311611C2911952200AD73D2 /* ToastBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2311611B2911952200AD73D2 /* ToastBar.swift */; };
@@ -50,10 +49,13 @@
 		23C993A629108F7800B8D1E4 /* HeartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C993A529108F7800B8D1E4 /* HeartViewController.swift */; };
 		23C993AA2910945400B8D1E4 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C993A92910945400B8D1E4 /* UITextField.swift */; };
 		23E6ACA9290130C50091D803 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6ACA8290130C50091D803 /* UIDevice.swift */; };
-		58A23E1C2028CBEE0CA8BC47 /* Pods_MYONGSIKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */; };
+		23EB17CF6B38DEE891CEE615 /* Pods_MYONGSIKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A8F26ED3169283F50536BC /* Pods_MYONGSIKTests.framework */; };
+		417DABEFE3293E14B6183EF8 /* Pods_MYONGSIK_MYONGSIKUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E43CB40CE90775A80B9D93 /* Pods_MYONGSIK_MYONGSIKUITests.framework */; };
 		73178AC129EAFC3A001C3AA4 /* MapStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */; };
 		73178AD829EED14A001C3AA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */; };
 		73178ADB29EED194001C3AA4 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 73178ADA29EED194001C3AA4 /* FirebaseAnalytics */; };
+		736124A529FA14C100B017AA /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 736124A429FA14C100B017AA /* Realm */; };
+		736124A729FA14C100B017AA /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 736124A629FA14C100B017AA /* RealmSwift */; };
 		736A8DF829E999E200D30A35 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736A8DF729E999E200D30A35 /* MapViewController.swift */; };
 		736A8DFC29E9A01700D30A35 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFB29E9A01700D30A35 /* Metal.framework */; };
 		736A8DFE29E9A02000D30A35 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFD29E9A02000D30A35 /* SystemConfiguration.framework */; };
@@ -91,7 +93,6 @@
 		736A92BA29E9A8E300D30A35 /* map_pin_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929E29E9A8E300D30A35 /* map_pin_shadow.png */; };
 		736A92BB29E9A8E300D30A35 /* DaumMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A929F29E9A8E300D30A35 /* DaumMap.framework */; };
 		73C5B24C29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */; };
-		92033E7EAD47D14ADA175F1B /* Pods_MYONGSIK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */; };
 		A202857F29C5B339008A7853 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = A202857E29C5B339008A7853 /* Toast */; };
 		A202858129C7520C008A7853 /* StoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A202858029C7520C008A7853 /* StoreModel.swift */; };
 		A23DA70729A7EFEA003FDA56 /* RegisterUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70629A7EFEA003FDA56 /* RegisterUUID.swift */; };
@@ -118,6 +119,7 @@
 		A2EA100B29F3FAD4000D600B /* SettingResTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */; };
 		A2EA100E29F41162000D600B /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100D29F41162000D600B /* UserDefaults+.swift */; };
 		A2EA100F29F412AA000D600B /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100D29F41162000D600B /* UserDefaults+.swift */; };
+		F1AB9D167BCAC4ED7B207EDB /* Pods_MYONGSIK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 675C1421BB3FBC90A2A640C1 /* Pods_MYONGSIK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,9 +161,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		05499D88CFD8F6094E3854DF /* Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		0F3766A332C9FBAAF6A71FF8 /* Pods_MYONGSIK_MYONGSIKUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIK_MYONGSIKUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		108AE19554B82CED05D5D05C /* Pods-MYONGSIKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIKTests.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIKTests/Pods-MYONGSIKTests.release.xcconfig"; sourceTree = "<group>"; };
+		1501E9128F32E1F2FDE6DC40 /* Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		2311611729117F9D00AD73D2 /* HeartListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartListTableViewCell.swift; sourceTree = "<group>"; };
 		231161192911807A00AD73D2 /* HeartListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartListData.swift; sourceTree = "<group>"; };
 		2311611B2911952200AD73D2 /* ToastBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastBar.swift; sourceTree = "<group>"; };
@@ -209,9 +209,10 @@
 		23C993A529108F7800B8D1E4 /* HeartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartViewController.swift; sourceTree = "<group>"; };
 		23C993A92910945400B8D1E4 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		23E6ACA8290130C50091D803 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
-		409643676213BA9A3C80FD32 /* Pods-MYONGSIKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIKTests.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIKTests/Pods-MYONGSIKTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279D23092143E8C2E222F4C8 /* Pods-MYONGSIK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.release.xcconfig"; sourceTree = "<group>"; };
+		4451E2BF5C4E4AAD6E75665A /* Pods-MYONGSIKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIKTests.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIKTests/Pods-MYONGSIKTests.debug.xcconfig"; sourceTree = "<group>"; };
+		459C46192E94B625F8305FB0 /* Pods-MYONGSIKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIKTests.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIKTests/Pods-MYONGSIKTests.release.xcconfig"; sourceTree = "<group>"; };
+		675C1421BB3FBC90A2A640C1 /* Pods_MYONGSIK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStoreView.swift; sourceTree = "<group>"; };
 		73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		736A8DF729E999E200D30A35 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -260,8 +261,6 @@
 		736A929E29E9A8E300D30A35 /* map_pin_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin_shadow.png; sourceTree = "<group>"; };
 		736A929F29E9A8E300D30A35 /* DaumMap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DaumMap.framework; sourceTree = "<group>"; };
 		73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBottomAlertViewController.swift; sourceTree = "<group>"; };
-		7595CF6EE606B781645AD9EB /* Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; sourceTree = "<group>"; };
-		77CEA1CD0123C0563A94A6E1 /* Pods-MYONGSIK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.debug.xcconfig"; sourceTree = "<group>"; };
 		A202858029C7520C008A7853 /* StoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModel.swift; sourceTree = "<group>"; };
 		A23DA70629A7EFEA003FDA56 /* RegisterUUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUUID.swift; sourceTree = "<group>"; };
 		A23DA70829A7F1AD003FDA56 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -289,7 +288,10 @@
 		A2EA100C29F41130000D600B /* MYONGSIK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MYONGSIK.entitlements; sourceTree = "<group>"; };
 		A2EA100D29F41162000D600B /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		A2EA101229F4264A000D600B /* DailyFoodWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DailyFoodWidgetExtension.entitlements; sourceTree = "<group>"; };
-		AE9F16CCD51F90ED1842BEA4 /* Pods-MYONGSIK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.release.xcconfig"; sourceTree = "<group>"; };
+		A9A8F26ED3169283F50536BC /* Pods_MYONGSIKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE46BCAAFA67542D6CFBF4A0 /* Pods-MYONGSIK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.debug.xcconfig"; sourceTree = "<group>"; };
+		C1E43CB40CE90775A80B9D93 /* Pods_MYONGSIK_MYONGSIKUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIK_MYONGSIKUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCF8D0D000E6EABF4E802C99 /* Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,6 +301,7 @@
 			files = (
 				736A8E0829E9A07800D30A35 /* libsqlite3.tbd in Frameworks */,
 				736A8E0029E9A02F00D30A35 /* CoreLocation.framework in Frameworks */,
+				736124A729FA14C100B017AA /* RealmSwift in Frameworks */,
 				73178ADB29EED194001C3AA4 /* FirebaseAnalytics in Frameworks */,
 				A202857F29C5B339008A7853 /* Toast in Frameworks */,
 				736A8E0629E9A06800D30A35 /* libc++.tbd in Frameworks */,
@@ -308,7 +311,8 @@
 				736A8E0729E9A07000D30A35 /* libxml2.tbd in Frameworks */,
 				736A8DFC29E9A01700D30A35 /* Metal.framework in Frameworks */,
 				736A92BB29E9A8E300D30A35 /* DaumMap.framework in Frameworks */,
-				92033E7EAD47D14ADA175F1B /* Pods_MYONGSIK.framework in Frameworks */,
+				736124A529FA14C100B017AA /* Realm in Frameworks */,
+				F1AB9D167BCAC4ED7B207EDB /* Pods_MYONGSIK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,7 +320,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58A23E1C2028CBEE0CA8BC47 /* Pods_MYONGSIKTests.framework in Frameworks */,
+				23EB17CF6B38DEE891CEE615 /* Pods_MYONGSIKTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,7 +328,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16E35826E03E14564D74F8D8 /* Pods_MYONGSIK_MYONGSIKUITests.framework in Frameworks */,
+				417DABEFE3293E14B6183EF8 /* Pods_MYONGSIK_MYONGSIKUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,12 +347,12 @@
 		16E3901AD54B7620460C0BD2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				77CEA1CD0123C0563A94A6E1 /* Pods-MYONGSIK.debug.xcconfig */,
-				AE9F16CCD51F90ED1842BEA4 /* Pods-MYONGSIK.release.xcconfig */,
-				05499D88CFD8F6094E3854DF /* Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig */,
-				7595CF6EE606B781645AD9EB /* Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig */,
-				409643676213BA9A3C80FD32 /* Pods-MYONGSIKTests.debug.xcconfig */,
-				108AE19554B82CED05D5D05C /* Pods-MYONGSIKTests.release.xcconfig */,
+				AE46BCAAFA67542D6CFBF4A0 /* Pods-MYONGSIK.debug.xcconfig */,
+				279D23092143E8C2E222F4C8 /* Pods-MYONGSIK.release.xcconfig */,
+				1501E9128F32E1F2FDE6DC40 /* Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig */,
+				FCF8D0D000E6EABF4E802C99 /* Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig */,
+				4451E2BF5C4E4AAD6E75665A /* Pods-MYONGSIKTests.debug.xcconfig */,
+				459C46192E94B625F8305FB0 /* Pods-MYONGSIKTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -779,11 +783,11 @@
 				736A8DFD29E9A02000D30A35 /* SystemConfiguration.framework */,
 				736A8DFB29E9A01700D30A35 /* Metal.framework */,
 				23451DEC29117633006AE030 /* WebKit.framework */,
-				6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */,
-				0F3766A332C9FBAAF6A71FF8 /* Pods_MYONGSIK_MYONGSIKUITests.framework */,
-				5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */,
 				A258496A29E687C900E75568 /* WidgetKit.framework */,
 				A258496C29E687C900E75568 /* SwiftUI.framework */,
+				675C1421BB3FBC90A2A640C1 /* Pods_MYONGSIK.framework */,
+				C1E43CB40CE90775A80B9D93 /* Pods_MYONGSIK_MYONGSIKUITests.framework */,
+				A9A8F26ED3169283F50536BC /* Pods_MYONGSIKTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -795,12 +799,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 23166A9828FECD9F002AEFB7 /* Build configuration list for PBXNativeTarget "MYONGSIK" */;
 			buildPhases = (
-				74035901E4F6C7AE3F515E24 /* [CP] Check Pods Manifest.lock */,
+				4037891B8AFAA716F8EC231C /* [CP] Check Pods Manifest.lock */,
 				23166A6A28FECD9C002AEFB7 /* Sources */,
 				23166A6B28FECD9C002AEFB7 /* Frameworks */,
 				23166A6C28FECD9C002AEFB7 /* Resources */,
-				EEDDC5406744A29A22DEECDA /* [CP] Embed Pods Frameworks */,
 				A258497B29E687CA00E75568 /* Embed Foundation Extensions */,
+				B113E8A0B74AF28871CD1067 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -811,6 +815,8 @@
 			packageProductDependencies = (
 				A202857E29C5B339008A7853 /* Toast */,
 				73178ADA29EED194001C3AA4 /* FirebaseAnalytics */,
+				736124A429FA14C100B017AA /* Realm */,
+				736124A629FA14C100B017AA /* RealmSwift */,
 			);
 			productName = MYONGSIK;
 			productReference = 23166A6E28FECD9C002AEFB7 /* MYONGSIK.app */;
@@ -820,7 +826,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 23166A9B28FECD9F002AEFB7 /* Build configuration list for PBXNativeTarget "MYONGSIKTests" */;
 			buildPhases = (
-				1FEFBB751CE28A0DB87D0086 /* [CP] Check Pods Manifest.lock */,
+				379C95D7ABB96AA359DCA180 /* [CP] Check Pods Manifest.lock */,
 				23166A8028FECD9E002AEFB7 /* Sources */,
 				23166A8128FECD9E002AEFB7 /* Frameworks */,
 				23166A8228FECD9E002AEFB7 /* Resources */,
@@ -839,11 +845,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 23166A9E28FECD9F002AEFB7 /* Build configuration list for PBXNativeTarget "MYONGSIKUITests" */;
 			buildPhases = (
-				36EBEE563ED1E28FBA589B72 /* [CP] Check Pods Manifest.lock */,
+				D9F777E56B2D0C358F89A414 /* [CP] Check Pods Manifest.lock */,
 				23166A8A28FECD9F002AEFB7 /* Sources */,
 				23166A8B28FECD9F002AEFB7 /* Frameworks */,
 				23166A8C28FECD9F002AEFB7 /* Resources */,
-				77DE485AC24FFCE1C9AF4DDC /* [CP] Embed Pods Frameworks */,
+				A3D132A6BEB3B1F3F80C8BE9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -911,6 +917,7 @@
 			packageReferences = (
 				A202857D29C5B339008A7853 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				73178AD929EED194001C3AA4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				736124A329FA14C100B017AA /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 23166A6F28FECD9D002AEFB7 /* Products */;
 			projectDirPath = "";
@@ -992,7 +999,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1FEFBB751CE28A0DB87D0086 /* [CP] Check Pods Manifest.lock */ = {
+		379C95D7ABB96AA359DCA180 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1014,29 +1021,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		36EBEE563ED1E28FBA589B72 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MYONGSIK-MYONGSIKUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		74035901E4F6C7AE3F515E24 /* [CP] Check Pods Manifest.lock */ = {
+		4037891B8AFAA716F8EC231C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1058,7 +1043,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		77DE485AC24FFCE1C9AF4DDC /* [CP] Embed Pods Frameworks */ = {
+		A3D132A6BEB3B1F3F80C8BE9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1075,7 +1060,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EEDDC5406744A29A22DEECDA /* [CP] Embed Pods Frameworks */ = {
+		B113E8A0B74AF28871CD1067 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1090,6 +1075,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D9F777E56B2D0C358F89A414 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MYONGSIK-MYONGSIKUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1348,7 +1355,7 @@
 		};
 		23166A9928FECD9F002AEFB7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 77CEA1CD0123C0563A94A6E1 /* Pods-MYONGSIK.debug.xcconfig */;
+			baseConfigurationReference = AE46BCAAFA67542D6CFBF4A0 /* Pods-MYONGSIK.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1378,14 +1385,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.8;
+				MARKETING_VERSION = 1.1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = gomin.MYONGSIK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/gimchowon/Desktop/Kakao-Map-Bridge-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/yoosang/Desktop/Myongsik_iOS/Kakao-Map-Bridge-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1393,7 +1400,7 @@
 		};
 		23166A9A28FECD9F002AEFB7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AE9F16CCD51F90ED1842BEA4 /* Pods-MYONGSIK.release.xcconfig */;
+			baseConfigurationReference = 279D23092143E8C2E222F4C8 /* Pods-MYONGSIK.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1423,14 +1430,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.8;
+				MARKETING_VERSION = 1.1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = gomin.MYONGSIK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/gimchowon/Desktop/Kakao-Map-Bridge-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/yoosang/Desktop/Myongsik_iOS/Kakao-Map-Bridge-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1438,7 +1445,7 @@
 		};
 		23166A9C28FECD9F002AEFB7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 409643676213BA9A3C80FD32 /* Pods-MYONGSIKTests.debug.xcconfig */;
+			baseConfigurationReference = 4451E2BF5C4E4AAD6E75665A /* Pods-MYONGSIKTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1458,7 +1465,7 @@
 		};
 		23166A9D28FECD9F002AEFB7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 108AE19554B82CED05D5D05C /* Pods-MYONGSIKTests.release.xcconfig */;
+			baseConfigurationReference = 459C46192E94B625F8305FB0 /* Pods-MYONGSIKTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1478,7 +1485,7 @@
 		};
 		23166A9F28FECD9F002AEFB7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05499D88CFD8F6094E3854DF /* Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig */;
+			baseConfigurationReference = 1501E9128F32E1F2FDE6DC40 /* Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1496,7 +1503,7 @@
 		};
 		23166AA028FECD9F002AEFB7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7595CF6EE606B781645AD9EB /* Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig */;
+			baseConfigurationReference = FCF8D0D000E6EABF4E802C99 /* Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1631,6 +1638,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		736124A329FA14C100B017AA /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		A202857D29C5B339008A7853 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
@@ -1646,6 +1661,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 73178AD929EED194001C3AA4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
+		};
+		736124A429FA14C100B017AA /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 736124A329FA14C100B017AA /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		736124A629FA14C100B017AA /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 736124A329FA14C100B017AA /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		A202857E29C5B339008A7853 /* Toast */ = {
 			isa = XCSwiftPackageProductDependency;

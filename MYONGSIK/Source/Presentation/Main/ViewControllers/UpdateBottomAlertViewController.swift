@@ -88,9 +88,11 @@ class UpdateBottomAlertViewController: UIViewController {
     func setupLayout() {
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)
         
+        let deviceHeight = UIScreen.main.bounds.height
+        
         self.view.addSubview(bottomView)
         bottomView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(460)
+            make.top.equalToSuperview().offset(deviceHeight/2)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
