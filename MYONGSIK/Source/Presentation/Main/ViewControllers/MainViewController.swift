@@ -145,7 +145,7 @@ class MainViewController: MainBaseViewController {
         fetchDailyData()
         fetchWeekData()
     }
-    
+     
     private func showUpdateAlert() {
         if UserDefaults.standard.value(forKey: "StopAlert") == nil {
             let updateAlert = UpdateBottomAlertViewController()

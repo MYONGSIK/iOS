@@ -131,6 +131,8 @@ class MapStoreView: UIView {
             delegate?.addHeart(placeName: placeName, category: category, url: url)
             delegate?.requestAddHeart(storeModel: storeModel!)
         }
+        
+        self.isHeart.toggle()
     }
     
     @objc func phoneButtonTap() {
