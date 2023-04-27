@@ -147,7 +147,6 @@ class MainViewController: MainBaseViewController {
     }
     
     private func showUpdateAlert() {
-        print(UserDefaults.standard.value(forKey: "StopAlert"))
         if UserDefaults.standard.value(forKey: "StopAlert") == nil {
             let updateAlert = UpdateBottomAlertViewController()
             
