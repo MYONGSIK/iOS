@@ -90,6 +90,14 @@ struct Provider: TimelineProvider {
                 }
             default: return
             }
+        } else {
+            getMealData(resName: "MCC식당") { data in
+                let currentDate = Date()
+                let entry = FoodEntry(date: currentDate, mealData: data.data ?? [], restaurantName: "MCC식당")
+                let nextRefresh = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate)!
+                let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
+                completion(timeline)
+            }
         }
     }
     
@@ -168,7 +176,7 @@ struct Provider: TimelineProvider {
             default: return ""
             }
         }
-        return "식당 미선택"
+        return "MCC식당"
     }
     
     func getYonginRestaurantName() -> String {
