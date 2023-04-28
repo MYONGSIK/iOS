@@ -109,7 +109,6 @@
 		A258496B29E687C900E75568 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A258496A29E687C900E75568 /* WidgetKit.framework */; };
 		A258496D29E687C900E75568 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A258496C29E687C900E75568 /* SwiftUI.framework */; };
 		A258497029E687C900E75568 /* DailyFoodWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258496F29E687C900E75568 /* DailyFoodWidgetBundle.swift */; };
-		A258497229E687C900E75568 /* DailyFoodWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258497129E687C900E75568 /* DailyFoodWidgetLiveActivity.swift */; };
 		A258497429E687C900E75568 /* DailyFoodWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258497329E687C900E75568 /* DailyFoodWidget.swift */; };
 		A258497629E687CA00E75568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A258497529E687CA00E75568 /* Assets.xcassets */; };
 		A258497A29E687CA00E75568 /* DailyFoodWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A258496929E687C900E75568 /* DailyFoodWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -279,7 +278,6 @@
 		A258496A29E687C900E75568 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		A258496C29E687C900E75568 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		A258496F29E687C900E75568 /* DailyFoodWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyFoodWidgetBundle.swift; sourceTree = "<group>"; };
-		A258497129E687C900E75568 /* DailyFoodWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyFoodWidgetLiveActivity.swift; sourceTree = "<group>"; };
 		A258497329E687C900E75568 /* DailyFoodWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyFoodWidget.swift; sourceTree = "<group>"; };
 		A258497529E687CA00E75568 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A258497729E687CA00E75568 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -759,7 +757,6 @@
 			isa = PBXGroup;
 			children = (
 				A258496F29E687C900E75568 /* DailyFoodWidgetBundle.swift */,
-				A258497129E687C900E75568 /* DailyFoodWidgetLiveActivity.swift */,
 				A258497329E687C900E75568 /* DailyFoodWidget.swift */,
 				A258497529E687CA00E75568 /* Assets.xcassets */,
 				A258497729E687CA00E75568 /* Info.plist */,
@@ -1175,7 +1172,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A258497429E687C900E75568 /* DailyFoodWidget.swift in Sources */,
-				A258497229E687C900E75568 /* DailyFoodWidgetLiveActivity.swift in Sources */,
 				A2EA100F29F412AA000D600B /* UserDefaults+.swift in Sources */,
 				A258497029E687C900E75568 /* DailyFoodWidgetBundle.swift in Sources */,
 			);
@@ -1385,7 +1381,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/yoosang/Desktop/Myongsik_iOS/Kakao-Map-Bridge-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/gimchowon/Desktop/Myongsik/iOS/Kakao-Map-Bridge-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1430,7 +1426,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/yoosang/Desktop/Myongsik_iOS/Kakao-Map-Bridge-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/gimchowon/Desktop/Myongsik/iOS/Kakao-Map-Bridge-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1526,7 +1522,7 @@
 				INFOPLIST_FILE = DailyFoodWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DailyFoodWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1556,7 +1552,7 @@
 				INFOPLIST_FILE = DailyFoodWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DailyFoodWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

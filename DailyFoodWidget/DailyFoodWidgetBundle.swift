@@ -12,6 +12,6 @@ import SwiftUI
 struct DailyFoodWidgetBundle: WidgetBundle {
     var body: some Widget {
         DailyFoodWidget()
-        DailyFoodWidgetLiveActivity()
+//        DailyFoodWidgetLiveActivity()
     }
 }
