@@ -57,6 +57,7 @@ class RestaurantMainViewController: MainBaseViewController {
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
+        fetchRankData()
         
     }
     override func viewDidAppear(_ animated: Bool) {
