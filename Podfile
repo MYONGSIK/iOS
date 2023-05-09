@@ -12,6 +12,9 @@ target 'MYONGSIK' do
 	pod 'Kingfisher'
 	pod 'Alamofire'
 	pod 'DropDown'
+  pod 'Firebase'
+  pod 'Firebase/Core'
+  pod 'Firebase/Analytics'
 
 	#RxSwift
     	pod 'RxSwift'
