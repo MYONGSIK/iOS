@@ -92,7 +92,7 @@ class UpdateBottomAlertViewController: UIViewController {
         
         self.view.addSubview(bottomView)
         bottomView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(height/2)
+            make.top.equalToSuperview().offset(height/3)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()

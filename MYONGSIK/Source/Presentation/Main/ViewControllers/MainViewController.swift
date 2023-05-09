@@ -150,7 +150,6 @@ class MainViewController: MainBaseViewController {
         if UserDefaults.standard.value(forKey: "StopAlert") == nil {
             let updateAlert = UpdateBottomAlertViewController()
             
-            updateAlert.modalPresentationStyle = .overFullScreen
             
             self.present(updateAlert, animated: true)
         }
