@@ -402,8 +402,9 @@ struct DailyFoodWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
                      DailyFoodWidgetEntryView(entry: entry)
                  }
-                 .configurationDisplayName("My Widget")
-                 .description("This is an example widget.")
+                 .configurationDisplayName("명식이")
+                 .description("학식을 위젯으로 편학게 보세요~")
+                 .supportedFamilies([.systemLarge])
     }
 }
 
