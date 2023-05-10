@@ -187,13 +187,15 @@ extension MapViewController: MTMapViewDelegate {
         swipeDownGesture.direction = .down
         self.storeInfoView.addGestureRecognizer(swipeDownGesture)
         
+        let height = UIScreen.main.bounds.height
+        
         
         self.view.addSubview(self.storeInfoView)
         self.storeInfoView.snp.makeConstraints {
             $0.bottom.equalToSuperview()
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
-            $0.height.equalTo(280)
+            $0.height.equalTo(height/3+20)
         }
         
         return false
@@ -205,7 +207,7 @@ extension MapViewController {
     func fetchResData() {
         
         let queryParam: Parameters = [
-            "sort": "scrapCount,desc",
+            "sort": "scrapCount,asc",
             "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
             "size": Int32.max
         ]
