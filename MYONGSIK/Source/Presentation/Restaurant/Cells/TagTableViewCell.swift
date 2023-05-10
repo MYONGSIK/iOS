@@ -38,8 +38,8 @@ class TagTableViewCell: UITableViewCell {
         self.contentView.addSubview(tagContainerView)
         tagContainerView.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(10)
-            make.trailing.bottom.equalToSuperview().inset(12)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().inset(12)
         }
         
         /// set tag button
@@ -83,7 +83,7 @@ class TagTableViewCell: UITableViewCell {
                 tagContainerView.addSubview(btn)
 
                 btn.snp.makeConstraints { make in
-                    make.width.equalToSuperview().dividedBy(2.1)
+                    make.width.equalToSuperview().dividedBy(2.22)
                     make.height.equalToSuperview().dividedBy(2.2)
                 }
                 
@@ -92,22 +92,22 @@ class TagTableViewCell: UITableViewCell {
         
         mealTagButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(2)
-            make.leading.equalToSuperview().offset(4)
+            make.leading.equalToSuperview().offset(12)
         }
         
         cafeTagButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(2)
-            make.trailing.equalToSuperview().inset(4)
+            make.trailing.equalToSuperview().inset(12)
         }
         
         drinkTagButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(2)
-            make.leading.equalToSuperview().offset(4)
+            make.leading.equalToSuperview().offset(12)
         }
         
         bakeryTagButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(2)
-            make.trailing.equalToSuperview().inset(4)
+            make.trailing.equalToSuperview().inset(12)
         }
     }
     
