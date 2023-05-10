@@ -98,7 +98,6 @@
 		A23DA70729A7EFEA003FDA56 /* RegisterUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70629A7EFEA003FDA56 /* RegisterUUID.swift */; };
 		A23DA70929A7F1AD003FDA56 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70829A7F1AD003FDA56 /* UserModel.swift */; };
 		A23DA70B29A89575003FDA56 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70A29A89575003FDA56 /* UIResponder+.swift */; };
-		A23DA70D29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70C29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift */; };
 		A23DA70F29A8A971003FDA56 /* MindFoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70E29A8A971003FDA56 /* MindFoodModel.swift */; };
 		A23F2DB129A2F9750046ED70 /* SubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */; };
 		A23F2DB829A3131C0046ED70 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DB729A3131C0046ED70 /* SplashViewController.swift */; };
@@ -268,7 +267,6 @@
 		A23DA70629A7EFEA003FDA56 /* RegisterUUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUUID.swift; sourceTree = "<group>"; };
 		A23DA70829A7F1AD003FDA56 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		A23DA70A29A89575003FDA56 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
-		A23DA70C29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbButtonSetPopupViewController.swift; sourceTree = "<group>"; };
 		A23DA70E29A8A971003FDA56 /* MindFoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindFoodModel.swift; sourceTree = "<group>"; };
 		A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitViewController.swift; path = ../ViewModels/SubmitViewController.swift; sourceTree = "<group>"; };
 		A23F2DB729A3131C0046ED70 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -585,7 +583,6 @@
 			isa = PBXGroup;
 			children = (
 				23735B0328FEE24900599221 /* MainTableViewCell.swift */,
-				A23DA70C29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift */,
 				A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */,
 			);
 			path = Cells;
@@ -1126,7 +1123,6 @@
 				2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */,
 				238F56342910AC170044214F /* SearchResultTableViewCell.swift in Sources */,
 				23B9E89D29114670009B6D8F /* TagTableViewCell.swift in Sources */,
-				A23DA70D29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift in Sources */,
 				A23DA70B29A89575003FDA56 /* UIResponder+.swift in Sources */,
 				238F562F2910A6D60044214F /* KakaoMapModel.swift in Sources */,
 				A2A7966529A4702100A2F2E2 /* SelectRestaurantViewController.swift in Sources */,

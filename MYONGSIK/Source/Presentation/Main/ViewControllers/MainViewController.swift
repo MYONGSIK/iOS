@@ -146,13 +146,17 @@ class MainViewController: MainBaseViewController {
     }
      
     private func showUpdateAlert() {
-        if UserDefaults.standard.value(forKey: "StopAlert") == nil {
-            let updateAlert = UpdateBottomAlertViewController()
-            updateAlert.delegate = self
-            updateAlert.modalPresentationStyle = .overFullScreen
-            self.present(updateAlert, animated: true)
-        }else {
-            showAdVC()
+        if let userCampus = UserDefaults.standard.value(forKey: "userCampus") {
+            if userCampus as! String == CampusInfo.seoul.name  {
+                if UserDefaults.standard.value(forKey: "StopAlert") == nil  {
+                    let updateAlert = UpdateBottomAlertViewController()
+                    updateAlert.delegate = self
+                    updateAlert.modalPresentationStyle = .overFullScreen
+                    self.present(updateAlert, animated: true)
+                }else {
+                    showAdVC()
+                }
+            }
         }
     }
     
