@@ -300,7 +300,7 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 0:
             return 60
         case 1:
-            return 200
+            return 225
         case 2:
             return 46
         default:
