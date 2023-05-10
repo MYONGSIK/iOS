@@ -132,7 +132,6 @@ class MainViewController: MainBaseViewController {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
       
-        
         showUpdateAlert()
         
         setSelectedRes()
@@ -149,11 +148,18 @@ class MainViewController: MainBaseViewController {
     private func showUpdateAlert() {
         if UserDefaults.standard.value(forKey: "StopAlert") == nil {
             let updateAlert = UpdateBottomAlertViewController()
-            
+            updateAlert.delegate = self
             updateAlert.modalPresentationStyle = .overFullScreen
-            
             self.present(updateAlert, animated: true)
+        }else {
+            showAdVC()
         }
+    }
+    
+    private func showAdVC() {
+       let gaAdController = GoogleMobileAdsController()
+        
+        gaAdController.createAndLoadInterstitial(vc: self)
     }
     
 
@@ -595,5 +601,11 @@ extension MainViewController {
                           animations: { () -> Void in
                           self.tableView.reloadData()},
                           completion: nil);
+    }
+}
+
+extension MainViewController: UpdateBottomDelegate {
+    func dissmissShowGaAd() {
+        showAdVC()
     }
 }

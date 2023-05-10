@@ -6,7 +6,8 @@
 //
 
 import UIKit
-import FirebaseCore
+import Firebase
+import GoogleMobileAds
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         FirebaseApp.configure()
+        GADMobileAds.sharedInstance().start()
         return true
     }
 

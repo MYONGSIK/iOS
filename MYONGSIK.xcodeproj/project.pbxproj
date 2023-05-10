@@ -51,9 +51,11 @@
 		23C993AA2910945400B8D1E4 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C993A92910945400B8D1E4 /* UITextField.swift */; };
 		23E6ACA9290130C50091D803 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6ACA8290130C50091D803 /* UIDevice.swift */; };
 		58A23E1C2028CBEE0CA8BC47 /* Pods_MYONGSIKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */; };
+		7303B8AE2A0A4E7D004C4C52 /* GaAdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7303B8AD2A0A4E7D004C4C52 /* GaAdViewController.swift */; };
+		7303B8B02A0AA28F004C4C52 /* GoogleMobileAdsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7303B8AF2A0AA28F004C4C52 /* GoogleMobileAdsController.swift */; };
+		7303B8B22A0AA52D004C4C52 /* GoogleMobileAdsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7303B8B12A0AA52D004C4C52 /* GoogleMobileAdsKey.swift */; };
 		73178AC129EAFC3A001C3AA4 /* MapStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */; };
 		73178AD829EED14A001C3AA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */; };
-		73178ADB29EED194001C3AA4 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 73178ADA29EED194001C3AA4 /* FirebaseAnalytics */; };
 		736A8DF829E999E200D30A35 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736A8DF729E999E200D30A35 /* MapViewController.swift */; };
 		736A8DFC29E9A01700D30A35 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFB29E9A01700D30A35 /* Metal.framework */; };
 		736A8DFE29E9A02000D30A35 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFD29E9A02000D30A35 /* SystemConfiguration.framework */; };
@@ -211,6 +213,9 @@
 		409643676213BA9A3C80FD32 /* Pods-MYONGSIKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIKTests.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIKTests/Pods-MYONGSIKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7303B8AD2A0A4E7D004C4C52 /* GaAdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaAdViewController.swift; sourceTree = "<group>"; };
+		7303B8AF2A0AA28F004C4C52 /* GoogleMobileAdsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMobileAdsController.swift; sourceTree = "<group>"; };
+		7303B8B12A0AA52D004C4C52 /* GoogleMobileAdsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMobileAdsKey.swift; sourceTree = "<group>"; };
 		73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStoreView.swift; sourceTree = "<group>"; };
 		73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		736A8DF729E999E200D30A35 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -297,7 +302,6 @@
 			files = (
 				736A8E0829E9A07800D30A35 /* libsqlite3.tbd in Frameworks */,
 				736A8E0029E9A02F00D30A35 /* CoreLocation.framework in Frameworks */,
-				73178ADB29EED194001C3AA4 /* FirebaseAnalytics in Frameworks */,
 				A202857F29C5B339008A7853 /* Toast in Frameworks */,
 				736A8E0629E9A06800D30A35 /* libc++.tbd in Frameworks */,
 				736A8E0229E9A03800D30A35 /* QuartzCore.framework in Frameworks */,
@@ -529,6 +533,8 @@
 				23166A7128FECD9D002AEFB7 /* AppDelegate.swift */,
 				23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */,
 				23A7C669290AADE900351D16 /* InfoPlist */,
+				7303B8AF2A0AA28F004C4C52 /* GoogleMobileAdsController.swift */,
+				7303B8B12A0AA52D004C4C52 /* GoogleMobileAdsKey.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -573,6 +579,7 @@
 				A2A7966429A4702100A2F2E2 /* SelectRestaurantViewController.swift */,
 				73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */,
 				A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */,
+				7303B8AD2A0A4E7D004C4C52 /* GaAdViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -807,7 +814,6 @@
 			name = MYONGSIK;
 			packageProductDependencies = (
 				A202857E29C5B339008A7853 /* Toast */,
-				73178ADA29EED194001C3AA4 /* FirebaseAnalytics */,
 			);
 			productName = MYONGSIK;
 			productReference = 23166A6E28FECD9C002AEFB7 /* MYONGSIK.app */;
@@ -907,7 +913,6 @@
 			mainGroup = 23166A6528FECD9C002AEFB7;
 			packageReferences = (
 				A202857D29C5B339008A7853 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
-				73178AD929EED194001C3AA4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 23166A6F28FECD9D002AEFB7 /* Products */;
 			projectDirPath = "";
@@ -1111,10 +1116,12 @@
 				23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */,
 				A2431C8E29A347C300D8E493 /* CALayer+.swift in Sources */,
 				23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */,
+				7303B8B22A0AA52D004C4C52 /* GoogleMobileAdsKey.swift in Sources */,
 				23C993A429108F6F00B8D1E4 /* RestaurantSearchViewController.swift in Sources */,
 				73C5B24C29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift in Sources */,
 				23B9E89B29114532009B6D8F /* TagCollectionViewCell.swift in Sources */,
 				2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */,
+				7303B8AE2A0A4E7D004C4C52 /* GaAdViewController.swift in Sources */,
 				2311611829117F9D00AD73D2 /* HeartListTableViewCell.swift in Sources */,
 				A2EA100929F3F855000D600B /* SettingRestautrantViewController.swift in Sources */,
 				A23DA70929A7F1AD003FDA56 /* UserModel.swift in Sources */,
@@ -1146,6 +1153,7 @@
 				A23DA70F29A8A971003FDA56 /* MindFoodModel.swift in Sources */,
 				A2431C8C29A3473D00D8E493 /* String+.swift in Sources */,
 				73178AC129EAFC3A001C3AA4 /* MapStoreView.swift in Sources */,
+				7303B8B02A0AA28F004C4C52 /* GoogleMobileAdsController.swift in Sources */,
 				A23F2DB829A3131C0046ED70 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1374,7 +1382,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.10;
+				MARKETING_VERSION = 1.1.11;
 				PRODUCT_BUNDLE_IDENTIFIER = gomin.MYONGSIK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1419,7 +1427,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.10;
+				MARKETING_VERSION = 1.1.11;
 				PRODUCT_BUNDLE_IDENTIFIER = gomin.MYONGSIK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1528,7 +1536,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.10;
+				MARKETING_VERSION = 1.1.11;
 				PRODUCT_BUNDLE_IDENTIFIER = gomin.MYONGSIK.DailyFoodWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1558,7 +1566,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.10;
+				MARKETING_VERSION = 1.1.11;
 				PRODUCT_BUNDLE_IDENTIFIER = gomin.MYONGSIK.DailyFoodWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1619,14 +1627,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		73178AD929EED194001C3AA4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.0.0;
-			};
-		};
 		A202857D29C5B339008A7853 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
@@ -1638,11 +1638,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		73178ADA29EED194001C3AA4 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 73178AD929EED194001C3AA4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
 		A202857E29C5B339008A7853 /* Toast */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A202857D29C5B339008A7853 /* XCRemoteSwiftPackageReference "Toast-Swift" */;

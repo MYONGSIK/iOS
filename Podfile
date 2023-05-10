@@ -12,6 +12,10 @@ target 'MYONGSIK' do
 	pod 'Kingfisher'
 	pod 'Alamofire'
 	pod 'DropDown'
+  pod 'Firebase'
+  pod 'Firebase/Core'
+  pod 'Firebase/Analytics'
+  pod 'Google-Mobile-Ads-SDK'
 
 	#RxSwift
     	pod 'RxSwift'
