@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "resIcon_drink.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
