@@ -304,10 +304,10 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 2:
             return 46
         default:
-//            switch self.cellMode {
-//            case .rankCell: return 200
-//            case .kakaoCell: return 170
-//            }
+            switch self.cellMode {
+            case .rankCell: return 200
+            case .kakaoCell: return 170
+            }
             return 200
         }
     }
