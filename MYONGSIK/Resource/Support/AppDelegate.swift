@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import GoogleMobileAds
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,17 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // MARK: LaunchScreen
         // 각 상황별로 실행할 작업을 클로저 내에 작성
-        let uuid = UIDevice.current.identifierForVendor!.uuidString
-        checkAppFirstrunOrUpdateStatus {
-            print("앱 설치 후 최초 UUID - \(uuid)")
-            registerUser(uuid: uuid)
-        } updated: {
-            print("앱 버전 변경 후 최초 UUID - \(uuid)")
-            registerUser(uuid: uuid)
-        } nothingChanged: {
-            print("변경 사항 없음")
+        
+        
+        if RegisterUUID.shared.getDeviceID() == "" {
+            _ = RegisterUUID.shared.createDeviceID()
         }
         
+        FirebaseApp.configure()
+        GADMobileAds.sharedInstance().start()
         return true
     }
 

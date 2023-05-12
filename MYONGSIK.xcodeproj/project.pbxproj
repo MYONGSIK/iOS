@@ -51,22 +51,74 @@
 		23C993AA2910945400B8D1E4 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C993A92910945400B8D1E4 /* UITextField.swift */; };
 		23E6ACA9290130C50091D803 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6ACA8290130C50091D803 /* UIDevice.swift */; };
 		58A23E1C2028CBEE0CA8BC47 /* Pods_MYONGSIKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */; };
+		7303B8B02A0AA28F004C4C52 /* GoogleMobileAdsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7303B8AF2A0AA28F004C4C52 /* GoogleMobileAdsController.swift */; };
+		7303B8B22A0AA52D004C4C52 /* GoogleMobileAdsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7303B8B12A0AA52D004C4C52 /* GoogleMobileAdsKey.swift */; };
+		73178AC129EAFC3A001C3AA4 /* MapStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */; };
+		73178AD829EED14A001C3AA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */; };
+		736A8DF829E999E200D30A35 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736A8DF729E999E200D30A35 /* MapViewController.swift */; };
+		736A8DFC29E9A01700D30A35 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFB29E9A01700D30A35 /* Metal.framework */; };
+		736A8DFE29E9A02000D30A35 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFD29E9A02000D30A35 /* SystemConfiguration.framework */; };
+		736A8E0029E9A02F00D30A35 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFF29E9A02F00D30A35 /* CoreLocation.framework */; };
+		736A8E0229E9A03800D30A35 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8E0129E9A03700D30A35 /* QuartzCore.framework */; };
+		736A8E0629E9A06800D30A35 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8E0329E9A04300D30A35 /* libc++.tbd */; };
+		736A8E0729E9A07000D30A35 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8E0429E9A04C00D30A35 /* libxml2.tbd */; };
+		736A8E0829E9A07800D30A35 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8E0529E9A05800D30A35 /* libsqlite3.tbd */; };
+		736A92A029E9A8E300D30A35 /* map_pinup_custom@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A927B29E9A8E300D30A35 /* map_pinup_custom@3x.png */; };
+		736A92A129E9A8E300D30A35 /* map_pin_custom.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A927C29E9A8E300D30A35 /* map_pin_custom.png */; };
+		736A92A229E9A8E300D30A35 /* shadow_balloon.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A927D29E9A8E300D30A35 /* shadow_balloon.png */; };
+		736A92A329E9A8E300D30A35 /* map_pinup.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A927E29E9A8E300D30A35 /* map_pinup.png */; };
+		736A92A429E9A8E300D30A35 /* detail_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A927F29E9A8E300D30A35 /* detail_button.png */; };
+		736A92A529E9A8E300D30A35 /* map_pin_custom@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A928029E9A8E300D30A35 /* map_pin_custom@3x.png */; };
+		736A92A629E9A8E300D30A35 /* map_pinup@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A928129E9A8E300D30A35 /* map_pinup@3x.png */; };
+		736A92A729E9A8E300D30A35 /* map_pin_shadow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A928229E9A8E300D30A35 /* map_pin_shadow@3x.png */; };
+		736A92A829E9A8E300D30A35 /* copyright.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A928329E9A8E300D30A35 /* copyright.png */; };
+		736A92A929E9A8E300D30A35 /* th_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A928429E9A8E300D30A35 /* th_line.png */; };
+		736A92AA29E9A8E300D30A35 /* map_pin_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A928529E9A8E300D30A35 /* map_pin_red@3x.png */; };
+		736A92AB29E9A8E300D30A35 /* daum_copyright.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A928629E9A8E300D30A35 /* daum_copyright.png */; };
+		736A92AC29E9A8E300D30A35 /* map_pin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A928729E9A8E300D30A35 /* map_pin@3x.png */; };
+		736A92AD29E9A8E300D30A35 /* map_present_tracking.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A928829E9A8E300D30A35 /* map_present_tracking.png */; };
+		736A92AE29E9A8E300D30A35 /* map_pin_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A928929E9A8E300D30A35 /* map_pin_red.png */; };
+		736A92AF29E9A8E300D30A35 /* info_box.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929329E9A8E300D30A35 /* info_box.png */; };
+		736A92B029E9A8E300D30A35 /* point_sprite.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929429E9A8E300D30A35 /* point_sprite.png */; };
+		736A92B129E9A8E300D30A35 /* map_pinup_custom.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929529E9A8E300D30A35 /* map_pinup_custom.png */; };
+		736A92B229E9A8E300D30A35 /* info_box_tail.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929629E9A8E300D30A35 /* info_box_tail.png */; };
+		736A92B329E9A8E300D30A35 /* noimage256.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929729E9A8E300D30A35 /* noimage256.png */; };
+		736A92B429E9A8E300D30A35 /* map_present_direction.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929829E9A8E300D30A35 /* map_present_direction.png */; };
+		736A92B529E9A8E300D30A35 /* map_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929929E9A8E300D30A35 /* map_pin.png */; };
+		736A92B629E9A8E300D30A35 /* map_present.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929A29E9A8E300D30A35 /* map_present.png */; };
+		736A92B729E9A8E300D30A35 /* noimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929B29E9A8E300D30A35 /* noimage.png */; };
+		736A92B829E9A8E300D30A35 /* map_present_background_update.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929C29E9A8E300D30A35 /* map_present_background_update.png */; };
+		736A92B929E9A8E300D30A35 /* daum_th_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929D29E9A8E300D30A35 /* daum_th_line.png */; };
+		736A92BA29E9A8E300D30A35 /* map_pin_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 736A929E29E9A8E300D30A35 /* map_pin_shadow.png */; };
+		736A92BB29E9A8E300D30A35 /* DaumMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A929F29E9A8E300D30A35 /* DaumMap.framework */; };
+		73C5B24C29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */; };
 		92033E7EAD47D14ADA175F1B /* Pods_MYONGSIK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */; };
 		A202857F29C5B339008A7853 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = A202857E29C5B339008A7853 /* Toast */; };
 		A202858129C7520C008A7853 /* StoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A202858029C7520C008A7853 /* StoreModel.swift */; };
 		A23DA70729A7EFEA003FDA56 /* RegisterUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70629A7EFEA003FDA56 /* RegisterUUID.swift */; };
 		A23DA70929A7F1AD003FDA56 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70829A7F1AD003FDA56 /* UserModel.swift */; };
 		A23DA70B29A89575003FDA56 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70A29A89575003FDA56 /* UIResponder+.swift */; };
-		A23DA70D29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70C29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift */; };
 		A23DA70F29A8A971003FDA56 /* MindFoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70E29A8A971003FDA56 /* MindFoodModel.swift */; };
-		A23F2DAF29A2F9080046ED70 /* SubmitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DAE29A2F9080046ED70 /* SubmitData.swift */; };
 		A23F2DB129A2F9750046ED70 /* SubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */; };
 		A23F2DB829A3131C0046ED70 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DB729A3131C0046ED70 /* SplashViewController.swift */; };
 		A2431C8929A3243D00D8E493 /* CampusSetPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2431C8829A3243D00D8E493 /* CampusSetPopupViewController.swift */; };
 		A2431C8C29A3473D00D8E493 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2431C8B29A3473D00D8E493 /* String+.swift */; };
 		A2431C8E29A347C300D8E493 /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2431C8D29A347C300D8E493 /* CALayer+.swift */; };
 		A2431C9029A34FBA00D8E493 /* PopupBaseVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2431C8F29A34FBA00D8E493 /* PopupBaseVIewController.swift */; };
+		A258490329E6812A00E75568 /* SubmitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258490229E6812A00E75568 /* SubmitData.swift */; };
+		A258496B29E687C900E75568 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A258496A29E687C900E75568 /* WidgetKit.framework */; };
+		A258496D29E687C900E75568 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A258496C29E687C900E75568 /* SwiftUI.framework */; };
+		A258497029E687C900E75568 /* DailyFoodWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258496F29E687C900E75568 /* DailyFoodWidgetBundle.swift */; };
+		A258497429E687C900E75568 /* DailyFoodWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258497329E687C900E75568 /* DailyFoodWidget.swift */; };
+		A258497629E687CA00E75568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A258497529E687CA00E75568 /* Assets.xcassets */; };
+		A258497A29E687CA00E75568 /* DailyFoodWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A258496929E687C900E75568 /* DailyFoodWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A2A7966529A4702100A2F2E2 /* SelectRestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7966429A4702100A2F2E2 /* SelectRestaurantViewController.swift */; };
+		A2DC657F2A0CB43700D8C6F9 /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2DC657E2A0CB43700D8C6F9 /* MainCollectionViewCell.swift */; };
+		A2DC65852A0CC79000D8C6F9 /* MainFoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2DC65842A0CC79000D8C6F9 /* MainFoodTableViewCell.swift */; };
+		A2EA100929F3F855000D600B /* SettingRestautrantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */; };
+		A2EA100B29F3FAD4000D600B /* SettingResTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */; };
+		A2EA100E29F41162000D600B /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100D29F41162000D600B /* UserDefaults+.swift */; };
+		A2EA100F29F412AA000D600B /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA100D29F41162000D600B /* UserDefaults+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,7 +136,28 @@
 			remoteGlobalIDString = 23166A6D28FECD9C002AEFB7;
 			remoteInfo = MYONGSIK;
 		};
+		A258497829E687CA00E75568 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 23166A6628FECD9C002AEFB7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A258496829E687C900E75568;
+			remoteInfo = DailyFoodWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A258497B29E687CA00E75568 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A258497A29E687CA00E75568 /* DailyFoodWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		05499D88CFD8F6094E3854DF /* Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -140,22 +213,85 @@
 		409643676213BA9A3C80FD32 /* Pods-MYONGSIKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIKTests.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIKTests/Pods-MYONGSIKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7303B8AF2A0AA28F004C4C52 /* GoogleMobileAdsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMobileAdsController.swift; sourceTree = "<group>"; };
+		7303B8B12A0AA52D004C4C52 /* GoogleMobileAdsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMobileAdsKey.swift; sourceTree = "<group>"; };
+		73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStoreView.swift; sourceTree = "<group>"; };
+		73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		736A8DF729E999E200D30A35 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		736A8DFB29E9A01700D30A35 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		736A8DFD29E9A02000D30A35 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		736A8DFF29E9A02F00D30A35 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		736A8E0129E9A03700D30A35 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		736A8E0329E9A04300D30A35 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		736A8E0429E9A04C00D30A35 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		736A8E0529E9A05800D30A35 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		736A8E0E29E9A3DC00D30A35 /* Kakao-Map-Bridge-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Kakao-Map-Bridge-Header.h"; sourceTree = "<group>"; };
+		736A927B29E9A8E300D30A35 /* map_pinup_custom@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pinup_custom@3x.png"; sourceTree = "<group>"; };
+		736A927C29E9A8E300D30A35 /* map_pin_custom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin_custom.png; sourceTree = "<group>"; };
+		736A927D29E9A8E300D30A35 /* shadow_balloon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shadow_balloon.png; sourceTree = "<group>"; };
+		736A927E29E9A8E300D30A35 /* map_pinup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pinup.png; sourceTree = "<group>"; };
+		736A927F29E9A8E300D30A35 /* detail_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail_button.png; sourceTree = "<group>"; };
+		736A928029E9A8E300D30A35 /* map_pin_custom@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pin_custom@3x.png"; sourceTree = "<group>"; };
+		736A928129E9A8E300D30A35 /* map_pinup@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pinup@3x.png"; sourceTree = "<group>"; };
+		736A928229E9A8E300D30A35 /* map_pin_shadow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pin_shadow@3x.png"; sourceTree = "<group>"; };
+		736A928329E9A8E300D30A35 /* copyright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = copyright.png; sourceTree = "<group>"; };
+		736A928429E9A8E300D30A35 /* th_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = th_line.png; sourceTree = "<group>"; };
+		736A928529E9A8E300D30A35 /* map_pin_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pin_red@3x.png"; sourceTree = "<group>"; };
+		736A928629E9A8E300D30A35 /* daum_copyright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = daum_copyright.png; sourceTree = "<group>"; };
+		736A928729E9A8E300D30A35 /* map_pin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pin@3x.png"; sourceTree = "<group>"; };
+		736A928829E9A8E300D30A35 /* map_present_tracking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_present_tracking.png; sourceTree = "<group>"; };
+		736A928929E9A8E300D30A35 /* map_pin_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin_red.png; sourceTree = "<group>"; };
+		736A928B29E9A8E300D30A35 /* MTMapPOIItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTMapPOIItem.h; sourceTree = "<group>"; };
+		736A928C29E9A8E300D30A35 /* MTMapCameraUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTMapCameraUpdate.h; sourceTree = "<group>"; };
+		736A928D29E9A8E300D30A35 /* MTMapReverseGeoCoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTMapReverseGeoCoder.h; sourceTree = "<group>"; };
+		736A928E29E9A8E300D30A35 /* MTMapPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTMapPolyline.h; sourceTree = "<group>"; };
+		736A928F29E9A8E300D30A35 /* MTMapLocationMarkerItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTMapLocationMarkerItem.h; sourceTree = "<group>"; };
+		736A929029E9A8E300D30A35 /* MTMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTMapView.h; sourceTree = "<group>"; };
+		736A929129E9A8E300D30A35 /* MTMapGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTMapGeometry.h; sourceTree = "<group>"; };
+		736A929229E9A8E300D30A35 /* MTMapCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTMapCircle.h; sourceTree = "<group>"; };
+		736A929329E9A8E300D30A35 /* info_box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info_box.png; sourceTree = "<group>"; };
+		736A929429E9A8E300D30A35 /* point_sprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = point_sprite.png; sourceTree = "<group>"; };
+		736A929529E9A8E300D30A35 /* map_pinup_custom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pinup_custom.png; sourceTree = "<group>"; };
+		736A929629E9A8E300D30A35 /* info_box_tail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info_box_tail.png; sourceTree = "<group>"; };
+		736A929729E9A8E300D30A35 /* noimage256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noimage256.png; sourceTree = "<group>"; };
+		736A929829E9A8E300D30A35 /* map_present_direction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_present_direction.png; sourceTree = "<group>"; };
+		736A929929E9A8E300D30A35 /* map_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin.png; sourceTree = "<group>"; };
+		736A929A29E9A8E300D30A35 /* map_present.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_present.png; sourceTree = "<group>"; };
+		736A929B29E9A8E300D30A35 /* noimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noimage.png; sourceTree = "<group>"; };
+		736A929C29E9A8E300D30A35 /* map_present_background_update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_present_background_update.png; sourceTree = "<group>"; };
+		736A929D29E9A8E300D30A35 /* daum_th_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = daum_th_line.png; sourceTree = "<group>"; };
+		736A929E29E9A8E300D30A35 /* map_pin_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin_shadow.png; sourceTree = "<group>"; };
+		736A929F29E9A8E300D30A35 /* DaumMap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DaumMap.framework; sourceTree = "<group>"; };
+		73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBottomAlertViewController.swift; sourceTree = "<group>"; };
 		7595CF6EE606B781645AD9EB /* Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; sourceTree = "<group>"; };
 		77CEA1CD0123C0563A94A6E1 /* Pods-MYONGSIK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.debug.xcconfig"; sourceTree = "<group>"; };
 		A202858029C7520C008A7853 /* StoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModel.swift; sourceTree = "<group>"; };
 		A23DA70629A7EFEA003FDA56 /* RegisterUUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUUID.swift; sourceTree = "<group>"; };
 		A23DA70829A7F1AD003FDA56 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		A23DA70A29A89575003FDA56 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
-		A23DA70C29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbButtonSetPopupViewController.swift; sourceTree = "<group>"; };
 		A23DA70E29A8A971003FDA56 /* MindFoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindFoodModel.swift; sourceTree = "<group>"; };
-		A23F2DAE29A2F9080046ED70 /* SubmitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitData.swift; path = "../../../../../iOS 2/MYONGSIK/Source/Domain/Entity/SubmitData.swift"; sourceTree = "<group>"; };
 		A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitViewController.swift; path = ../ViewModels/SubmitViewController.swift; sourceTree = "<group>"; };
 		A23F2DB729A3131C0046ED70 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		A2431C8829A3243D00D8E493 /* CampusSetPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusSetPopupViewController.swift; sourceTree = "<group>"; };
 		A2431C8B29A3473D00D8E493 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		A2431C8D29A347C300D8E493 /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 		A2431C8F29A34FBA00D8E493 /* PopupBaseVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBaseVIewController.swift; sourceTree = "<group>"; };
+		A258490229E6812A00E75568 /* SubmitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitData.swift; sourceTree = "<group>"; };
+		A258496929E687C900E75568 /* DailyFoodWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DailyFoodWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A258496A29E687C900E75568 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		A258496C29E687C900E75568 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		A258496F29E687C900E75568 /* DailyFoodWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyFoodWidgetBundle.swift; sourceTree = "<group>"; };
+		A258497329E687C900E75568 /* DailyFoodWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyFoodWidget.swift; sourceTree = "<group>"; };
+		A258497529E687CA00E75568 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A258497729E687CA00E75568 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2A7966429A4702100A2F2E2 /* SelectRestaurantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRestaurantViewController.swift; sourceTree = "<group>"; };
+		A2DC657E2A0CB43700D8C6F9 /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
+		A2DC65842A0CC79000D8C6F9 /* MainFoodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFoodTableViewCell.swift; sourceTree = "<group>"; };
+		A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRestautrantViewController.swift; sourceTree = "<group>"; };
+		A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingResTableViewCell.swift; sourceTree = "<group>"; };
+		A2EA100C29F41130000D600B /* MYONGSIK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MYONGSIK.entitlements; sourceTree = "<group>"; };
+		A2EA100D29F41162000D600B /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
+		A2EA101229F4264A000D600B /* DailyFoodWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DailyFoodWidgetExtension.entitlements; sourceTree = "<group>"; };
 		AE9F16CCD51F90ED1842BEA4 /* Pods-MYONGSIK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -164,8 +300,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				736A8E0829E9A07800D30A35 /* libsqlite3.tbd in Frameworks */,
+				736A8E0029E9A02F00D30A35 /* CoreLocation.framework in Frameworks */,
 				A202857F29C5B339008A7853 /* Toast in Frameworks */,
+				736A8E0629E9A06800D30A35 /* libc++.tbd in Frameworks */,
+				736A8E0229E9A03800D30A35 /* QuartzCore.framework in Frameworks */,
+				736A8DFE29E9A02000D30A35 /* SystemConfiguration.framework in Frameworks */,
 				23451DED29117633006AE030 /* WebKit.framework in Frameworks */,
+				736A8E0729E9A07000D30A35 /* libxml2.tbd in Frameworks */,
+				736A8DFC29E9A01700D30A35 /* Metal.framework in Frameworks */,
+				736A92BB29E9A8E300D30A35 /* DaumMap.framework in Frameworks */,
 				92033E7EAD47D14ADA175F1B /* Pods_MYONGSIK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -183,6 +327,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				16E35826E03E14564D74F8D8 /* Pods_MYONGSIK_MYONGSIKUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A258496629E687C900E75568 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A258496D29E687C900E75568 /* SwiftUI.framework in Frameworks */,
+				A258496B29E687C900E75568 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,9 +358,12 @@
 		23166A6528FECD9C002AEFB7 = {
 			isa = PBXGroup;
 			children = (
+				A2EA101229F4264A000D600B /* DailyFoodWidgetExtension.entitlements */,
+				736A8E0E29E9A3DC00D30A35 /* Kakao-Map-Bridge-Header.h */,
 				23166A7028FECD9D002AEFB7 /* MYONGSIK */,
 				23166A8728FECD9F002AEFB7 /* MYONGSIKTests */,
 				23166A9128FECD9F002AEFB7 /* MYONGSIKUITests */,
+				A258496E29E687C900E75568 /* DailyFoodWidget */,
 				23166A6F28FECD9D002AEFB7 /* Products */,
 				16E3901AD54B7620460C0BD2 /* Pods */,
 				C3E767C8B313A0328B6C34CF /* Frameworks */,
@@ -220,6 +376,7 @@
 				23166A6E28FECD9C002AEFB7 /* MYONGSIK.app */,
 				23166A8428FECD9E002AEFB7 /* MYONGSIKTests.xctest */,
 				23166A8E28FECD9F002AEFB7 /* MYONGSIKUITests.xctest */,
+				A258496929E687C900E75568 /* DailyFoodWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -227,6 +384,8 @@
 		23166A7028FECD9D002AEFB7 /* MYONGSIK */ = {
 			isa = PBXGroup;
 			children = (
+				A2EA100C29F41130000D600B /* MYONGSIK.entitlements */,
+				73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */,
 				2373E4E9290AD18A00D51B8E /* Resource */,
 				2373E4E8290AD18500D51B8E /* Source */,
 				23166A7A28FECD9E002AEFB7 /* Assets.xcassets */,
@@ -357,6 +516,7 @@
 		2373E4EC290AD1AC00D51B8E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				736A8DF529E999CC00D30A35 /* Map */,
 				23166AA528FEDA0A002AEFB7 /* Utils */,
 				23BE0150290E0AAF00861DA5 /* Restaurant */,
 				23BE014F290E0AA900861DA5 /* Heart */,
@@ -373,6 +533,8 @@
 				23166A7128FECD9D002AEFB7 /* AppDelegate.swift */,
 				23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */,
 				23A7C669290AADE900351D16 /* InfoPlist */,
+				7303B8AF2A0AA28F004C4C52 /* GoogleMobileAdsController.swift */,
+				7303B8B12A0AA52D004C4C52 /* GoogleMobileAdsKey.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -383,7 +545,7 @@
 				2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */,
 				238F562E2910A6D60044214F /* KakaoMapModel.swift */,
 				231161192911807A00AD73D2 /* HeartListData.swift */,
-				A23F2DAE29A2F9080046ED70 /* SubmitData.swift */,
+				A258490229E6812A00E75568 /* SubmitData.swift */,
 				A23DA70829A7F1AD003FDA56 /* UserModel.swift */,
 				A23DA70E29A8A971003FDA56 /* MindFoodModel.swift */,
 				A202858029C7520C008A7853 /* StoreModel.swift */,
@@ -415,6 +577,8 @@
 				23166A7528FECD9D002AEFB7 /* MainViewController.swift */,
 				A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */,
 				A2A7966429A4702100A2F2E2 /* SelectRestaurantViewController.swift */,
+				73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */,
+				A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -423,7 +587,9 @@
 			isa = PBXGroup;
 			children = (
 				23735B0328FEE24900599221 /* MainTableViewCell.swift */,
-				A23DA70C29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift */,
+				A2EA100A29F3FAD4000D600B /* SettingResTableViewCell.swift */,
+				A2DC657E2A0CB43700D8C6F9 /* MainCollectionViewCell.swift */,
+				A2DC65842A0CC79000D8C6F9 /* MainFoodTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -499,6 +665,82 @@
 			path = KakaoMapService;
 			sourceTree = "<group>";
 		};
+		736A8DF529E999CC00D30A35 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				736A8DF629E999D600D30A35 /* ViewController */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		736A8DF629E999D600D30A35 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				736A8DF729E999E200D30A35 /* MapViewController.swift */,
+				73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		736A927929E9A8E300D30A35 /* DaumMap.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				736A927A29E9A8E300D30A35 /* Resources */,
+				736A929F29E9A8E300D30A35 /* DaumMap.framework */,
+			);
+			path = DaumMap.embeddedframework;
+			sourceTree = "<group>";
+		};
+		736A927A29E9A8E300D30A35 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				736A927B29E9A8E300D30A35 /* map_pinup_custom@3x.png */,
+				736A927C29E9A8E300D30A35 /* map_pin_custom.png */,
+				736A927D29E9A8E300D30A35 /* shadow_balloon.png */,
+				736A927E29E9A8E300D30A35 /* map_pinup.png */,
+				736A927F29E9A8E300D30A35 /* detail_button.png */,
+				736A928029E9A8E300D30A35 /* map_pin_custom@3x.png */,
+				736A928129E9A8E300D30A35 /* map_pinup@3x.png */,
+				736A928229E9A8E300D30A35 /* map_pin_shadow@3x.png */,
+				736A928329E9A8E300D30A35 /* copyright.png */,
+				736A928429E9A8E300D30A35 /* th_line.png */,
+				736A928529E9A8E300D30A35 /* map_pin_red@3x.png */,
+				736A928629E9A8E300D30A35 /* daum_copyright.png */,
+				736A928729E9A8E300D30A35 /* map_pin@3x.png */,
+				736A928829E9A8E300D30A35 /* map_present_tracking.png */,
+				736A928929E9A8E300D30A35 /* map_pin_red.png */,
+				736A928A29E9A8E300D30A35 /* Headers */,
+				736A929329E9A8E300D30A35 /* info_box.png */,
+				736A929429E9A8E300D30A35 /* point_sprite.png */,
+				736A929529E9A8E300D30A35 /* map_pinup_custom.png */,
+				736A929629E9A8E300D30A35 /* info_box_tail.png */,
+				736A929729E9A8E300D30A35 /* noimage256.png */,
+				736A929829E9A8E300D30A35 /* map_present_direction.png */,
+				736A929929E9A8E300D30A35 /* map_pin.png */,
+				736A929A29E9A8E300D30A35 /* map_present.png */,
+				736A929B29E9A8E300D30A35 /* noimage.png */,
+				736A929C29E9A8E300D30A35 /* map_present_background_update.png */,
+				736A929D29E9A8E300D30A35 /* daum_th_line.png */,
+				736A929E29E9A8E300D30A35 /* map_pin_shadow.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		736A928A29E9A8E300D30A35 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				736A928B29E9A8E300D30A35 /* MTMapPOIItem.h */,
+				736A928C29E9A8E300D30A35 /* MTMapCameraUpdate.h */,
+				736A928D29E9A8E300D30A35 /* MTMapReverseGeoCoder.h */,
+				736A928E29E9A8E300D30A35 /* MTMapPolyline.h */,
+				736A928F29E9A8E300D30A35 /* MTMapLocationMarkerItem.h */,
+				736A929029E9A8E300D30A35 /* MTMapView.h */,
+				736A929129E9A8E300D30A35 /* MTMapGeometry.h */,
+				736A929229E9A8E300D30A35 /* MTMapCircle.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
 		A23F2DB429A30ED10046ED70 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
@@ -513,17 +755,39 @@
 			children = (
 				A2431C8B29A3473D00D8E493 /* String+.swift */,
 				A2431C8D29A347C300D8E493 /* CALayer+.swift */,
+				A2EA100D29F41162000D600B /* UserDefaults+.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A258496E29E687C900E75568 /* DailyFoodWidget */ = {
+			isa = PBXGroup;
+			children = (
+				A258496F29E687C900E75568 /* DailyFoodWidgetBundle.swift */,
+				A258497329E687C900E75568 /* DailyFoodWidget.swift */,
+				A258497529E687CA00E75568 /* Assets.xcassets */,
+				A258497729E687CA00E75568 /* Info.plist */,
+			);
+			path = DailyFoodWidget;
 			sourceTree = "<group>";
 		};
 		C3E767C8B313A0328B6C34CF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				736A927929E9A8E300D30A35 /* DaumMap.embeddedframework */,
+				736A8E0529E9A05800D30A35 /* libsqlite3.tbd */,
+				736A8E0429E9A04C00D30A35 /* libxml2.tbd */,
+				736A8E0329E9A04300D30A35 /* libc++.tbd */,
+				736A8E0129E9A03700D30A35 /* QuartzCore.framework */,
+				736A8DFF29E9A02F00D30A35 /* CoreLocation.framework */,
+				736A8DFD29E9A02000D30A35 /* SystemConfiguration.framework */,
+				736A8DFB29E9A01700D30A35 /* Metal.framework */,
 				23451DEC29117633006AE030 /* WebKit.framework */,
 				6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */,
 				0F3766A332C9FBAAF6A71FF8 /* Pods_MYONGSIK_MYONGSIKUITests.framework */,
 				5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */,
+				A258496A29E687C900E75568 /* WidgetKit.framework */,
+				A258496C29E687C900E75568 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -540,10 +804,12 @@
 				23166A6B28FECD9C002AEFB7 /* Frameworks */,
 				23166A6C28FECD9C002AEFB7 /* Resources */,
 				EEDDC5406744A29A22DEECDA /* [CP] Embed Pods Frameworks */,
+				A258497B29E687CA00E75568 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A258497929E687CA00E75568 /* PBXTargetDependency */,
 			);
 			name = MYONGSIK;
 			packageProductDependencies = (
@@ -592,6 +858,23 @@
 			productReference = 23166A8E28FECD9F002AEFB7 /* MYONGSIKUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		A258496829E687C900E75568 /* DailyFoodWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A258497E29E687CA00E75568 /* Build configuration list for PBXNativeTarget "DailyFoodWidgetExtension" */;
+			buildPhases = (
+				A258496529E687C900E75568 /* Sources */,
+				A258496629E687C900E75568 /* Frameworks */,
+				A258496729E687C900E75568 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DailyFoodWidgetExtension;
+			productName = DailyFoodWidgetExtension;
+			productReference = A258496929E687C900E75568 /* DailyFoodWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -599,7 +882,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					23166A6D28FECD9C002AEFB7 = {
@@ -612,6 +895,9 @@
 					23166A8D28FECD9F002AEFB7 = {
 						CreatedOnToolsVersion = 13.4.1;
 						TestTargetID = 23166A6D28FECD9C002AEFB7;
+					};
+					A258496829E687C900E75568 = {
+						CreatedOnToolsVersion = 14.1;
 					};
 				};
 			};
@@ -635,6 +921,7 @@
 				23166A6D28FECD9C002AEFB7 /* MYONGSIK */,
 				23166A8328FECD9E002AEFB7 /* MYONGSIKTests */,
 				23166A8D28FECD9F002AEFB7 /* MYONGSIKUITests */,
+				A258496829E687C900E75568 /* DailyFoodWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -644,13 +931,41 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				736A92A329E9A8E300D30A35 /* map_pinup.png in Resources */,
+				736A92A029E9A8E300D30A35 /* map_pinup_custom@3x.png in Resources */,
 				23166A7E28FECD9E002AEFB7 /* LaunchScreen.storyboard in Resources */,
+				736A92A129E9A8E300D30A35 /* map_pin_custom.png in Resources */,
 				2348C670290074AB00355B53 /* InfoPlist.strings in Resources */,
+				736A92A729E9A8E300D30A35 /* map_pin_shadow@3x.png in Resources */,
+				736A92AE29E9A8E300D30A35 /* map_pin_red.png in Resources */,
+				736A92B329E9A8E300D30A35 /* noimage256.png in Resources */,
+				736A92B629E9A8E300D30A35 /* map_present.png in Resources */,
 				23735AFB28FEDA6100599221 /* NotoSansKR-Light.otf in Resources */,
+				736A92A929E9A8E300D30A35 /* th_line.png in Resources */,
+				736A92A429E9A8E300D30A35 /* detail_button.png in Resources */,
+				736A92B529E9A8E300D30A35 /* map_pin.png in Resources */,
+				736A92A229E9A8E300D30A35 /* shadow_balloon.png in Resources */,
+				736A92B029E9A8E300D30A35 /* point_sprite.png in Resources */,
+				736A92A829E9A8E300D30A35 /* copyright.png in Resources */,
+				736A92B229E9A8E300D30A35 /* info_box_tail.png in Resources */,
+				736A92AF29E9A8E300D30A35 /* info_box.png in Resources */,
+				736A92BA29E9A8E300D30A35 /* map_pin_shadow.png in Resources */,
 				23166A7B28FECD9E002AEFB7 /* Assets.xcassets in Resources */,
+				736A92AC29E9A8E300D30A35 /* map_pin@3x.png in Resources */,
+				736A92AA29E9A8E300D30A35 /* map_pin_red@3x.png in Resources */,
+				736A92A529E9A8E300D30A35 /* map_pin_custom@3x.png in Resources */,
 				23735AFA28FEDA6100599221 /* NotoSansKR-Bold.otf in Resources */,
+				736A92B729E9A8E300D30A35 /* noimage.png in Resources */,
 				23735AFC28FEDA6100599221 /* NotoSansKR-Regular.otf in Resources */,
+				736A92B829E9A8E300D30A35 /* map_present_background_update.png in Resources */,
+				73178AD829EED14A001C3AA4 /* GoogleService-Info.plist in Resources */,
+				736A92B929E9A8E300D30A35 /* daum_th_line.png in Resources */,
+				736A92B429E9A8E300D30A35 /* map_present_direction.png in Resources */,
+				736A92B129E9A8E300D30A35 /* map_pinup_custom.png in Resources */,
+				736A92AB29E9A8E300D30A35 /* daum_copyright.png in Resources */,
 				23166A7928FECD9D002AEFB7 /* Main.storyboard in Resources */,
+				736A92A629E9A8E300D30A35 /* map_pinup@3x.png in Resources */,
+				736A92AD29E9A8E300D30A35 /* map_present_tracking.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,6 +980,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A258496729E687C900E75568 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A258497629E687CA00E75568 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,38 +1101,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2DC657F2A0CB43700D8C6F9 /* MainCollectionViewCell.swift in Sources */,
 				2373E4E7290ACB7D00D51B8E /* Constants.swift in Sources */,
+				A2EA100E29F41162000D600B /* UserDefaults+.swift in Sources */,
 				2324102A28FF0DD50095C0CC /* PaddingLabel.swift in Sources */,
 				2394E92928FEF7C2009B6AEF /* APIModel.swift in Sources */,
 				2311611A2911807A00AD73D2 /* HeartListData.swift in Sources */,
+				A2DC65852A0CC79000D8C6F9 /* MainFoodTableViewCell.swift in Sources */,
 				23BE0154290E0AE100861DA5 /* TabBarViewController.swift in Sources */,
 				23735AFE28FEDA7F00599221 /* UIFont.swift in Sources */,
 				A2431C8929A3243D00D8E493 /* CampusSetPopupViewController.swift in Sources */,
 				23E6ACA9290130C50091D803 /* UIDevice.swift in Sources */,
 				2311611C2911952200AD73D2 /* ToastBar.swift in Sources */,
+				736A8DF829E999E200D30A35 /* MapViewController.swift in Sources */,
 				A2431C9029A34FBA00D8E493 /* PopupBaseVIewController.swift in Sources */,
 				23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */,
 				A2431C8E29A347C300D8E493 /* CALayer+.swift in Sources */,
 				23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */,
+				7303B8B22A0AA52D004C4C52 /* GoogleMobileAdsKey.swift in Sources */,
 				23C993A429108F6F00B8D1E4 /* RestaurantSearchViewController.swift in Sources */,
+				73C5B24C29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift in Sources */,
 				23B9E89B29114532009B6D8F /* TagCollectionViewCell.swift in Sources */,
 				2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */,
 				2311611829117F9D00AD73D2 /* HeartListTableViewCell.swift in Sources */,
+				A2EA100929F3F855000D600B /* SettingRestautrantViewController.swift in Sources */,
 				A23DA70929A7F1AD003FDA56 /* UserModel.swift in Sources */,
 				23C993AA2910945400B8D1E4 /* UITextField.swift in Sources */,
 				238F562D2910A54C0044214F /* KakaoMapDataManager.swift in Sources */,
 				2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */,
 				238F56342910AC170044214F /* SearchResultTableViewCell.swift in Sources */,
 				23B9E89D29114670009B6D8F /* TagTableViewCell.swift in Sources */,
-				A23DA70D29A89660003FDA56 /* ThumbButtonSetPopupViewController.swift in Sources */,
 				A23DA70B29A89575003FDA56 /* UIResponder+.swift in Sources */,
 				238F562F2910A6D60044214F /* KakaoMapModel.swift in Sources */,
 				A2A7966529A4702100A2F2E2 /* SelectRestaurantViewController.swift in Sources */,
-				A23F2DAF29A2F9080046ED70 /* SubmitData.swift in Sources */,
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				A202858129C7520C008A7853 /* StoreModel.swift in Sources */,
 				23B9E8992911356D009B6D8F /* ScreenManager.swift in Sources */,
+				A2EA100B29F3FAD4000D600B /* SettingResTableViewCell.swift in Sources */,
 				23C993A629108F7800B8D1E4 /* HeartViewController.swift in Sources */,
+				A258490329E6812A00E75568 /* SubmitData.swift in Sources */,
 				2373E4E5290AC93000D51B8E /* APIManager.swift in Sources */,
 				23735B0428FEE24900599221 /* MainTableViewCell.swift in Sources */,
 				23B9E8972911336A009B6D8F /* RestaurantMainViewController.swift in Sources */,
@@ -822,6 +1152,8 @@
 				23735B0128FEDBF900599221 /* UIColor.swift in Sources */,
 				A23DA70F29A8A971003FDA56 /* MindFoodModel.swift in Sources */,
 				A2431C8C29A3473D00D8E493 /* String+.swift in Sources */,
+				73178AC129EAFC3A001C3AA4 /* MapStoreView.swift in Sources */,
+				7303B8B02A0AA28F004C4C52 /* GoogleMobileAdsController.swift in Sources */,
 				A23F2DB829A3131C0046ED70 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -843,6 +1175,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A258496529E687C900E75568 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A258497429E687C900E75568 /* DailyFoodWidget.swift in Sources */,
+				A2EA100F29F412AA000D600B /* UserDefaults+.swift in Sources */,
+				A258497029E687C900E75568 /* DailyFoodWidgetBundle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -855,6 +1197,11 @@
 			isa = PBXTargetDependency;
 			target = 23166A6D28FECD9C002AEFB7 /* MYONGSIK */;
 			targetProxy = 23166A8F28FECD9F002AEFB7 /* PBXContainerItemProxy */;
+		};
+		A258497929E687CA00E75568 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A258496829E687C900E75568 /* DailyFoodWidgetExtension */;
+			targetProxy = A258497829E687CA00E75568 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1007,11 +1354,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 77CEA1CD0123C0563A94A6E1 /* Pods-MYONGSIK.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = MYONGSIK/MYONGSIK.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 5XGLRW6VG4;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/IOS_DaumMap_SDK_1.4.0/lib/DaumMap.embeddedframework",
+					"$(PROJECT_DIR)/DaumMap.embeddedframework",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MYONGSIK/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1024,13 +1382,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.6;
+				MARKETING_VERSION = 1.1.11;
 				PRODUCT_BUNDLE_IDENTIFIER = gomin.MYONGSIK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/yoosang/Desktop/Myongsik_iOS/Kakao-Map-Bridge-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1040,11 +1399,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AE9F16CCD51F90ED1842BEA4 /* Pods-MYONGSIK.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = MYONGSIK/MYONGSIK.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 5XGLRW6VG4;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/IOS_DaumMap_SDK_1.4.0/lib/DaumMap.embeddedframework",
+					"$(PROJECT_DIR)/DaumMap.embeddedframework",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MYONGSIK/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1057,13 +1427,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.6;
+				MARKETING_VERSION = 1.1.11;
 				PRODUCT_BUNDLE_IDENTIFIER = gomin.MYONGSIK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/yoosang/Desktop/Myongsik_iOS/Kakao-Map-Bridge-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1145,6 +1516,66 @@
 			};
 			name = Release;
 		};
+		A258497C29E687CA00E75568 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = DailyFoodWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5XGLRW6VG4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DailyFoodWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DailyFoodWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1.11;
+				PRODUCT_BUNDLE_IDENTIFIER = gomin.MYONGSIK.DailyFoodWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A258497D29E687CA00E75568 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = DailyFoodWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5XGLRW6VG4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DailyFoodWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DailyFoodWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1.11;
+				PRODUCT_BUNDLE_IDENTIFIER = gomin.MYONGSIK.DailyFoodWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1180,6 +1611,15 @@
 			buildConfigurations = (
 				23166A9F28FECD9F002AEFB7 /* Debug */,
 				23166AA028FECD9F002AEFB7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A258497E29E687CA00E75568 /* Build configuration list for PBXNativeTarget "DailyFoodWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A258497C29E687CA00E75568 /* Debug */,
+				A258497D29E687CA00E75568 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

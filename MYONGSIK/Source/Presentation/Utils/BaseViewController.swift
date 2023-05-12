@@ -12,13 +12,16 @@ class BaseViewController: UIViewController {
     // MARK: Views
     // 상단바
     let navigationView = UIView().then{
-        $0.backgroundColor = .signatureBlue
+        $0.backgroundColor = .white
         $0.clipsToBounds = true
+    }
+    let borderView = UIView().then {
+        $0.backgroundColor = .signatureBlue
     }
     // 상단 제목
     let titleLabel = UILabel().then{
         $0.font = UIFont.NotoSansKR(size: 24, family: .Bold)
-        $0.textColor = .white
+        $0.textColor = .black
     }
     
     // MARK: - Life Cycles
@@ -29,9 +32,10 @@ class BaseViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
-                
+        
         //setUpView
         self.view.addSubview(navigationView)
+        self.view.addSubview(borderView)
         navigationView.addSubview(titleLabel)
         
         //setUpConstraint
@@ -40,6 +44,11 @@ class BaseViewController: UIViewController {
             make.top.equalToSuperview()
             if UIDevice.current.hasNotch {make.height.equalTo(121)}
             else {make.height.equalTo(91)}
+        }
+        borderView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(navigationView.snp.bottom)
+            $0.height.equalTo(1.5)
         }
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(30)

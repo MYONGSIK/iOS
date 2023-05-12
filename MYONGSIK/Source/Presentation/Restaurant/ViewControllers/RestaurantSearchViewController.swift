@@ -12,20 +12,21 @@ import Toast
 class RestaurantSearchViewController: BaseViewController {
     // MARK: Views
     let backButton = UIButton().then{
-        $0.setImage(UIImage(named: "arrow_left"), for: .normal)
+        $0.setImage(UIImage(named: "arrow_left_gray"), for: .normal)
     }
     lazy var searchButton = UIButton().then{
-        $0.setImage(UIImage(named: "search"), for: .normal)
+        $0.setImage(UIImage(named: "search_blue"), for: .normal)
         $0.frame = CGRect(x: 0, y: 0, width: 24, height: 22)
     }
     var searchTextField = UITextField().then{
-        $0.placeholder = "가고싶은 명지맛집을 검색 하세요."
+        $0.placeholder = "검색어를 입력하세요."
         $0.font = UIFont.NotoSansKR(size: 15, family: .Regular)
         $0.clearButtonMode = .never
-        $0.borderStyle = .none
         $0.backgroundColor = .white
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 19
+        $0.layer.borderWidth = 2.0
+        $0.layer.borderColor = UIColor.signatureBlue.cgColor
         $0.addPadding(left: 16, right: 40)
         
         // 화면이 시작되자마자 키보드가 활성화됩니다.

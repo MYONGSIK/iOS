@@ -17,6 +17,7 @@ enum inputStatus {
 }
 class SubmitViewController: UIViewController {
     
+    var area: String?
     var submitStatus: inputStatus = .notSubmit
     
     // MARK: - Views
@@ -188,17 +189,19 @@ class SubmitViewController: UIViewController {
     
     func saveSubmit(input: String?) {
         if let submitted = self.inputTextView.text {
+            if area! == "학관식당" { area = "학생식당" }
             
-            let phoneId = UIDevice.current.identifierForVendor!.uuidString
+            let phoneId = RegisterUUID.shared.getDeviceID()
             
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"
             let registeredAt = formatter.string(from: Date())
             
-            let param = SubmitModel(writerId: phoneId,
+            let param = SubmitModel(areaName: area!,
+                                    writerId: phoneId,
                                     registeredAt: registeredAt,
                                     content: submitted)
-            APIManager.shared.postData(urlEndpointString: Constants.postFoodReview,
+            APIManager.shared.postData(urlEndpointString: Constants.postFoodReviewWithArea,
                                        dataType: SubmitModel.self,
                                        responseType: SubmitResponseModel.self,
                                        parameter: param,

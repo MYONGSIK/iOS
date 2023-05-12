@@ -14,6 +14,7 @@ protocol RestaurantCellDelegate {
 
 enum CellTodo {
     case main
+    case random
     case search
 }
 
@@ -120,6 +121,25 @@ class SearchResultTableViewCell: UITableViewCell {
     }
     
     // MARK: Functions
+    func deleteAllSubViews() {
+        [
+            howManyLikeLabel,
+            backView,
+            placeNameLabel,
+            dotLabel,
+            placeCategoryLabel,
+            distanceLabel,
+            goLinkButton,
+            pinImage,
+            locationButton,
+            phoneImage,
+            phoneNumButton
+            
+        ].forEach { subView in
+            subView.removeFromSuperview()
+        }
+    }
+    
     func setUpView() {
         self.contentView.addSubview(howManyLikeLabel)
         self.contentView.addSubview(backView)
@@ -145,6 +165,7 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(15)
             make.top.equalTo(howManyLikeLabel.snp.bottom).offset(5)
+//            make.top.equalToSuperview().offset(40)
             make.bottom.equalToSuperview().inset(10)
         }
         placeNameLabel.snp.makeConstraints { make in
@@ -193,6 +214,25 @@ class SearchResultTableViewCell: UITableViewCell {
             make.leading.equalTo(locationButton)
             make.centerY.equalTo(phoneImage)
         }
+    }
+    
+    private func setNoHowManyLabelConstraints() {
+        howManyLikeLabel.removeFromSuperview()
+
+        /// set constraints
+        self.backView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(10)
+        }
+        self.placeNameLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(22)
+        }
+        self.pinImage.snp.makeConstraints {
+            $0.top.equalTo(placeNameLabel.snp.bottom).offset(25)
+        }
+        self.phoneImage.snp.makeConstraints {
+            $0.top.equalTo(pinImage.snp.bottom).offset(22)
+        }
+        
     }
     
     @objc func didTapHeartButton(_ sender: UIButton) {
@@ -252,6 +292,7 @@ class SearchResultTableViewCell: UITableViewCell {
     
     // MARK: 서버에서 데이터를 받아온 후 출력시킵니다.
     func setUpData(_ data: KakaoResultModel) {
+        print("setUpData called --> \(data)")
         self.data = HeartListModel(placeName: data.place_name ?? nil,
                                    category: data.category_group_name ?? nil,
                                    placeUrl: data.place_url ?? nil)
@@ -263,7 +304,9 @@ class SearchResultTableViewCell: UITableViewCell {
                                     name: data.place_name,
                                     scrapCount: nil,
                                     storeId: Int(data.id!),
-                                    urlAddress: data.place_url)
+                                    urlAddress: data.place_url,
+                                    longitude: data.x,
+                                    latitude: data.y)
 
         if let placeName = data.place_name {self.placeNameLabel.text = placeName}
         if let category = data.category_group_name {self.placeCategoryLabel.text = category}
@@ -282,6 +325,11 @@ class SearchResultTableViewCell: UITableViewCell {
             if location == "" {
                 self.locationButton.setTitle("주소가 없습니다.", for: .normal)
                 self.storeData?.address = "주소가 없습니다."
+            } else {
+                let attributedString = NSMutableAttributedString.init(string: location)
+                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: location.count))
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.signatureGray, range: NSRange.init(location: 0, length: location.count))
+                self.locationButton.setAttributedTitle(attributedString, for: .normal)
             }
         }
         if let phone = data.phone {
@@ -289,6 +337,11 @@ class SearchResultTableViewCell: UITableViewCell {
             if phone == "" {
                 self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)
                 self.storeData?.contact = "전화번호가 없습니다."
+            } else {
+                let attributedString = NSMutableAttributedString.init(string: phone)
+                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: phone.count))
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.signatureGray, range: NSRange.init(location: 0, length: phone.count))
+                self.phoneNumButton.setAttributedTitle(attributedString, for: .normal)
             }
         }
     }
@@ -315,6 +368,11 @@ class SearchResultTableViewCell: UITableViewCell {
             if location == "" {
                 self.locationButton.setTitle("주소가 없습니다.", for: .normal)
                 self.storeData?.address = "주소가 없습니다."
+            } else {
+                let attributedString = NSMutableAttributedString.init(string: location)
+                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: location.count))
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.signatureGray, range: NSRange.init(location: 0, length: location.count))
+                self.locationButton.setAttributedTitle(attributedString, for: .normal)
             }
         }
         if let phone = data.contact {
@@ -322,8 +380,15 @@ class SearchResultTableViewCell: UITableViewCell {
             if phone == "" {
                 self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)
                 self.storeData?.contact = "전화번호가 없습니다."
+            } else {
+                let attributedString = NSMutableAttributedString.init(string: phone)
+                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: phone.count))
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.signatureGray, range: NSRange.init(location: 0, length: phone.count))
+                self.phoneNumButton.setAttributedTitle(attributedString, for: .normal)
             }
         }
+        if let longitude = data.longitude { self.storeData?.longitude = longitude }
+        if let latitude = data.latitude { self.storeData?.latitude = latitude }
     }
     
     func addHeartData(data: HeartListModel?) {
@@ -349,21 +414,13 @@ class SearchResultTableViewCell: UITableViewCell {
     func setupLayout(todo: CellTodo) {
         switch todo {
         case .main:
-            self.howManyLikeLabel.isHidden = false
-        case .search:
-            self.howManyLikeLabel.isHidden = true
-            self.backView.snp.makeConstraints {
-                $0.top.equalToSuperview().offset(10)
-            }
-            self.placeNameLabel.snp.makeConstraints {
-                $0.top.equalToSuperview().inset(22)
-            }
-            self.pinImage.snp.makeConstraints {
-                $0.top.equalTo(placeNameLabel.snp.bottom).offset(25)
-            }
-            self.phoneImage.snp.makeConstraints {
-                $0.top.equalTo(pinImage.snp.bottom).offset(22)
-            }
+            deleteAllSubViews()
+            setUpView()
+            setUpConstraint()
+            
+        default:
+            setUpView()
+            setNoHowManyLabelConstraints()
         }
     }
     

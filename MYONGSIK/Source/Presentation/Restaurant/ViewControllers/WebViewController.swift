@@ -147,7 +147,7 @@ class WebViewController: UIViewController, WKUIDelegate {
     func requestAddHeart() {
         // TODO: 찜꽁 리스트 추가 POST
         let campus = (campusInfo == .seoul) ? "SEOUL" : "YONGIN"
-        let phoneId = UIDevice.current.identifierForVendor!.uuidString
+        let phoneId = RegisterUUID.shared.getDeviceID()
         
         let bodyParam = HeartModel(address: storeData?.address,
                                    campus: campus,
@@ -155,6 +155,8 @@ class WebViewController: UIViewController, WKUIDelegate {
                                    code: storeData?.code,
                                    contact: storeData?.contact,
                                    distance: storeData?.distance,
+                                   longitude: storeData?.latitude,
+                                   latitude: storeData?.longitude,
                                    name: storeData?.name,
                                    phoneId: phoneId,
                                    urlAddress: storeData?.urlAddress)

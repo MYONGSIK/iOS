@@ -12,12 +12,12 @@ import Toast
 class RestaurantTagViewController: BaseViewController {
     // MARK: - Views
     let backButton = UIButton().then{
-        $0.setImage(UIImage(named: "arrow_left"), for: .normal)
+        $0.setImage(UIImage(named: "arrow_left_gray"), for: .normal)
     }
     let subTitleLabel = UILabel().then{
-        $0.text = "# 모아뒀으니 골라보세요!"
+//        $0.text = "# 모아뒀으니 골라보세요!"
         $0.font = UIFont.NotoSansKR(size: 24, family: .Bold)
-        $0.textColor = .white
+        $0.textColor = .black
     }
 
     // MARK: - Life Cycles
@@ -80,6 +80,7 @@ class RestaurantTagViewController: BaseViewController {
         }
     }
     func setUpView() {
+//        super.titleLabel.text = "#명지밥집"
         super.navigationView.addSubview(backButton)
         super.navigationView.addSubview(subTitleLabel)
         

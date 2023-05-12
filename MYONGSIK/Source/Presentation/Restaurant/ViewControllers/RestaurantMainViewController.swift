@@ -10,6 +10,12 @@ import SnapKit
 import Then
 import Toast
 import Alamofire
+import DropDown
+
+enum CellMode {
+    case kakaoCell
+    case rankCell
+}
 
 // MARK: '명지 맛집' 페이지
 class RestaurantMainViewController: MainBaseViewController {
@@ -20,8 +26,19 @@ class RestaurantMainViewController: MainBaseViewController {
         $0.setImage(UIImage(named: "search_white"), for: .normal)
         $0.addTarget(self, action: #selector(goSearchButtonDidTap), for: .touchUpInside)
     }
+    
+    let sortButton = UIButton(type: .system).then {
+        $0.setTitle("인기순 ", for: .normal)
+        $0.setImage(UIImage(named: "arrow_bottom"), for: .normal)
+        $0.semanticContentAttribute = .forceRightToLeft
+        $0.tintColor = .gray
+        $0.layer.cornerRadius = 15
+    }
+    
+    let sortDropDown = DropDown()
 
     // MARK: Life Cycles
+    var cellMode: CellMode = .rankCell
     var campusInfo: CampusInfo = .seoul    // default값 - 인캠
     
     var restaurantMainTableView: UITableView!
@@ -40,6 +57,7 @@ class RestaurantMainViewController: MainBaseViewController {
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
+        fetchRankData()
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -48,13 +66,32 @@ class RestaurantMainViewController: MainBaseViewController {
         DispatchQueue.main.async {
 //            self.searchResult.removeAll()
             KakaoMapDataManager().randomMapDataManager(self)
+//            self.getRandomRestaurants()
 
 //            self.rankResults.removeAll()
-            self.fetchRankData()
-            self.reloadDataAnimation()
+            
+//            self.fetchRankData()
+//            self.reloadDataAnimation()
+            self.checkSortMode()
         }
     }
     
+    func checkSortMode() {
+        if let sortValue = UserDefaults.standard.object(forKey: "restaurant_sort_value") {
+            self.fetchRankData()
+            switch sortValue as! String {
+            case "scrapCount,desc":
+                cellMode = .rankCell
+            case "distance,asc":
+                cellMode = .rankCell
+            case "kakaoRandom":
+                cellMode = .kakaoCell
+                self.getRandomRestaurants()
+            default: return
+            }
+            self.reloadDataAnimation()
+        }
+    }
     
     
     // MARK: Actions
@@ -113,55 +150,77 @@ class RestaurantMainViewController: MainBaseViewController {
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
+    
+    @objc func didTapSortButton() {
+        sortDropDown.show()
+    }
     func setSortButtonCell(_ cell: UITableViewCell) {
+        sortDropDown.dataSource = ["인기순", "거리순", "추천순"]
+        sortDropDown.selectedTextColor = .signatureBlue
+        sortDropDown.anchorView = sortButton
+        sortDropDown.bottomOffset = CGPoint(x: 0, y:(sortDropDown.anchorView?.plainView.bounds.height)!)
+        sortDropDown.width = 80
+        sortDropDown.cellHeight = 40
+        sortButton.addTarget(self, action: #selector(didTapSortButton), for: .touchUpInside)
+        sortDropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            self?.sortButton.setTitle(item, for: .normal)
+            switch item {
+            case "인기순":
+                self?.sortButton.setTitle("인기순 ", for: .normal)
+                self?.fetchDataWithSort(sort: "scrapCount,desc")
+                UserDefaults.standard.set("scrapCount,desc", forKey: "restaurant_sort_value")
+            case "거리순":
+                self?.sortButton.setTitle("거리순 ", for: .normal)
+                self?.fetchDataWithSort(sort: "distance,asc")
+                UserDefaults.standard.set("distance,asc", forKey: "restaurant_sort_value")
+            case "추천순":
+                self?.sortButton.setTitle("추천순 ", for: .normal)
+                self?.getRandomRestaurants()
+                UserDefaults.standard.set("kakaoRandom", forKey: "restaurant_sort_value")
+            default: return
+            }
+        }
+        
         let titleLabel = UILabel().then {
             $0.text = "#명지인이 선택한 맛집"
             $0.numberOfLines = 2
             $0.font = UIFont.NotoSansKR(size: 22, family: .Bold)
         }
         
-//        let likeOrder = UIAction(title: "인기순", image: nil, handler: { _ in print("인기순 선택") })
-//        let distanceOrder = UIAction(title: "거리순", image: nil, handler: { _ in print("거리순 선택") })
-//
-//        let sortButton = UIButton(type: .system).then {
-//            $0.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-//            $0.semanticContentAttribute = .forceRightToLeft
-//            $0.tintColor = .gray
-//            $0.layer.cornerRadius = 15
-//
-//            $0.menu = UIMenu(
-//                title: "",
-//                image: nil,
-//                identifier: nil,
-//                options: .displayInline,
-//                children: [likeOrder, distanceOrder]
-//            )
-//            $0.showsMenuAsPrimaryAction = true
-//            $0.changesSelectionAsPrimaryAction = true
-//        }
         cell.contentView.addSubview(titleLabel)
-//        cell.contentView.addSubview(sortButton)
+        cell.contentView.addSubview(sortButton)
         
         titleLabel.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(5)
             $0.leading.equalToSuperview().inset(15)
         }
         
-//        sortButton.snp.makeConstraints {
-//            $0.centerY.equalTo(titleLabel)
-//            $0.trailing.equalToSuperview().inset(15)
-//            $0.height.equalTo(30)
-//            $0.width.equalTo(80)
-//        }
+        sortButton.snp.makeConstraints {
+            $0.centerY.equalTo(titleLabel)
+            $0.trailing.equalToSuperview().inset(10)
+            $0.height.equalTo(30)
+            $0.width.equalTo(80)
+        }
     }
     @objc private func refreshContentView() {
         refreshControl.beginRefreshing()
         DispatchQueue.main.async {
 //            self.rankResults.removeAll()
-            self.fetchRankData()
+            switch self.cellMode {
+            case .rankCell: self.fetchRankData()
+            case .kakaoCell: self.getRandomRestaurants()
+            }
+            
             self.reloadDataAnimation()
         }
         refreshControl.endRefreshing()
+    }
+    
+    private func getRandomRestaurants() {
+        KakaoMapDataManager().randomMapDataManager(self)
+        self.kakaoRandomMapSuccessAPI(self.searchResult)
+        self.cellMode = .kakaoCell
+        self.reloadDataAnimation()
     }
 }
 // MARK: - TableView delegate
@@ -174,8 +233,16 @@ class RestaurantMainViewController: MainBaseViewController {
  */
 extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = self.rankResults.count ?? 0
-        return count + 3
+        switch self.cellMode {
+        case .rankCell:
+            let count = self.rankResults.count ?? 0
+            return count + 3
+        case .kakaoCell:
+            let count = self.searchResult.count ?? 0
+            return count + 3
+        }
+//        let count = self.rankResults.count ?? 0
+//        return count + 3
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tag = indexPath.row
@@ -183,7 +250,7 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 0:
             let cell = UITableViewCell()
             DispatchQueue.main.async {
-                cell.textLabel?.text = "#모아뒀으니 골라보세요!"
+                cell.textLabel?.text = "#명지맛집 모음!"
                 cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
                 cell.selectionStyle = .none
             }
@@ -191,7 +258,8 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TagTableViewCell", for: indexPath) as? TagTableViewCell else { return UITableViewCell() }
             DispatchQueue.main.async {
-                cell.setCollectionView(self)
+                cell.setTagView()
+                cell.delegate = self
                 cell.selectionStyle = .none
             }
             return cell
@@ -208,10 +276,20 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
             DispatchQueue.main.async {
                 let itemIdx = indexPath.item - 3
                 cell.campusInfo = self.campusInfo
-                cell.setUpDataWithRank(self.rankResults[itemIdx])
-                cell.delegate = self
-                cell.selectionStyle = .none
-                cell.setupLayout(todo: .main)
+                
+                switch self.cellMode {
+                case .rankCell:
+                    cell.setUpDataWithRank(self.rankResults[itemIdx])
+                    cell.delegate = self
+                    cell.selectionStyle = .none
+                    cell.setupLayout(todo: .main)
+                case .kakaoCell:
+                    cell.setUpData(self.searchResult[itemIdx])
+                    cell.delegate = self
+                    cell.selectionStyle = .none
+                    cell.setupLayout(todo: .random)
+                }
+                
             }
             return cell
         }
@@ -222,61 +300,33 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 0:
             return 60
         case 1:
-            return 84
+            return 225
         case 2:
             return 46
         default:
+            switch self.cellMode {
+            case .rankCell: return 200
+            case .kakaoCell: return 170
+            }
             return 200
         }
     }
 }
-// MARK: - CollectionView delegate
-extension RestaurantMainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
-    }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier,
-                                                            for: indexPath)
-                as? TagCollectionViewCell else{ fatalError() }
-        let tag = indexPath.row
-        switch tag {
-        case 0:
-            cell.titleLabel.text = "#명지맛집"
-        case 1:
-            cell.titleLabel.text = "#명지카페"
-        case 2:
-            cell.titleLabel.text = "#명지술집"
-        default:
-            cell.titleLabel.text = "#명지빵집"
-        }
-        return cell
-    }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        UIDevice.vibrate()
-        
-        var tagKeyword = ""
-        let tag = indexPath.row
-        switch tag {
-        case 0:
-            tagKeyword = "맛집"
-        case 1:
-            tagKeyword = "카페"
-        case 2:
-            tagKeyword = "술집"
-        default:
-            tagKeyword = "빵집"
-        }
+
+extension RestaurantMainViewController: TagCellDelegate {
+    func didTapTagButton(tagKeyword: String) {
         let vc = RestaurantTagViewController()
         vc.tagKeyword = tagKeyword
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
+
 // MARK: - API Success
 extension RestaurantMainViewController {
     func kakaoRandomMapSuccessAPI(_ result: [KakaoResultModel]) {
+        print("result count -> \(result.count)")
         let resultCount = result.count ?? 0
-        if resultCount >= 10 {self.searchResult = Array(result[0..<10])}
+        if resultCount >= 20 {self.searchResult = Array(result[0..<20])}
         else {self.searchResult = result}
         
         reloadDataAnimation()
@@ -307,17 +357,57 @@ extension RestaurantMainViewController: RestaurantCellDelegate {
 // MARK: - API extension
 extension RestaurantMainViewController {
     func fetchRankData() {
+        var queryParam: Parameters
+        if let sortValue = UserDefaults.standard.object(forKey: "restaurant_sort_value") {
+
+            switch sortValue as! String {
+            case "scrapCount,desc":
+                sortButton.setTitle("인기순 ", for: .normal)
+            case "distance,asc":
+                sortButton.setTitle("거리순 ", for: .normal)
+            case "kakaoRandom":
+                sortButton.setTitle("추천순 ", for: .normal)
+            default: return
+            }
+            
+            queryParam = [
+                "sort": sortValue as! String,  
+                "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
+            ]
+        } else {
+            queryParam = [
+                "sort": "scrapCount,desc",  // defalut : 인기순
+                "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
+            ]
+        }
+        
+        APIManager.shared.getData(urlEndpointString: Constants.getStoreRank,
+                                  dataType: StoreRankModel.self,
+                                  parameter: queryParam,
+                                  completionHandler: { [weak self] response in
+            if response.success {
+                self?.rankResults = response.data.content
+                self?.reloadDataAnimation()
+            } else {
+                self?.showAlert(message: "맛집 순위 정보를 가져올 수 없습니다.")
+            }
+
+        })
+    }
+    
+    func fetchDataWithSort(sort: String) {
+        self.cellMode = .rankCell
         let queryParam: Parameters = [
-            "sort": "scrapCount,desc",
+            "sort": sort,
             "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
         ]
         APIManager.shared.getData(urlEndpointString: Constants.getStoreRank,
                                   dataType: StoreRankModel.self,
                                   parameter: queryParam,
                                   completionHandler: { [weak self] response in
-//            print(response.data)
             if response.success {
                 self?.rankResults = response.data.content
+                self?.reloadDataAnimation()
             } else {
                 self?.showAlert(message: "맛집 순위 정보를 가져올 수 없습니다.")
             }
