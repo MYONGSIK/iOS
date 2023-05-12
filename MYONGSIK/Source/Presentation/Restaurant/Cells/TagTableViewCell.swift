@@ -45,7 +45,7 @@ class TagTableViewCell: UITableViewCell {
         /// set tag button
         mealTagButton = UIButton().then {
             $0.setImage(UIImage(named: "resIcon_meal"), for: .normal)
-            $0.setTitle("집밥", for: .normal)
+            $0.setTitle("맛집", for: .normal)
             $0.addTarget(self, action: #selector(didTapMealTagButton), for: .touchUpInside)
         }
         
