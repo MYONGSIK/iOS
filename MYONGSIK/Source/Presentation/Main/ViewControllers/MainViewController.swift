@@ -78,13 +78,13 @@ class MainViewController: MainBaseViewController {
     let goBeforeButton = UIButton().then {
         $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         $0.tintColor = .signatureBlue
-//        $0.addTarget(self, action: #selector(didTapGoBeforeButton(_:)), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(didTapGoBeforeButton(_:)), for: .touchUpInside)
     }
     
     let goAfterButton = UIButton().then {
         $0.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         $0.tintColor = .signatureBlue
-//        $0.addTarget(self, action: #selector(didTapGoAfterButton(_:)), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(didTapGoAfterButton(_:)), for: .touchUpInside)
     }
 
     let tablePageControl = UIPageControl().then {
@@ -462,31 +462,41 @@ class MainViewController: MainBaseViewController {
     }
 
     private func didTapChangeDateButton(value: Int) {
-        tablePageControl.currentPage += value
-        setArrowButtons(currentPageControl: tablePageControl.currentPage)
+        currentPageNum += value
+//        tablePageControl.currentPage += value
+//        setArrowButtons(currentPageControl: tablePageControl.currentPage)
+        setArrowButtons(currentPageControl: currentPageNum)
         
         // set titleLabel
-        if let start = startDay {
-            DispatchQueue.main.async {
-                
-                let date = Calendar.current.date(byAdding: .day, value: self.tablePageControl.currentPage, to: start)
+        print("didTapChangeDateButton called --> currentPageNum : \(currentPageNum)")
+        DispatchQueue.main.async {
+            self.mealCollectionView.scrollToItem(at: IndexPath(item: self.currentPageNum, section: 0), at: .centeredHorizontally, animated: false)
+            if let start = self.startDay {
+                let date = Calendar.current.date(byAdding: .day, value: self.currentPageNum, to: start)
                 self.titleLabel.text  = "오늘의 학식  |  \(self.getTodayDataText(date: date!))"
-                
-                // set daily food data
-                let dateFormatter = DateFormatter()
-                dateFormatter.timeZone = TimeZone(identifier: "UTC")
-                dateFormatter.dateFormat = "yyyy-MM-dd"
-                
-                let today = Date() + 32400
-                if dateFormatter.string(from: date!) == dateFormatter.string(from: today) { self.isToday = true }
-                else { self.isToday = false }
-                
-                self.foodData = self.getDailyFoodData(date: date!)
-                self.checkDataIsEmpty()
-                
-                self.reloadDataAnimation()
             }
         }
+//        if let start = startDay {
+//            DispatchQueue.main.async {
+//
+//                let date = Calendar.current.date(byAdding: .day, value: self.tablePageControl.currentPage, to: start)
+//                self.titleLabel.text  = "오늘의 학식  |  \(self.getTodayDataText(date: date!))"
+//
+//                // set daily food data
+//                let dateFormatter = DateFormatter()
+//                dateFormatter.timeZone = TimeZone(identifier: "UTC")
+//                dateFormatter.dateFormat = "yyyy-MM-dd"
+//
+//                let today = Date() + 32400
+//                if dateFormatter.string(from: date!) == dateFormatter.string(from: today) { self.isToday = true }
+//                else { self.isToday = false }
+//
+//                self.foodData = self.getDailyFoodData(date: date!)
+//                self.checkDataIsEmpty()
+//
+//                self.reloadDataAnimation()
+//            }
+//        }
     }
     
     func setSubmitButtonCell(_ cell: UITableViewCell) {
@@ -668,12 +678,12 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        DispatchQueue.main.async {
-            if let start = self.startDay {
-                let date = Calendar.current.date(byAdding: .day, value: self.currentPageNum, to: start)
-                self.titleLabel.text  = "오늘의 학식  |  \(self.getTodayDataText(date: date!))"
-            }
-        }
+//        DispatchQueue.main.async {
+//            if let start = self.startDay {
+//                let date = Calendar.current.date(byAdding: .day, value: self.currentPageNum, to: start)
+//                self.titleLabel.text  = "오늘의 학식  |  \(self.getTodayDataText(date: date!))"
+//            }
+//        }
         
         let width = scrollView.bounds.size.width
         let x = scrollView.contentOffset.x + (width/2)
