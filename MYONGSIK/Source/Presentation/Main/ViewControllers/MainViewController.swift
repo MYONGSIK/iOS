@@ -668,6 +668,13 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        DispatchQueue.main.async {
+            if let start = self.startDay {
+                let date = Calendar.current.date(byAdding: .day, value: self.currentPageNum, to: start)
+                self.titleLabel.text  = "오늘의 학식  |  \(self.getTodayDataText(date: date!))"
+            }
+        }
+        
         let width = scrollView.bounds.size.width
         let x = scrollView.contentOffset.x + (width/2)
         
@@ -675,7 +682,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         if tablePageControl.currentPage != currentPageNum {
             tablePageControl.currentPage = currentPageNum
         }
-        didTapChangeDateButton(value: currentPageNum)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { return -5 }
