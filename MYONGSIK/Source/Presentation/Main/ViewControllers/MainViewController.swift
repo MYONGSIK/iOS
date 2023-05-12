@@ -196,6 +196,16 @@ class MainViewController: MainBaseViewController {
         }
     }
     
+    private func removeAllViews() {
+        [
+            containerView,
+            pageControlContainerView,
+            submitContainerView
+        ].forEach { view in
+            view.removeFromSuperview()
+        }
+    }
+    
     private func fetchDailyData() {
         var resName = selectedResName
         if selectedResName == YonginRestaurant.academy.rawValue { resName = "학생식당" }
@@ -224,8 +234,10 @@ class MainViewController: MainBaseViewController {
                 self?.reloadDataAnimation()
                 
             case 405, 500:
+                self?.removeAllViews()
                 self?.showAlert(message: result?.message ?? "금일 식당운영을 하지 않습니다")
             default:
+                self?.removeAllViews()
                 self?.showAlert(message: "네트워크 오류 - error code : \(result?.httpCode)")
                 return
             }
@@ -450,8 +462,8 @@ class MainViewController: MainBaseViewController {
     }
 
     private func didTapChangeDateButton(value: Int) {
-//        tablePageControl.currentPage += value
-//        setArrowButtons(currentPageControl: tablePageControl.currentPage)
+        tablePageControl.currentPage += value
+        setArrowButtons(currentPageControl: tablePageControl.currentPage)
         
         // set titleLabel
         if let start = startDay {
