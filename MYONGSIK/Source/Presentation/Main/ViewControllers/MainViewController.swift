@@ -10,8 +10,16 @@ import SnapKit
 import Then
 
 // MARK: '오늘의 학식' 페이지
+
+enum Height: Int {
+    case food3 = 510
+    case food2 = 400
+}
+
 class MainViewController: MainBaseViewController {
     // MARK: - Variables
+    
+    var currentPageNum = 0
 
     var isToday: Bool = true
     var isWeekend: Bool = false
@@ -23,7 +31,6 @@ class MainViewController: MainBaseViewController {
     var startDay: Date?
     var endDay: Date?
     
-//    var mainTableView: UITableView!
     var foodData: [DayFoodModel]? = []
     var weekFoodData: [DayFoodModel]? = []
     
@@ -38,11 +45,6 @@ class MainViewController: MainBaseViewController {
         $0.tintColor = .white
         $0.addTarget(self, action: #selector(didTapBackItemButton), for: .touchUpInside)
     }
-    
-//    let adImageView = UIView().then{
-//        $0.backgroundColor = .systemGray4
-//        $0.layer.cornerRadius = 15
-//    }
 
     var tableView: UITableView!
     
@@ -76,13 +78,13 @@ class MainViewController: MainBaseViewController {
     let goBeforeButton = UIButton().then {
         $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         $0.tintColor = .signatureBlue
-        $0.addTarget(self, action: #selector(didTapGoBeforeButton(_:)), for: .touchUpInside)
+//        $0.addTarget(self, action: #selector(didTapGoBeforeButton(_:)), for: .touchUpInside)
     }
     
     let goAfterButton = UIButton().then {
         $0.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         $0.tintColor = .signatureBlue
-        $0.addTarget(self, action: #selector(didTapGoAfterButton(_:)), for: .touchUpInside)
+//        $0.addTarget(self, action: #selector(didTapGoAfterButton(_:)), for: .touchUpInside)
     }
 
     let tablePageControl = UIPageControl().then {
@@ -123,6 +125,11 @@ class MainViewController: MainBaseViewController {
         $0.textAlignment = .center
         $0.isHidden = true
     }
+    
+    var containerView = UIView().then { $0.backgroundColor = .white }
+    var pageControlContainerView = UIView().then { $0.backgroundColor = .white }
+    var submitContainerView = UIView().then { $0.backgroundColor = .white }
+    var mealCollectionView: UICollectionView!
 
     // MARK: - Life Cycles
     override func viewDidLoad() {
@@ -136,13 +143,17 @@ class MainViewController: MainBaseViewController {
         
         setSelectedRes()
         setWeekDateData()
-        
-        setUpTableView(dataSourceDelegate: self)
+    
+        setupCollectionView()
         setUpView()
         setUpConstraint()
         
         fetchDailyData()
         fetchWeekData()
+        
+        DispatchQueue.main.async {
+            self.mealCollectionView.scrollToItem(at: IndexPath(item: self.currentPageNum, section: 0), at: .centeredHorizontally, animated: false)
+        }
     }
      
     private func showUpdateAlert() {
@@ -185,6 +196,16 @@ class MainViewController: MainBaseViewController {
         }
     }
     
+    private func removeAllViews() {
+        [
+            containerView,
+            pageControlContainerView,
+            submitContainerView
+        ].forEach { view in
+            view.removeFromSuperview()
+        }
+    }
+    
     private func fetchDailyData() {
         var resName = selectedResName
         if selectedResName == YonginRestaurant.academy.rawValue { resName = "학생식당" }
@@ -211,11 +232,12 @@ class MainViewController: MainBaseViewController {
                 }
             
                 self?.reloadDataAnimation()
-                print("fetchDailyData - \(self?.foodData?.count)")
                 
             case 405, 500:
+                self?.removeAllViews()
                 self?.showAlert(message: result?.message ?? "금일 식당운영을 하지 않습니다")
             default:
+                self?.removeAllViews()
                 self?.showAlert(message: "네트워크 오류 - error code : \(result?.httpCode)")
                 return
             }
@@ -240,6 +262,10 @@ class MainViewController: MainBaseViewController {
             if let result = result, let data = result.data {
                 self?.weekFoodData = data.sorted(by: { $0.toDay! < $1.toDay! })
                 self?.reloadDataAnimation()
+            
+                self?.weekFoodData?.forEach({ data in
+                    print(data)
+                })
             }
 
         })
@@ -261,6 +287,28 @@ class MainViewController: MainBaseViewController {
             $0.allowsSelection = false
         }
     }
+    
+    func setupCollectionView() {
+        mealCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then{
+            let flowLayout = UICollectionViewFlowLayout()
+            flowLayout.itemSize = CGSize(width: self.view.frame.width-15, height: 300)
+            flowLayout.scrollDirection = .horizontal
+            flowLayout.minimumLineSpacing = 10
+
+            $0.collectionViewLayout = flowLayout
+            $0.delegate = self
+            $0.dataSource = self
+            $0.backgroundColor = .white
+            
+            $0.showsHorizontalScrollIndicator = false
+            
+            $0.decelerationRate = .fast
+            $0.isPagingEnabled = false
+
+            $0.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: MainCollectionViewCell.identifier)
+        }
+    }
+    
     func setUpView() {
         super.navigationImgView.addSubview(backItemButton)
         
@@ -268,7 +316,10 @@ class MainViewController: MainBaseViewController {
         scrolleView.addSubview(contentView)
         contentView.addSubview(titleView)
         contentView.addSubview(changeDayButtonView)
-        contentView.addSubview(tableView)
+
+        contentView.addSubview(containerView)
+        contentView.addSubview(pageControlContainerView)
+        contentView.addSubview(submitContainerView)
         contentView.addSubview(isEmptyDataLabel)
 
         titleView.addSubview(titleLabel)
@@ -276,6 +327,11 @@ class MainViewController: MainBaseViewController {
         
         changeDayButtonView.addSubview(goBeforeButton)
         changeDayButtonView.addSubview(goAfterButton)
+        
+        pageControlContainerView.addSubview(tablePageControl)
+        submitContainerView.addSubview(submitButton)
+        
+        containerView.addSubview(mealCollectionView)
     }
     func setUpConstraint() {
         backItemButton.snp.makeConstraints {
@@ -291,7 +347,7 @@ class MainViewController: MainBaseViewController {
         contentView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.centerX.top.bottom.equalToSuperview()
-            $0.height.equalTo(1000)
+            $0.height.equalTo(700)
         }
 
         
@@ -328,16 +384,55 @@ class MainViewController: MainBaseViewController {
             $0.leading.equalTo(goBeforeButton.snp.trailing)
             $0.trailing.top.bottom.equalToSuperview()
         }
-        
-        tableView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(titleView.snp.bottom)
-            $0.bottom.equalToSuperview()
-        }
 
         isEmptyDataLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(120)
             $0.centerX.equalToSuperview()
+        }
+        
+        containerView.snp.makeConstraints { make in
+            make.height.equalTo(isTwoFoods() ? Height.food2.rawValue : Height.food3.rawValue)
+            make.top.equalTo(titleView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+        }
+        
+        mealCollectionView.snp.makeConstraints { make in
+            make.top.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        pageControlContainerView.snp.makeConstraints { make in
+            make.height.equalTo(30)
+            make.top.equalTo(containerView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+        }
+        
+        tablePageControl.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+        }
+        
+        submitContainerView.snp.makeConstraints { make in
+            make.top.equalTo(pageControlContainerView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        submitButton.snp.makeConstraints { make in
+            make.height.equalTo(50)
+            make.width.equalTo(300)
+            make.top.equalToSuperview().offset(10)
+            make.centerX.equalToSuperview()
+        }
+    }
+    
+    private func isTwoFoods() -> Bool {
+        switch self.selectedResName {
+        case SeoulRestaurant.mcc.rawValue,
+             YonginRestaurant.myungjin.rawValue: return false
+
+        case YonginRestaurant.staff.rawValue,
+             YonginRestaurant.dormitory.rawValue,
+             YonginRestaurant.academy.rawValue: return true
+            
+        default: return false
         }
     }
     
@@ -448,59 +543,6 @@ class MainViewController: MainBaseViewController {
     }
 }
 
-// MARK: - TableView delegate
-extension MainViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let data = self.foodData {
-            isFoodDataIsEmpty = false
-            return data.count + 2
-        } else {
-            isFoodDataIsEmpty = true
-            
-            let alert = UIAlertController(title: nil, message: "불러올 학식 정보가 없습니다", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default))
-            present(alert, animated: true)
-            
-            return 0
-        }
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == foodData!.count {
-            let cell = UITableViewCell()
-            cell.addSubview(tablePageControl)
-            tablePageControl.snp.makeConstraints {
-                $0.centerX.centerY.equalToSuperview()
-            }
-            return cell
-        } else if indexPath.row == foodData!.count + 1 {
-            let cell = UITableViewCell()
-            self.setSubmitButtonCell(cell)
-            return cell
-        }
-
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
-        cell.selectionStyle = .none
-        if let res = self.selectedResName {
-            cell.selectedRestaurant = res
-            
-        } else { print("selectedResName이 설정되지 않음") }
-        
-        let itemIdx = indexPath.row
-        
-        if self.foodData!.count > 0 {
-            cell.data = self.foodData![itemIdx]
-            cell.isWeekend = self.isWeekend
-            cell.setUpData()
-            cell.setUpButtons()
-            cell.checkIsToday(isToday: self.isToday)
-
-        }
-        return cell
-
-    }
-
-}
-
 // MARK: - API Success
 extension MainViewController {
     func getTodayDataText(date: Date) -> String {
@@ -518,35 +560,38 @@ extension MainViewController {
         dateFormatter.dateFormat = "EE"
         
         let today = Date() + 32400
-        print("today - \(today)")
+        
         switch dateFormatter.string(from: today) {
         case "월":
             startDay = today
-            tablePageControl.currentPage = 0
+            currentPageNum = 0
         case "화":
             startDay = Calendar.current.date(byAdding: .day, value: -1, to: today)
-            tablePageControl.currentPage = 1
+            currentPageNum = 1
         case "수":
             startDay = Calendar.current.date(byAdding: .day, value: -2, to: today)
-            tablePageControl.currentPage = 2
+            currentPageNum = 2
         case "목":
             startDay = Calendar.current.date(byAdding: .day, value: -3, to: today)
-            tablePageControl.currentPage = 3
+            currentPageNum = 3
         case "금":
             startDay = Calendar.current.date(byAdding: .day, value: -4, to: today)
-            tablePageControl.currentPage = 4
+            currentPageNum = 4
         case "토":
             isWeekend = true
             startDay = Calendar.current.date(byAdding: .day, value: -5, to: today)
             tablePageControl.currentPage = 4
+            currentPageNum = 4
             showAlert(message: "주말에는 학생식당을 운영하지 않습니다.")
         case "일":
             isSunday = true
             startDay = Calendar.current.date(byAdding: .day, value: 1, to: today)
             tablePageControl.currentPage = 0
+            currentPageNum = 0
             showAlert(message: "주말에는 학생식당을 운영하지 않습니다.")
         default: return
         }
+        tablePageControl.currentPage = currentPageNum
         setArrowButtons(currentPageControl: tablePageControl.currentPage)
         
         endDay = Calendar.current.date(byAdding: .day, value: 4, to: startDay!)
@@ -554,8 +599,8 @@ extension MainViewController {
         // 일요일 테스트 용
 //        startDay = Calendar.current.date(byAdding: .day, value: 1, to: today)
 //        endDay = Calendar.current.date(byAdding: .day, value: 4, to: startDay!)
-        print("startDay - \(startDay)")
-        print("endDay - \(endDay)")
+//        print("startDay - \(startDay)")
+//        print("endDay - \(endDay)")
         
         if isWeekend { titleLabel.text = "오늘의 학식  |  \(getTodayDataText(date: endDay!))" }
         if isSunday { titleLabel.text = "오늘의 학식  |  \(getTodayDataText(date: startDay!))" }
@@ -599,12 +644,13 @@ extension MainViewController {
     func reloadDataAnimation() {
         print("reloadDataAnimation called")
         // reload data with animation
-        UIView.transition(with: self.tableView,
+        UIView.transition(with: self.mealCollectionView,
                           duration: 0.35,
                           options: .transitionCrossDissolve,
                           animations: { () -> Void in
-                          self.tableView.reloadData()},
+                          self.mealCollectionView.reloadData()},
                           completion: nil);
+        tablePageControl.currentPage = currentPageNum
     }
 }
 
@@ -613,3 +659,95 @@ extension MainViewController: UpdateBottomDelegate {
         showAdVC()
     }
 }
+
+extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { return 5 }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        DispatchQueue.main.async {
+            if let start = self.startDay {
+                let date = Calendar.current.date(byAdding: .day, value: self.currentPageNum, to: start)
+                self.titleLabel.text  = "오늘의 학식  |  \(self.getTodayDataText(date: date!))"
+            }
+        }
+        
+        let width = scrollView.bounds.size.width
+        let x = scrollView.contentOffset.x + (width/2)
+        
+        currentPageNum = Int(x / width)
+        if tablePageControl.currentPage != currentPageNum {
+            tablePageControl.currentPage = currentPageNum
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { return -5 }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCollectionViewCell", for: indexPath) as? MainCollectionViewCell else { return UICollectionViewCell() }
+        cell.tag = indexPath.row
+        
+        cell.isToday = self.isToday
+        cell.isWeekend = self.isWeekend
+        cell.isFoodDataIsEmpty = self.isFoodDataIsEmpty
+        cell.selectedResName = self.selectedResName
+
+        let divideNum = getDivideNum()
+        cell.foodData = getDailyFoodData(startIdx: divideNum * indexPath.row,
+                                         endIdx: divideNum * (indexPath.row+1))
+        cell.tableView.reloadData()
+        
+        return cell
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+       guard let layout = mealCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+       
+       let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
+       
+       let estimatedIndex = scrollView.contentOffset.x / cellWidthIncludingSpacing
+       let index: Int
+       if velocity.x > 0 {
+           index = Int(ceil(estimatedIndex))
+       } else if velocity.x < 0 {
+           index = Int(floor(estimatedIndex))
+       } else {
+           index = Int(round(estimatedIndex))
+       }
+       
+       targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
+   }
+}
+
+extension MainViewController {
+    func getDailyFoodData(startIdx: Int, endIdx: Int) -> [DayFoodModel] {
+        var data: [DayFoodModel] = []
+        if (weekFoodData?.count ?? 0) > 0  {
+            for i in startIdx ..< endIdx {
+                data.append(weekFoodData![i])
+            }
+        }
+        return data
+    }
+    
+    func getDivideNum() -> Int {
+        switch self.selectedResName {
+        case SeoulRestaurant.mcc.rawValue,
+             YonginRestaurant.myungjin.rawValue:
+            
+            return 3
+
+        case YonginRestaurant.staff.rawValue,
+             YonginRestaurant.dormitory.rawValue,
+             YonginRestaurant.academy.rawValue:
+            return 2
+            
+        default:
+            return 3
+        }
+    }
+}
+

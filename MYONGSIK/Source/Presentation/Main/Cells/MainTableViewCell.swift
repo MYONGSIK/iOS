@@ -34,7 +34,7 @@ class MainTableViewCell: UITableViewCell {
         $0.textColor = UIColor(red: 10/255, green: 69/255, blue: 202/255, alpha: 1)
     }
     let foodLabel = UILabel().then{
-        $0.font = UIFont.NotoSansKR(size: 18, family: .Regular)
+        $0.font = UIFont.NotoSansKR(size: 16, family: .Regular)
         $0.textColor = .signatureGray
         $0.numberOfLines = 0
         $0.textAlignment = .center
@@ -47,7 +47,6 @@ class MainTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
         setUpView()
         setUpConstraint()
     }
@@ -107,8 +106,12 @@ class MainTableViewCell: UITableViewCell {
         
     }
     func setUpConstraint() {
+        self.contentView.snp.makeConstraints { make in
+            make.leading.trailing.top.bottom.equalToSuperview()
+        }
         backView.snp.makeConstraints { make in
-            make.leading.trailing.top.equalToSuperview().inset(21)
+            make.top.equalToSuperview().inset(7)
+            make.leading.trailing.top.equalToSuperview().inset(10)
             make.bottom.equalToSuperview()
         }
         typeView.snp.makeConstraints {
@@ -177,7 +180,7 @@ class MainTableViewCell: UITableViewCell {
             let attribtuedString = NSMutableAttributedString(string: foods)
             let range = (foods as NSString).range(of: originStr)
             attribtuedString.addAttribute(.foregroundColor, value: UIColor.signatureBlue, range: range)
-            attribtuedString.addAttribute(.font, value: UIFont.NotoSansKR(size: 18, family: .Bold), range: range)
+            attribtuedString.addAttribute(.font, value: UIFont.NotoSansKR(size: 16, family: .Bold), range: range)
             self.foodLabel.attributedText = attribtuedString
         } else {  self.foodLabel.text = foods }
 
