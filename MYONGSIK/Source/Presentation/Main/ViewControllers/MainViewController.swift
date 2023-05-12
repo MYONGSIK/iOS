@@ -12,7 +12,7 @@ import Then
 // MARK: '오늘의 학식' 페이지
 
 enum Height: Int {
-    case food3 = 500
+    case food3 = 510
     case food2 = 400
 }
 
