@@ -250,7 +250,7 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 0:
             let cell = UITableViewCell()
             DispatchQueue.main.async {
-                cell.textLabel?.text = "#모아뒀으니 골라보세요!"
+                cell.textLabel?.text = "#명지맛집 모음!"
                 cell.textLabel?.font = UIFont.NotoSansKR(size: 22, family: .Bold)
                 cell.selectionStyle = .none
             }
@@ -258,7 +258,8 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TagTableViewCell", for: indexPath) as? TagTableViewCell else { return UITableViewCell() }
             DispatchQueue.main.async {
-                cell.setCollectionView(self)
+                cell.setTagView()
+                cell.delegate = self
                 cell.selectionStyle = .none
             }
             return cell
@@ -299,60 +300,27 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 0:
             return 60
         case 1:
-            return 84
+            return 225
         case 2:
             return 46
         default:
-//            switch self.cellMode {
-//            case .rankCell: return 200
-//            case .kakaoCell: return 170
-//            }
+            switch self.cellMode {
+            case .rankCell: return 200
+            case .kakaoCell: return 170
+            }
             return 200
         }
     }
 }
-// MARK: - CollectionView delegate
-extension RestaurantMainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
-    }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier,
-                                                            for: indexPath)
-                as? TagCollectionViewCell else{ fatalError() }
-        let tag = indexPath.row
-        switch tag {
-        case 0:
-            cell.titleLabel.text = "#명지맛집"
-        case 1:
-            cell.titleLabel.text = "#명지카페"
-        case 2:
-            cell.titleLabel.text = "#명지술집"
-        default:
-            cell.titleLabel.text = "#명지빵집"
-        }
-        return cell
-    }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        UIDevice.vibrate()
-        
-        var tagKeyword = ""
-        let tag = indexPath.row
-        switch tag {
-        case 0:
-            tagKeyword = "맛집"
-        case 1:
-            tagKeyword = "카페"
-        case 2:
-            tagKeyword = "술집"
-        default:
-            tagKeyword = "빵집"
-        }
+
+extension RestaurantMainViewController: TagCellDelegate {
+    func didTapTagButton(tagKeyword: String) {
         let vc = RestaurantTagViewController()
         vc.tagKeyword = tagKeyword
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
+
 // MARK: - API Success
 extension RestaurantMainViewController {
     func kakaoRandomMapSuccessAPI(_ result: [KakaoResultModel]) {

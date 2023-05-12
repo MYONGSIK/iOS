@@ -121,6 +121,25 @@ class SearchResultTableViewCell: UITableViewCell {
     }
     
     // MARK: Functions
+    func deleteAllSubViews() {
+        [
+            howManyLikeLabel,
+            backView,
+            placeNameLabel,
+            dotLabel,
+            placeCategoryLabel,
+            distanceLabel,
+            goLinkButton,
+            pinImage,
+            locationButton,
+            phoneImage,
+            phoneNumButton
+            
+        ].forEach { subView in
+            subView.removeFromSuperview()
+        }
+    }
+    
     func setUpView() {
         self.contentView.addSubview(howManyLikeLabel)
         self.contentView.addSubview(backView)
@@ -195,6 +214,25 @@ class SearchResultTableViewCell: UITableViewCell {
             make.leading.equalTo(locationButton)
             make.centerY.equalTo(phoneImage)
         }
+    }
+    
+    private func setNoHowManyLabelConstraints() {
+        howManyLikeLabel.removeFromSuperview()
+
+        /// set constraints
+        self.backView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(10)
+        }
+        self.placeNameLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(22)
+        }
+        self.pinImage.snp.makeConstraints {
+            $0.top.equalTo(placeNameLabel.snp.bottom).offset(25)
+        }
+        self.phoneImage.snp.makeConstraints {
+            $0.top.equalTo(pinImage.snp.bottom).offset(22)
+        }
+        
     }
     
     @objc func didTapHeartButton(_ sender: UIButton) {
@@ -376,38 +414,13 @@ class SearchResultTableViewCell: UITableViewCell {
     func setupLayout(todo: CellTodo) {
         switch todo {
         case .main:
-            self.howManyLikeLabel.isHidden = false
-            self.howManyLikeLabel.textColor = .signatureBlue
-        case .random:
-            self.howManyLikeLabel.isHidden = false
-            self.howManyLikeLabel.textColor = .white
-//            self.howManyLikeLabel.isHidden = true
-//            self.backView.snp.makeConstraints {
-//                $0.top.equalToSuperview().offset(10)
-//            }
-//            self.placeNameLabel.snp.makeConstraints {
-//                $0.top.equalToSuperview().inset(22)
-//            }
-//            self.pinImage.snp.makeConstraints {
-//                $0.top.equalTo(placeNameLabel.snp.bottom).offset(25)
-//            }
-//            self.phoneImage.snp.makeConstraints {
-//                $0.top.equalTo(pinImage.snp.bottom).offset(22)
-//            }
-        case .search:
-            self.howManyLikeLabel.isHidden = true
-            self.backView.snp.makeConstraints {
-                $0.top.equalToSuperview().offset(10)
-            }
-            self.placeNameLabel.snp.makeConstraints {
-                $0.top.equalToSuperview().inset(22)
-            }
-            self.pinImage.snp.makeConstraints {
-                $0.top.equalTo(placeNameLabel.snp.bottom).offset(25)
-            }
-            self.phoneImage.snp.makeConstraints {
-                $0.top.equalTo(pinImage.snp.bottom).offset(22)
-            }
+            deleteAllSubViews()
+            setUpView()
+            setUpConstraint()
+            
+        default:
+            setUpView()
+            setNoHowManyLabelConstraints()
         }
     }
     
