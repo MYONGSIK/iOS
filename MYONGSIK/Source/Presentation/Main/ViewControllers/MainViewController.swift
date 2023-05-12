@@ -463,12 +463,8 @@ class MainViewController: MainBaseViewController {
 
     private func didTapChangeDateButton(value: Int) {
         currentPageNum += value
-//        tablePageControl.currentPage += value
-//        setArrowButtons(currentPageControl: tablePageControl.currentPage)
         setArrowButtons(currentPageControl: currentPageNum)
         
-        // set titleLabel
-        print("didTapChangeDateButton called --> currentPageNum : \(currentPageNum)")
         DispatchQueue.main.async {
             self.mealCollectionView.scrollToItem(at: IndexPath(item: self.currentPageNum, section: 0), at: .centeredHorizontally, animated: false)
             if let start = self.startDay {
@@ -476,27 +472,6 @@ class MainViewController: MainBaseViewController {
                 self.titleLabel.text  = "오늘의 학식  |  \(self.getTodayDataText(date: date!))"
             }
         }
-//        if let start = startDay {
-//            DispatchQueue.main.async {
-//
-//                let date = Calendar.current.date(byAdding: .day, value: self.tablePageControl.currentPage, to: start)
-//                self.titleLabel.text  = "오늘의 학식  |  \(self.getTodayDataText(date: date!))"
-//
-//                // set daily food data
-//                let dateFormatter = DateFormatter()
-//                dateFormatter.timeZone = TimeZone(identifier: "UTC")
-//                dateFormatter.dateFormat = "yyyy-MM-dd"
-//
-//                let today = Date() + 32400
-//                if dateFormatter.string(from: date!) == dateFormatter.string(from: today) { self.isToday = true }
-//                else { self.isToday = false }
-//
-//                self.foodData = self.getDailyFoodData(date: date!)
-//                self.checkDataIsEmpty()
-//
-//                self.reloadDataAnimation()
-//            }
-//        }
     }
     
     func setSubmitButtonCell(_ cell: UITableViewCell) {
@@ -541,7 +516,8 @@ class MainViewController: MainBaseViewController {
     
     @objc private func pageChanged(_ sender: UIPageControl) { print("pageChanged") }
 
-    @objc private func didTapGoBeforeButton(_ sender: UIButton) { didTapChangeDateButton(value: -1) }
+    @objc private func didTapGoBeforeButton(_ sender: UIButton) {
+        didTapChangeDateButton(value: -1) }
     @objc private func didTapGoAfterButton(_ sender: UIButton) { didTapChangeDateButton(value: 1) }
     
     @objc func submitButtonTapped(_ sender: UIButton){
@@ -692,6 +668,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         if tablePageControl.currentPage != currentPageNum {
             tablePageControl.currentPage = currentPageNum
         }
+        
+        setArrowButtons(currentPageControl: currentPageNum)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { return -5 }
