@@ -279,7 +279,7 @@ class MainViewController: MainBaseViewController {
     func setupCollectionView() {
         mealCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then{
             let flowLayout = UICollectionViewFlowLayout()
-            flowLayout.itemSize = CGSize(width: self.view.frame.width-10, height: 300)
+            flowLayout.itemSize = CGSize(width: self.view.frame.width-15, height: 300)
             flowLayout.scrollDirection = .horizontal
             flowLayout.minimumLineSpacing = 10
 
@@ -686,22 +686,22 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-           guard let layout = mealCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-           
-           let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
-           
-           let estimatedIndex = scrollView.contentOffset.x / cellWidthIncludingSpacing
-           let index: Int
-           if velocity.x > 0 {
-               index = Int(ceil(estimatedIndex))
-           } else if velocity.x < 0 {
-               index = Int(floor(estimatedIndex))
-           } else {
-               index = Int(round(estimatedIndex))
-           }
-           
-           targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
+       guard let layout = mealCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+       
+       let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
+       
+       let estimatedIndex = scrollView.contentOffset.x / cellWidthIncludingSpacing
+       let index: Int
+       if velocity.x > 0 {
+           index = Int(ceil(estimatedIndex))
+       } else if velocity.x < 0 {
+           index = Int(floor(estimatedIndex))
+       } else {
+           index = Int(round(estimatedIndex))
        }
+       
+       targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
+   }
 }
 
 extension MainViewController {
