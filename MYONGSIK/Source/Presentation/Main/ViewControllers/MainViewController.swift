@@ -243,7 +243,8 @@ class MainViewController: MainBaseViewController {
             }
             
             self?.reloadDataAnimation()
-            self?.checkDataIsEmpty()
+//            self?.checkDataIsEmpty()
+            self?.checkWeekDataIsEmpty()
         })
         
     }
@@ -263,11 +264,16 @@ class MainViewController: MainBaseViewController {
                 self?.weekFoodData = data.sorted(by: { $0.toDay! < $1.toDay! })
                 self?.reloadDataAnimation()
             
+                print("***** Fetched Week Food Data --> ")
                 self?.weekFoodData?.forEach({ data in
                     print(data)
                 })
+                
+                self?.reloadDataAnimation()
+                self?.checkWeekDataIsEmpty()
             }
-
+            
+            
         })
     }
 
@@ -436,14 +442,35 @@ class MainViewController: MainBaseViewController {
         }
     }
     
-    private func checkDataIsEmpty() {
-        if foodData?.count == 0 {
-            tablePageControl.isHidden = true
-            submitButton.isHidden = true
+//    private func checkDataIsEmpty() {
+//        if foodData?.count == 0 {
+//            tablePageControl.isHidden = true
+//            submitButton.isHidden = true
+//            isEmptyDataLabel.isHidden = false
+//        } else {
+//            tablePageControl.isHidden = false
+//            submitButton.isHidden = false
+//            isEmptyDataLabel.isHidden = true
+//        }
+//    }
+    
+    private func checkWeekDataIsEmpty() {
+        if weekFoodData?.count == 0 {
+//            tablePageControl.isHidden = true
+//            submitButton.isHidden = true
+            removeAllViews()
+            containerView.isHidden = true
+            pageControlContainerView.isHidden = true
+            submitContainerView.isHidden = true
             isEmptyDataLabel.isHidden = false
         } else {
-            tablePageControl.isHidden = false
-            submitButton.isHidden = false
+//            tablePageControl.isHidden = false
+//            submitButton.isHidden = false
+            setUpView()
+            setUpConstraint()
+            containerView.isHidden = false
+            pageControlContainerView.isHidden = false
+            submitContainerView.isHidden = false
             isEmptyDataLabel.isHidden = true
         }
     }
