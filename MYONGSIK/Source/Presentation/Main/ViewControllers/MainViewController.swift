@@ -418,6 +418,7 @@ class MainViewController: MainBaseViewController {
         
         submitContainerView.snp.makeConstraints { make in
             make.top.equalTo(pageControlContainerView.snp.bottom)
+            make.height.equalTo(170)
             make.leading.trailing.bottom.equalToSuperview()
         }
         
