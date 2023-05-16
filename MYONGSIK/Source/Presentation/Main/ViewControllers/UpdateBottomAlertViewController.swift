@@ -7,13 +7,7 @@
 
 import UIKit
 
-protocol UpdateBottomDelegate {
-    func dissmissShowGaAd()
-}
-
 class UpdateBottomAlertViewController: UIViewController {
-    
-    var delegate: UpdateBottomDelegate?
     
     let bottomView = UIView().then {
         $0.backgroundColor = .white
@@ -181,9 +175,7 @@ class UpdateBottomAlertViewController: UIViewController {
         if let encoded = try? encoder.encode(true) {
             UserDefaults.standard.setValue(encoded, forKey: "StopAlert")
         }
-        self.dismiss(animated: true) {
-            self.delegate?.dissmissShowGaAd()
-        }
+        self.dismiss(animated: true)
     }
     
 

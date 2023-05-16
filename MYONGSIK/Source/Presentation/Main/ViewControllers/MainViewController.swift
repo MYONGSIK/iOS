@@ -161,21 +161,13 @@ class MainViewController: MainBaseViewController {
             if userCampus as! String == CampusInfo.seoul.name  {
                 if UserDefaults.standard.value(forKey: "StopAlert") == nil  {
                     let updateAlert = UpdateBottomAlertViewController()
-                    updateAlert.delegate = self
                     updateAlert.modalPresentationStyle = .overFullScreen
                     self.present(updateAlert, animated: true)
-                }else {
-                    showAdVC()
                 }
             }
         }
     }
     
-    private func showAdVC() {
-       let gaAdController = GoogleMobileAdsController()
-        
-        gaAdController.createAndLoadInterstitial(vc: self)
-    }
     
 
     // MARK: - Functions
@@ -353,7 +345,7 @@ class MainViewController: MainBaseViewController {
         contentView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.centerX.top.bottom.equalToSuperview()
-            $0.height.equalTo(700)
+            $0.height.equalTo(850)
         }
 
         
@@ -418,13 +410,14 @@ class MainViewController: MainBaseViewController {
         
         submitContainerView.snp.makeConstraints { make in
             make.top.equalTo(pageControlContainerView.snp.bottom)
+//            make.height.equalTo(200)
             make.leading.trailing.bottom.equalToSuperview()
         }
         
         submitButton.snp.makeConstraints { make in
             make.height.equalTo(50)
             make.width.equalTo(300)
-            make.top.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(25)
             make.centerX.equalToSuperview()
         }
     }
@@ -667,11 +660,6 @@ extension MainViewController {
     }
 }
 
-extension MainViewController: UpdateBottomDelegate {
-    func dissmissShowGaAd() {
-        showAdVC()
-    }
-}
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { return 5 }
