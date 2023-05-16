@@ -38,19 +38,11 @@ class SelectRestaurantViewController: MainBaseViewController {
     private func showUpdateAlert() {
         if UserDefaults.standard.value(forKey: "StopAlert") == nil {
             let updateAlert = UpdateBottomAlertViewController()
-            updateAlert.delegate = self
             updateAlert.modalPresentationStyle = .overFullScreen
             self.present(updateAlert, animated: true)
-        }else {
-            showAdVC()
         }
     }
     
-    private func showAdVC() {
-       let gaAdController = GoogleMobileAdsController()
-        
-        gaAdController.createAndLoadInterstitial(vc: self)
-    }
     
     func setUpTableView(delegate: UITableViewDelegate & UITableViewDataSource) {
         buttonTableView = UITableView().then{
@@ -167,11 +159,5 @@ extension SelectRestaurantViewController {
             $0.trailing.equalToSuperview().inset(30)
         }
         
-    }
-}
-
-extension SelectRestaurantViewController: UpdateBottomDelegate {
-    func dissmissShowGaAd() {
-        showAdVC()
     }
 }

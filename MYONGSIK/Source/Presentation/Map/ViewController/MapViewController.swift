@@ -32,6 +32,14 @@ class MapViewController: UIViewController {
         getHeartData()
         setup()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if self.storeInfoView != nil {
+            self.storeInfoView.removeFromSuperview()
+        }
+        
+        getHeartData()
+    }
 
     private func setup() {
         mapView = MTMapView(frame: self.view.frame)

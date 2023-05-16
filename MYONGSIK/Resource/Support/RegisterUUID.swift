@@ -54,6 +54,8 @@ class RegisterUUID {
             let deviceData = existingItem[kSecValueData as String] as? Foundation.Data
             let uuidData = String(data: deviceData!, encoding: .utf8)!
             
+            print("get : "  + uuidData)
+            
             return uuidData
         }
         else if status == errSecItemNotFound || status == -25300 {

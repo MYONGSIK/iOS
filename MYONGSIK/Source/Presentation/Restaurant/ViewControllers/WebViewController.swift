@@ -59,6 +59,7 @@ class WebViewController: UIViewController, WKUIDelegate {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.isNavigationBarHidden = true
     }
     // MARK: - Actions
