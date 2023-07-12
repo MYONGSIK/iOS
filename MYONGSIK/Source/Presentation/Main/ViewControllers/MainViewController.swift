@@ -19,6 +19,8 @@ enum Height: Int {
 class MainViewController: MainBaseViewController {
     // MARK: - Variables
     
+    let mainViewModel = MainViewModel()
+    
     var currentPageNum = 0
 
     var isToday: Bool = true
@@ -148,12 +150,21 @@ class MainViewController: MainBaseViewController {
         setUpView()
         setUpConstraint()
         
+        test()
+        
         fetchDailyData()
         fetchWeekData()
         
         DispatchQueue.main.async {
             self.mealCollectionView.scrollToItem(at: IndexPath(item: self.currentPageNum, section: 0), at: .centeredHorizontally, animated: false)
         }
+    }
+    
+    private func test() {
+        var resName = selectedResName
+        if selectedResName == YonginRestaurant.academy.rawValue { resName = "학생식당" }
+        
+        mainViewModel.getWeekFood(area: resName ?? "")
     }
      
     private func showUpdateAlert() {

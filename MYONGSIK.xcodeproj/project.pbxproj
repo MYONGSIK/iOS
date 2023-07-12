@@ -55,7 +55,8 @@
 		7303B8B22A0AA52D004C4C52 /* GoogleMobileAdsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7303B8B12A0AA52D004C4C52 /* GoogleMobileAdsKey.swift */; };
 		73178AC129EAFC3A001C3AA4 /* MapStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */; };
 		73178AD829EED14A001C3AA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */; };
-		734360052A2DB55800845A1B /* FoodService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734360042A2DB55800845A1B /* FoodService.swift */; };
+		731C3F422A5D3DA300A5277A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731C3F412A5D3DA300A5277A /* MainViewModel.swift */; };
+		734360052A2DB55800845A1B /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734360042A2DB55800845A1B /* MainService.swift */; };
 		734360082A2DBBE800845A1B /* HeartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734360072A2DBBE800845A1B /* HeartService.swift */; };
 		736A8DF829E999E200D30A35 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736A8DF729E999E200D30A35 /* MapViewController.swift */; };
 		736A8DFC29E9A01700D30A35 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFB29E9A01700D30A35 /* Metal.framework */; };
@@ -219,7 +220,8 @@
 		7303B8B12A0AA52D004C4C52 /* GoogleMobileAdsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMobileAdsKey.swift; sourceTree = "<group>"; };
 		73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStoreView.swift; sourceTree = "<group>"; };
 		73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		734360042A2DB55800845A1B /* FoodService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodService.swift; sourceTree = "<group>"; };
+		731C3F412A5D3DA300A5277A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		734360042A2DB55800845A1B /* MainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainService.swift; sourceTree = "<group>"; };
 		734360072A2DBBE800845A1B /* HeartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartService.swift; sourceTree = "<group>"; };
 		736A8DF729E999E200D30A35 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		736A8DFB29E9A01700D30A35 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
@@ -483,7 +485,6 @@
 		2373E4E8290AD18500D51B8E /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				731C3F3F2A5C051400A5277A /* ViewModel */,
 				2373E4EC290AD1AC00D51B8E /* Presentation */,
 				2373E4EB290AD1A900D51B8E /* Data */,
 				2373E4EA290AD19A00D51B8E /* Domain */,
@@ -570,6 +571,7 @@
 		2373E4F2290AD35200D51B8E /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				731C3F402A5D3D9200A5277A /* ViewModel */,
 				2373E4F4290AD35F00D51B8E /* Cells */,
 				2373E4F3290AD35800D51B8E /* ViewControllers */,
 			);
@@ -613,7 +615,7 @@
 			isa = PBXGroup;
 			children = (
 				734360062A2DBBD400845A1B /* HeartService */,
-				734360032A2DB54500845A1B /* FoodService */,
+				734360032A2DB54500845A1B /* MainService */,
 				23C993AB2910A4E500B8D1E4 /* KakaoMapService */,
 			);
 			path = Services;
@@ -672,19 +674,20 @@
 			path = KakaoMapService;
 			sourceTree = "<group>";
 		};
-		731C3F3F2A5C051400A5277A /* ViewModel */ = {
+		731C3F402A5D3D9200A5277A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				731C3F412A5D3DA300A5277A /* MainViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		734360032A2DB54500845A1B /* FoodService */ = {
+		734360032A2DB54500845A1B /* MainService */ = {
 			isa = PBXGroup;
 			children = (
-				734360042A2DB55800845A1B /* FoodService.swift */,
+				734360042A2DB55800845A1B /* MainService.swift */,
 			);
-			path = FoodService;
+			path = MainService;
 			sourceTree = "<group>";
 		};
 		734360062A2DBBD400845A1B /* HeartService */ = {
@@ -1163,10 +1166,11 @@
 				238F56342910AC170044214F /* SearchResultTableViewCell.swift in Sources */,
 				23B9E89D29114670009B6D8F /* TagTableViewCell.swift in Sources */,
 				A23DA70B29A89575003FDA56 /* UIResponder+.swift in Sources */,
+				731C3F422A5D3DA300A5277A /* MainViewModel.swift in Sources */,
 				238F562F2910A6D60044214F /* KakaoMapModel.swift in Sources */,
 				A2A7966529A4702100A2F2E2 /* SelectRestaurantViewController.swift in Sources */,
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
-				734360052A2DB55800845A1B /* FoodService.swift in Sources */,
+				734360052A2DB55800845A1B /* MainService.swift in Sources */,
 				A202858129C7520C008A7853 /* StoreModel.swift in Sources */,
 				23B9E8992911356D009B6D8F /* ScreenManager.swift in Sources */,
 				A2EA100B29F3FAD4000D600B /* SettingResTableViewCell.swift in Sources */,
