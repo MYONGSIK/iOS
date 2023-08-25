@@ -11,6 +11,7 @@ import SnapKit
 
 enum SeoulRestaurant: String {
     case mcc = "MCC식당"
+    case paulbassett = "폴바셋식당"
 }
 
 enum YonginRestaurant: String {

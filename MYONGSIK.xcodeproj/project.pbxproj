@@ -584,8 +584,8 @@
 				23166A7528FECD9D002AEFB7 /* MainViewController.swift */,
 				A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */,
 				A2A7966429A4702100A2F2E2 /* SelectRestaurantViewController.swift */,
-				73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */,
 				A2EA100829F3F855000D600B /* SettingRestautrantViewController.swift */,
+				73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

@@ -20,10 +20,6 @@ class SelectRestaurantViewController: MainBaseViewController {
         [YonginRestaurant.myungjin.rawValue, "백반 11:30~14:30 \n샐러드,볶음밥 10:00~15:00"]
     ]
     
-//    let adImageView = UIView().then{
-//        $0.backgroundColor = .systemGray4
-//        $0.layer.cornerRadius = 15
-//    }
     
     var buttonTableView: UITableView!
     
@@ -57,18 +53,10 @@ class SelectRestaurantViewController: MainBaseViewController {
     }
     
     func setup() {
-//        self.view.addSubview(adImageView)
         super.setCampusButton.isHidden = false
         self.view.addSubview(buttonTableView)
         
-//        adImageView.snp.makeConstraints {
-//            $0.top.equalTo(super.navigationImgView.snp.bottom).inset(10)
-//            $0.leading.equalToSuperview().offset(15)
-//            $0.trailing.equalToSuperview().inset(15)
-//            $0.height.equalTo(70)
-//        }
         buttonTableView.snp.makeConstraints {
-//            $0.top.equalTo(adImageView.snp.bottom).offset(5)
             $0.top.equalTo(super.navigationImgView.snp.bottom).inset(10)
             $0.leading.equalToSuperview().offset(15)
             $0.trailing.equalToSuperview().inset(15)
@@ -86,7 +74,6 @@ extension SelectRestaurantViewController: UITableViewDelegate, UITableViewDataSo
         let cell = UITableViewCell()
         cell.selectionStyle = .none
         setButtonCell(cell, info: resInfo[indexPath.row])
-        print("setting cell")
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
