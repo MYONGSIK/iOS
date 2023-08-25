@@ -16,6 +16,8 @@ class MainViewModel: ObservableObject{
     
     private var cancellabels: Set<AnyCancellable> = []
     
+    private var restaurants: [Restaurant] = []
+    
     @Published var campus: String?
     @Published var weekFood: Array<DayFoodModel> = []
     
@@ -30,6 +32,14 @@ class MainViewModel: ObservableObject{
         $campus.sink { campus in
             completion(campus ?? "")
         }.store(in: &cancellabels)
+    }
+    
+    func getRestaurantsCount() -> Int {
+        return restaurants.count
+    }
+    
+    func getRestaurant(index: Int) -> Restaurant {
+        return restaurants[index]
     }
 }
 
@@ -48,6 +58,7 @@ extension MainViewModel {
     
     func setCampus(campus: String) {
         self.campus = campus
+        setRestraunt()
         
         mainService.setCampus(campus: campus)
     }
@@ -56,6 +67,23 @@ extension MainViewModel {
     func getCampus() {
         mainService.getCampus { campus in
             self.campus = campus
+            self.setRestraunt()
+        }
+    }
+    
+    func setRestraunt() {
+        if campus == CampusInfo.seoul.name {
+            var seoulRestaurants: [Restaurant] = []
+            for i in 0..<2 {
+                seoulRestaurants.append(Restaurant.allCases[i])
+            }
+            self.restaurants = seoulRestaurants
+        }else if campus == CampusInfo.yongin.name {
+            var yonginRestaurants: [Restaurant] = []
+            for i in 2..<Restaurant.allCases.count {
+                yonginRestaurants.append(Restaurant.allCases[i])
+            }
+            self.restaurants = yonginRestaurants
         }
     }
 }

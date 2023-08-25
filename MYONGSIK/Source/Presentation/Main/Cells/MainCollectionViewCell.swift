@@ -80,8 +80,8 @@ extension MainCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
         if self.foodData!.count > 0 {
             cell.data = self.foodData![itemIdx]
             cell.isWeekend = self.isWeekend
-            cell.setUpData()
-            cell.setUpButtons()
+//            cell.setUpData()
+//            cell.setUpButtons()
             cell.checkIsToday(isToday: self.isToday)
 
         }

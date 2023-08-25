@@ -140,32 +140,20 @@ class MainViewController: MainBaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
-      
-        showUpdateAlert()
         
-        setSelectedRes()
-        setWeekDateData()
+       
     
         setupCollectionView()
         setUpView()
         setUpConstraint()
         
-        test()
         
-        fetchDailyData()
-        fetchWeekData()
-        
+
         DispatchQueue.main.async {
             self.mealCollectionView.scrollToItem(at: IndexPath(item: self.currentPageNum, section: 0), at: .centeredHorizontally, animated: false)
         }
     }
     
-    private func test() {
-        var resName = selectedResName
-        if selectedResName == YonginRestaurant.academy.rawValue { resName = "학생식당" }
-        
-        mainViewModel.getWeekFood(area: resName ?? "")
-    }
      
     private func showUpdateAlert() {
         if let userCampus = UserDefaults.standard.value(forKey: "userCampus") {
@@ -182,22 +170,7 @@ class MainViewController: MainBaseViewController {
     
 
     // MARK: - Functions
-    private func setSelectedRes() {
-        if let userCampus = UserDefaults.standard.value(forKey: "userCampus") {
-            switch userCampus as! String {
-            case CampusInfo.seoul.name:
-                selectedResName = SeoulRestaurant.mcc.rawValue
-                operatingTimeText = "중식 11:30~14:00  |  석식 17:30~19:00"
-                backItemButton.isHidden = true
-            case CampusInfo.yongin.name:
-                print("operatingTimeText - \(operatingTimeText)")
-                backItemButton.isHidden = false
-//                super.setCampusButton.isHidden = false
-                return
-            default: return
-            }
-        }
-    }
+
     
     private func removeAllViews() {
         [
@@ -209,76 +182,6 @@ class MainViewController: MainBaseViewController {
         }
     }
     
-    private func fetchDailyData() {
-        var resName = selectedResName
-        if selectedResName == YonginRestaurant.academy.rawValue { resName = "학생식당" }
-        print(Constants.getDayFood + "/\(resName!)")
-        APIManager.shared.getData(urlEndpointString: Constants.getDayFood + "/\(resName!)",
-                                  dataType: APIModel<[DayFoodModel]>?.self,
-                                  parameter: nil,
-                                  completionHandler: { [weak self] result in
-            switch result?.httpCode {
-            case 200:
-                // set TableView
-                // 중식A - 중식B - 석식 순으로 보이도록 데이터 정렬
-                self?.foodData = result?.data!.sorted(by: { $0.mealType! > $1.mealType! })
-                if var data = self?.foodData {
-                    
-                    if (self?.selectedResName == SeoulRestaurant.mcc.rawValue) && (data.count == 3) {
-                        // 중식B - 중식A - 석식 순으로 정렬되어있는 상태이므로 수정 필요
-                        let temp = data[0]
-                        data[0] = data[1]
-                        data[1] = temp
-                    }
-                    
-                    self?.foodData = data
-                }
-            
-                self?.reloadDataAnimation()
-                
-            case 405, 500:
-                self?.removeAllViews()
-                self?.showAlert(message: result?.message ?? "금일 식당운영을 하지 않습니다")
-            default:
-                self?.removeAllViews()
-                self?.showAlert(message: "네트워크 오류 - error code : \(result?.httpCode)")
-                return
-            }
-            
-            self?.reloadDataAnimation()
-//            self?.checkDataIsEmpty()
-            self?.checkWeekDataIsEmpty()
-        })
-        
-    }
-    
-    private func fetchWeekData() {
-        var resName = selectedResName
-        if selectedResName == YonginRestaurant.academy.rawValue { resName = "학생식당" }
-        
-        print(Constants.getWeekFood + "/\(resName!)")
-
-        APIManager.shared.getData(urlEndpointString: Constants.getWeekFood + "/\(resName!)",
-                                  dataType: APIModel<[DayFoodModel]>?.self,
-                                  parameter: nil,
-                                  completionHandler: { [weak self] result in
-
-            if let result = result, let data = result.data {
-                self?.weekFoodData = data.sorted(by: { $0.toDay! < $1.toDay! })
-                self?.reloadDataAnimation()
-            
-                print("***** Fetched Week Food Data --> ")
-                self?.weekFoodData?.forEach({ data in
-                    print(data)
-                })
-                
-                self?.reloadDataAnimation()
-                self?.checkWeekDataIsEmpty()
-            }
-            
-            
-        })
-    }
 
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
         tableView = UITableView()
@@ -400,7 +303,7 @@ class MainViewController: MainBaseViewController {
         }
         
         containerView.snp.makeConstraints { make in
-            make.height.equalTo(isTwoFoods() ? Height.food2.rawValue : Height.food3.rawValue)
+            make.height.equalTo( Height.food3.rawValue)
             make.top.equalTo(titleView.snp.bottom)
             make.leading.trailing.equalToSuperview()
         }
@@ -433,43 +336,15 @@ class MainViewController: MainBaseViewController {
         }
     }
     
-    private func isTwoFoods() -> Bool {
-        switch self.selectedResName {
-        case SeoulRestaurant.mcc.rawValue,
-             YonginRestaurant.myungjin.rawValue: return false
 
-        case YonginRestaurant.staff.rawValue,
-             YonginRestaurant.dormitory.rawValue,
-             YonginRestaurant.academy.rawValue: return true
-            
-        default: return false
-        }
-    }
-    
-//    private func checkDataIsEmpty() {
-//        if foodData?.count == 0 {
-//            tablePageControl.isHidden = true
-//            submitButton.isHidden = true
-//            isEmptyDataLabel.isHidden = false
-//        } else {
-//            tablePageControl.isHidden = false
-//            submitButton.isHidden = false
-//            isEmptyDataLabel.isHidden = true
-//        }
-//    }
-    
     private func checkWeekDataIsEmpty() {
         if weekFoodData?.count == 0 {
-//            tablePageControl.isHidden = true
-//            submitButton.isHidden = true
             removeAllViews()
             containerView.isHidden = true
             pageControlContainerView.isHidden = true
             submitContainerView.isHidden = true
             isEmptyDataLabel.isHidden = false
         } else {
-//            tablePageControl.isHidden = false
-//            submitButton.isHidden = false
             setUpView()
             setUpConstraint()
             containerView.isHidden = false
@@ -613,12 +488,6 @@ extension MainViewController {
         
         endDay = Calendar.current.date(byAdding: .day, value: 4, to: startDay!)
         
-        // 일요일 테스트 용
-//        startDay = Calendar.current.date(byAdding: .day, value: 1, to: today)
-//        endDay = Calendar.current.date(byAdding: .day, value: 4, to: startDay!)
-//        print("startDay - \(startDay)")
-//        print("endDay - \(endDay)")
-        
         if isWeekend { titleLabel.text = "오늘의 학식  |  \(getTodayDataText(date: endDay!))" }
         if isSunday { titleLabel.text = "오늘의 학식  |  \(getTodayDataText(date: startDay!))" }
     }
@@ -660,7 +529,6 @@ extension MainViewController {
     
     func reloadDataAnimation() {
         print("reloadDataAnimation called")
-        // reload data with animation
         UIView.transition(with: self.mealCollectionView,
                           duration: 0.35,
                           options: .transitionCrossDissolve,
@@ -709,9 +577,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         cell.isFoodDataIsEmpty = self.isFoodDataIsEmpty
         cell.selectedResName = self.selectedResName
 
-        let divideNum = getDivideNum()
-        cell.foodData = getDailyFoodData(startIdx: divideNum * indexPath.row,
-                                         endIdx: divideNum * (indexPath.row+1))
         cell.tableView.reloadData()
         
         return cell
@@ -734,34 +599,5 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
        
        targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
    }
-}
-
-extension MainViewController {
-    func getDailyFoodData(startIdx: Int, endIdx: Int) -> [DayFoodModel] {
-        var data: [DayFoodModel] = []
-        if (weekFoodData?.count ?? 0) > 0  {
-            for i in startIdx ..< endIdx {
-                data.append(weekFoodData![i])
-            }
-        }
-        return data
-    }
-    
-    func getDivideNum() -> Int {
-        switch self.selectedResName {
-        case SeoulRestaurant.mcc.rawValue,
-             YonginRestaurant.myungjin.rawValue:
-            
-            return 3
-
-        case YonginRestaurant.staff.rawValue,
-             YonginRestaurant.dormitory.rawValue,
-             YonginRestaurant.academy.rawValue:
-            return 2
-            
-        default:
-            return 3
-        }
-    }
 }
 
