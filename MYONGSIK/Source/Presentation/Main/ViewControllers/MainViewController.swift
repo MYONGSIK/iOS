@@ -137,20 +137,20 @@ class MainViewController: MainBaseViewController {
         
         scrolleView.addSubview(contentView)
 
-//        contentView.addSubview(isEmptyDataLabel)
-//
-//        contentView.addSubview(titleLabel)
-//        contentView.addSubview(dateLabel)
-//        contentView.addSubview(operatingTimeLabel)
-//
-//        contentView.addSubview(goBeforeButton)
-//        contentView.addSubview(goAfterButton)
+        contentView.addSubview(isEmptyDataLabel)
+
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(dateLabel)
+        contentView.addSubview(operatingTimeLabel)
+
+        contentView.addSubview(goBeforeButton)
+        contentView.addSubview(goAfterButton)
         
         contentView.addSubview(mealCollectionView)
         
-//        contentView.addSubview(tablePageControl)
-//
-//        contentView.addSubview(submitButton)
+        contentView.addSubview(tablePageControl)
+
+        contentView.addSubview(submitButton)
     }
     
     func setupConstraint() {
@@ -170,27 +170,69 @@ class MainViewController: MainBaseViewController {
             $0.height.equalTo(850)
         }
         
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(30)
+            make.leading.equalToSuperview().offset(15)
+        }
+        
+        dateLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom)
+            make.leading.equalToSuperview().offset(16)
+        }
+        
+        goAfterButton.snp.makeConstraints { make in
+            make.centerY.equalTo(titleLabel.snp.centerY)
+            make.trailing.equalToSuperview().inset(15)
+            make.width.height.equalTo(50)
+        }
+        
+        goBeforeButton.snp.makeConstraints { make in
+            make.centerY.equalTo(titleLabel.snp.centerY)
+            make.trailing.equalTo(goAfterButton.snp.leading).inset(10)
+            make.width.height.equalTo(50)
+        }
+        
+        submitButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().inset(30)
+            make.width.equalTo(245)
+            make.height.equalTo(50)
+        }
+        
+        tablePageControl.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(submitButton.snp.top).inset(50)
+        }
+        
+        isEmptyDataLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(CGFloat.screenHeight / 3)
+            make.centerX.equalToSuperview()
+        }
+        
         mealCollectionView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(tablePageControl.snp.top).inset(20)
         }
+        
+        
     }
     
     private func setupObserver() {
         MainViewModel.shared.getFoodList { [self] foodList in
             if foodList.isEmpty {
+                scrolleView.isScrollEnabled = false
                 mealCollectionView.isHidden = true
-//                tablePageControl.isHidden = true
-//                submitButton.isHidden = true
-//                isEmptyDataLabel.isHidden = false
+                tablePageControl.isHidden = true
+                submitButton.isHidden = true
+                isEmptyDataLabel.isHidden = false
             }else {
+                scrolleView.isScrollEnabled = true
                 mealCollectionView.isHidden = false
-//                tablePageControl.isHidden = false
-//                submitButton.isHidden = false
-//                isEmptyDataLabel.isHidden = true
-                
+                tablePageControl.isHidden = false
+                submitButton.isHidden = false
+                isEmptyDataLabel.isHidden = true
                 
                 mealCollectionView.reloadData()
             }
@@ -219,37 +261,48 @@ class MainViewController: MainBaseViewController {
         let today = Date() + 32400
         
         switch convertStr {
-        case "월":
+        case "월요일":
             currentPageNum = 0
             startDate = today
-        case "화":
+        case "화요일":
             currentPageNum = 1
             startDate = Calendar.current.date(byAdding: .day, value: -1, to: today)!
-        case "수":
+        case "수요일":
             currentPageNum = 2
             startDate = Calendar.current.date(byAdding: .day, value: -1, to: today)!
-        case "목":
+        case "목요일":
             currentPageNum = 3
             startDate = Calendar.current.date(byAdding: .day, value: -1, to: today)!
-        case "금":
+        case "금요일":
             currentPageNum = 4
             startDate = Calendar.current.date(byAdding: .day, value: -1, to: today)!
-        case "토":
+        case "토요일":
             currentPageNum = 0
             startDate = Calendar.current.date(byAdding: .day, value: 2, to: today)!
-        case "일":
+        case "일요일":
             currentPageNum = 0
             startDate = Calendar.current.date(byAdding: .day, value: 1, to: today)!
         default:
             return
         }
+        
+        print(currentPageNum)
+        
+        getTodayDataText()
+        setArrowButtons()
     }
     
-    private func getTodayDataText(date: Date) -> String {
+    private func getTodayDataText() {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM월 dd일"
         formatter.timeZone = TimeZone(identifier: "UTC")
-        return formatter.string(from: date)
+        
+        
+        
+        if let date = Calendar.current.date(byAdding: .day, value: self.currentPageNum, to: startDate) {
+            print(formatter.string(from: date))
+            self.titleLabel.text  = "오늘의 학식  |  \(formatter.string(from: date))"
+        }
     }
     
     private func setArrowButtons() {
@@ -266,6 +319,7 @@ class MainViewController: MainBaseViewController {
 
     private func didTapChangeDateButton(value: Int) {
         currentPageNum += value
+        getTodayDataText()
         setArrowButtons()
     }
     
@@ -306,10 +360,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let page = Int(targetContentOffset.pointee.x / CGFloat.screenWidth)
-        if let date = Calendar.current.date(byAdding: .day, value: self.currentPageNum, to: startDate) {
-            self.titleLabel.text  = "오늘의 학식  |  \(getTodayDataText(date: date))"
-        }
-        
         didTapChangeDateButton(value: page - currentPageNum)
    }
 }
