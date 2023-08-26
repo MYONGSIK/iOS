@@ -24,7 +24,7 @@ class MainViewModel: ObservableObject{
     private var pageCount = 0
     
     @Published var campus: String?
-    @Published var foodList: [[DayFoodModel]]?
+    @Published var foodList: [[DayFoodModel]] = []
     @Published var isFood: Bool = false
     @Published var selectedRestaurant: Restaurant?
     
@@ -43,11 +43,18 @@ class MainViewModel: ObservableObject{
         }.store(in: &cancellabels)
     }
     
+    func getFoodList(completion: @escaping ([[DayFoodModel]]) -> Void) {
+        $foodList.sink { foodList in
+            completion(foodList)
+        }.store(in: &cancellabels)
+    }
+    
+    
     func getDayFood(day: Int, index: Int, cancelLabels: inout Set<AnyCancellable> ,completion: @escaping (DayFoodModel) -> Void) {
         $foodList.filter{ foodList in
-            foodList != nil && foodList?.count != 0 && foodList?.count ?? 0 > day && foodList?[day].count ?? 0 > index
+            foodList.count != 0 && foodList.count > day && foodList[day].count > index
         }.sink { foodList in
-            completion((foodList?[day][index])!)
+            completion(foodList[day][index])
         }.store(in: &cancelLabels)
     }
     
@@ -59,8 +66,16 @@ class MainViewModel: ObservableObject{
     
     func removeFoodList() {
         isFood = false
-        foodList = nil
+        foodList.removeAll()
         selectedRestaurant = nil
+    }
+    
+    func getSelectedRestaurant(completion: @escaping (Restaurant) -> Void) {
+        $selectedRestaurant.filter { selectedRestaurant in
+            selectedRestaurant != nil
+        }.sink { selectedRestaurant in
+            completion(selectedRestaurant!)
+        }.store(in: &cancellabels)
     }
     
     func getSelectedRestaurantFoodCount(completion: @escaping (Int) -> Void) {
@@ -107,24 +122,23 @@ extension MainViewModel {
         mainService.getWeekFood(area: (self.selectedRestaurant?.getServerName())!) { response in
             if response.success {
                 if let data = response.data {
-                    self.foodList = []
                     var dayFoodList: [DayFoodModel] = []
                     for i in 0..<data.count {
                         if self.selectedRestaurant! == .mcc || self.selectedRestaurant! == .myungjin {
                             if i % 3 == 0 && i != 0{
-                                self.foodList?.append(dayFoodList)
+                                self.foodList.append(dayFoodList)
                                 dayFoodList.removeAll()
                             }
                         }else {
                             if i % 2 == 0 && i != 0{
-                                self.foodList?.append(dayFoodList)
+                                self.foodList.append(dayFoodList)
                                 dayFoodList.removeAll()
                             }
                         }
                        
                         dayFoodList.append(data[i])
                     }
-                    print(self.foodList)
+                    self.foodList.append(dayFoodList)
                     self.isFood = true
                 }
             }

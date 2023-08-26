@@ -9,8 +9,6 @@ import UIKit
 import SnapKit
 
 
-
-// MARK: 자연캠 식당 선택 화면
 class SelectRestaurantViewController: MainBaseViewController {
     
     private var buttonTableView = UITableView()
@@ -20,7 +18,6 @@ class SelectRestaurantViewController: MainBaseViewController {
         setup()
         setupView()
         setupConstraints()
-        setupObserver()
     }
     
     private func setup() {
@@ -50,14 +47,7 @@ class SelectRestaurantViewController: MainBaseViewController {
         }
     }
     
-    private func setupObserver() {
-        MainViewModel.shared.isFood { result in
-            if result {
-                let mainVC = MainViewController()
-                self.navigationController?.pushViewController(mainVC, animated: true)
-            }
-        }
-    }
+
 }
 
 extension SelectRestaurantViewController: UITableViewDelegate, UITableViewDataSource {
@@ -75,7 +65,9 @@ extension SelectRestaurantViewController: UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: 선택된 식당의 학식 정보를 토대로 화면으로 전환 (MainVC) / 현재 화면 전환만 구현해둠
         MainViewModel.shared.setRestaurant(index: indexPath.row)
-        
         MainViewModel.shared.getWeekFood()
+        
+        let mainVC = MainViewController()
+        self.navigationController?.pushViewController(mainVC, animated: true)
     }
 }

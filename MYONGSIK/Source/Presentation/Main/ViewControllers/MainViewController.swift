@@ -7,18 +7,11 @@
 
 import UIKit
 import SnapKit
-import Then
-
-// MARK: '오늘의 학식' 페이지
-
-enum Height: Int {
-    case food3 = 510
-    case food2 = 400
-}
 
 class MainViewController: MainBaseViewController {
     // MARK: - Variables
-    var currentPageNum = 0
+    private var currentPageNum = 0
+    private var startDate = Date()
 
     // MARK: - Views
     private let scrolleView = UIScrollView()
@@ -29,12 +22,11 @@ class MainViewController: MainBaseViewController {
     private let tableView = UITableView()
     
     private let titleLabel = UILabel()
+    private let dateLabel = UILabel()
     private let operatingTimeLabel = UILabel()
     
     private let goBeforeButton = UIButton()
     private let goAfterButton = UIButton()
-    
-    
     
     private let mealCollectionView: UICollectionView = {
         
@@ -50,36 +42,28 @@ class MainViewController: MainBaseViewController {
         cv.decelerationRate = .fast
         cv.isPagingEnabled = false
         cv.register(PageCell.self, forCellWithReuseIdentifier: "cell")
-        
+
         return cv
     }()
-   
-
+    
     private let tablePageControl = UIPageControl()
     
     private let submitButton = UIButton()
     
     private let isEmptyDataLabel = UILabel()
-    
-    private let containerView = UIView().then { $0.backgroundColor = .white }
-    private let pageControlContainerView = UIView().then { $0.backgroundColor = .white }
-    private let submitContainerView = UIView().then { $0.backgroundColor = .white }
+
 
 
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
           
-        
-        
         setup()
         setupView()
         setupConstraint()
         setupObserver()
+        setupCurrentPage()
     }
-    
-    
-
     
     private func setup() {
         self.navigationController?.isNavigationBarHidden = true
@@ -100,10 +84,7 @@ class MainViewController: MainBaseViewController {
         
         operatingTimeLabel.font = UIFont.NotoSansKR(size: 12, family: .Regular)
         operatingTimeLabel.textColor = .gray
-        operatingTimeLabel.attributedText = "운영시간  |  \(MainViewModel.shared.getRestaurant().getTime())"
-            .attributed(of: "운영시간", value: [
-                .foregroundColor: UIColor.darkGray
-            ])
+        
 
         mealCollectionView.delegate = self
         mealCollectionView.dataSource = self
@@ -119,7 +100,6 @@ class MainViewController: MainBaseViewController {
         tablePageControl.numberOfPages = 5
         tablePageControl.pageIndicatorTintColor = .lightGray
         tablePageControl.currentPageIndicatorTintColor = .signatureBlue
-        tablePageControl.addTarget(self, action: #selector(pageChanged(_:)), for: .valueChanged)
 
         
         var config = UIButton.Configuration.tinted()
@@ -154,22 +134,23 @@ class MainViewController: MainBaseViewController {
         super.navigationImgView.addSubview(backItemButton)
         
         self.view.addSubview(scrolleView)
+        
         scrolleView.addSubview(contentView)
 
-//        contentView.addSubview(pageControlContainerView)
-//        contentView.addSubview(submitContainerView)
 //        contentView.addSubview(isEmptyDataLabel)
 //
 //        contentView.addSubview(titleLabel)
+//        contentView.addSubview(dateLabel)
 //        contentView.addSubview(operatingTimeLabel)
 //
 //        contentView.addSubview(goBeforeButton)
 //        contentView.addSubview(goAfterButton)
-//
-//        pageControlContainerView.addSubview(tablePageControl)
-//        submitContainerView.addSubview(submitButton)
         
         contentView.addSubview(mealCollectionView)
+        
+//        contentView.addSubview(tablePageControl)
+//
+//        contentView.addSubview(submitButton)
     }
     
     func setupConstraint() {
@@ -198,58 +179,104 @@ class MainViewController: MainBaseViewController {
     }
     
     private func setupObserver() {
-        MainViewModel.shared.isFood { isFood in
-            if isFood == false {
-                self.navigationController?.popViewController(animated: true)
+        MainViewModel.shared.getFoodList { [self] foodList in
+            if foodList.isEmpty {
+                mealCollectionView.isHidden = true
+//                tablePageControl.isHidden = true
+//                submitButton.isHidden = true
+//                isEmptyDataLabel.isHidden = false
+            }else {
+                mealCollectionView.isHidden = false
+//                tablePageControl.isHidden = false
+//                submitButton.isHidden = false
+//                isEmptyDataLabel.isHidden = true
+                
+                
+                mealCollectionView.reloadData()
             }
         }
         
-        MainViewModel.shared.isFood { result in
-            if result {
-                self.mealCollectionView.reloadData()
+        MainViewModel.shared.getSelectedRestaurant { restaurant in
+            switch restaurant {
+            case .mcc, .paulbassett:
+                return
+            default:
+                self.operatingTimeLabel.attributedText = "운영시간  |  \(restaurant.getTime())"
+                    .attributed(of: "운영시간", value: [
+                        .foregroundColor: UIColor.darkGray
+                ])
             }
         }
     }
     
-    private func removeAllViews() {
-        [
-            containerView,
-            pageControlContainerView,
-            submitContainerView
-        ].forEach { view in
-            view.removeFromSuperview()
-        }
-    }
-    
-
-    
-    private func setArrowButtons(currentPageControl: Int) {
-        goBeforeButton.isEnabled = true; goBeforeButton.tintColor = .signatureBlue
-        goAfterButton.isEnabled = true; goAfterButton.tintColor = .signatureBlue
-        switch currentPageControl {
-        case 0:
-            goBeforeButton.isEnabled = false; goBeforeButton.tintColor = .lightGray
-        case tablePageControl.numberOfPages-1:
-            goAfterButton.isEnabled = false; goAfterButton.tintColor = .lightGray
+    private func setupCurrentPage() {
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
+        formatter.locale = Locale(identifier:"ko_KR")
+        let convertStr = formatter.string(from: date)
+        
+        let today = Date() + 32400
+        
+        switch convertStr {
+        case "월":
+            currentPageNum = 0
+            startDate = today
+        case "화":
+            currentPageNum = 1
+            startDate = Calendar.current.date(byAdding: .day, value: -1, to: today)!
+        case "수":
+            currentPageNum = 2
+            startDate = Calendar.current.date(byAdding: .day, value: -1, to: today)!
+        case "목":
+            currentPageNum = 3
+            startDate = Calendar.current.date(byAdding: .day, value: -1, to: today)!
+        case "금":
+            currentPageNum = 4
+            startDate = Calendar.current.date(byAdding: .day, value: -1, to: today)!
+        case "토":
+            currentPageNum = 0
+            startDate = Calendar.current.date(byAdding: .day, value: 2, to: today)!
+        case "일":
+            currentPageNum = 0
+            startDate = Calendar.current.date(byAdding: .day, value: 1, to: today)!
         default:
             return
         }
     }
+    
+    private func getTodayDataText(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM월 dd일"
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        return formatter.string(from: date)
+    }
+    
+    private func setArrowButtons() {
+        goBeforeButton.isEnabled = true; goBeforeButton.tintColor = .signatureBlue
+        goAfterButton.isEnabled = true; goAfterButton.tintColor = .signatureBlue
+        
+        if currentPageNum == 0 {
+            goBeforeButton.isEnabled = false; goBeforeButton.tintColor = .lightGray
+        }else if currentPageNum == 4 {
+            goAfterButton.isEnabled = false; goAfterButton.tintColor = .lightGray
+        }
+
+    }
 
     private func didTapChangeDateButton(value: Int) {
         currentPageNum += value
-        setArrowButtons(currentPageControl: currentPageNum)
+        setArrowButtons()
     }
     
-    // MARK: - Actions
+    
     @objc private func didTapBackItemButton() {
         MainViewModel.shared.removeFoodList()
+        self.navigationController?.popViewController(animated: true)
     }
     
-    @objc private func pageChanged(_ sender: UIPageControl) { print("pageChanged") }
 
-    @objc private func didTapGoBeforeButton(_ sender: UIButton) {
-        didTapChangeDateButton(value: -1) }
+    @objc private func didTapGoBeforeButton(_ sender: UIButton) {didTapChangeDateButton(value: -1) }
     @objc private func didTapGoAfterButton(_ sender: UIButton) { didTapChangeDateButton(value: 1) }
     
     @objc func submitButtonTapped(_ sender: UIButton){
@@ -260,44 +287,11 @@ class MainViewController: MainBaseViewController {
     }
 }
 
-// MARK: - API Success
-extension MainViewController {
-    private func showAlert(message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default))
-        present(alert, animated: true)
-    }
-    
-    func reloadDataAnimation() {
-        print("reloadDataAnimation called")
-        UIView.transition(with: self.mealCollectionView,
-                          duration: 0.35,
-                          options: .transitionCrossDissolve,
-                          animations: { () -> Void in
-                          self.mealCollectionView.reloadData()},
-                          completion: nil);
-        tablePageControl.currentPage = currentPageNum
-    }
-}
-
-
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { return 5 }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let width = scrollView.bounds.size.width
-        let x = scrollView.contentOffset.x + (width/2)
-        
-        currentPageNum = Int(x / width)
-        if tablePageControl.currentPage != currentPageNum {
-            tablePageControl.currentPage = currentPageNum
-        }
-        
-        setArrowButtons(currentPageControl: currentPageNum)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { return -5 }
@@ -311,21 +305,12 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-       guard let layout = mealCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-       
-       let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
-       
-       let estimatedIndex = scrollView.contentOffset.x / cellWidthIncludingSpacing
-       let index: Int
-       if velocity.x > 0 {
-           index = Int(ceil(estimatedIndex))
-       } else if velocity.x < 0 {
-           index = Int(floor(estimatedIndex))
-       } else {
-           index = Int(round(estimatedIndex))
-       }
-       
-       targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
+        let page = Int(targetContentOffset.pointee.x / CGFloat.screenWidth)
+        if let date = Calendar.current.date(byAdding: .day, value: self.currentPageNum, to: startDate) {
+            self.titleLabel.text  = "오늘의 학식  |  \(getTodayDataText(date: date))"
+        }
+        
+        didTapChangeDateButton(value: page - currentPageNum)
    }
 }
 

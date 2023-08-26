@@ -44,8 +44,8 @@ class PageCell: UICollectionViewCell {
     private func setupConstraints() {
         foodInfoTableView.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(15)
-            make.trailing.equalToSuperview().inset(15)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }

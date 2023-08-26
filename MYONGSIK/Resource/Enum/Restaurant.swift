@@ -45,6 +45,8 @@ extension Restaurant {
     
     func getFoodInfoCount() -> Int {
         switch self {
+        case .paulbassett:
+            return 1
         case .staff, .dormitory, .academy:
             return 2
         default:
@@ -54,6 +56,8 @@ extension Restaurant {
     
     func getLunchAName() -> String {
         switch self {
+        case .paulbassett:
+            return "중식"
         case .mcc:
             return "중식A"
         case .academy:

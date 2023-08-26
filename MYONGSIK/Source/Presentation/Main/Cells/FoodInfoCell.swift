@@ -115,4 +115,9 @@ class FoodInfoCell: UITableViewCell {
             .blueBold(string: mainMenu, fontSize: 23)
             .grayRegular(string: restMenu, fontSize: 16)
     }
+    
+    override func layoutSubviews() {
+          super.layoutSubviews()
+          contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15))
+    }
 }
