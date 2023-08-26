@@ -18,7 +18,7 @@ class MainViewModel: ObservableObject{
     
     private var restaurants: [Restaurant] = []
     
-    private var selectedRestaurant: Restaurant?
+    
     
     //안쓸거 같으면 삭제
     private var pageCount = 0
@@ -26,6 +26,7 @@ class MainViewModel: ObservableObject{
     @Published var campus: String?
     @Published var foodList: [[DayFoodModel]]?
     @Published var isFood: Bool = false
+    @Published var selectedRestaurant: Restaurant?
     
     var _pageCount: Int {
         get {
@@ -44,7 +45,7 @@ class MainViewModel: ObservableObject{
     
     func getDayFood(day: Int, index: Int, cancelLabels: inout Set<AnyCancellable> ,completion: @escaping (DayFoodModel) -> Void) {
         $foodList.filter{ foodList in
-            foodList != nil && foodList?.count != 0 && foodList?.count ?? 0 > day
+            foodList != nil && foodList?.count != 0 && foodList?.count ?? 0 > day && foodList?[day].count ?? 0 > index
         }.sink { foodList in
             completion((foodList?[day][index])!)
         }.store(in: &cancelLabels)
@@ -59,6 +60,15 @@ class MainViewModel: ObservableObject{
     func removeFoodList() {
         isFood = false
         foodList = nil
+        selectedRestaurant = nil
+    }
+    
+    func getSelectedRestaurantFoodCount(completion: @escaping (Int) -> Void) {
+        $selectedRestaurant.filter { selectedRestaurant in
+            selectedRestaurant != nil
+        }.sink { selectedRestaurant in
+            completion(selectedRestaurant!.getFoodInfoCount())
+        }.store(in: &cancellabels)
     }
     
     func getCampus() -> String {
@@ -70,13 +80,12 @@ class MainViewModel: ObservableObject{
     }
     
     func getRestaurant(index: Int) -> Restaurant {
-        setRestaurant(restaurant: restaurants[index])
         return restaurants[index]
     }
     
     
-    func setRestaurant(restaurant: Restaurant) {
-        self.selectedRestaurant = restaurant
+    func setRestaurant(index: Int) {
+        self.selectedRestaurant = restaurants[index]
     }
     
     func getRestaurant() -> Restaurant {
@@ -85,34 +94,41 @@ class MainViewModel: ObservableObject{
         }
         return .academy
     }
+    
+    func getRestaurantFoodCount() -> Int {
+        return self.selectedRestaurant?.getFoodInfoCount() ?? 2
+    }
 }
 
 
 // MARK: 로직 처리
 extension MainViewModel {
-    func getWeekFood(area: String) {
-        mainService.getWeekFood(area: area) { response in
+    func getWeekFood() {
+        mainService.getWeekFood(area: (self.selectedRestaurant?.getServerName())!) { response in
             if response.success {
                 if let data = response.data {
                     self.foodList = []
-                    var i = 0
                     var dayFoodList: [DayFoodModel] = []
-                    data.forEach { food in
-                        if i == 3 {
-                            self.foodList?.append(dayFoodList)
-                            
-                            i = 0
-                            dayFoodList.removeAll()
+                    for i in 0..<data.count {
+                        if self.selectedRestaurant! == .mcc || self.selectedRestaurant! == .myungjin {
+                            if i % 3 == 0 && i != 0{
+                                self.foodList?.append(dayFoodList)
+                                dayFoodList.removeAll()
+                            }
+                        }else {
+                            if i % 2 == 0 && i != 0{
+                                self.foodList?.append(dayFoodList)
+                                dayFoodList.removeAll()
+                            }
                         }
-                        
-                        dayFoodList.append(food)
-                        i += 1
+                       
+                        dayFoodList.append(data[i])
                     }
+                    print(self.foodList)
                     self.isFood = true
                 }
             }
         }
-        print(self.foodList)
     }
     
     func saveCampus(campus: String) {

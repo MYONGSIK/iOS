@@ -45,10 +45,45 @@ extension Restaurant {
     
     func getFoodInfoCount() -> Int {
         switch self {
-        case .myungjin:
+        case .staff, .dormitory, .academy:
             return 2
         default:
             return 3
+        }
+    }
+    
+    func getLunchAName() -> String {
+        switch self {
+        case .mcc:
+            return "중식A"
+        case .academy:
+           return "조식"
+        case .myungjin:
+            return "백반"
+        default:
+            return "중식"
+        }
+    }
+    
+    func getLunchBName() -> String {
+        switch self {
+        case .mcc:
+            return "중식B"
+        case .myungjin:
+            return "샐러드"
+        default:
+            return ""
+        }
+    }
+    
+    func getDinnerName() -> String {
+        switch self {
+        case .myungjin:
+            return "볶음밥"
+        case .academy:
+            return "중식"
+        default:
+            return "석식"
         }
     }
 }

@@ -203,6 +203,12 @@ class MainViewController: MainBaseViewController {
                 self.navigationController?.popViewController(animated: true)
             }
         }
+        
+        MainViewModel.shared.isFood { result in
+            if result {
+                self.mealCollectionView.reloadData()
+            }
+        }
     }
     
     private func removeAllViews() {

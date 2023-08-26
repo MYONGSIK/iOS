@@ -13,6 +13,7 @@ class FoodInfoCell: UITableViewCell {
     
     var cancelLabels: Set<AnyCancellable> = []
     
+    private let containerView = UIView()
     private let categoryLabel = UILabel()
     private let foodInfoLabel = UILabel()
     
@@ -34,20 +35,25 @@ class FoodInfoCell: UITableViewCell {
     }
     
     private func setup() {
-        self.contentView.backgroundColor = .white
-        self.contentView.layer.cornerRadius = 8
-        self.contentView.layer.borderWidth = 1.6
-        self.contentView.layer.borderColor = UIColor(red: 0.919, green: 0.919, blue: 0.919, alpha: 1).cgColor
+        self.selectionStyle = .none
+        
+        containerView.backgroundColor = .white
+        containerView.layer.cornerRadius = 8
+        containerView.layer.borderWidth = 1.6
+        containerView.layer.borderColor = UIColor(red: 0.919, green: 0.919, blue: 0.919, alpha: 1).cgColor
         
         categoryLabel.text = "카테고"
         categoryLabel.textColor = .signatureBlue
         categoryLabel.font = UIFont.NotoSansKR(size: 12, family: .Regular)
+        categoryLabel.textAlignment = .center
+        
         categoryLabel.layer.borderWidth = 1.6
         categoryLabel.layer.borderColor = UIColor.signatureBlue.cgColor
-        categoryLabel.layer.cornerRadius = 20
+        categoryLabel.layer.cornerRadius = 12
         
         
-        foodInfoLabel.text = "베이컨김치볶음밥&후라이 맑은우동국물\n피쉬앤칩스&케찹 단무지 배추김치"
+        
+        foodInfoLabel.text = "등록된 식단내용이(가) 없습니다."
         foodInfoLabel.font = UIFont.NotoSansKR(size: 16, family: .Bold)
         foodInfoLabel.textColor = .signatureGray
         foodInfoLabel.numberOfLines = 0
@@ -55,19 +61,23 @@ class FoodInfoCell: UITableViewCell {
     }
     
     private func setupView() {
-        self.contentView.addSubview(categoryLabel)
-        self.contentView.addSubview(foodInfoLabel)
+        self.contentView.addSubview(containerView)
+        containerView.addSubview(categoryLabel)
+        containerView.addSubview(foodInfoLabel)
     }
     
     private func setupConstraints() {
-        self.contentView.snp.makeConstraints { make in
-            make.height.width.equalTo(CGFloat.screenWidth - 30)
+        containerView.snp.makeConstraints {  make in
+            make.top.equalToSuperview().inset(15)
+            make.bottom.leading.trailing.equalToSuperview().inset(5)
             make.height.equalTo(113)
         }
         
         categoryLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(8)
             make.leading.equalToSuperview().offset(8)
+            make.width.equalTo(53)
+            make.height.equalTo(24)
         }
         
         foodInfoLabel.snp.makeConstraints { make in
@@ -80,25 +90,13 @@ class FoodInfoCell: UITableViewCell {
     func setContent(foodInfo: DayFoodModel) {
         switch foodInfo.mealType {
         case "LUNCH_A":
-            if MainViewModel.shared.getRestaurant() == .myungjin {
-                categoryLabel.text = "백반"
-            }else {
-                categoryLabel.text = "중식A"
-            }
+            categoryLabel.text = MainViewModel.shared.getRestaurant().getLunchAName()
         case "LUNCH_B":
-            if MainViewModel.shared.getRestaurant() == .myungjin {
-                categoryLabel.text = "샐러드"
-            }else {
-                categoryLabel.text = "중식B"
-            }
+            categoryLabel.text = MainViewModel.shared.getRestaurant().getLunchBName()
         case "DINNER":
-            if MainViewModel.shared.getRestaurant() == .myungjin {
-                categoryLabel.text = "볶음밥"
-            }else {
-                categoryLabel.text = "석식"
-            }
+            categoryLabel.text = MainViewModel.shared.getRestaurant().getDinnerName()
         default:
-            categoryLabel.text = "식사"
+            categoryLabel.text = ""
         }
         
         

@@ -28,6 +28,12 @@ class PageCell: UICollectionViewCell {
     private func setup() {
         foodInfoTableView.dataSource = self
         foodInfoTableView.delegate = self
+        foodInfoTableView.isScrollEnabled = false
+        
+        foodInfoTableView.rowHeight = UITableView.automaticDimension
+        foodInfoTableView.estimatedRowHeight = UITableView.automaticDimension
+        
+        foodInfoTableView.separatorStyle = .none
         foodInfoTableView.register(FoodInfoCell.self, forCellReuseIdentifier: "cell")
     }
     
@@ -38,28 +44,32 @@ class PageCell: UICollectionViewCell {
     private func setupConstraints() {
         foodInfoTableView.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.leading.equalToSuperview().offset(15)
+            make.trailing.equalToSuperview().inset(15)
             make.bottom.equalToSuperview()
         }
     }
     
     func setDay(page: Int) {
         day = page
+        foodInfoTableView.reloadData()
     }
     
 }
 
 extension PageCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        var count = 0
+        MainViewModel.shared.getSelectedRestaurantFoodCount { foodCount in
+            count = foodCount
+        }
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FoodInfoCell
         
         MainViewModel.shared.getDayFood(day: day, index: indexPath.row, cancelLabels: &cell.cancelLabels) { foodInfo in
-            print(foodInfo)
             cell.setContent(foodInfo: foodInfo)
         }
         
