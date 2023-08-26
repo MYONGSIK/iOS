@@ -13,9 +13,9 @@ enum MealType: String {
 }
 
 struct DayFoodModel: Decodable {
-    let mealId: Int?
-    let mealType: String?
-    let meals: [String]?
+    let mealId: Int
+    let mealType: String
+    let meals: [String]
     let statusType: String?
     let toDay: String?
 }

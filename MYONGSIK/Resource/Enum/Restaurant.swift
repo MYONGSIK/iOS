@@ -42,4 +42,13 @@ extension Restaurant {
             return ""
         }
     }
+    
+    func getFoodInfoCount() -> Int {
+        switch self {
+        case .myungjin:
+            return 2
+        default:
+            return 3
+        }
+    }
 }

@@ -19,14 +19,13 @@ class CampusSetPopupViewController: PopupBaseVIewController {
         
         switch super.emphasisText! {
         case CampusInfo.seoul.name:
-            MainViewModel.shared.setCampus(campus: CampusInfo.seoul.name)
+            MainViewModel.shared.saveCampus(campus: CampusInfo.seoul.name)
         case CampusInfo.yongin.name:
-            MainViewModel.shared.setCampus(campus: CampusInfo.yongin.name)
+            MainViewModel.shared.saveCampus(campus: CampusInfo.yongin.name)
         default:
             print("ERROR :: fail to set campus")
             return
         }
-        MainViewModel.shared.getCampus()
     }
     
     override func didTapCancelButton(_ sender: UIButton) {
