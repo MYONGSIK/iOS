@@ -31,9 +31,8 @@ class MainViewController: MainBaseViewController {
     private let mealCollectionView: UICollectionView = {
         
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = CGSize(width: CGFloat.screenWidth - 30, height: 400)
+        flowLayout.itemSize = CGSize(width: CGFloat.screenWidth, height: 400)
         flowLayout.scrollDirection = .horizontal
-        flowLayout.minimumLineSpacing = 20
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         
@@ -41,6 +40,7 @@ class MainViewController: MainBaseViewController {
         cv.showsHorizontalScrollIndicator = false
         cv.decelerationRate = .fast
         cv.isPagingEnabled = false
+        
         cv.register(PageCell.self, forCellWithReuseIdentifier: "cell")
 
         return cv
@@ -233,7 +233,7 @@ class MainViewController: MainBaseViewController {
                 tablePageControl.isHidden = false
                 submitButton.isHidden = false
                 isEmptyDataLabel.isHidden = true
-                
+
                 mealCollectionView.reloadData()
             }
         }
@@ -319,6 +319,10 @@ class MainViewController: MainBaseViewController {
 
     private func didTapChangeDateButton(value: Int) {
         currentPageNum += value
+        
+        let indexPath = IndexPath(item: currentPageNum, section: 0)
+        mealCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        
         getTodayDataText()
         setArrowButtons()
     }
@@ -348,8 +352,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { return -5 }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PageCell
         
@@ -359,8 +361,30 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let page = Int(targetContentOffset.pointee.x / CGFloat.screenWidth)
-        didTapChangeDateButton(value: page - currentPageNum)
-   }
+        guard let layout = self.mealCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+       
+        let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
+       
+        let estimatedIndex = scrollView.contentOffset.x / cellWidthIncludingSpacing
+        let index: Int
+        if velocity.x > 0 {
+            index = Int(ceil(estimatedIndex))
+        } else if velocity.x < 0 {
+            index = Int(floor(estimatedIndex))
+        } else {
+            index = Int(round(estimatedIndex))
+        }
+       
+        if index > -1 && index < 5 {
+            currentPageNum = index
+            getTodayDataText()
+            setArrowButtons()
+        }
+        
+        
+        targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
+    }
+    
+    
 }
 
