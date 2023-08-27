@@ -66,7 +66,7 @@ class RestaurantSelectCell: UITableViewCell {
         containerView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(15)
             $0.bottom.leading.trailing.equalToSuperview().inset(5)
-            $0.height.equalTo(CGFloat.screenHeight / 6.25)
+            $0.height.equalTo(130)
         }
         restaurantNameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(30)

@@ -47,6 +47,7 @@ class MainViewController: MainBaseViewController {
     }()
     
     private let tablePageControl = UIPageControl()
+    private let tablePageView = UIView()
     
     private let submitButton = UIButton()
     
@@ -98,6 +99,7 @@ class MainViewController: MainBaseViewController {
         goAfterButton.addTarget(self, action: #selector(didTapGoAfterButton(_:)), for: .touchUpInside)
         
         tablePageControl.numberOfPages = 5
+        tablePageControl.backgroundStyle = .minimal
         tablePageControl.pageIndicatorTintColor = .lightGray
         tablePageControl.currentPageIndicatorTintColor = .signatureBlue
 
@@ -167,7 +169,7 @@ class MainViewController: MainBaseViewController {
         contentView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.centerX.top.bottom.equalToSuperview()
-            $0.height.equalTo(850)
+            $0.height.equalTo(CGFloat.screenHeight)
         }
         
         titleLabel.snp.makeConstraints { make in
@@ -175,7 +177,7 @@ class MainViewController: MainBaseViewController {
             make.leading.equalToSuperview().offset(15)
         }
         
-        dateLabel.snp.makeConstraints { make in
+        operatingTimeLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom)
             make.leading.equalToSuperview().offset(16)
         }
@@ -192,51 +194,56 @@ class MainViewController: MainBaseViewController {
             make.width.height.equalTo(50)
         }
         
+        mealCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(operatingTimeLabel.snp.bottom).offset(20)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(500)
+        }
+        
+        
+        tablePageControl.snp.makeConstraints { make in
+            make.top.equalTo(mealCollectionView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(30)
+        }
+        
         submitButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(30)
+            make.top.equalTo(tablePageControl.snp.bottom).offset(30)
             make.width.equalTo(245)
             make.height.equalTo(50)
         }
-        
-        tablePageControl.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(submitButton.snp.top).inset(50)
-        }
+      
         
         isEmptyDataLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(CGFloat.screenHeight / 3)
             make.centerX.equalToSuperview()
         }
         
-        mealCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalTo(tablePageControl.snp.top).inset(20)
-        }
+        
         
         
     }
     
     private func setupObserver() {
-        MainViewModel.shared.getFoodList { [self] foodList in
-            if foodList.isEmpty {
-                scrolleView.isScrollEnabled = false
-                mealCollectionView.isHidden = true
-                tablePageControl.isHidden = true
-                submitButton.isHidden = true
-                isEmptyDataLabel.isHidden = false
-            }else {
-                scrolleView.isScrollEnabled = true
-                mealCollectionView.isHidden = false
-                tablePageControl.isHidden = false
-                submitButton.isHidden = false
-                isEmptyDataLabel.isHidden = true
-
-                mealCollectionView.reloadData()
-            }
-        }
+//        MainViewModel.shared.getFoodList { [self] foodList in
+//            if foodList.isEmpty {
+//                scrolleView.isScrollEnabled = false
+//                mealCollectionView.isHidden = true
+//                tablePageControl.isHidden = true
+//                submitButton.isHidden = true
+//                isEmptyDataLabel.isHidden = false
+//            }else {
+//                scrolleView.isScrollEnabled = true
+//                mealCollectionView.isHidden = false
+//                tablePageControl.isHidden = false
+//                submitButton.isHidden = false
+//                isEmptyDataLabel.isHidden = true
+//
+//                mealCollectionView.reloadData()
+//            }
+//        }
         
         MainViewModel.shared.getSelectedRestaurant { restaurant in
             switch restaurant {
@@ -306,6 +313,8 @@ class MainViewController: MainBaseViewController {
     }
     
     private func setArrowButtons() {
+        tablePageControl.currentPage = currentPageNum
+        
         goBeforeButton.isEnabled = true; goBeforeButton.tintColor = .signatureBlue
         goAfterButton.isEnabled = true; goAfterButton.tintColor = .signatureBlue
         

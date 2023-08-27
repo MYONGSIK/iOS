@@ -53,7 +53,7 @@ class FoodInfoCell: UITableViewCell {
         
         
         
-        foodInfoLabel.text = "등록된 식단내용이(가) 없습니다."
+        foodInfoLabel.text = "모짜렐라치즈 돈가츠 맑은 우동국물 추가밥 스위트콘&그린샐러드 오이피클 배추김치"
         foodInfoLabel.font = UIFont.NotoSansKR(size: 16, family: .Bold)
         foodInfoLabel.textColor = .signatureGray
         foodInfoLabel.numberOfLines = 0
@@ -70,7 +70,7 @@ class FoodInfoCell: UITableViewCell {
         containerView.snp.makeConstraints {  make in
             make.top.equalToSuperview().inset(15)
             make.bottom.leading.trailing.equalToSuperview().inset(5)
-            make.height.equalTo(113)
+            make.height.equalTo(130)
         }
         
         categoryLabel.snp.makeConstraints { make in
@@ -83,7 +83,7 @@ class FoodInfoCell: UITableViewCell {
         foodInfoLabel.snp.makeConstraints { make in
             make.top.equalTo(categoryLabel.snp.bottom).offset(14)
             make.centerX.equalToSuperview()
-            make.width.equalTo(contentView.frame.width - 46)
+            make.width.equalTo(contentView.frame.width - 20)
         }
     }
     
