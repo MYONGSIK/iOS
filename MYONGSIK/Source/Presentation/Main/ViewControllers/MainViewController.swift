@@ -169,7 +169,7 @@ class MainViewController: MainBaseViewController {
         contentView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.centerX.top.bottom.equalToSuperview()
-            $0.height.equalTo(CGFloat.screenHeight)
+            $0.height.equalTo(CGFloat.screenHeight + 50)
         }
         
         titleLabel.snp.makeConstraints { make in
@@ -198,7 +198,7 @@ class MainViewController: MainBaseViewController {
             make.top.equalTo(operatingTimeLabel.snp.bottom).offset(20)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(500)
+            make.height.equalTo(MainViewModel.shared.getRestaurantFoodCount() * 150)
         }
         
         
@@ -227,23 +227,23 @@ class MainViewController: MainBaseViewController {
     }
     
     private func setupObserver() {
-//        MainViewModel.shared.getFoodList { [self] foodList in
-//            if foodList.isEmpty {
-//                scrolleView.isScrollEnabled = false
-//                mealCollectionView.isHidden = true
-//                tablePageControl.isHidden = true
-//                submitButton.isHidden = true
-//                isEmptyDataLabel.isHidden = false
-//            }else {
-//                scrolleView.isScrollEnabled = true
-//                mealCollectionView.isHidden = false
-//                tablePageControl.isHidden = false
-//                submitButton.isHidden = false
-//                isEmptyDataLabel.isHidden = true
-//
-//                mealCollectionView.reloadData()
-//            }
-//        }
+        MainViewModel.shared.getFoodList { [self] foodList in
+            if foodList.isEmpty {
+                scrolleView.isScrollEnabled = false
+                mealCollectionView.isHidden = true
+                tablePageControl.isHidden = true
+                submitButton.isHidden = true
+                isEmptyDataLabel.isHidden = false
+            }else {
+                scrolleView.isScrollEnabled = true
+                mealCollectionView.isHidden = false
+                tablePageControl.isHidden = false
+                submitButton.isHidden = false
+                isEmptyDataLabel.isHidden = true
+
+                mealCollectionView.reloadData()
+            }
+        }
         
         MainViewModel.shared.getSelectedRestaurant { restaurant in
             switch restaurant {
