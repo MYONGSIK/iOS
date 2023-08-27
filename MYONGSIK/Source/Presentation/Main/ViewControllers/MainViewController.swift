@@ -250,7 +250,7 @@ class MainViewController: MainBaseViewController {
             case .mcc, .paulbassett:
                 return
             default:
-                self.operatingTimeLabel.attributedText = "운영시간  |  \(restaurant.getTime())"
+                self.operatingTimeLabel.attributedText = "운영시간  |  \(restaurant.getResTime())"
                     .attributed(of: "운영시간", value: [
                         .foregroundColor: UIColor.darkGray
                 ])

@@ -43,6 +43,21 @@ extension Restaurant {
         }
     }
     
+    func getResTime() -> String {
+        switch self {
+        case .staff:
+            return "중식 11:30~13:30  |  석식 17:30~18:30"
+        case .dormitory:
+            return "중식 11:30~13:30  |  석식 17:00~18:30"
+        case .academy:
+            return "조식 08:30~09:30  |  중식 10:00~15:00"
+        case .myungjin:
+            return "백반 11:30~14:30  |  샐러드,볶음밥 10:00~15:00"
+        default:
+            return ""
+        }
+    }
+    
     func getFoodInfoCount() -> Int {
         switch self {
         case .paulbassett:

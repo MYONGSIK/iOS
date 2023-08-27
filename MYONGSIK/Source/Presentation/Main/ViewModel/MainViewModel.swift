@@ -22,6 +22,7 @@ class MainViewModel: ObservableObject{
     
     //안쓸거 같으면 삭제
     private var pageCount = 0
+    private var resName = ""
     
     @Published var campus: String?
     @Published var foodList: [[DayFoodModel]] = []
@@ -174,5 +175,27 @@ extension MainViewModel {
             }
             self.restaurants = yonginRestaurants
         }
+    }
+    
+    func saveWidgetResName(resName: String) {
+        mainService.setWidgetResName(resName: resName)
+    }
+    
+    func loadWidgetResName() -> String {
+        mainService.getWidgetResName { resName in
+            self.resName = resName
+        }
+        
+        if resName == "" {
+            if campus == "인문캠퍼스" {
+                saveWidgetResName(resName: Restaurant.mcc.getServerName())
+                return Restaurant.mcc.getServerName()
+            }else if campus == "용인캠퍼스" {
+                saveWidgetResName(resName: Restaurant.staff.getServerName())
+                return Restaurant.staff.getServerName()
+            }
+        }
+        
+        return resName
     }
 }

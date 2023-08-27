@@ -23,6 +23,16 @@ class MainService {
             completion(campus)
         }
     }
+    
+    func setWidgetResName(resName: String) {
+        UserDefaults.standard.setValue(resName, forKey: "widget_res_name")
+    }
+    
+    func getWidgetResName(completion: @escaping (String) -> Void) {
+        if let resName = UserDefaults.standard.object(forKey: "widget_res_name") as? String {
+            completion(resName)
+        }
+    }
 }
 
 

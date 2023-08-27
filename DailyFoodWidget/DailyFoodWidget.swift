@@ -68,36 +68,15 @@ struct Provider: TimelineProvider {
             UserDefaults.shared.set(value, forKey: key)
         }
         
-        if let userCampus  = UserDefaults.shared.value(forKey: "userCampus") {
-            switch userCampus as! String {
-            case "인문캠퍼스":
-                // MCC 설정
-                getMealData(resName: "MCC식당") { data in
-                    let currentDate = Date()
-                    let entry = FoodEntry(date: currentDate, mealData: data.data ?? [], restaurantName: "MCC식당")
-                    let nextRefresh = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate)!
-                    let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
-                    completion(timeline)
-                }
-            case "자연캠퍼스":
-                let resName = getYonginRestaurantName()
-                getMealData(resName: resName) { data in
-                    let currentDate = Date()
-                    let entry = FoodEntry(date: currentDate, mealData: data.data ?? [], restaurantName: resName)
-                    let nextRefresh = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate)!
-                    let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
-                    completion(timeline)
-                }
-            default: return
-            }
-        } else {
-            getMealData(resName: "MCC식당") { data in
+        if let resName = UserDefaults.standard.object(forKey: "widget_res_name") as? String {
+            getMealData(resName: resName) { data in
                 let currentDate = Date()
-                let entry = FoodEntry(date: currentDate, mealData: data.data ?? [], restaurantName: "MCC식당")
+                let entry = FoodEntry(date: currentDate, mealData: data.data ?? [], restaurantName: resName)
                 let nextRefresh = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate)!
                 let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
                 completion(timeline)
             }
+            
         }
     }
     
