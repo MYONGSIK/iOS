@@ -66,6 +66,11 @@ class MainViewController: MainBaseViewController {
         setupCurrentPage()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        MainViewModel.shared.removeFoodList()
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     private func setup() {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true

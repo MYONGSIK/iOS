@@ -130,6 +130,11 @@ extension MainViewModel {
                                 self.foodList.append(dayFoodList)
                                 dayFoodList.removeAll()
                             }
+                        }else if self.selectedRestaurant! == .paulbassett {
+                            if i != 0 {
+                                self.foodList.append(dayFoodList)
+                                dayFoodList.removeAll()
+                            }
                         }else {
                             if i % 2 == 0 && i != 0{
                                 self.foodList.append(dayFoodList)
