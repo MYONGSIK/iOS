@@ -240,8 +240,9 @@ class MainViewController: MainBaseViewController {
                 tablePageControl.isHidden = false
                 submitButton.isHidden = false
                 isEmptyDataLabel.isHidden = true
-
-                mealCollectionView.reloadData()
+             
+                
+                setupCurrentPage()
             }
         }
         
@@ -276,16 +277,16 @@ class MainViewController: MainBaseViewController {
             startDate = Calendar.current.date(byAdding: .day, value: -1, to: today)!
         case "수요일":
             currentPageNum = 2
-            startDate = Calendar.current.date(byAdding: .day, value: -1, to: today)!
+            startDate = Calendar.current.date(byAdding: .day, value: -2, to: today)!
         case "목요일":
             currentPageNum = 3
-            startDate = Calendar.current.date(byAdding: .day, value: -1, to: today)!
+            startDate = Calendar.current.date(byAdding: .day, value: -3, to: today)!
         case "금요일":
             currentPageNum = 4
-            startDate = Calendar.current.date(byAdding: .day, value: -1, to: today)!
+            startDate = Calendar.current.date(byAdding: .day, value: -4, to: today)!
         case "토요일":
             currentPageNum = 0
-            startDate = Calendar.current.date(byAdding: .day, value: 2, to: today)!
+            startDate = Calendar.current.date(byAdding: .day, value: -5, to: today)!
         case "일요일":
             currentPageNum = 0
             startDate = Calendar.current.date(byAdding: .day, value: 1, to: today)!
@@ -293,7 +294,11 @@ class MainViewController: MainBaseViewController {
             return
         }
         
-        print(currentPageNum)
+        
+        
+        tablePageControl.currentPage = currentPageNum
+        let indexPath = IndexPath(item: currentPageNum, section: 0)
+        mealCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
         
         getTodayDataText()
         setArrowButtons()
@@ -332,6 +337,7 @@ class MainViewController: MainBaseViewController {
         let indexPath = IndexPath(item: currentPageNum, section: 0)
         mealCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         
+        
         getTodayDataText()
         setArrowButtons()
     }
@@ -369,6 +375,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         return cell
     }
     
+    
+    
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         guard let layout = self.mealCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
        
@@ -385,6 +393,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
        
         if index > -1 && index < 5 {
+            
+        
             currentPageNum = index
             getTodayDataText()
             setArrowButtons()
