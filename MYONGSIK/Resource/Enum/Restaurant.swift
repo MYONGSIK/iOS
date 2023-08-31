@@ -37,7 +37,7 @@ extension Restaurant {
         case .academy:
             return "운영시간 \n조식 08:30~09:30  |  중식 10:00~15:00"
         case .myungjin:
-            return "운영시간 \n백반 11:30~14:30 \n샐러드,볶음밥 10:00~15:00"
+            return "운영시간 \n백반 11:30~14:30"
         default:
             return ""
         }
@@ -52,7 +52,7 @@ extension Restaurant {
         case .academy:
             return "조식 08:30~09:30  |  중식 10:00~15:00"
         case .myungjin:
-            return "백반 11:30~14:30  |  샐러드,볶음밥 10:00~15:00"
+            return "백반 11:30~14:30"
         default:
             return ""
         }
@@ -89,7 +89,7 @@ extension Restaurant {
         case .mcc:
             return "중식B"
         case .myungjin:
-            return "샐러드"
+            return "떡볶이"
         default:
             return ""
         }
