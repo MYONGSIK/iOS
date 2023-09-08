@@ -17,7 +17,6 @@ enum inputStatus {
 }
 class SubmitViewController: UIViewController {
     
-    var area: String?
     var submitStatus: inputStatus = .notSubmit
     
     // MARK: - Views
@@ -188,8 +187,8 @@ class SubmitViewController: UIViewController {
     }
     
     func saveSubmit(input: String?) {
+        let restraunt = MainViewModel.shared.getRestaurant()
         if let submitted = self.inputTextView.text {
-            if area! == "학관식당" { area = "학생식당" }
             
             let phoneId = RegisterUUID.shared.getDeviceID()
             
@@ -197,7 +196,7 @@ class SubmitViewController: UIViewController {
             formatter.dateFormat = "yyyy-MM-dd"
             let registeredAt = formatter.string(from: Date())
             
-            let param = SubmitModel(areaName: area!,
+            let param = SubmitModel(areaName: restraunt.getServerName(),
                                     writerId: phoneId,
                                     registeredAt: registeredAt,
                                     content: submitted)
@@ -212,8 +211,6 @@ class SubmitViewController: UIViewController {
                     self?.showCompleteSubmitView()
                 case false:
                     self?.showFailToSubmitAlert(errorcode: result.httpCode)
-                default:
-                    return
                 }
             })
             
