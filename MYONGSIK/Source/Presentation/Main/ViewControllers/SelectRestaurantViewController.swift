@@ -66,7 +66,7 @@ extension SelectRestaurantViewController: UITableViewDelegate, UITableViewDataSo
         // TODO: 선택된 식당의 학식 정보를 토대로 화면으로 전환 (MainVC) / 현재 화면 전환만 구현해둠
         MainViewModel.shared.setRestaurant(index: indexPath.row)
         MainViewModel.shared.getWeekFood()
-        
+
         let mainVC = MainViewController()
         self.navigationController?.pushViewController(mainVC, animated: true)
     }
