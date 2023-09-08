@@ -24,7 +24,7 @@ class TabBarViewController: UITabBarController {
        // 인스턴스화
         let resVC = RestaurantMainViewController()
         let mapVC = MapViewController()
-        let mainVC = isYonginCampus() ? SelectRestaurantViewController() :  MainViewController()
+        let mainVC = SelectRestaurantViewController()
         let heartVC = HeartViewController()
         
         resVC.tabBarItem.image = UIImage.init(named: "res")
@@ -50,12 +50,5 @@ class TabBarViewController: UITabBarController {
         setViewControllers([nav1, nav2, nav3, nav4], animated: false)
         
         self.selectedIndex = 2
-    }
-    
-    func isYonginCampus() -> Bool {
-        if let userCampus = UserDefaults.standard.object(forKey: "userCampus") {
-            if userCampus as! String == CampusInfo.yongin.name { return true }
-        } 
-        return false
     }
 }

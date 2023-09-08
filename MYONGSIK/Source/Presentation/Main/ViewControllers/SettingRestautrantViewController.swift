@@ -83,28 +83,6 @@ class SettingRestautrantViewController: BaseViewController {
         }
     }
     
-    private func setRestaurantInfo(name: String) {
-        var saveName = ""
-        switch name {
-        case "생활관식당": saveName = "생활관식당"
-        case "명진당": saveName = "명진당식당"
-        case "학생회관": saveName = "학생식당"
-        case "교직원식당": saveName = "교직원식당"
-        default: return
-        }
-        UserDefaults.shared.set(saveName, forKey: "yongin_widget_res_name")
-    }
-    
-    private func checkIsSavedName(name: String) -> Bool {
-        if let saved = UserDefaults.shared.value(forKey: "yongin_widget_res_name") {
-            var savedStr = saved as! String
-            if savedStr == "명진당식당" { savedStr = "명진당" }
-            else if savedStr == "학생식당" { savedStr = "학생회관" }
-            
-            if savedStr == name { return true }
-        }
-        return false
-    }
     
     @objc private func didTapBackButton() {
         self.navigationController?.popViewController(animated: true)
@@ -113,14 +91,21 @@ class SettingRestautrantViewController: BaseViewController {
 }
 
 extension SettingRestautrantViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return restaurants.count }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return MainViewModel.shared.getRestaurantsCount()
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingResTableViewCell", for: indexPath) as? SettingResTableViewCell else { return UITableViewCell() }
+        
         cell.selectionStyle = .none
-        cell.configureName(name: restaurants[indexPath.row])
-        if checkIsSavedName(name: restaurants[indexPath.row]) { cell.setSelectedRes(selected: true) }
-        else { cell.setSelectedRes(selected: false) }
+        cell.configureName(name: MainViewModel.shared.getRestaurant(index: indexPath.row).rawValue)
+        
+        if MainViewModel.shared.getRestaurant(index: indexPath.row).getServerName() == MainViewModel.shared.loadWidgetResName() {
+            cell.setSelectedRes(selected: true)
+        }else {
+            cell.setSelectedRes(selected: false)
+        }
 
         return cell
     }
@@ -128,7 +113,7 @@ extension SettingRestautrantViewController: UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { return 70 }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.setRestaurantInfo(name: restaurants[indexPath.row])
+        MainViewModel.shared.saveWidgetResName(resName: MainViewModel.shared.getRestaurant(index: indexPath.row).getServerName())
         WidgetCenter.shared.reloadAllTimelines()
         tableView.reloadData()
     }

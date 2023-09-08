@@ -225,6 +225,7 @@ extension MapViewController {
                                   parameter: queryParam,
                                   completionHandler: { [weak self] response in
             if response.success {
+                print(response.data.content.count)
                 self?.resList = response.data.content
                 self?.setupPin()
             } else {

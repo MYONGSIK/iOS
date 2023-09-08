@@ -48,9 +48,6 @@ class MainBaseViewController: UIViewController {
         navigationImgView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
         }
-//        topLabel.snp.makeConstraints {
-//            $0.centerX.centerY.equalToSuperview()
-//        }
         topLogoImg.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
         }
