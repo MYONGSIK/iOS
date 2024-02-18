@@ -7,7 +7,6 @@
 
 import UIKit
 import Alamofire
-import RealmSwift
 import Toast
 
 class MapViewController: UIViewController {
@@ -298,10 +297,6 @@ extension MapViewController: MapStoreDelegate {
     func showToast(message: String) {
         self.view.makeToast(message, duration: 1.0, position: .center)
     }
-    
-    
-    
-    
     
 }
 

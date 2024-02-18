@@ -57,6 +57,5 @@ struct StoreParamModel: Decodable {
     let pageNumber: Int?
     let pageSize: Int?
     let sort: String?
-//    let sort.unsorted: Bool?
     let unpaged: Bool?
 }

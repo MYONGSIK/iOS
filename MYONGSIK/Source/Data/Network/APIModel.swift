@@ -13,7 +13,4 @@ struct APIModel<T: Decodable>: Decodable {
     let httpStatus: String?
     let message: String?
     var data: T?
-    
-//    let errorCode: String?
-//    let dayOfTheWeek: String?
 }
