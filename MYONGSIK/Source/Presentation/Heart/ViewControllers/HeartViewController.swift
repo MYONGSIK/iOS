@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 import Alamofire
 
 // MARK: 찜꽁리스트 페이지

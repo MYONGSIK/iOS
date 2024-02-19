@@ -1,0 +1,6 @@
+framework module Pods_MYONGSIKTests {
+  umbrella header "Pods-MYONGSIKTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

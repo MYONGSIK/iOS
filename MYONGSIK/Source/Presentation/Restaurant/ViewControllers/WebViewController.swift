@@ -7,7 +7,6 @@
 
 import UIKit
 import WebKit
-import RealmSwift
 
 // MARK: 링크 이동 후 보이는 페이지입니다.
 class WebViewController: UIViewController, WKUIDelegate {

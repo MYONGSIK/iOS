@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 protocol RestaurantCellDelegate {
     func showToast(message: String)

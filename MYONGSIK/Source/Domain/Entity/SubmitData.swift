@@ -6,17 +6,10 @@
 //
 
 import Foundation
-import RealmSwift
 
 // MARK: 학식 의견 데이터 모델
-class SubmitData: Object {
-    @objc dynamic var submittedDate = Date()
-    @objc dynamic var opinion = ""
-}
 
 struct SubmitModel: Codable {
-//    let submittedDate: Date!
-//    let opinion: String!
     let areaName: String
     let writerId: String
     let registeredAt: String
