@@ -11,43 +11,25 @@ import Alamofire
 class APIManager {
     static let shared = APIManager()
     
-    // MARK: - Get Method
-    func GetDataManager<T: Decodable>(with param: Encodable? = nil, from url: String, callback: @escaping (_ data: T?, _ error: String?) -> ()) {
-        AF.request(url, method: .get, parameters: param?.dictionary).responseJSON { response in
-            do {
-                guard let resData = response.data else {
-                    callback(nil, "emptyData")
-                    return
-                }
-                let data = try JSONDecoder().decode(T.self, from:resData)
-                callback(data, nil)
-     
-            } catch {
-                callback(nil, error.localizedDescription)
-            }
-        }
-    }
-    // MARK: - Post Method
-    func PostDataManager<T: Decodable>(with param: Encodable? = nil, from url: String, callback: @escaping (_ data: T?, _ error: String?) -> ()) {
-        AF.request(url, method: .get, parameters: param?.dictionary).responseJSON { response in
-            do {
-                guard let resData = response.data else {
-                    callback(nil, "emptyData")
-                    return
-                }
-                let data = try JSONDecoder().decode(T.self, from:resData)
-                callback(data, nil)
-     
-            } catch {
-                callback(nil, error.localizedDescription)
+    private var campusInfo: CampusInfo = .seoul
+    
+    init() {
+        if let userCampus  = UserDefaults.standard.value(forKey: "userCampus") {
+            switch userCampus as! String {
+            case CampusInfo.seoul.name:
+                campusInfo = .seoul
+            case CampusInfo.yongin.name:
+                campusInfo = .yongin
+            default:
+                return
             }
         }
     }
     
     func getData<T: Decodable>(urlEndpointString: String,
-                               dataType: T.Type,
+                               responseDataType: T.Type,
                                parameter: Parameters?,
-                               completionHandler: @escaping (T)->Void) {
+                               completionHandler: @escaping (APIModel<T>)->Void) {
         
         let urlString = Constants.BaseURL + urlEndpointString
         print("url -> \(urlString)")
@@ -56,7 +38,7 @@ class APIManager {
             
             AF
                 .request(url, method: .get, parameters: parameter, encoding: URLEncoding.queryString)
-                .responseDecodable(of: T.self) { response in
+                .responseDecodable(of: APIModel<T>.self) { response in
                     print("getData called")
                     switch response.result {
                     case .success(let success):
@@ -71,11 +53,11 @@ class APIManager {
         
     }
     
-    func postData<T: Codable, R: Decodable>(urlEndpointString: String,
-                                            dataType: T.Type,
-                                            responseType: R.Type,
-                                            parameter: T,
-                                            completionHandler: @escaping (APIModel<R>) -> Void) {
+    func postData<T: Codable, U: Decodable>(urlEndpointString: String,
+                                            responseDataType: U.Type,
+                                            requestDataType: T.Type,
+                                            parameter: T?,
+                                            completionHandler: @escaping (APIModel<U>)->Void) {
         
         guard let url = URL(string: Constants.BaseURL + urlEndpointString) else { return }
 
@@ -84,7 +66,7 @@ class APIManager {
                      method: .post,
                      parameters: parameter,
                      encoder: .json)
-            .responseDecodable(of: APIModel<R>.self) { response in
+            .responseDecodable(of: APIModel<U>.self) { response in
                 print(response)
                 switch response.result {
                 case .success(let success):
@@ -95,6 +77,29 @@ class APIManager {
             }
             .resume()
     }
+    
+    func deleteData<T: Codable, U: Decodable>(urlEndpointString: String,
+                                                responseDataType: U.Type,
+                                                requestDataType: T.Type,
+                                                parameter: T?,
+                                                completionHandler: @escaping (APIModel<U>)->Void) {
+            
+        guard let url = URL(string: Constants.BaseURL + urlEndpointString) else { return }
+            
+            AF
+                .request(url, method: .delete, parameters: parameter, encoder: .json)
+                .responseDecodable(of: APIModel<U>.self) { response in
+
+                    print(response)
+                    switch response.result {
+                    case .success(let success):
+                        completionHandler(success)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+                .resume()
+        }
 }
 
 // MARK: - Encodable Extension

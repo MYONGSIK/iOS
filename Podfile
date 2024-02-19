@@ -16,6 +16,7 @@ target 'MYONGSIK' do
   pod 'Firebase/Core'
   pod 'Firebase/Analytics'
   pod 'Google-Mobile-Ads-SDK'
+  pod 'CombineCocoa'
 
   target 'MYONGSIKTests' do
     inherit! :search_paths

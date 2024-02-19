@@ -55,9 +55,10 @@
 		73178AC129EAFC3A001C3AA4 /* MapStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */; };
 		73178AD829EED14A001C3AA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */; };
 		731C3F422A5D3DA300A5277A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731C3F412A5D3DA300A5277A /* MainViewModel.swift */; };
+		7329D7612B82EAB100D24D8F /* HeartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7329D7602B82EAB100D24D8F /* HeartViewModel.swift */; };
+		7329D7632B82F7C800D24D8F /* ViewModelabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7329D7622B82F7C800D24D8F /* ViewModelabel.swift */; };
 		734360052A2DB55800845A1B /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734360042A2DB55800845A1B /* MainService.swift */; };
 		734360082A2DBBE800845A1B /* HeartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734360072A2DBBE800845A1B /* HeartService.swift */; };
-		736A8DF829E999E200D30A35 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736A8DF729E999E200D30A35 /* MapViewController.swift */; };
 		736A8DFC29E9A01700D30A35 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFB29E9A01700D30A35 /* Metal.framework */; };
 		736A8DFE29E9A02000D30A35 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFD29E9A02000D30A35 /* SystemConfiguration.framework */; };
 		736A8E0029E9A02F00D30A35 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFF29E9A02F00D30A35 /* CoreLocation.framework */; };
@@ -75,7 +76,7 @@
 		92033E7EAD47D14ADA175F1B /* Pods_MYONGSIK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */; };
 		A202857F29C5B339008A7853 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = A202857E29C5B339008A7853 /* Toast */; };
 		A202858129C7520C008A7853 /* StoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A202858029C7520C008A7853 /* StoreModel.swift */; };
-		A23DA70729A7EFEA003FDA56 /* RegisterUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70629A7EFEA003FDA56 /* RegisterUUID.swift */; };
+		A23DA70729A7EFEA003FDA56 /* DeviceIdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70629A7EFEA003FDA56 /* DeviceIdManager.swift */; };
 		A23DA70929A7F1AD003FDA56 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70829A7F1AD003FDA56 /* UserModel.swift */; };
 		A23DA70B29A89575003FDA56 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70A29A89575003FDA56 /* UIResponder+.swift */; };
 		A23DA70F29A8A971003FDA56 /* MindFoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70E29A8A971003FDA56 /* MindFoodModel.swift */; };
@@ -195,9 +196,10 @@
 		73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStoreView.swift; sourceTree = "<group>"; };
 		73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		731C3F412A5D3DA300A5277A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		7329D7602B82EAB100D24D8F /* HeartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartViewModel.swift; sourceTree = "<group>"; };
+		7329D7622B82F7C800D24D8F /* ViewModelabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelabel.swift; sourceTree = "<group>"; };
 		734360042A2DB55800845A1B /* MainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainService.swift; sourceTree = "<group>"; };
 		734360072A2DBBE800845A1B /* HeartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartService.swift; sourceTree = "<group>"; };
-		736A8DF729E999E200D30A35 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		736A8DFB29E9A01700D30A35 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		736A8DFD29E9A02000D30A35 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		736A8DFF29E9A02F00D30A35 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -215,7 +217,7 @@
 		7595CF6EE606B781645AD9EB /* Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; sourceTree = "<group>"; };
 		77CEA1CD0123C0563A94A6E1 /* Pods-MYONGSIK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.debug.xcconfig"; sourceTree = "<group>"; };
 		A202858029C7520C008A7853 /* StoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModel.swift; sourceTree = "<group>"; };
-		A23DA70629A7EFEA003FDA56 /* RegisterUUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUUID.swift; sourceTree = "<group>"; };
+		A23DA70629A7EFEA003FDA56 /* DeviceIdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceIdManager.swift; sourceTree = "<group>"; };
 		A23DA70829A7F1AD003FDA56 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		A23DA70A29A89575003FDA56 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
 		A23DA70E29A8A971003FDA56 /* MindFoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindFoodModel.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				23B9E8982911356D009B6D8F /* ScreenManager.swift */,
 				2311611B2911952200AD73D2 /* ToastBar.swift */,
 				A2431C8F29A34FBA00D8E493 /* PopupBaseVIewController.swift */,
+				7329D7622B82F7C800D24D8F /* ViewModelabel.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -475,12 +478,12 @@
 		2373E4ED290AD20300D51B8E /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				A23DA70629A7EFEA003FDA56 /* RegisterUUID.swift */,
 				23166A7128FECD9D002AEFB7 /* AppDelegate.swift */,
-				23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */,
-				23A7C669290AADE900351D16 /* InfoPlist */,
 				7303B8AF2A0AA28F004C4C52 /* GoogleMobileAdsController.swift */,
 				7303B8B12A0AA52D004C4C52 /* GoogleMobileAdsKey.swift */,
+				23A7C669290AADE900351D16 /* InfoPlist */,
+				A23DA70629A7EFEA003FDA56 /* DeviceIdManager.swift */,
+				23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 		23BE014F290E0AA900861DA5 /* Heart */ = {
 			isa = PBXGroup;
 			children = (
+				7329D75F2B82EAA600D24D8F /* ViewModel */,
 				23451DEE29117F70006AE030 /* Cells */,
 				23BE0151290E0AB800861DA5 /* ViewControllers */,
 			);
@@ -622,6 +626,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		7329D75F2B82EAA600D24D8F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7329D7602B82EAB100D24D8F /* HeartViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		734360032A2DB54500845A1B /* MainService */ = {
 			isa = PBXGroup;
 			children = (
@@ -649,7 +661,6 @@
 		736A8DF629E999D600D30A35 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				736A8DF729E999E200D30A35 /* MapViewController.swift */,
 				73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */,
 			);
 			path = ViewController;
@@ -1010,13 +1021,13 @@
 				23E6ACA9290130C50091D803 /* UIDevice.swift in Sources */,
 				73DF1D8C2A9898FE0097DB63 /* Restaurant.swift in Sources */,
 				2311611C2911952200AD73D2 /* ToastBar.swift in Sources */,
-				736A8DF829E999E200D30A35 /* MapViewController.swift in Sources */,
 				A2431C9029A34FBA00D8E493 /* PopupBaseVIewController.swift in Sources */,
 				23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */,
 				73DF1D942A99B2900097DB63 /* PageCell.swift in Sources */,
 				A2431C8E29A347C300D8E493 /* CALayer+.swift in Sources */,
 				23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */,
 				7303B8B22A0AA52D004C4C52 /* GoogleMobileAdsKey.swift in Sources */,
+				7329D7632B82F7C800D24D8F /* ViewModelabel.swift in Sources */,
 				734360082A2DBBE800845A1B /* HeartService.swift in Sources */,
 				23C993A429108F6F00B8D1E4 /* RestaurantSearchViewController.swift in Sources */,
 				73C5B24C29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift in Sources */,
@@ -1047,12 +1058,13 @@
 				23B9E8972911336A009B6D8F /* RestaurantMainViewController.swift in Sources */,
 				A23F2DB129A2F9750046ED70 /* SubmitViewController.swift in Sources */,
 				2324102E28FF2C9F0095C0CC /* FormatManager.swift in Sources */,
-				A23DA70729A7EFEA003FDA56 /* RegisterUUID.swift in Sources */,
+				A23DA70729A7EFEA003FDA56 /* DeviceIdManager.swift in Sources */,
 				23451DEB29117355006AE030 /* WebViewController.swift in Sources */,
 				238F56312910AA0F0044214F /* MainBaseViewController.swift in Sources */,
 				23451DE929116964006AE030 /* RestaurantTagViewController.swift in Sources */,
 				23735B0128FEDBF900599221 /* UIColor.swift in Sources */,
 				A23DA70F29A8A971003FDA56 /* MindFoodModel.swift in Sources */,
+				7329D7612B82EAB100D24D8F /* HeartViewModel.swift in Sources */,
 				A2431C8C29A3473D00D8E493 /* String+.swift in Sources */,
 				73178AC129EAFC3A001C3AA4 /* MapStoreView.swift in Sources */,
 				7303B8B02A0AA28F004C4C52 /* GoogleMobileAdsController.swift in Sources */,

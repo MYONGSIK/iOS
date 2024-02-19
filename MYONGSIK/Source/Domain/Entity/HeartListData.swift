@@ -7,15 +7,7 @@
 
 import Foundation
 
-// MARK: 찜꽁리스트 데이터 모델
-
-struct HeartListModel {
-    let placeName: String!
-    let category: String!
-    let placeUrl: String!
-}
-
-struct HeartModel: Codable {
+struct RequestHeartModel: Codable {
     var address: String! = "주소없음"
     var campus: String?
     var category: String?
@@ -29,7 +21,7 @@ struct HeartModel: Codable {
     var urlAddress: String?
 }
 
-struct Heart: Codable {
+struct ResponseHeartModel: Codable {
     var id: Int
     var code: String?
     var name: String?

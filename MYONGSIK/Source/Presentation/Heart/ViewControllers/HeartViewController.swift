@@ -24,7 +24,6 @@ class HeartViewController: MainBaseViewController {
     var storeListData: [StoreModel] = []
     var isSelectedCell: [Bool] = []
     private var campusInfo: CampusInfo = .yongin
-    let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,16 +35,11 @@ class HeartViewController: MainBaseViewController {
         
         setCampusInfo()
         setUpTableView(dataSourceDelegate: self)
-        getHeartData()
         setUpView()
         setUpConstraint()
     }
 
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        getHeartData()
-    }
     
     private func setCampusInfo() {
         if let userCampus  = UserDefaults.standard.value(forKey: "userCampus") {
@@ -143,85 +137,11 @@ extension HeartViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
-// MARK: - Get Realm datas
-extension HeartViewController {
-    func getHeartData() {
-        self.heartListData.removeAll()
-        
-        let hearts = realm.objects(HeartListData.self)
-        for heart in hearts {
-            print(HeartListModel(placeName: heart.placeName, category: heart.category, placeUrl: heart.placeUrl))
-            self.heartListData.append(HeartListModel(placeName: heart.placeName, category: heart.category, placeUrl: heart.placeUrl))
-        }
-        
-        heartListData.forEach { _ in
-            isSelectedCell.append(false)
-        }
-        
-        fetchResData()
-    }
-    
-    func fetchResData() {
-        let queryParam: Parameters = [
-            "sort": "scrapCount,asc",
-            "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
-            "size": Int32.max
-        ]
-        
-        APIManager.shared.getData(urlEndpointString: Constants.getStoreRank,
-                                  dataType: StoreRankModel.self,
-                                  parameter: queryParam,
-                                  completionHandler: { [weak self] response in
-            if response.success {
-                self?.storeListData = response.data.content
-                self?.reloadDataAnimation()
-            }
-        })
-    }
-    
-    
-//    func fetchHeartData() {
-//        let phoneId = RegisterUUID.shared.getDeviceID()
-//        APIManager.shared.getData(urlEndpointString: Constants.postHeart + "/" + phoneId,
-//                                  dataType: APIModel<Data>.self,
-//                                  parameter: nil,
-//                                  completionHandler: { response in
-//            print(response.data!.content)
-//            self.storeListData = response.data!.content
-//            self.reloadDataAnimation()
-//        })
-//    }
-    func reloadDataAnimation() {
-        if heartListData.count == 0 {
-            heartTableView.isHidden = true
-            emptyLabel.isHidden = false
-        } else {
-            heartTableView.isHidden = false
-            emptyLabel.isHidden = true
-            
-            UIView.transition(with: self.heartTableView,
-                              duration: 0.35,
-                              options: .transitionCrossDissolve,
-                              animations: { () -> Void in
-                              self.heartTableView.reloadData()},
-                              completion: nil);
-        }
-        
-        
-        
-    }
-}
-
 extension HeartViewController: HeartListDelegate {
     func deleteHeart(placeName: String) {
-
-        let predicate = NSPredicate(format: "placeName = %@", placeName)
-        let objc = realm.objects(HeartListData.self).filter(predicate)
-        try! realm.write { realm.delete(objc) }
-
+        // MARK: - 서버와 통신해 찜콩리스트 삭제
         
         heartListData = []
-        getHeartData()
         setUpConstraint()
     }
     
