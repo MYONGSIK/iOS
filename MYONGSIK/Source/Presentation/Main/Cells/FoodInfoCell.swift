@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SnapKit
 import Combine
 
 class FoodInfoCell: UITableViewCell {

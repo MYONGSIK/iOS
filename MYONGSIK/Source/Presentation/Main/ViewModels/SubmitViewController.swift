@@ -190,7 +190,7 @@ class SubmitViewController: UIViewController {
         let restraunt = MainViewModel.shared.getRestaurant()
         if let submitted = self.inputTextView.text {
             
-            let phoneId = RegisterUUID.shared.getDeviceID()
+            let phoneId = DeviceIdManager.shared.getDeviceID()
             
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"
@@ -200,19 +200,19 @@ class SubmitViewController: UIViewController {
                                     writerId: phoneId,
                                     registeredAt: registeredAt,
                                     content: submitted)
-            APIManager.shared.postData(urlEndpointString: Constants.postFoodReviewWithArea,
-                                       dataType: SubmitModel.self,
-                                       responseType: SubmitResponseModel.self,
-                                       parameter: param,
-                                       completionHandler: { [weak self] result in
-                
-                switch result.success {
-                case true:
-                    self?.showCompleteSubmitView()
-                case false:
-                    self?.showFailToSubmitAlert(errorcode: result.httpCode)
-                }
-            })
+//            APIManager.shared.postData(urlEndpointString: Constants.postFoodReviewWithArea,
+//                                       dataType: SubmitModel.self,
+//                                       responseType: SubmitResponseModel.self,
+//                                       parameter: param,
+//                                       completionHandler: { [weak self] result in
+//                
+//                switch result.success {
+//                case true:
+//                    self?.showCompleteSubmitView()
+//                case false:
+//                    self?.showFailToSubmitAlert(errorcode: result.httpCode)
+//                }
+//            })
             
         } else { print("ERROR :: 제출할 의견이 비어있음"); return }
         

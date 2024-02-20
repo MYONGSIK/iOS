@@ -24,7 +24,6 @@ class WebViewController: UIViewController, WKUIDelegate {
     
     // MARK: - Life Cycles
     var webView: WKWebView!
-    let realm = try! Realm()    // Realm을 활용해 기기에 저장합니다.
     
     // Properties
     var storeData: StoreModel?
@@ -45,8 +44,6 @@ class WebViewController: UIViewController, WKUIDelegate {
         self.navigationController?.isNavigationBarHidden = false
         self.tabBarController?.tabBar.isHidden = true
         
-        // realm 객체 정의
-        let realm = try! Realm()
         
         guard let url = self.webURL else {return}
         let myURL = URL(string: url)
@@ -89,41 +86,20 @@ class WebViewController: UIViewController, WKUIDelegate {
         guard let placeName = self.placeName else {return}
         guard let category = self.category else {return}
         
-        let heartData = HeartListData()
-        heartData.placeName = placeName
-        heartData.category = category
-        heartData.placeUrl = url
-        
-        try! realm.write { //렘(DB)에 저장
-              realm.add(heartData)
-            }
-        // MARK: -
-        /*
-         기존방식: HeartListData 모델을 정의하고, 이름/카테고리/url을 저장하며 이것으로 아이템들을 구분하였습니다.
-         수정해야할 방식: 각 맛집마다 ID가 있습니다. removeHeartData 할 때, ID를 통해 구분하시면 되겠습니다.
-         */
+        // MARK: - 서버와 통신해 찜콩 리스트 저장
+
     }
     func removeHeartData() {
         guard let url = self.webURL else {return}
         guard let placeName = self.placeName else {return}
         guard let category = self.category else {return}
         
-        // 쿼리를 통해 선택적 삭제
-        // TODO: 추후 placeName이 아닌 ID로 데이터 삭제 !!!!!!
-        let predicate = NSPredicate(format: "placeName = %@", placeName)
-        let obj = realm.objects(HeartListData.self).filter(predicate)
-        print(obj)
-        try! realm.write { //렘(DB)에서 삭제
-            realm.delete(obj)
-            }
+        // MARK: - 서버와 통신해 찜콩리스트 삭제
         
     }
     func getHeartData() {
-        // 모든 객체 얻기
-        let hearts = realm.objects(HeartListData.self)
-        for heart in hearts {
-            if self.placeName == heart.placeName {self.heartButton.isSelected = true}
-        }
+        // MARK: - 서버와 통신해 찜콩 리스트 Get
+       
     }
     func addHeartAnimation() {
         ToastBar(self, message: .addHeart)
@@ -146,28 +122,28 @@ class WebViewController: UIViewController, WKUIDelegate {
     
     func requestAddHeart() {
         // TODO: 찜꽁 리스트 추가 POST
-        let campus = (campusInfo == .seoul) ? "SEOUL" : "YONGIN"
-        let phoneId = RegisterUUID.shared.getDeviceID()
-        
-        let bodyParam = HeartModel(address: storeData?.address,
-                                   campus: campus,
-                                   category: storeData?.category,
-                                   code: storeData?.code,
-                                   contact: storeData?.contact,
-                                   distance: storeData?.distance,
-                                   longitude: storeData?.latitude,
-                                   latitude: storeData?.longitude,
-                                   name: storeData?.name,
-                                   phoneId: phoneId,
-                                   urlAddress: storeData?.urlAddress)
-        
-        APIManager.shared.postData(urlEndpointString: Constants.postHeart,
-                                   dataType: HeartModel.self,
-                                   responseType: HeartModel.self,
-                                   parameter: bodyParam,
-                                   completionHandler: { response in
-            print("찜꽁 POST Param - \(bodyParam)")
-            print(response)
-        })
+//        let campus = (campusInfo == .seoul) ? "SEOUL" : "YONGIN"
+//        let phoneId = DeviceIdManager.shared.getDeviceID()
+//
+//        let bodyParam = HeartModel(address: storeData?.address,
+//                                   campus: campus,
+//                                   category: storeData?.category,
+//                                   code: storeData?.code,
+//                                   contact: storeData?.contact,
+//                                   distance: storeData?.distance,
+//                                   longitude: storeData?.latitude,
+//                                   latitude: storeData?.longitude,
+//                                   name: storeData?.name,
+//                                   phoneId: phoneId,
+//                                   urlAddress: storeData?.urlAddress)
+//        
+//        APIManager.shared.postData(urlEndpointString: Constants.postHeart,
+//                                   dataType: HeartModel.self,
+//                                   responseType: HeartModel.self,
+//                                   parameter: bodyParam,
+//                                   completionHandler: { response in
+//            print("찜꽁 POST Param - \(bodyParam)")
+//            print(response)
+//        })
     }
 }
