@@ -8,26 +8,44 @@
 import Foundation
 import Combine
 
-
-struct HeartViewControllerInput {
-    let viewDidLoad: AnyPublisher<Void, Never>
-    let viewWillApear: AnyPublisher<[Heart], Never>
-    let showHeartDetail: AnyPublisher<Heart, Never>
-    let moveToWebView: AnyPublisher<Void, Never>
-    let deleteHeart: AnyPublisher<Int, Never>
+final class HeartViewModel: ViewModelabel {
+    static let shared = HeartViewModel()
+    
+    private let heartService: HeartServiceProtocol
+    private let output: PassthroughSubject<Output, Never> = .init()
+    private var cancellabels = Set<AnyCancellable>()
+    
+    init(heartService: HeartServiceProtocol = HeartService()) {
+        self.heartService = heartService
+    }
+    
+    enum Input {
+        case viewDidLoad
+        case viewWillAppear
+        case tapHeartButton(String)
+        case tapLinkButton(String)
+    }
+    
+    enum Output {
+        case updateHeart([ResponseHeartModel])
+        case heartResult(Bool)
+        case moveToLink(String)
+    }
+    
+    func trastfrom(_ input: AnyPublisher<Input, Never>) -> AnyPublisher<Output, Never> {
+        input.sink { [weak self] event in
+            switch event {
+            case .viewDidLoad, .viewWillAppear:
+                self?.output.send(.updateHeart(self!.heartService.getHeartList()))
+            case .tapHeartButton(let id):
+                self?.output.send(.heartResult(self!.heartService.cancelHeart(id: id)))
+                self?.output.send(.updateHeart(self!.heartService.getHeartList()))
+            case.tapLinkButton(let link):
+                self?.output.send(.moveToLink(link))
+            }
+        }.store(in: &cancellabels)
+        
+        return output.eraseToAnyPublisher()
+    }
+    
 }
-
-enum HeartViewControllerState {
-    case showHeartList(String)
-    case showHeartDetail(String)
-    case showWebView(String)
-    case deleteHeart(String)
-    case none
-}
-
-protocol HeartViewModelalbel: ViewModelabel
-where Input == HeartViewControllerInput,
-      State == HeartViewControllerState,
-      Output == AnyPublisher<State, Never> { }
-
-

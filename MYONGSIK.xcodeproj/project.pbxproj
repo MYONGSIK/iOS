@@ -393,8 +393,8 @@
 		23735AF528FEDA3D00599221 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				23E6ACA8290130C50091D803 /* UIDevice.swift */,
 				23735AF628FEDA4800599221 /* Fonts */,
+				23E6ACA8290130C50091D803 /* UIDevice.swift */,
 				23735B0028FEDBF900599221 /* UIColor.swift */,
 				2324102928FF0DD50095C0CC /* PaddingLabel.swift */,
 				23C993A92910945400B8D1E4 /* UITextField.swift */,
@@ -478,10 +478,10 @@
 		2373E4ED290AD20300D51B8E /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				23A7C669290AADE900351D16 /* InfoPlist */,
 				23166A7128FECD9D002AEFB7 /* AppDelegate.swift */,
 				7303B8AF2A0AA28F004C4C52 /* GoogleMobileAdsController.swift */,
 				7303B8B12A0AA52D004C4C52 /* GoogleMobileAdsKey.swift */,
-				23A7C669290AADE900351D16 /* InfoPlist */,
 				A23DA70629A7EFEA003FDA56 /* DeviceIdManager.swift */,
 				23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */,
 			);
@@ -1292,6 +1292,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1337,6 +1338,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

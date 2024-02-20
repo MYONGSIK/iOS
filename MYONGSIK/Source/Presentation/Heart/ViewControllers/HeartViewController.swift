@@ -6,12 +6,27 @@
 //
 
 import UIKit
-import Alamofire
+import Combine
+import Then
 
 // MARK: 찜꽁리스트 페이지
 class HeartViewController: MainBaseViewController {
+    var heartList: [ResponseHeartModel] = []
+    var isSelectedCell: [Bool] = []
+    private var campusInfo: CampusInfo = .yongin
     
-    // MARK: Life Cycles
+    private var cancellabels = Set<AnyCancellable>()
+    private let input: PassthroughSubject<HeartViewModel.Input, Never> = .init()
+                                            
+
+    var heartTableView = UITableView().then{
+        $0.backgroundColor = .white
+        $0.showsVerticalScrollIndicator = false
+        $0.separatorStyle = .none
+
+        $0.rowHeight = UITableView.automaticDimension
+    }
+    
     let emptyLabel = UILabel().then {
         $0.text = "찜꽁리스트가 비어있어요! \n맛집을 찜꽁해 나만의 맛집 리스트를 만들어봐요!"
         $0.numberOfLines = 0
@@ -19,11 +34,6 @@ class HeartViewController: MainBaseViewController {
         $0.font = UIFont.NotoSansKR(size: 14, family: .Bold)
         $0.textAlignment = .center
     }
-    var heartTableView: UITableView!
-    var heartListData: [HeartListModel] = []
-    var storeListData: [StoreModel] = []
-    var isSelectedCell: [Bool] = []
-    private var campusInfo: CampusInfo = .yongin
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,49 +43,38 @@ class HeartViewController: MainBaseViewController {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
-        setCampusInfo()
-        setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
     }
-
     
-    
-    private func setCampusInfo() {
-        if let userCampus  = UserDefaults.standard.value(forKey: "userCampus") {
-            switch userCampus as! String {
-            case CampusInfo.seoul.name:
-                campusInfo = .seoul
-            case CampusInfo.yongin.name:
-                campusInfo = .yongin
-            default:
-                return
-            }
-        }
+    private func bind() {
+        let output = HeartViewModel.shared.trastfrom(input.eraseToAnyPublisher())
+        output.receive(on: DispatchQueue.main)
+            .sink { [weak self] event in
+                switch event {
+                case .updateHeart(let heartList):
+                    self?.heartTableView.isHidden = !heartList.isEmpty
+                    self?.emptyLabel.isHidden = heartList.isEmpty
+                    self?.heartList = heartList
+                    self?.heartTableView.reloadData()
+                    break
+                case.heartResult(let result):
+                    break
+                    
+                case .moveToLink(let link):
+                    self?.moveToWebVC(link: link)
+                    break
+                }
+            }.store(in: &cancellabels)
     }
-    
-    
-    // MARK: Functions
-    func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
-        heartTableView = UITableView()
-        heartTableView.then{
-            $0.delegate = dataSourceDelegate
-            $0.dataSource = dataSourceDelegate
-            $0.register(HeartListTableViewCell.self, forCellReuseIdentifier: "HeartListTableViewCell")
-            $0.backgroundColor = .white
-            $0.showsVerticalScrollIndicator = false
-            $0.separatorStyle = .none
 
-            // autoHeight
-            $0.rowHeight = UITableView.automaticDimension
-//            $0.estimatedRowHeight = UITableView.automaticDimension
-            
-            
-        }
-    }
     func setUpView() {
         self.view.addSubview(emptyLabel)
         self.view.addSubview(heartTableView)
+        
+        self.heartTableView.delegate = self
+        self.heartTableView.dataSource = self
+        self.heartTableView.register(HeartListTableViewCell.self, forCellReuseIdentifier: "HeartListTableViewCell")
     }
     func setUpConstraint() {
         heartTableView.snp.makeConstraints { make in
@@ -83,7 +82,8 @@ class HeartViewController: MainBaseViewController {
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
-        if heartListData.count == 0 {
+        
+        if heartList.count == 0 {
             heartTableView.isHidden = true
             emptyLabel.isHidden = false
             
@@ -102,22 +102,27 @@ class HeartViewController: MainBaseViewController {
         }
     }
     
+    func moveToWebVC(link: String) {
+        let vc = WebViewController()
+        vc.webURL = link
+        vc.heartButton.isHidden = true
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 
 }
 // MARK: - TableView delegate
 extension HeartViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = self.heartListData.count
+        let count = self.heartList.count
         return count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HeartListTableViewCell", for: indexPath) as? HeartListTableViewCell else { return UITableViewCell() }
-        cell.delegate = self
-        storeListData.forEach { store in
-            if store.name == self.heartListData[indexPath.row].placeName! {
-                cell.setUpData(store, isSelect: isSelectedCell[indexPath.row])
-            }
-        }
+        cell.input = self.input
+        cell.setUpData(self.heartList[indexPath.row], isSelect: isSelectedCell[indexPath.row])
+        
         cell.selectionStyle = .none
         return cell
     }
@@ -136,26 +141,4 @@ extension HeartViewController: UITableViewDelegate, UITableViewDataSource {
         isSelectedCell[indexPath.row].toggle()
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
-}
-extension HeartViewController: HeartListDelegate {
-    func deleteHeart(placeName: String) {
-        // MARK: - 서버와 통신해 찜콩리스트 삭제
-        
-        heartListData = []
-        setUpConstraint()
-    }
-    
-    func reloadTableView() {
-        self.heartTableView.reloadData()
-    }
-    
-    func moveToWebVC(link: String) {
-        let vc = WebViewController()
-        vc.webURL = link
-        vc.heartButton.isHidden = true
-        
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    
 }

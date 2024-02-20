@@ -6,11 +6,11 @@
 //
 
 import Foundation
+import Combine
 
 protocol ViewModelabel {
     associatedtype Input
-    associatedtype State
     associatedtype Output
     
-    func trastfrom(_ input: Input) -> Output
+    func trastfrom(_ input: AnyPublisher<Input, Never>) -> AnyPublisher<Output, Never>
 }
