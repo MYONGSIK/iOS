@@ -20,7 +20,7 @@ enum CellTodo {
 // MARK: 검색 페이지 > 검색 결과 셀
 class SearchResultTableViewCell: UITableViewCell {
     var campusInfo: CampusInfo?
-    var storeData: StoreModel?
+    var storeData: RestaurantModel?
     var data: ResponseHeartModel?
     var delegate: RestaurantCellDelegate?
     
@@ -281,7 +281,7 @@ class SearchResultTableViewCell: UITableViewCell {
 //        self.data = HeartListModel(placeName: data.place_name ?? nil,
 //                                   category: data.category_group_name ?? nil,
 //                                   placeUrl: data.place_url ?? nil)
-        self.storeData = StoreModel(address: data.road_address_name,
+        self.storeData = RestaurantModel(address: data.road_address_name,
                                     category: data.category_group_name,
                                     code: data.id,
                                     contact: data.phone,
@@ -330,7 +330,7 @@ class SearchResultTableViewCell: UITableViewCell {
             }
         }
     }
-    func setUpDataWithRank(_ data: StoreModel) {
+    func setUpDataWithRank(_ data: RestaurantModel) {
         self.storeData = data
 //        self.data = HeartListModel(placeName: data.name ?? nil,
 //                                   category: data.category ?? nil,

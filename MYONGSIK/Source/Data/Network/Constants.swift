@@ -66,7 +66,7 @@ struct Constants {
     static let BaseURL = "http://13.209.50.30"
     static let registerUser = "/api/v2/users"
     static let getWeekFood = "/api/v2/meals/week"
-    static let getStoreRank = "/api/v2/scraps/store"
+    static let RestaurantUrl = "/api/v2/scraps/store"
     static let HeartUrl = "/api/v2/scraps"
     static let GetHeartUrl = "/api/v2/scraps/\(DeviceIdManager.shared.deviceId)"
     

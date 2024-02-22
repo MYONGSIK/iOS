@@ -44,15 +44,15 @@ class RestaurantMainViewController: MainBaseViewController {
     var restaurantMainTableView: UITableView!
     var searchResult: [KakaoResultModel] = []
     
-    var rankResults: [StoreModel] = []
+    var rankResults: [RestaurantModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 //        super.topLabel.text = "명지맛집"
         
-        self.navigationController?.isNavigationBarHidden = true
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+//        self.navigationController?.isNavigationBarHidden = true
+//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+//        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         setCampusInfo()
         setUpTableView(dataSourceDelegate: self)
         setUpView()
@@ -61,19 +61,19 @@ class RestaurantMainViewController: MainBaseViewController {
         
     }
     override func viewDidAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = false
-        //DATA
-        DispatchQueue.main.async {
-//            self.searchResult.removeAll()
-            KakaoMapDataManager().randomMapDataManager(self)
-//            self.getRandomRestaurants()
-
-//            self.rankResults.removeAll()
-            
-//            self.fetchRankData()
-//            self.reloadDataAnimation()
-            self.checkSortMode()
-        }
+//        self.tabBarController?.tabBar.isHidden = false
+//        //DATA
+//        DispatchQueue.main.async {
+////            self.searchResult.removeAll()
+//            KakaoMapDataManager().randomMapDataManager(self)
+////            self.getRandomRestaurants()
+//
+////            self.rankResults.removeAll()
+//            
+////            self.fetchRankData()
+////            self.reloadDataAnimation()
+//            self.checkSortMode()
+//        }
     }
     
     func checkSortMode() {

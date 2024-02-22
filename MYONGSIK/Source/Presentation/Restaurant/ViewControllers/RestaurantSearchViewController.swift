@@ -38,7 +38,7 @@ class RestaurantSearchViewController: BaseViewController {
     var searchResultTableView: UITableView!
     var searchResult: [KakaoResultModel] = []
     
-    var searchStoreResult: [StoreModel] = []
+    var searchStoreResult: [RestaurantModel] = []
     var campusInfo: CampusInfo = .seoul    // default값 - 인캠
     
     var pageNum: Int = 1

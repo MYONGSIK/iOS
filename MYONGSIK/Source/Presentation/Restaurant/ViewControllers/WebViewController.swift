@@ -26,7 +26,7 @@ class WebViewController: UIViewController, WKUIDelegate {
     var webView: WKWebView!
     
     // Properties
-    var storeData: StoreModel?
+    var storeData: RestaurantModel?
     var campusInfo: CampusInfo?
     
     var webURL: String!

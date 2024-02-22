@@ -59,13 +59,8 @@
 		7329D7632B82F7C800D24D8F /* ViewModelabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7329D7622B82F7C800D24D8F /* ViewModelabel.swift */; };
 		734360052A2DB55800845A1B /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734360042A2DB55800845A1B /* MainService.swift */; };
 		734360082A2DBBE800845A1B /* HeartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734360072A2DBBE800845A1B /* HeartService.swift */; };
-		736A8DFC29E9A01700D30A35 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFB29E9A01700D30A35 /* Metal.framework */; };
-		736A8DFE29E9A02000D30A35 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFD29E9A02000D30A35 /* SystemConfiguration.framework */; };
-		736A8E0029E9A02F00D30A35 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8DFF29E9A02F00D30A35 /* CoreLocation.framework */; };
-		736A8E0229E9A03800D30A35 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8E0129E9A03700D30A35 /* QuartzCore.framework */; };
-		736A8E0629E9A06800D30A35 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8E0329E9A04300D30A35 /* libc++.tbd */; };
-		736A8E0729E9A07000D30A35 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8E0429E9A04C00D30A35 /* libxml2.tbd */; };
-		736A8E0829E9A07800D30A35 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A8E0529E9A05800D30A35 /* libsqlite3.tbd */; };
+		738DAB122B88823D00BE346C /* RestaurantService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738DAB112B88823D00BE346C /* RestaurantService.swift */; };
+		73A9DAF72B8BA96F00D10102 /* CampusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A9DAF62B8BA96F00D10102 /* CampusManager.swift */; };
 		73C5B24C29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */; };
 		73DF1D892A9897180097DB63 /* CGFloat+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D882A9897180097DB63 /* CGFloat+.swift */; };
 		73DF1D8C2A9898FE0097DB63 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D8B2A9898FE0097DB63 /* Restaurant.swift */; };
@@ -75,18 +70,16 @@
 		73DF1D962A99B6E90097DB63 /* NSMutableAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D952A99B6E90097DB63 /* NSMutableAttributedString+.swift */; };
 		92033E7EAD47D14ADA175F1B /* Pods_MYONGSIK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */; };
 		A202857F29C5B339008A7853 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = A202857E29C5B339008A7853 /* Toast */; };
-		A202858129C7520C008A7853 /* StoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A202858029C7520C008A7853 /* StoreModel.swift */; };
+		A202858129C7520C008A7853 /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A202858029C7520C008A7853 /* RestaurantModel.swift */; };
 		A23DA70729A7EFEA003FDA56 /* DeviceIdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70629A7EFEA003FDA56 /* DeviceIdManager.swift */; };
 		A23DA70929A7F1AD003FDA56 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70829A7F1AD003FDA56 /* UserModel.swift */; };
 		A23DA70B29A89575003FDA56 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70A29A89575003FDA56 /* UIResponder+.swift */; };
-		A23DA70F29A8A971003FDA56 /* MindFoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DA70E29A8A971003FDA56 /* MindFoodModel.swift */; };
 		A23F2DB129A2F9750046ED70 /* SubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */; };
 		A23F2DB829A3131C0046ED70 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F2DB729A3131C0046ED70 /* SplashViewController.swift */; };
 		A2431C8929A3243D00D8E493 /* CampusSetPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2431C8829A3243D00D8E493 /* CampusSetPopupViewController.swift */; };
 		A2431C8C29A3473D00D8E493 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2431C8B29A3473D00D8E493 /* String+.swift */; };
 		A2431C8E29A347C300D8E493 /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2431C8D29A347C300D8E493 /* CALayer+.swift */; };
 		A2431C9029A34FBA00D8E493 /* PopupBaseVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2431C8F29A34FBA00D8E493 /* PopupBaseVIewController.swift */; };
-		A258490329E6812A00E75568 /* SubmitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258490229E6812A00E75568 /* SubmitData.swift */; };
 		A258496B29E687C900E75568 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A258496A29E687C900E75568 /* WidgetKit.framework */; };
 		A258496D29E687C900E75568 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A258496C29E687C900E75568 /* SwiftUI.framework */; };
 		A258497029E687C900E75568 /* DailyFoodWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258496F29E687C900E75568 /* DailyFoodWidgetBundle.swift */; };
@@ -207,6 +200,8 @@
 		736A8E0329E9A04300D30A35 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		736A8E0429E9A04C00D30A35 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		736A8E0529E9A05800D30A35 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		738DAB112B88823D00BE346C /* RestaurantService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantService.swift; sourceTree = "<group>"; };
+		73A9DAF62B8BA96F00D10102 /* CampusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusManager.swift; sourceTree = "<group>"; };
 		73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBottomAlertViewController.swift; sourceTree = "<group>"; };
 		73DF1D882A9897180097DB63 /* CGFloat+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+.swift"; sourceTree = "<group>"; };
 		73DF1D8B2A9898FE0097DB63 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
@@ -216,18 +211,16 @@
 		73DF1D952A99B6E90097DB63 /* NSMutableAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+.swift"; sourceTree = "<group>"; };
 		7595CF6EE606B781645AD9EB /* Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; path = "Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests.release.xcconfig"; sourceTree = "<group>"; };
 		77CEA1CD0123C0563A94A6E1 /* Pods-MYONGSIK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MYONGSIK.debug.xcconfig"; path = "Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK.debug.xcconfig"; sourceTree = "<group>"; };
-		A202858029C7520C008A7853 /* StoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModel.swift; sourceTree = "<group>"; };
+		A202858029C7520C008A7853 /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
 		A23DA70629A7EFEA003FDA56 /* DeviceIdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceIdManager.swift; sourceTree = "<group>"; };
 		A23DA70829A7F1AD003FDA56 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		A23DA70A29A89575003FDA56 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
-		A23DA70E29A8A971003FDA56 /* MindFoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindFoodModel.swift; sourceTree = "<group>"; };
 		A23F2DB029A2F9750046ED70 /* SubmitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitViewController.swift; path = ../ViewModels/SubmitViewController.swift; sourceTree = "<group>"; };
 		A23F2DB729A3131C0046ED70 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		A2431C8829A3243D00D8E493 /* CampusSetPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusSetPopupViewController.swift; sourceTree = "<group>"; };
 		A2431C8B29A3473D00D8E493 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		A2431C8D29A347C300D8E493 /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 		A2431C8F29A34FBA00D8E493 /* PopupBaseVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBaseVIewController.swift; sourceTree = "<group>"; };
-		A258490229E6812A00E75568 /* SubmitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitData.swift; sourceTree = "<group>"; };
 		A258496929E687C900E75568 /* DailyFoodWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DailyFoodWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A258496A29E687C900E75568 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		A258496C29E687C900E75568 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -249,15 +242,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				736A8E0829E9A07800D30A35 /* libsqlite3.tbd in Frameworks */,
-				736A8E0029E9A02F00D30A35 /* CoreLocation.framework in Frameworks */,
 				A202857F29C5B339008A7853 /* Toast in Frameworks */,
-				736A8E0629E9A06800D30A35 /* libc++.tbd in Frameworks */,
-				736A8E0229E9A03800D30A35 /* QuartzCore.framework in Frameworks */,
-				736A8DFE29E9A02000D30A35 /* SystemConfiguration.framework in Frameworks */,
 				23451DED29117633006AE030 /* WebKit.framework in Frameworks */,
-				736A8E0729E9A07000D30A35 /* libxml2.tbd in Frameworks */,
-				736A8DFC29E9A01700D30A35 /* Metal.framework in Frameworks */,
 				92033E7EAD47D14ADA175F1B /* Pods_MYONGSIK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,11 +451,11 @@
 		2373E4EC290AD1AC00D51B8E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				736A8DF529E999CC00D30A35 /* Map */,
 				23166AA528FEDA0A002AEFB7 /* Utils */,
 				23BE0150290E0AAF00861DA5 /* Restaurant */,
-				23BE014F290E0AA900861DA5 /* Heart */,
+				736A8DF529E999CC00D30A35 /* Map */,
 				2373E4F2290AD35200D51B8E /* Main */,
+				23BE014F290E0AA900861DA5 /* Heart */,
 				2373E4F1290AD31B00D51B8E /* Launch */,
 			);
 			path = Presentation;
@@ -484,6 +470,7 @@
 				7303B8B12A0AA52D004C4C52 /* GoogleMobileAdsKey.swift */,
 				A23DA70629A7EFEA003FDA56 /* DeviceIdManager.swift */,
 				23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */,
+				73A9DAF62B8BA96F00D10102 /* CampusManager.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -492,12 +479,10 @@
 			isa = PBXGroup;
 			children = (
 				2394E92B28FEF8E6009B6AEF /* DayFoodModel.swift */,
-				238F562E2910A6D60044214F /* KakaoMapModel.swift */,
 				231161192911807A00AD73D2 /* HeartListData.swift */,
-				A258490229E6812A00E75568 /* SubmitData.swift */,
+				238F562E2910A6D60044214F /* KakaoMapModel.swift */,
+				A202858029C7520C008A7853 /* RestaurantModel.swift */,
 				A23DA70829A7F1AD003FDA56 /* UserModel.swift */,
-				A23DA70E29A8A971003FDA56 /* MindFoodModel.swift */,
-				A202858029C7520C008A7853 /* StoreModel.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -557,6 +542,7 @@
 		2394E92A28FEF8CC009B6AEF /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				738DAB102B88822200BE346C /* RestaurantService */,
 				734360062A2DBBD400845A1B /* HeartService */,
 				734360032A2DB54500845A1B /* MainService */,
 				23C993AB2910A4E500B8D1E4 /* KakaoMapService */,
@@ -664,6 +650,14 @@
 				73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		738DAB102B88822200BE346C /* RestaurantService */ = {
+			isa = PBXGroup;
+			children = (
+				738DAB112B88823D00BE346C /* RestaurantService.swift */,
+			);
+			path = RestaurantService;
 			sourceTree = "<group>";
 		};
 		73DF1D8A2A98979B0097DB63 /* Enum */ = {
@@ -1028,6 +1022,7 @@
 				23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */,
 				7303B8B22A0AA52D004C4C52 /* GoogleMobileAdsKey.swift in Sources */,
 				7329D7632B82F7C800D24D8F /* ViewModelabel.swift in Sources */,
+				73A9DAF72B8BA96F00D10102 /* CampusManager.swift in Sources */,
 				734360082A2DBBE800845A1B /* HeartService.swift in Sources */,
 				23C993A429108F6F00B8D1E4 /* RestaurantSearchViewController.swift in Sources */,
 				73C5B24C29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift in Sources */,
@@ -1044,15 +1039,15 @@
 				A23DA70B29A89575003FDA56 /* UIResponder+.swift in Sources */,
 				731C3F422A5D3DA300A5277A /* MainViewModel.swift in Sources */,
 				238F562F2910A6D60044214F /* KakaoMapModel.swift in Sources */,
+				738DAB122B88823D00BE346C /* RestaurantService.swift in Sources */,
 				A2A7966529A4702100A2F2E2 /* SelectRestaurantViewController.swift in Sources */,
 				23166A7428FECD9D002AEFB7 /* SceneDelegate.swift in Sources */,
 				734360052A2DB55800845A1B /* MainService.swift in Sources */,
 				73DF1D8E2A98A23A0097DB63 /* RestaurantSelectCell.swift in Sources */,
-				A202858129C7520C008A7853 /* StoreModel.swift in Sources */,
+				A202858129C7520C008A7853 /* RestaurantModel.swift in Sources */,
 				23B9E8992911356D009B6D8F /* ScreenManager.swift in Sources */,
 				A2EA100B29F3FAD4000D600B /* SettingResTableViewCell.swift in Sources */,
 				23C993A629108F7800B8D1E4 /* HeartViewController.swift in Sources */,
-				A258490329E6812A00E75568 /* SubmitData.swift in Sources */,
 				2373E4E5290AC93000D51B8E /* APIManager.swift in Sources */,
 				73DF1D892A9897180097DB63 /* CGFloat+.swift in Sources */,
 				23B9E8972911336A009B6D8F /* RestaurantMainViewController.swift in Sources */,
@@ -1063,7 +1058,6 @@
 				238F56312910AA0F0044214F /* MainBaseViewController.swift in Sources */,
 				23451DE929116964006AE030 /* RestaurantTagViewController.swift in Sources */,
 				23735B0128FEDBF900599221 /* UIColor.swift in Sources */,
-				A23DA70F29A8A971003FDA56 /* MindFoodModel.swift in Sources */,
 				7329D7612B82EAB100D24D8F /* HeartViewModel.swift in Sources */,
 				A2431C8C29A3473D00D8E493 /* String+.swift in Sources */,
 				73178AC129EAFC3A001C3AA4 /* MapStoreView.swift in Sources */,
@@ -1281,7 +1275,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 5XGLRW6VG4;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/IOS_DaumMap_SDK_1.4.0/lib/DaumMap.embeddedframework",
@@ -1330,7 +1324,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 5XGLRW6VG4;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/IOS_DaumMap_SDK_1.4.0/lib/DaumMap.embeddedframework",
