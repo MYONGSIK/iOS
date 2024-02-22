@@ -9,9 +9,12 @@ import Foundation
 
 class MainService {
     func getWeekFood(area: String, completion: @escaping (APIModel<[DayFoodModel]>) -> Void) {
-        APIManager.shared.getData(urlEndpointString: "/api/v2/meals/week/\(area)", dataType: APIModel<[DayFoodModel]>.self , parameter: nil) { response in
-            completion(response)
+        APIManager.shared.getData(urlEndpointString: "/api/v2/meals/week/\(area)", responseDataType: APIModel<[DayFoodModel]>.self, parameter: nil) { response in
+            if let data = response.data {
+                completion(data)
+            }
         }
+
     }
     
     func setCampus(campus: String) {

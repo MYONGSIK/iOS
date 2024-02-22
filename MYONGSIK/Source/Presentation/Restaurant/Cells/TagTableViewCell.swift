@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol TagCellDelegate {
     func didTapTagButton(tagKeyword: String)

@@ -1,12 +1,5 @@
-//
-//  ViewController.swift
-//  MYONGSIK
-//
-//  Created by gomin on 2022/10/18.
-//
-
 import UIKit
-import SnapKit
+import Combine
 
 class MainViewController: MainBaseViewController {
     // MARK: - Variables

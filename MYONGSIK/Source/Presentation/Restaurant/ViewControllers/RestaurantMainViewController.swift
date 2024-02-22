@@ -380,39 +380,39 @@ extension RestaurantMainViewController {
                 "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
             ]
         }
-        
-        APIManager.shared.getData(urlEndpointString: Constants.getStoreRank,
-                                  dataType: StoreRankModel.self,
-                                  parameter: queryParam,
-                                  completionHandler: { [weak self] response in
-            if response.success {
-                self?.rankResults = response.data.content
-                self?.reloadDataAnimation()
-            } else {
-                self?.showAlert(message: "맛집 순위 정보를 가져올 수 없습니다.")
-            }
-
-        })
+//        
+//        APIManager.shared.getData(urlEndpointString: Constants.getStoreRank,
+//                                  dataType: StoreRankModel.self,
+//                                  parameter: queryParam,
+//                                  completionHandler: { [weak self] response in
+//            if response.success {
+//                self?.rankResults = response.data.content
+//                self?.reloadDataAnimation()
+//            } else {
+//                self?.showAlert(message: "맛집 순위 정보를 가져올 수 없습니다.")
+//            }
+//
+//        })
     }
     
     func fetchDataWithSort(sort: String) {
-        self.cellMode = .rankCell
-        let queryParam: Parameters = [
-            "sort": sort,
-            "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
-        ]
-        APIManager.shared.getData(urlEndpointString: Constants.getStoreRank,
-                                  dataType: StoreRankModel.self,
-                                  parameter: queryParam,
-                                  completionHandler: { [weak self] response in
-            if response.success {
-                self?.rankResults = response.data.content
-                self?.reloadDataAnimation()
-            } else {
-                self?.showAlert(message: "맛집 순위 정보를 가져올 수 없습니다.")
-            }
-
-        })
+//        self.cellMode = .rankCell
+//        let queryParam: Parameters = [
+//            "sort": sort,
+//            "campus" : (campusInfo == .seoul) ? "SEOUL" : "YONGIN",
+//        ]
+//        APIManager.shared.getData(urlEndpointString: Constants.getStoreRank,
+//                                  dataType: StoreRankModel.self,
+//                                  parameter: queryParam,
+//                                  completionHandler: { [weak self] response in
+//            if response.success {
+//                self?.rankResults = response.data.content
+//                self?.reloadDataAnimation()
+//            } else {
+//                self?.showAlert(message: "맛집 순위 정보를 가져올 수 없습니다.")
+//            }
+//
+//        })
     }
     
     func showAlert(message: String) {
