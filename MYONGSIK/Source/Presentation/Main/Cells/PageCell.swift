@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SnapKit
 
 class PageCell: UICollectionViewCell {
     private let foodInfoTableView = UITableView()

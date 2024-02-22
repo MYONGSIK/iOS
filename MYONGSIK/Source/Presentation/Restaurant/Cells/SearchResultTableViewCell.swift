@@ -19,10 +19,9 @@ enum CellTodo {
 
 // MARK: 검색 페이지 > 검색 결과 셀
 class SearchResultTableViewCell: UITableViewCell {
-    let realm = try! Realm()
     var campusInfo: CampusInfo?
     var storeData: StoreModel?
-    var data: HeartListModel?
+    var data: ResponseHeartModel?
     var delegate: RestaurantCellDelegate?
     
     // MARK: Views
@@ -63,13 +62,7 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.textColor = .signatureBlue
     }
-//    let heartButton = UIButton().then {
-//        $0.setImage(UIImage(systemName: "heart"), for: .normal)
-//        $0.setImage(UIImage(systemName: "heart.fill"), for: .selected)
-//        $0.tintColor = .lightGray
-//
-//        $0.addTarget(self, action: #selector(didTapHeartButton(_:)), for: .touchUpInside)
-//    }
+
     let pinImage = UIImageView().then{
         $0.image = UIImage(named: "pin")
     }
@@ -147,7 +140,6 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.addSubview(dotLabel)
         backView.addSubview(placeCategoryLabel)
         backView.addSubview(distanceLabel)
-//        backView.addSubview(heartButton)
         
         backView.addSubview(goLinkButton)
         
@@ -164,7 +156,6 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(15)
             make.top.equalTo(howManyLikeLabel.snp.bottom).offset(5)
-//            make.top.equalToSuperview().offset(40)
             make.bottom.equalToSuperview().inset(10)
         }
         placeNameLabel.snp.makeConstraints { make in
@@ -183,11 +174,7 @@ class SearchResultTableViewCell: UITableViewCell {
             make.centerY.equalTo(placeCategoryLabel)
             make.trailing.lessThanOrEqualToSuperview().offset(-20)  //
         }
-//        heartButton.snp.makeConstraints { make in
-//            make.top.trailing.equalToSuperview().inset(20)
-//            make.leading.equalTo(distanceLabel.snp.trailing).offset(5)
-//            make.width.height.equalTo(30)
-//        }
+
         goLinkButton.snp.makeConstraints { make in
             make.width.equalTo(100)
             make.height.equalTo(30)
@@ -201,7 +188,6 @@ class SearchResultTableViewCell: UITableViewCell {
         locationButton.snp.makeConstraints { make in
             make.leading.equalTo(pinImage.snp.trailing).offset(10)
             make.top.centerY.equalTo(pinImage)
-//            make.trailing.lessThanOrEqualTo(goLinkButton.snp.leading).offset(-42)
             make.trailing.equalToSuperview().offset(-20)
         }
         phoneImage.snp.makeConstraints { make in
@@ -239,18 +225,18 @@ class SearchResultTableViewCell: UITableViewCell {
         sender.isSelected = !sender.isSelected
         if sender.isSelected {
             sender.tintColor = .systemPink
-            addHeartData(data: self.data)   // 로컬에 찜 추가
+            // MARK: - 서버와 통신 해 찜 추가로 변경
         }
         if !sender.isSelected {
             sender.tintColor = .lightGray
-            deleteHeartData(data: self.data)    // 로컬에 찜 삭제
+            // MARK: - 서버와 통신 해 찜 삭제로 변경
         }
     }
     
     @objc func didTapGoLinkButton() {
         print("didTapGoLinkButton")
-        guard let link = self.data?.placeUrl else {return}
-        guard let placeName = self.data?.placeName else {return}
+        guard let link = self.data?.urlAddress else {return}
+        guard let placeName = self.data?.name else {return}
         guard let category = self.data?.category else {return}
         
         let webView = WebViewController()
@@ -292,9 +278,9 @@ class SearchResultTableViewCell: UITableViewCell {
     // MARK: 서버에서 데이터를 받아온 후 출력시킵니다.
     func setUpData(_ data: KakaoResultModel) {
         print("setUpData called --> \(data)")
-        self.data = HeartListModel(placeName: data.place_name ?? nil,
-                                   category: data.category_group_name ?? nil,
-                                   placeUrl: data.place_url ?? nil)
+//        self.data = HeartListModel(placeName: data.place_name ?? nil,
+//                                   category: data.category_group_name ?? nil,
+//                                   placeUrl: data.place_url ?? nil)
         self.storeData = StoreModel(address: data.road_address_name,
                                     category: data.category_group_name,
                                     code: data.id,
@@ -346,9 +332,9 @@ class SearchResultTableViewCell: UITableViewCell {
     }
     func setUpDataWithRank(_ data: StoreModel) {
         self.storeData = data
-        self.data = HeartListModel(placeName: data.name ?? nil,
-                                   category: data.category ?? nil,
-                                   placeUrl: data.urlAddress ?? nil)
+//        self.data = HeartListModel(placeName: data.name ?? nil,
+//                                   category: data.category ?? nil,
+//                                   placeUrl: data.urlAddress ?? nil)
         if let count = data.scrapCount {self.howManyLikeLabel.text = "명지대학생들이 \(count)명이 담았어요!"}
         if let placeName = data.name {self.placeNameLabel.text = placeName}
         if let category = data.category {self.placeCategoryLabel.text = category}
@@ -388,26 +374,6 @@ class SearchResultTableViewCell: UITableViewCell {
         }
         if let longitude = data.longitude { self.storeData?.longitude = longitude }
         if let latitude = data.latitude { self.storeData?.latitude = latitude }
-    }
-    
-    func addHeartData(data: HeartListModel?) {
-        if let data = data {
-            
-            let objc = HeartListData()
-            objc.placeName = data.placeName
-            objc.category = data.category
-            objc.placeUrl = data.placeUrl
-            
-            try! realm.write { realm.add(objc) }
-        }
-    }
-    
-    func deleteHeartData(data: HeartListModel?) {
-        if let data = data {
-            let predicate = NSPredicate(format: "placeName = %@", data.placeName)
-            let objc = realm.objects(HeartListData.self).filter(predicate)
-            try! realm.write { realm.delete(objc) }
-        }
     }
     
     func setupLayout(todo: CellTodo) {

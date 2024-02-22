@@ -6,19 +6,28 @@
 //
 
 import UIKit
-
-protocol HeartListDelegate {
-    func deleteHeart(placeName: String)
-    func reloadTableView()
-    func moveToWebVC(link: String)
-}
+import Combine
+import CombineCocoa
 
 // MARK: 찜꽁리스트 셀
 class HeartListTableViewCell: UITableViewCell {
-    var delegate: HeartListDelegate?
+    private var cancellabels = Set<AnyCancellable>()
+    private var _input: PassthroughSubject<HeartViewModel.Input, Never>!
+    
+    var input: PassthroughSubject<HeartViewModel.Input, Never> {
+        get {
+            return _input
+        }
+        set(value) {
+            _input = value
+        }
+    }
+    
     
     var isSelect: Bool = false
-    var store: StoreModel?
+    var store: ResponseHeartModel?
+    
+    
     
     // MARK: - Views
     let backView = UIView().then{
@@ -60,8 +69,6 @@ class HeartListTableViewCell: UITableViewCell {
         $0.tintColor = .white
         $0.backgroundColor = .signatureBlue
         $0.layer.cornerRadius = 15
-        
-        $0.addTarget(self, action: #selector(didTapGoLinkButton), for: .touchUpInside)
     }
     
     let heartButton = UIButton().then {
@@ -69,7 +76,6 @@ class HeartListTableViewCell: UITableViewCell {
         $0.setImage(UIImage(systemName: "heart.fill"), for: .selected)
         $0.tintColor = .systemPink
         $0.isSelected = true
-        $0.addTarget(self, action: #selector(didTapHeartButton(_:)), for: .touchUpInside)
     }
     
     private let pinImageView = UIImageView().then {
@@ -103,10 +109,6 @@ class HeartListTableViewCell: UITableViewCell {
         $0.font = UIFont.NotoSansKR(size: 10, family: .Regular)
     }
     
-    
-    
-    
-
     //MARK: - LifeCycle
     var placeUrl: String!
     
@@ -119,6 +121,11 @@ class HeartListTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cancellabels.removeAll()
     }
     
     // MARK: - Functions
@@ -243,7 +250,7 @@ class HeartListTableViewCell: UITableViewCell {
         }
     }
     
-    func setUpData(_ data: StoreModel, isSelect: Bool) {
+    func setUpData(_ data: ResponseHeartModel, isSelect: Bool) {
         if let placeName = data.name {self.placeNameLabel.text = placeName}
         if let category = data.category {self.placeCategoryLabel.text = category}
         if let placeUrl = data.urlAddress {self.placeUrl = placeUrl}
@@ -266,16 +273,16 @@ class HeartListTableViewCell: UITableViewCell {
         
         setUpView()
         setUpConstraint()
+        bind()
     }
     
-    @objc func didTapHeartButton(_ sender: UIButton) {
-        print("식당 좋아요 버튼 탭함")
-        if let placeName = self.placeNameLabel.text {
-            delegate?.deleteHeart(placeName: placeName)
-        }
-    }
-    
-    @objc func didTapGoLinkButton() {
-        self.delegate?.moveToWebVC(link: store?.urlAddress ?? "")
+    private func bind() {
+        heartButton.tapPublisher.sink { [weak self] _ in
+            self?._input.send(.tapHeartButton(self!.store!.id.description))
+        }.store(in: &cancellabels)
+        
+        goLinkButton.tapPublisher.sink { [weak self] _ in
+            self?._input.send(.tapLinkButton(self!.store!.urlAddress!))
+        }.store(in: &cancellabels)
     }
 }
