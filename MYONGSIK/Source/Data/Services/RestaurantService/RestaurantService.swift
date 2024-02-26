@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 protocol RestaurantServiceProtocol {
-    func getRestaurantList(completion: @escaping ([RestaurantModel]) -> Void)
+    func getRestaurantList(sort: String, completion: @escaping ([RestaurantModel]) -> Void)
     func getKakaoRestaurantList(completion: @escaping ([KakaoResultModel]) -> Void)
     func getTagRestaurantList(keyword: String, completion: @escaping ([KakaoResultModel]) -> Void)
 }
@@ -21,12 +21,14 @@ class RestaurantService: RestaurantServiceProtocol {
         "Accept": "application/json"
     ]
     private let foodList = ["부대찌개", "국밥", "마라탕", "중식", "한식", "카페", "족발", "술집", "파스타", "커피", "삼겹살", "치킨", "떡볶이", "햄버거", "피자", "초밥", "회", "곱창", "냉면", "닭발"]
-    private var campusInfo: CampusInfo = .seoul
     
-    
-    
-    func getRestaurantList(completion: @escaping ([RestaurantModel]) -> Void) {
-        APIManager.shared.getData(urlEndpointString: Constants.RestaurantUrl, responseDataType: ListModel<RestaurantModel>.self, parameter: nil) { response in
+    func getRestaurantList(sort: String, completion: @escaping ([RestaurantModel]) -> Void) {
+        let parameters: Parameters = [
+            "sort": sort,
+            "campus": CampusManager.shared.campus!.param
+        ]
+        
+        APIManager.shared.getData(urlEndpointString: Constants.RestaurantUrl, responseDataType: ListModel<RestaurantModel>.self, parameter: parameters) { response in
             if let content = response.data?.content {
                 completion(content)
             }
@@ -36,9 +38,9 @@ class RestaurantService: RestaurantServiceProtocol {
     func getKakaoRestaurantList(completion: @escaping ([KakaoResultModel]) -> Void) {
         let randomKeyword = foodList.randomElement() ?? ""
         
-        let radius = (campusInfo == .seoul) ? Constants.seoulRadius : Constants.yonginRadius
-        let sendUrl = Constants.KakaoURL + campusInfo.keyword + "\(randomKeyword)"
-                    + campusInfo.x + campusInfo.y + radius + Constants.categoryCode + Constants.sort
+        let radius = (CampusManager.shared.campus == .seoul) ? Constants.seoulRadius : Constants.yonginRadius
+        let sendUrl = Constants.KakaoURL + CampusManager.shared.campus!.keyword + "\(randomKeyword)"
+                    + CampusManager.shared.campus!.x + CampusManager.shared.campus!.y + radius + Constants.categoryCode + Constants.sort
         guard let target = sendUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {return}
         guard let url = URL(string: target) else {return}
 
@@ -57,9 +59,9 @@ class RestaurantService: RestaurantServiceProtocol {
     }
     
     func getTagRestaurantList(keyword: String, completion: @escaping ([KakaoResultModel]) -> Void) {
-        let radius = (campusInfo == .seoul) ? Constants.seoulRadius : Constants.yonginRadius
-        let sendUrl = Constants.KakaoURL + campusInfo.keyword + "\(keyword)"
-                    + campusInfo.x + campusInfo.y + radius + Constants.categoryCode + Constants.sort
+        let radius = (CampusManager.shared.campus == .seoul) ? Constants.seoulRadius : Constants.yonginRadius
+        let sendUrl = Constants.KakaoURL + CampusManager.shared.campus!.keyword + "\(keyword)"
+                    + CampusManager.shared.campus!.x + CampusManager.shared.campus!.y + radius + Constants.categoryCode + Constants.sort
         guard let target = sendUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {return}
         guard let url = URL(string: target) else {return}
 

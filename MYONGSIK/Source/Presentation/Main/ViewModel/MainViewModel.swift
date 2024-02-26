@@ -18,13 +18,16 @@ class MainViewModel: ObservableObject{
     
     private var restaurants: [Restaurant] = []
     
+    init() {
+        setRestraunt()
+    }
+    
     
     
     //안쓸거 같으면 삭제
     private var pageCount = 0
     private var resName = ""
     
-    @Published var campus: String?
     @Published var foodList: [[DayFoodModel]] = []
     @Published var isFood: Bool = false
     @Published var selectedRestaurant: Restaurant?
@@ -36,12 +39,6 @@ class MainViewModel: ObservableObject{
         set(pageCount) {
             self.pageCount = pageCount
         }
-    }
-    
-    func campus(completion: @escaping (String) -> Void) {
-        $campus.sink { campus in
-            completion(campus ?? "")
-        }.store(in: &cancellabels)
     }
     
     func getFoodList(completion: @escaping ([[DayFoodModel]]) -> Void) {
@@ -85,10 +82,6 @@ class MainViewModel: ObservableObject{
         }.sink { selectedRestaurant in
             completion(selectedRestaurant!.getFoodInfoCount())
         }.store(in: &cancellabels)
-    }
-    
-    func getCampus() -> String {
-        return campus ?? ""
     }
     
     func getRestaurantsCount() -> Int {
@@ -151,29 +144,14 @@ extension MainViewModel {
         }
     }
     
-    func saveCampus(campus: String) {
-        self.campus = campus
-        setRestraunt()
-        
-        mainService.setCampus(campus: campus)
-    }
-    
-    
-    func loadCampus() {
-        mainService.getCampus { campus in
-            self.campus = campus
-            self.setRestraunt()
-        }
-    }
-    
     func setRestraunt() {
-        if campus == CampusInfo.seoul.name {
+        if CampusManager.shared.campus == CampusInfo.seoul {
             var seoulRestaurants: [Restaurant] = []
             for i in 0..<2 {
                 seoulRestaurants.append(Restaurant.allCases[i])
             }
             self.restaurants = seoulRestaurants
-        }else if campus == CampusInfo.yongin.name {
+        }else if CampusManager.shared.campus == CampusInfo.yongin {
             var yonginRestaurants: [Restaurant] = []
             for i in 2..<Restaurant.allCases.count {
                 yonginRestaurants.append(Restaurant.allCases[i])
@@ -192,10 +170,10 @@ extension MainViewModel {
         }
         
         if resName == "" {
-            if campus == "인문캠퍼스" {
+            if CampusManager.shared.campus == .seoul {
                 saveWidgetResName(resName: Restaurant.mcc.getServerName())
                 return Restaurant.mcc.getServerName()
-            }else if campus == "용인캠퍼스" {
+            }else if CampusManager.shared.campus == .yongin {
                 saveWidgetResName(resName: Restaurant.staff.getServerName())
                 return Restaurant.staff.getServerName()
             }

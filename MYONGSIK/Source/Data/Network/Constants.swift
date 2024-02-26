@@ -21,6 +21,15 @@ enum CampusInfo {
         }
     }
     
+    var param: String {
+        switch self {
+        case .seoul:
+            return "SEOUL"
+        case .yongin:
+            return "YONGIN"
+        }
+    }
+    
     // MARK: 캠퍼스의 좌표 정보
     // 인캠 :: x(경도) - 126.9230255 & y(위도) - 37.5805970
     // 자캠 :: x(경도) - 127.1856568 & y(위도) - 37.2217101
@@ -63,7 +72,7 @@ enum CampusInfo {
 struct Constants {
     
     // API 연결 시
-    static let BaseURL = "http://13.209.50.30"
+    static let BaseURL = "http://ms.everymeal.shop"
     static let registerUser = "/api/v2/users"
     static let getWeekFood = "/api/v2/meals/week"
     static let RestaurantUrl = "/api/v2/scraps/store"

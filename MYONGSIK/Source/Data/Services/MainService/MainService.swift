@@ -14,17 +14,6 @@ class MainService {
                 completion(data)
             }
         }
-
-    }
-    
-    func setCampus(campus: String) {
-        UserDefaults.standard.setValue(campus, forKey: "userCampus")
-    }
-    
-    func getCampus(completion: @escaping (String) -> Void) {
-        if let campus = UserDefaults.standard.object(forKey: "userCampus") as? String {
-            completion(campus)
-        }
     }
     
     func setWidgetResName(resName: String) {

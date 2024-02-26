@@ -17,6 +17,27 @@ enum CellMode {
     case rankCell
 }
 
+enum SortType: String, CaseIterable {
+    case popular = "인기순 "
+    case distance = "거리순 "
+    case recomend = "추천순 "
+    
+    func param() -> String {
+        switch self {
+        case .popular:
+            return "scrapCount,desc"
+        case .distance:
+            return "distance,asc"
+        case .recomend:
+            return ""
+        }
+    }
+}
+
+
+
+
+
 // MARK: '명지 맛집' 페이지
 class RestaurantMainViewController: MainBaseViewController {
     lazy var refreshControl = UIRefreshControl().then {
@@ -155,7 +176,10 @@ class RestaurantMainViewController: MainBaseViewController {
         sortDropDown.show()
     }
     func setSortButtonCell(_ cell: UITableViewCell) {
-        sortDropDown.dataSource = ["인기순", "거리순", "추천순"]
+        let sortTypeList = SortType.allCases.map {
+            $0.rawValue
+        }
+        sortDropDown.dataSource = sortTypeList
         sortDropDown.selectedTextColor = .signatureBlue
         sortDropDown.anchorView = sortButton
         sortDropDown.bottomOffset = CGPoint(x: 0, y:(sortDropDown.anchorView?.plainView.bounds.height)!)
@@ -164,6 +188,9 @@ class RestaurantMainViewController: MainBaseViewController {
         sortButton.addTarget(self, action: #selector(didTapSortButton), for: .touchUpInside)
         sortDropDown.selectionAction = { [weak self] (index: Int, item: String) in
             self?.sortButton.setTitle(item, for: .normal)
+            //MARK: - Viewmodel input 연결 -> enum Type 활용 index활용
+            print(index)
+            
             switch item {
             case "인기순":
                 self?.sortButton.setTitle("인기순 ", for: .normal)
@@ -235,10 +262,10 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch self.cellMode {
         case .rankCell:
-            let count = self.rankResults.count ?? 0
+            let count = self.rankResults.count 
             return count + 3
         case .kakaoCell:
-            let count = self.searchResult.count ?? 0
+            let count = self.searchResult.count
             return count + 3
         }
 //        let count = self.rankResults.count ?? 0
@@ -325,7 +352,7 @@ extension RestaurantMainViewController: TagCellDelegate {
 extension RestaurantMainViewController {
     func kakaoRandomMapSuccessAPI(_ result: [KakaoResultModel]) {
         print("result count -> \(result.count)")
-        let resultCount = result.count ?? 0
+        let resultCount = result.count
         if resultCount >= 20 {self.searchResult = Array(result[0..<20])}
         else {self.searchResult = result}
         

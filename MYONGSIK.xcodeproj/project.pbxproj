@@ -61,6 +61,7 @@
 		734360082A2DBBE800845A1B /* HeartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734360072A2DBBE800845A1B /* HeartService.swift */; };
 		738DAB122B88823D00BE346C /* RestaurantService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738DAB112B88823D00BE346C /* RestaurantService.swift */; };
 		73A9DAF72B8BA96F00D10102 /* CampusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A9DAF62B8BA96F00D10102 /* CampusManager.swift */; };
+		73A9DAFA2B8BB12D00D10102 /* RestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A9DAF92B8BB12D00D10102 /* RestaurantViewModel.swift */; };
 		73C5B24C29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */; };
 		73DF1D892A9897180097DB63 /* CGFloat+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D882A9897180097DB63 /* CGFloat+.swift */; };
 		73DF1D8C2A9898FE0097DB63 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D8B2A9898FE0097DB63 /* Restaurant.swift */; };
@@ -202,6 +203,7 @@
 		736A8E0529E9A05800D30A35 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		738DAB112B88823D00BE346C /* RestaurantService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantService.swift; sourceTree = "<group>"; };
 		73A9DAF62B8BA96F00D10102 /* CampusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusManager.swift; sourceTree = "<group>"; };
+		73A9DAF92B8BB12D00D10102 /* RestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewModel.swift; sourceTree = "<group>"; };
 		73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBottomAlertViewController.swift; sourceTree = "<group>"; };
 		73DF1D882A9897180097DB63 /* CGFloat+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+.swift"; sourceTree = "<group>"; };
 		73DF1D8B2A9898FE0097DB63 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
@@ -571,6 +573,7 @@
 		23BE0150290E0AAF00861DA5 /* Restaurant */ = {
 			isa = PBXGroup;
 			children = (
+				73A9DAF82B8BB11F00D10102 /* ViewModel */,
 				238F56322910AC020044214F /* Cells */,
 				23BE0152290E0ABE00861DA5 /* ViewControllers */,
 			);
@@ -658,6 +661,14 @@
 				738DAB112B88823D00BE346C /* RestaurantService.swift */,
 			);
 			path = RestaurantService;
+			sourceTree = "<group>";
+		};
+		73A9DAF82B8BB11F00D10102 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				73A9DAF92B8BB12D00D10102 /* RestaurantViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		73DF1D8A2A98979B0097DB63 /* Enum */ = {
@@ -1063,6 +1074,7 @@
 				73178AC129EAFC3A001C3AA4 /* MapStoreView.swift in Sources */,
 				7303B8B02A0AA28F004C4C52 /* GoogleMobileAdsController.swift in Sources */,
 				A23F2DB829A3131C0046ED70 /* SplashViewController.swift in Sources */,
+				73A9DAFA2B8BB12D00D10102 /* RestaurantViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
