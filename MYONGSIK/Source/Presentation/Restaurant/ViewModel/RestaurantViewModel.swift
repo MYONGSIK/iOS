@@ -21,7 +21,7 @@ final class RestaurantViewModel: ViewModelabel {
     }
     
     enum Input {
-        case viewDidLoad
+        case viewDidLoad(String)
         case changeCategory(String)
         case selectCollect(String)
         case searchRestaurant(String)
@@ -41,12 +41,10 @@ final class RestaurantViewModel: ViewModelabel {
         
         input.sink { [weak self] event in
             switch event {
-            case .viewDidLoad:
-//                self?.restaurantService.getRestaurantList() { result in
-//                    self?.output.send(.updateRestaurant(result))
-//                }
-                break
-            case .changeCategory(let string):
+            case .viewDidLoad(let string), .changeCategory(let string):
+                self?.restaurantService.getRestaurantList(sort: string) { result in
+                    self?.output.send(.updateRestaurant(result))
+                }
                 break
             case .selectCollect(let string):
                 break
