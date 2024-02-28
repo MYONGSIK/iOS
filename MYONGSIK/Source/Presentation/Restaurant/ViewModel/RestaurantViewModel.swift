@@ -24,7 +24,7 @@ final class RestaurantViewModel: ViewModelabel {
         case viewDidLoad(String)
         case changeCategory(String)
         case selectCollect(String)
-        case searchRestaurant(String)
+        case searchRestaurant(String, Int)
         case tapPhone(String)
         case tapAddress(String)
         case tapLinkButton(String)
@@ -42,13 +42,25 @@ final class RestaurantViewModel: ViewModelabel {
         input.sink { [weak self] event in
             switch event {
             case .viewDidLoad(let string), .changeCategory(let string):
-                self?.restaurantService.getRestaurantList(sort: string) { result in
-                    self?.output.send(.updateRestaurant(result))
+                if string == "" {
+                    self?.restaurantService.getKakaoRestaurantList {result in
+                            self?.output.send(.updateKakaoRestaurant(result))
+                    }
+                }else {
+                    self?.restaurantService.getRestaurantList(sort: string) { result in
+                        self?.output.send(.updateRestaurant(result))
+                    }
                 }
                 break
             case .selectCollect(let string):
+                self?.restaurantService.getTagRestaurantList(keyword: string) { result in
+                    self?.output.send(.updateKakaoRestaurant(result))
+                }
                 break
-            case .searchRestaurant(let string):
+            case .searchRestaurant(let string, let page):
+                self?.restaurantService.getSearchRestaurantList(keyword: string, page: page, completion: { result in
+                    self?.output.send(.updateKakaoRestaurant(result))
+                })
                 break
             case .tapPhone(let string):
                 break

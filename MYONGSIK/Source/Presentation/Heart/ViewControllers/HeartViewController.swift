@@ -13,7 +13,6 @@ import Then
 class HeartViewController: MainBaseViewController {
     var heartList: [ResponseHeartModel] = []
     var isSelectedCell: [Bool] = []
-    private var campusInfo: CampusInfo = .yongin
     
     private var cancellabels = Set<AnyCancellable>()
     private let input: PassthroughSubject<HeartViewModel.Input, Never> = .init()
@@ -61,8 +60,8 @@ class HeartViewController: MainBaseViewController {
                 switch event {
                 case .updateHeart(let heartList):
                     self?.isSelectedCell = [Bool](repeating: false, count: heartList.count)
-                    self?.heartTableView.isHidden = false
-                    self?.emptyLabel.isHidden = true
+                    self?.heartTableView.isHidden = heartList.isEmpty
+                    self?.emptyLabel.isHidden = !heartList.isEmpty
                     self?.heartList = heartList
                     self?.heartTableView.reloadData()
                     break

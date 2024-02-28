@@ -12,6 +12,7 @@ protocol RestaurantServiceProtocol {
     func getRestaurantList(sort: String, completion: @escaping ([RestaurantModel]) -> Void)
     func getKakaoRestaurantList(completion: @escaping ([KakaoResultModel]) -> Void)
     func getTagRestaurantList(keyword: String, completion: @escaping ([KakaoResultModel]) -> Void)
+    func getSearchRestaurantList(keyword: String, page: Int, completion: @escaping ([KakaoResultModel]) -> Void)
 }
 
 class RestaurantService: RestaurantServiceProtocol {
@@ -69,6 +70,27 @@ class RestaurantService: RestaurantServiceProtocol {
            .validate()
            .responseDecodable(of: KakaoMapModel.self) { response in
                
+           switch response.result {
+           case .success(let result):
+               completion(result.documents)
+           case .failure(let error):
+               print(error.localizedDescription)
+               fatalError()
+           }
+        }
+    }
+    
+    func getSearchRestaurantList(keyword: String, page: Int, completion: @escaping ([KakaoResultModel]) -> Void) {
+        let radius = (CampusManager.shared.campus == .seoul) ? Constants.seoulRadius : Constants.yonginRadius
+        let sendUrl = Constants.KakaoURL + CampusManager.shared.campus!.keyword + "\(keyword)"
+        + CampusManager.shared.campus!.x + CampusManager.shared.campus!.y + radius + Constants.categoryCode
+                    + Constants.page + "\(page)" + Constants.size + Constants.sort
+        guard let target = sendUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {return}
+        guard let url = URL(string: target) else {return}
+
+        AF.request(url, method: .get, parameters: nil, headers: headers)
+           .validate()
+           .responseDecodable(of: KakaoMapModel.self) { response in
            switch response.result {
            case .success(let result):
                completion(result.documents)

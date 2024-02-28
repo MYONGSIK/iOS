@@ -19,7 +19,6 @@ enum CellTodo {
 
 // MARK: 검색 페이지 > 검색 결과 셀
 class SearchResultTableViewCell: UITableViewCell {
-    var campusInfo: CampusInfo?
     var storeData: RestaurantModel?
     var data: ResponseHeartModel?
     var delegate: RestaurantCellDelegate?
@@ -240,7 +239,6 @@ class SearchResultTableViewCell: UITableViewCell {
         guard let category = self.data?.category else {return}
         
         let webView = WebViewController()
-        webView.campusInfo = campusInfo
         webView.storeData = storeData
 //        print("웹뷰로 넘어가는 데이터 - \(storeData)")
         webView.webURL = link

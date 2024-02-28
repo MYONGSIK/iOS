@@ -39,7 +39,6 @@ class RestaurantSearchViewController: BaseViewController {
     var searchResult: [KakaoResultModel] = []
     
     var searchStoreResult: [RestaurantModel] = []
-    var campusInfo: CampusInfo = .seoul    // default값 - 인캠
     
     var pageNum: Int = 1
     
@@ -49,7 +48,6 @@ class RestaurantSearchViewController: BaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
-        setCampusInfo()
         setUpTableView(dataSourceDelegate: self)
         setUpView()
         setUpConstraint()
@@ -82,18 +80,7 @@ class RestaurantSearchViewController: BaseViewController {
         self.searchKeyword = text
         KakaoMapDataManager().searchMapDataManager(text, pageNum, self)
     }
-    // MARK: Functions
-    func setCampusInfo() {
-        if let userCampus  = UserDefaults.standard.value(forKey: "userCampus") {
-            switch userCampus as! String {
-            case CampusInfo.seoul.name:
-                campusInfo = .seoul
-            case CampusInfo.yongin.name:
-                campusInfo = .yongin
-            default: return
-            }
-        }
-    }
+    
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
         searchResultTableView = UITableView()
         searchResultTableView.then{
@@ -167,7 +154,6 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         cell.delegate = self
         let itemIdx = indexPath.item
         cell.setUpData(self.searchResult[itemIdx])
-        cell.campusInfo = self.campusInfo
         cell.setupLayout(todo: .search)
         return cell
     }
