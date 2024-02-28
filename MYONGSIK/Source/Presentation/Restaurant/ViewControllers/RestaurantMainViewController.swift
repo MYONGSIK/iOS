@@ -41,6 +41,7 @@ class RestaurantMainViewController: MainBaseViewController {
     private let input: PassthroughSubject<RestaurantViewModel.Input, Never> = .init()
     
     var cellMode: CellMode = .rankCell
+    var sortType: SortType = .popular
     var searchResult: [KakaoResultModel] = []
     var rankResults: [RestaurantModel] = []
     
@@ -75,38 +76,19 @@ class RestaurantMainViewController: MainBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        super.topLabel.text = "명지맛집"
         
-//        self.navigationController?.isNavigationBarHidden = true
-//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-//        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         setUpView()
         setUpConstraint()
         bind()
         
-        self.input.send(.viewDidLoad(SortType.allCases[0].param()))
-    }
-    override func viewDidAppear(_ animated: Bool) {
-//        self.tabBarController?.tabBar.isHidden = false
-//        //DATA
-//        DispatchQueue.main.async {
-////            self.searchResult.removeAll()
-//            KakaoMapDataManager().randomMapDataManager(self)
-////            self.getRandomRestaurants()
-//
-////            self.rankResults.removeAll()
-//            
-////            self.fetchRankData()
-////            self.reloadDataAnimation()
-//            self.checkSortMode()
-//        }
+        self.input.send(.viewDidLoad(sortType.param()))
     }
     
 
     
-    // MARK: Actions
-
-
     func setUpView() {
         restaurantMainTableView.delegate = self
         restaurantMainTableView.dataSource = self
@@ -148,6 +130,16 @@ class RestaurantMainViewController: MainBaseViewController {
                 break
             case .moveNaverMap(_):
                 break
+            case .getTagRestaurant(let tag, let result):
+                let vc = RestaurantTagViewController()
+                vc.tagResult = result
+                vc.tag = tag
+                self?.navigationController?.pushViewController(vc, animated: true)
+                break
+            case .updateSearchRestaurant(_):
+                break
+            case .updateTagRestaurant(_):
+                break
             }
         }.store(in: &cancellabels)
     }
@@ -168,7 +160,7 @@ class RestaurantMainViewController: MainBaseViewController {
         sortDropDown.selectionAction = { [weak self] (index: Int, item: String) in
             self?.sortButton.setTitle(item, for: .normal)
             //MARK: - Viewmodel input 연결 -> enum Type 활용 index활용
-            
+            self?.sortType = SortType.allCases[index]
             self?.sortButton.setTitle("\(SortType.allCases[index].rawValue) ", for: .normal)
             self!.input.send(.viewDidLoad(SortType.allCases[index].param()))
         }
@@ -209,10 +201,20 @@ class RestaurantMainViewController: MainBaseViewController {
     
     @objc private func refreshContentView() {
         refreshControl.beginRefreshing()
-
+        input.send(.viewDidLoad(sortType.param()))
         refreshControl.endRefreshing()
     }
     
+    
+    func reloadDataAnimation() {
+        // reload data with animation
+        UIView.transition(with: self.restaurantMainTableView,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { () -> Void in
+                          self.restaurantMainTableView.reloadData()},
+                          completion: nil);
+    }
 
 }
 // MARK: - TableView delegate
@@ -233,8 +235,6 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
             let count = self.searchResult.count
             return count + 3
         }
-//        let count = self.rankResults.count ?? 0
-//        return count + 3
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tag = indexPath.row
@@ -250,8 +250,8 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TagTableViewCell", for: indexPath) as? TagTableViewCell else { return UITableViewCell() }
             DispatchQueue.main.async {
-                cell.setTagView()
-                cell.delegate = self
+                cell.setup()
+                cell.input = self.input
                 cell.selectionStyle = .none
             }
             return cell
@@ -271,12 +271,10 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
                 switch self.cellMode {
                 case .rankCell:
                     cell.setUpDataWithRank(self.rankResults[itemIdx])
-                    cell.delegate = self
                     cell.selectionStyle = .none
                     cell.setupLayout(todo: .main)
                 case .kakaoCell:
                     cell.setUpData(self.searchResult[itemIdx])
-                    cell.delegate = self
                     cell.selectionStyle = .none
                     cell.setupLayout(todo: .random)
                 }
@@ -301,45 +299,15 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
             }
         }
     }
-}
-
-extension RestaurantMainViewController: TagCellDelegate {
-    func didTapTagButton(tagKeyword: String) {
-        let vc = RestaurantTagViewController()
-        vc.tagKeyword = tagKeyword
-        self.navigationController?.pushViewController(vc, animated: true)
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if tableView.tag == 1 {
+            guard let cell = tableView.cellForRow(at: indexPath) as? TagTableViewCell else {
+                return
+            }
+            
+            cell.cancellabels.removeAll()
+        }
     }
 }
 
-// MARK: - API Success
-extension RestaurantMainViewController {
-    func kakaoRandomMapSuccessAPI(_ result: [KakaoResultModel]) {
-        print("result count -> \(result.count)")
-        let resultCount = result.count
-        if resultCount >= 20 {self.searchResult = Array(result[0..<20])}
-        else {self.searchResult = result}
-        
-        reloadDataAnimation()
-    }
-    func kakaoRandomNoResultAPI() {
-        self.searchResult.removeAll()
-        reloadDataAnimation()
-    }
-    func reloadDataAnimation() {
-        // reload data with animation
-        UIView.transition(with: self.restaurantMainTableView,
-                          duration: 0.35,
-                          options: .transitionCrossDissolve,
-                          animations: { () -> Void in
-                          self.restaurantMainTableView.reloadData()},
-                          completion: nil);
-    }
-}
-
-
-// MARK: - Delegate Extension
-extension RestaurantMainViewController: RestaurantCellDelegate {
-    func showToast(message: String) {
-        self.view.makeToast(message, duration: 1.0, position: .center)
-    }
-}

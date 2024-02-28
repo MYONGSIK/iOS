@@ -6,22 +6,41 @@
 //
 
 import UIKit
+import Then
 import SnapKit
-
-protocol TagCellDelegate {
-    func didTapTagButton(tagKeyword: String)
-}
+import Combine
+import CombineCocoa
 
 class TagTableViewCell: UITableViewCell {
-
-    // MARK: Life Cycles
-    var delegate: TagCellDelegate?
+    var cancellabels = Set<AnyCancellable>()
+    private var _input: PassthroughSubject<RestaurantViewModel.Input, Never>!
     
-    var tagContainerView: UIView!
-    var mealTagButton: UIButton!
-    var cafeTagButton: UIButton!
-    var drinkTagButton: UIButton!
-    var bakeryTagButton: UIButton!
+    var input: PassthroughSubject<RestaurantViewModel.Input, Never> {
+        get {
+            return _input
+        }
+        set(value) {
+            _input = value
+        }
+    }
+    
+    var tagContainerView =  UIView().then { $0.backgroundColor = .white }
+    var mealTagButton = UIButton().then {
+        $0.setImage(UIImage(named: "resIcon_meal"), for: .normal)
+        $0.setTitle("맛집", for: .normal)
+    }
+    var cafeTagButton = UIButton().then {
+        $0.setImage(UIImage(named: "resIcon_cafe"), for: .normal)
+        $0.setTitle("카페", for: .normal)
+    }
+    var drinkTagButton = UIButton().then {
+        $0.setImage(UIImage(named: "resIcon_drink"), for: .normal)
+        $0.setTitle("술집", for: .normal)
+    }
+    var bakeryTagButton = UIButton().then {
+        $0.setImage(UIImage(named: "resIcon_bakery"), for: .normal)
+        $0.setTitle("빵집", for: .normal)
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,43 +50,15 @@ class TagTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cancellabels.removeAll()
+    }
+    
     // MARK: - Functions
-    func setTagView() {
+    func setup() {
         /// set container view
-        tagContainerView = UIView().then { $0.backgroundColor = .white }
-        
         self.contentView.addSubview(tagContainerView)
-        tagContainerView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().inset(12)
-        }
-        
-        /// set tag button
-        mealTagButton = UIButton().then {
-            $0.setImage(UIImage(named: "resIcon_meal"), for: .normal)
-            $0.setTitle("맛집", for: .normal)
-            $0.addTarget(self, action: #selector(didTapMealTagButton), for: .touchUpInside)
-        }
-        
-        cafeTagButton = UIButton().then {
-            $0.setImage(UIImage(named: "resIcon_cafe"), for: .normal)
-            $0.setTitle("카페", for: .normal)
-            $0.addTarget(self, action: #selector(didTapCafeTagButton), for: .touchUpInside)
-        }
-        
-        drinkTagButton = UIButton().then {
-            $0.setImage(UIImage(named: "resIcon_drink"), for: .normal)
-            $0.setTitle("술집", for: .normal)
-            $0.addTarget(self, action: #selector(didTapDrinkTagButton), for: .touchUpInside)
-        }
-        
-        bakeryTagButton = UIButton().then {
-            $0.setImage(UIImage(named: "resIcon_bakery"), for: .normal)
-            $0.setTitle("빵집", for: .normal)
-            $0.addTarget(self, action: #selector(didTapBakeryTagButton), for: .touchUpInside)
-        }
-        
         [ mealTagButton, cafeTagButton, drinkTagButton, bakeryTagButton ]
             .forEach { btn in
                 
@@ -87,10 +78,20 @@ class TagTableViewCell: UITableViewCell {
                     make.width.equalToSuperview().dividedBy(2.24)
                     make.height.equalToSuperview().dividedBy(2.35)
                 }
-                
             }
         
-        
+        setupConstraints()
+        bind()
+    }
+    
+    
+    func setupConstraints() {
+        tagContainerView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().inset(12)
+        }
+
         mealTagButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(7)
             make.leading.equalToSuperview().offset(12)
@@ -112,9 +113,22 @@ class TagTableViewCell: UITableViewCell {
         }
     }
     
-    @objc private func didTapMealTagButton() { delegate?.didTapTagButton(tagKeyword: "맛집") }
-    @objc private func didTapCafeTagButton() { delegate?.didTapTagButton(tagKeyword: "카페") }
-    @objc private func didTapDrinkTagButton() { delegate?.didTapTagButton(tagKeyword: "술집") }
-    @objc private func didTapBakeryTagButton() { delegate?.didTapTagButton(tagKeyword: "빵집") }
-    
+    func bind() {
+        mealTagButton.tapPublisher.sink { [weak self] _ in
+            self?.input.send(.selectCollect("맛집", 1))
+        }.store(in: &cancellabels)
+        
+        cafeTagButton.tapPublisher.sink { [weak self] _ in
+            self?.input.send(.selectCollect("카페", 1))
+        }.store(in: &cancellabels)
+        
+        drinkTagButton.tapPublisher.sink { [weak self] _ in
+            self?.input.send(.selectCollect("술집", 1))
+        }.store(in: &cancellabels)
+        
+        bakeryTagButton.tapPublisher.sink { [weak self] _ in
+            self?.input.send(.selectCollect("빵집", 1))
+        }.store(in: &cancellabels)
+        
+    }
 }

@@ -34,7 +34,6 @@
 		23735B0128FEDBF900599221 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23735B0028FEDBF900599221 /* UIColor.swift */; };
 		2373E4E5290AC93000D51B8E /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2373E4E4290AC93000D51B8E /* APIManager.swift */; };
 		2373E4E7290ACB7D00D51B8E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2373E4E6290ACB7D00D51B8E /* Constants.swift */; };
-		238F562D2910A54C0044214F /* KakaoMapDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F562C2910A54C0044214F /* KakaoMapDataManager.swift */; };
 		238F562F2910A6D60044214F /* KakaoMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F562E2910A6D60044214F /* KakaoMapModel.swift */; };
 		238F56312910AA0F0044214F /* MainBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F56302910AA0F0044214F /* MainBaseViewController.swift */; };
 		238F56342910AC170044214F /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F56332910AC170044214F /* SearchResultTableViewCell.swift */; };
@@ -167,7 +166,6 @@
 		23735B0028FEDBF900599221 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		2373E4E4290AC93000D51B8E /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		2373E4E6290ACB7D00D51B8E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		238F562C2910A54C0044214F /* KakaoMapDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapDataManager.swift; sourceTree = "<group>"; };
 		238F562E2910A6D60044214F /* KakaoMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapModel.swift; sourceTree = "<group>"; };
 		238F56302910AA0F0044214F /* MainBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBaseViewController.swift; sourceTree = "<group>"; };
 		238F56332910AC170044214F /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
@@ -547,7 +545,6 @@
 				738DAB102B88822200BE346C /* RestaurantService */,
 				734360062A2DBBD400845A1B /* HeartService */,
 				734360032A2DB54500845A1B /* MainService */,
-				23C993AB2910A4E500B8D1E4 /* KakaoMapService */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -597,14 +594,6 @@
 				23451DEA29117355006AE030 /* WebViewController.swift */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		23C993AB2910A4E500B8D1E4 /* KakaoMapService */ = {
-			isa = PBXGroup;
-			children = (
-				238F562C2910A54C0044214F /* KakaoMapDataManager.swift */,
-			);
-			path = KakaoMapService;
 			sourceTree = "<group>";
 		};
 		731C3F402A5D3D9200A5277A /* ViewModel */ = {
@@ -1043,7 +1032,6 @@
 				A2EA100929F3F855000D600B /* SettingRestautrantViewController.swift in Sources */,
 				A23DA70929A7F1AD003FDA56 /* UserModel.swift in Sources */,
 				23C993AA2910945400B8D1E4 /* UITextField.swift in Sources */,
-				238F562D2910A54C0044214F /* KakaoMapDataManager.swift in Sources */,
 				2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */,
 				238F56342910AC170044214F /* SearchResultTableViewCell.swift in Sources */,
 				23B9E89D29114670009B6D8F /* TagTableViewCell.swift in Sources */,

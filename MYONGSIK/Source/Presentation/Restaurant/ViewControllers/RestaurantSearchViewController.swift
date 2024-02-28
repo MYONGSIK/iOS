@@ -78,7 +78,7 @@ class RestaurantSearchViewController: BaseViewController {
         
         let text = sender.text ?? ""
         self.searchKeyword = text
-        KakaoMapDataManager().searchMapDataManager(text, pageNum, self)
+//        KakaoMapDataManager().searchMapDataManager(text, pageNum, self)
     }
     
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
@@ -140,7 +140,7 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
          */
         if ((indexPath.row + 1) %  15 == 0) && ((indexPath.row + 1) /  15 == pageNum) && (pageNum < 3) {
             pageNum = pageNum + 1
-            KakaoMapDataManager().searchMapDataManager(self.searchKeyword, pageNum, self)
+//            KakaoMapDataManager().searchMapDataManager(self.searchKeyword, pageNum, self)
             print("pageNum:", pageNum)
         }
     }

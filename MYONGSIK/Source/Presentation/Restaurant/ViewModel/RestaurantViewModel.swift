@@ -23,7 +23,8 @@ final class RestaurantViewModel: ViewModelabel {
     enum Input {
         case viewDidLoad(String)
         case changeCategory(String)
-        case selectCollect(String)
+        case selectCollect(String, Int)
+        case scrollTableView(String, Int)
         case searchRestaurant(String, Int)
         case tapPhone(String)
         case tapAddress(String)
@@ -33,6 +34,9 @@ final class RestaurantViewModel: ViewModelabel {
     enum Output {
         case updateRestaurant([RestaurantModel])
         case updateKakaoRestaurant([KakaoResultModel])
+        case getTagRestaurant(String, [KakaoResultModel])
+        case updateTagRestaurant([KakaoResultModel])
+        case updateSearchRestaurant([KakaoResultModel])
         case callRestaurant(String)
         case moveNaverMap(String)
     }
@@ -44,7 +48,7 @@ final class RestaurantViewModel: ViewModelabel {
             case .viewDidLoad(let string), .changeCategory(let string):
                 if string == "" {
                     self?.restaurantService.getKakaoRestaurantList {result in
-                            self?.output.send(.updateKakaoRestaurant(result))
+                        self?.output.send(.updateKakaoRestaurant(result))
                     }
                 }else {
                     self?.restaurantService.getRestaurantList(sort: string) { result in
@@ -52,14 +56,19 @@ final class RestaurantViewModel: ViewModelabel {
                     }
                 }
                 break
-            case .selectCollect(let string):
-                self?.restaurantService.getTagRestaurantList(keyword: string) { result in
-                    self?.output.send(.updateKakaoRestaurant(result))
+            case .selectCollect(let string, let page):
+                self?.restaurantService.getTagRestaurantList(keyword: string, page: page) { result in
+                    self?.output.send(.getTagRestaurant(string, result))
+                }
+                break
+            case .scrollTableView(let string, let page):
+                self?.restaurantService.getTagRestaurantList(keyword: string, page: page) { result in
+                    self?.output.send(.updateTagRestaurant(result))
                 }
                 break
             case .searchRestaurant(let string, let page):
                 self?.restaurantService.getSearchRestaurantList(keyword: string, page: page, completion: { result in
-                    self?.output.send(.updateKakaoRestaurant(result))
+                    self?.output.send(.updateSearchRestaurant(result))
                 })
                 break
             case .tapPhone(let string):
