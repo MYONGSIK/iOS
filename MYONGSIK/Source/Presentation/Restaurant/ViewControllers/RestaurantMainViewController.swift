@@ -52,7 +52,7 @@ class RestaurantMainViewController: MainBaseViewController {
     }
     let searchButton = UIButton().then{
         $0.setImage(UIImage(named: "search_white"), for: .normal)
-        $0.addTarget(RestaurantMainViewController.self, action: #selector(goSearchButtonDidTap), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(goSearchButtonDidTap), for: .touchUpInside)
     }
     
     let sortButton = UIButton(type: .system).then {
@@ -194,7 +194,7 @@ class RestaurantMainViewController: MainBaseViewController {
     @objc func goSearchButtonDidTap(_ sender: UIButton) {
         UIDevice.vibrate()
         let vc = RestaurantSearchViewController()
-        vc.searchStoreResult = self.rankResults
+        vc.input = self.input
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

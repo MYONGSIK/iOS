@@ -7,16 +7,37 @@
 
 import UIKit
 import Toast
+import Combine
+import CombineCocoa
 
 // MARK: 맛집 검색 페이지
 class RestaurantSearchViewController: BaseViewController {
+    var searchKeyword: String = ""
+    var searchResult: [KakaoResultModel] = []
+    
+    private var cancellabels = Set<AnyCancellable>()
+    private var _input: PassthroughSubject<RestaurantViewModel.Input, Never>!
+    
+    var input: PassthroughSubject<RestaurantViewModel.Input, Never> {
+        get {
+            return _input
+        }
+        set(value) {
+            _input = value
+        }
+    }
+
     // MARK: Views
+    var searchResultTableView: UITableView!
+    
     let backButton = UIButton().then{
         $0.setImage(UIImage(named: "arrow_left_gray"), for: .normal)
+        $0.addTarget(self, action: #selector(goBackButtonDidTap), for: .touchUpInside)
     }
     lazy var searchButton = UIButton().then{
         $0.setImage(UIImage(named: "search_blue"), for: .normal)
         $0.frame = CGRect(x: 0, y: 0, width: 24, height: 22)
+        $0.addTarget(self, action: #selector(searchButtonDidTap), for: .touchUpInside)
     }
     var searchTextField = UITextField().then{
         $0.placeholder = "검색어를 입력하세요."
@@ -34,13 +55,7 @@ class RestaurantSearchViewController: BaseViewController {
     }
     
     // MARK: Life Cycles
-    var searchKeyword: String = ""
-    var searchResultTableView: UITableView!
-    var searchResult: [KakaoResultModel] = []
-    
-    var searchStoreResult: [RestaurantModel] = []
-    
-    var pageNum: Int = 1
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,15 +64,9 @@ class RestaurantSearchViewController: BaseViewController {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
         setUpTableView(dataSourceDelegate: self)
-        setUpView()
+        setup()
         setUpConstraint()
-        
-        backButton.addTarget(self, action: #selector(goBackButtonDidTap), for: .touchUpInside)
-        searchButton.addTarget(self, action: #selector(searchButtonDidTap), for: .touchUpInside)
-        searchTextField.addTarget(self, action: #selector(searchTextFieldEditingChanged(_:)), for: .editingChanged)
-        
-        searchResultTableView.keyboardDismissMode = .onDrag
-        searchTextField.delegate = self
+        bind()
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -71,15 +80,7 @@ class RestaurantSearchViewController: BaseViewController {
         UIDevice.vibrate()
         self.view.endEditing(true)
     }
-    @objc func searchTextFieldEditingChanged(_ sender: UITextField) {
-        // 입력값이 바뀔 때마다 기존결과값은 초기화, 현재 결과값을 출력합니다.
-        pageNum = 1
-        self.searchResult.removeAll()
-        
-        let text = sender.text ?? ""
-        self.searchKeyword = text
-//        KakaoMapDataManager().searchMapDataManager(text, pageNum, self)
-    }
+    
     
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
         searchResultTableView = UITableView()
@@ -96,7 +97,10 @@ class RestaurantSearchViewController: BaseViewController {
             $0.showsVerticalScrollIndicator = false
         }
     }
-    func setUpView() {
+    func setup() {
+        searchResultTableView.keyboardDismissMode = .onDrag
+        searchTextField.delegate = self
+        
         super.navigationView.addSubview(searchTextField)
         super.navigationView.addSubview(backButton)
         searchTextField.addSubview(searchButton)
@@ -128,30 +132,55 @@ class RestaurantSearchViewController: BaseViewController {
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
+    
+    func bind() {
+        searchTextField.textPublisher.sink { [weak self] text in
+            self?.input.send(.searchRestaurant(text ?? "", 1))
+        }.store(in: &cancellabels)
+        
+        let output = RestaurantViewModel.shared.trastfrom(input.eraseToAnyPublisher())
+        
+        output.receive(on: DispatchQueue.main).sink {[weak self] event in
+            switch event {
+                
+            case .updateRestaurant(_):
+                break
+            case .updateKakaoRestaurant(_):
+                break
+            case .getTagRestaurant(_, _):
+                break
+            case .updateTagRestaurant(_):
+                break
+            case .updateSearchRestaurant(let result):
+                self?.searchResult = result
+                self?.reloadDataAnimation()
+            case .callRestaurant(_):
+                break
+            case .moveNaverMap(_):
+                break
+            }
+        }.store(in: &cancellabels)
+    }
+    
+    func reloadDataAnimation() {
+        // reload data with animation
+        UIView.transition(with: self.searchResultTableView,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { () -> Void in
+                          self.searchResultTableView.reloadData()},
+                          completion: nil);
+    }
 }
 // MARK: - TableView delegate
 extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        /*
-         카카오API에서는 한 페이지에 최대 15개의 결과값이 나옵니다.
-         최대 3페이지가 나옵니다.
-         따라서 총 최대 45개의 결과값이 나온다고 할 수 있겠습니다.
-         아래의 if조건문: 무한 스크롤
-         */
-        if ((indexPath.row + 1) %  15 == 0) && ((indexPath.row + 1) /  15 == pageNum) && (pageNum < 3) {
-            pageNum = pageNum + 1
-//            KakaoMapDataManager().searchMapDataManager(self.searchKeyword, pageNum, self)
-            print("pageNum:", pageNum)
-        }
-    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = self.searchResult.count ?? 0
+        let count = self.searchResult.count
         return count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-        cell.delegate = self
         let itemIdx = indexPath.item
         cell.setUpData(self.searchResult[itemIdx])
         cell.setupLayout(todo: .search)
@@ -171,37 +200,5 @@ extension RestaurantSearchViewController: UITextFieldDelegate {
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-    }
-}
-// MARK: - API Success
-extension RestaurantSearchViewController {
-    func kakaoSearchMapSuccessAPI(_ result: [KakaoResultModel]) {
-        for searchData in result {
-            self.searchResult.append(searchData)
-        }
-        if pageNum == 1 {reloadDataAnimation()}
-        else {self.searchResultTableView.reloadData()}
-    }
-    func kakaoSearchNoResultAPI() {
-        self.searchResult.removeAll()
-        self.pageNum = 1
-        reloadDataAnimation()
-    }
-    // 결과값이 나올 때, Tableview에 부드러운 애니메이션을 줍니다.
-    func reloadDataAnimation() {
-        // reload data with animation
-        UIView.transition(with: self.searchResultTableView,
-                          duration: 0.35,
-                          options: .transitionCrossDissolve,
-                          animations: { () -> Void in
-                          self.searchResultTableView.reloadData()},
-                          completion: nil);
-    }
-}
-
-// MARK: - Delegate Extension
-extension RestaurantSearchViewController: RestaurantCellDelegate {
-    func showToast(message: String) {
-        self.view.makeToast(message, duration: 1.0, position: .center)
     }
 }
