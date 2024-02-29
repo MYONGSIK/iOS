@@ -273,67 +273,12 @@ class SearchResultTableViewCell: UITableViewCell {
         }
     }
     
-    // MARK: 서버에서 데이터를 받아온 후 출력시킵니다.
-    func setUpData(_ data: KakaoResultModel) {
-        print("setUpData called --> \(data)")
-//        self.data = HeartListModel(placeName: data.place_name ?? nil,
-//                                   category: data.category_group_name ?? nil,
-//                                   placeUrl: data.place_url ?? nil)
-        self.storeData = RestaurantModel(address: data.road_address_name,
-                                    category: data.category_group_name,
-                                    code: data.id,
-                                    contact: data.phone,
-                                    distance: data.distance,
-                                    name: data.place_name,
-                                    scrapCount: nil,
-                                    storeId: Int(data.id!),
-                                    urlAddress: data.place_url,
-                                    longitude: data.x,
-                                    latitude: data.y)
-
-        if let placeName = data.place_name {self.placeNameLabel.text = placeName}
-        if let category = data.category_group_name {self.placeCategoryLabel.text = category}
-        if let distance = data.distance {
-            guard let distanceInt = Int(distance) else {return}
-            if distanceInt >= 1000 {
-                let distanceKmFirst = distanceInt / 1000
-                let distanceKmSecond = (distanceInt % 1000) / 100
-                self.distanceLabel.text = "\(distanceKmFirst).\(distanceKmSecond)km"
-            } else {
-                self.distanceLabel.text = "\(distanceInt)m"
-            }
-        }
-        if let location  = data.road_address_name {
-            self.locationButton.setTitle(location, for: .normal)
-            if location == "" {
-                self.locationButton.setTitle("주소가 없습니다.", for: .normal)
-                self.storeData?.address = "주소가 없습니다."
-            } else {
-                let attributedString = NSMutableAttributedString.init(string: location)
-                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: location.count))
-                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.signatureGray, range: NSRange.init(location: 0, length: location.count))
-                self.locationButton.setAttributedTitle(attributedString, for: .normal)
-            }
-        }
-        if let phone = data.phone {
-            self.phoneNumButton.setTitle(phone, for: .normal)
-            if phone == "" {
-                self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)
-                self.storeData?.contact = "전화번호가 없습니다."
-            } else {
-                let attributedString = NSMutableAttributedString.init(string: phone)
-                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: phone.count))
-                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.signatureGray, range: NSRange.init(location: 0, length: phone.count))
-                self.phoneNumButton.setAttributedTitle(attributedString, for: .normal)
-            }
-        }
-    }
-    func setUpDataWithRank(_ data: RestaurantModel) {
+    func setupRestaurant(_ data: RestaurantModel, _ cellMode: CellMode) {
         self.storeData = data
-//        self.data = HeartListModel(placeName: data.name ?? nil,
-//                                   category: data.category ?? nil,
-//                                   placeUrl: data.urlAddress ?? nil)
-        if let count = data.scrapCount {self.howManyLikeLabel.text = "명지대학생들이 \(count)명이 담았어요!"}
+        
+        if cellMode == .rankCell {
+            if let count = data.scrapCount {self.howManyLikeLabel.text = "명지대학생들이 \(count)명이 담았어요!"}
+        }
         if let placeName = data.name {self.placeNameLabel.text = placeName}
         if let category = data.category {self.placeCategoryLabel.text = category}
         if let distance = data.distance {
@@ -372,6 +317,12 @@ class SearchResultTableViewCell: UITableViewCell {
         }
         if let longitude = data.longitude { self.storeData?.longitude = longitude }
         if let latitude = data.latitude { self.storeData?.latitude = latitude }
+        
+        if cellMode == .rankCell {
+            setupLayout(todo: .main)
+        }else {
+            setupLayout(todo: .random)
+        }
     }
     
     func setupLayout(todo: CellTodo) {
@@ -380,7 +331,6 @@ class SearchResultTableViewCell: UITableViewCell {
             deleteAllSubViews()
             setUpView()
             setUpConstraint()
-            
         default:
             setUpView()
             setNoHowManyLabelConstraints()

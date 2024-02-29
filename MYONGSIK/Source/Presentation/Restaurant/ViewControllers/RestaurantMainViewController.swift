@@ -42,7 +42,6 @@ class RestaurantMainViewController: MainBaseViewController {
     
     var cellMode: CellMode = .rankCell
     var sortType: SortType = .popular
-    var searchResult: [KakaoResultModel] = []
     var rankResults: [RestaurantModel] = []
     
     let sortDropDown = DropDown()
@@ -119,12 +118,12 @@ class RestaurantMainViewController: MainBaseViewController {
         output.receive(on: DispatchQueue.main).sink { [weak self] event in
             switch event {
             case .updateRestaurant(let result):
-                self?.cellMode = .rankCell
+                if self?.sortType == .recomend {
+                    self?.cellMode = .kakaoCell
+                }else {
+                    self?.cellMode = .rankCell
+                }
                 self?.rankResults = result
-                self?.reloadDataAnimation()
-            case .updateKakaoRestaurant(let result):
-                self?.cellMode = .kakaoCell
-                self?.searchResult = result
                 self?.reloadDataAnimation()
             case .callRestaurant(_):
                 break
@@ -139,6 +138,8 @@ class RestaurantMainViewController: MainBaseViewController {
             case .updateSearchRestaurant(_):
                 break
             case .updateTagRestaurant(_):
+                break
+            case .heartResult(_):
                 break
             }
         }.store(in: &cancellabels)
@@ -227,14 +228,8 @@ class RestaurantMainViewController: MainBaseViewController {
  */
 extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch self.cellMode {
-        case .rankCell:
-            let count = self.rankResults.count 
-            return count + 3
-        case .kakaoCell:
-            let count = self.searchResult.count
-            return count + 3
-        }
+        let count = self.rankResults.count
+        return count + 3
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tag = indexPath.row
@@ -267,18 +262,8 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
 
             DispatchQueue.main.async {
                 let itemIdx = indexPath.item - 3
-                
-                switch self.cellMode {
-                case .rankCell:
-                    cell.setUpDataWithRank(self.rankResults[itemIdx])
-                    cell.selectionStyle = .none
-                    cell.setupLayout(todo: .main)
-                case .kakaoCell:
-                    cell.setUpData(self.searchResult[itemIdx])
-                    cell.selectionStyle = .none
-                    cell.setupLayout(todo: .random)
-                }
-                
+                cell.setupRestaurant(self.rankResults[itemIdx], self.cellMode)
+                cell.selectionStyle = .none
             }
             return cell
         }
@@ -305,7 +290,6 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
             guard let cell = tableView.cellForRow(at: indexPath) as? TagTableViewCell else {
                 return
             }
-            
             cell.cancellabels.removeAll()
         }
     }

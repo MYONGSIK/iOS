@@ -13,7 +13,7 @@ import CombineCocoa
 // MARK: 맛집 검색 페이지
 class RestaurantSearchViewController: BaseViewController {
     var searchKeyword: String = ""
-    var searchResult: [KakaoResultModel] = []
+    var searchResult: [RestaurantModel] = []
     
     private var cancellabels = Set<AnyCancellable>()
     private var _input: PassthroughSubject<RestaurantViewModel.Input, Never>!
@@ -73,6 +73,7 @@ class RestaurantSearchViewController: BaseViewController {
     }
     // MARK: Actions
     @objc func goBackButtonDidTap() {
+        self.cancellabels.removeAll()
         UIDevice.vibrate()
         self.navigationController?.popViewController(animated: true)
     }
@@ -145,8 +146,6 @@ class RestaurantSearchViewController: BaseViewController {
                 
             case .updateRestaurant(_):
                 break
-            case .updateKakaoRestaurant(_):
-                break
             case .getTagRestaurant(_, _):
                 break
             case .updateTagRestaurant(_):
@@ -157,6 +156,8 @@ class RestaurantSearchViewController: BaseViewController {
             case .callRestaurant(_):
                 break
             case .moveNaverMap(_):
+                break
+            case .heartResult(_):
                 break
             }
         }.store(in: &cancellabels)
@@ -182,7 +183,7 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         let itemIdx = indexPath.item
-        cell.setUpData(self.searchResult[itemIdx])
+        cell.setupRestaurant(self.searchResult[itemIdx], .kakaoCell)
         cell.setupLayout(todo: .search)
         return cell
     }

@@ -13,7 +13,7 @@ import CombineCocoa
 // MARK: 명지맛집 > 태그CollectionView셀 클릭 후 나오는 페이지입니다.
 class RestaurantTagViewController: BaseViewController {
     var tag = ""
-    var tagResult: [KakaoResultModel] = []
+    var tagResult: [RestaurantModel] = []
     var pageNum: Int = 1
     
     
@@ -108,8 +108,7 @@ extension RestaurantTagViewController: UITableViewDelegate, UITableViewDataSourc
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         let itemIdx = indexPath.item
-        cell.setUpData(self.tagResult[itemIdx])
-        cell.setupLayout(todo: .search)
+        cell.setupRestaurant(self.tagResult[itemIdx], .kakaoCell)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
