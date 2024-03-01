@@ -115,19 +115,19 @@ class TagTableViewCell: UITableViewCell {
     
     func bind() {
         mealTagButton.tapPublisher.sink { [weak self] _ in
-            self?.input.send(.selectCollect("맛집", 1))
+            self?.input.send(.tapTagButton("맛집", 1))
         }.store(in: &cancellabels)
         
         cafeTagButton.tapPublisher.sink { [weak self] _ in
-            self?.input.send(.selectCollect("카페", 1))
+            self?.input.send(.tapTagButton("카페", 1))
         }.store(in: &cancellabels)
         
         drinkTagButton.tapPublisher.sink { [weak self] _ in
-            self?.input.send(.selectCollect("술집", 1))
+            self?.input.send(.tapTagButton("술집", 1))
         }.store(in: &cancellabels)
         
         bakeryTagButton.tapPublisher.sink { [weak self] _ in
-            self?.input.send(.selectCollect("빵집", 1))
+            self?.input.send(.tapTagButton("빵집", 1))
         }.store(in: &cancellabels)
         
     }

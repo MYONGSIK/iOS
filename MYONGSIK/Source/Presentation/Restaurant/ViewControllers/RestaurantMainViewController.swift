@@ -39,6 +39,7 @@ enum SortType: String, CaseIterable {
 class RestaurantMainViewController: MainBaseViewController {
     private var cancellabels = Set<AnyCancellable>()
     private let input: PassthroughSubject<RestaurantViewModel.Input, Never> = .init()
+    private let viewModel = RestaurantViewModel()
     
     var cellMode: CellMode = .rankCell
     var sortType: SortType = .popular
@@ -86,7 +87,6 @@ class RestaurantMainViewController: MainBaseViewController {
         self.input.send(.viewDidLoad(sortType.param()))
     }
     
-
     
     func setUpView() {
         restaurantMainTableView.delegate = self
@@ -113,7 +113,7 @@ class RestaurantMainViewController: MainBaseViewController {
     }
     
     func bind() {
-        let output = RestaurantViewModel.shared.trastfrom(input.eraseToAnyPublisher())
+        let output = viewModel.trastfrom(input.eraseToAnyPublisher())
         
         output.receive(on: DispatchQueue.main).sink { [weak self] event in
             switch event {
@@ -134,8 +134,6 @@ class RestaurantMainViewController: MainBaseViewController {
                 vc.tagResult = result
                 vc.tag = tag
                 self?.navigationController?.pushViewController(vc, animated: true)
-                break
-            case .updateSearchRestaurant(_):
                 break
             case .updateTagRestaurant(_):
                 break
@@ -195,7 +193,6 @@ class RestaurantMainViewController: MainBaseViewController {
     @objc func goSearchButtonDidTap(_ sender: UIButton) {
         UIDevice.vibrate()
         let vc = RestaurantSearchViewController()
-        vc.input = self.input
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -282,15 +279,6 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
             case .rankCell: return 200
             case .kakaoCell: return 170
             }
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if tableView.tag == 1 {
-            guard let cell = tableView.cellForRow(at: indexPath) as? TagTableViewCell else {
-                return
-            }
-            cell.cancellabels.removeAll()
         }
     }
 }

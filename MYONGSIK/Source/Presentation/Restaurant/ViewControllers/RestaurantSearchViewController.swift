@@ -15,17 +15,10 @@ class RestaurantSearchViewController: BaseViewController {
     var searchKeyword: String = ""
     var searchResult: [RestaurantModel] = []
     
+    private let viewModel = RestaurantSearchViewModel()
     private var cancellabels = Set<AnyCancellable>()
-    private var _input: PassthroughSubject<RestaurantViewModel.Input, Never>!
+    private var input: PassthroughSubject<RestaurantSearchViewModel.Input, Never> = .init()
     
-    var input: PassthroughSubject<RestaurantViewModel.Input, Never> {
-        get {
-            return _input
-        }
-        set(value) {
-            _input = value
-        }
-    }
 
     // MARK: Views
     var searchResultTableView: UITableView!
@@ -68,12 +61,17 @@ class RestaurantSearchViewController: BaseViewController {
         setUpConstraint()
         bind()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.cancellabels.removeAll()
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     // MARK: Actions
     @objc func goBackButtonDidTap() {
-        self.cancellabels.removeAll()
         UIDevice.vibrate()
         self.navigationController?.popViewController(animated: true)
     }
@@ -81,6 +79,7 @@ class RestaurantSearchViewController: BaseViewController {
         UIDevice.vibrate()
         self.view.endEditing(true)
     }
+    
     
     
     func setUpTableView(dataSourceDelegate: UITableViewDelegate & UITableViewDataSource) {
@@ -136,28 +135,23 @@ class RestaurantSearchViewController: BaseViewController {
     
     func bind() {
         searchTextField.textPublisher.sink { [weak self] text in
-            self?.input.send(.searchRestaurant(text ?? "", 1))
+            self?.input.send(.search(text ?? ""))
         }.store(in: &cancellabels)
         
-        let output = RestaurantViewModel.shared.trastfrom(input.eraseToAnyPublisher())
+        let output = viewModel.trastfrom(input.eraseToAnyPublisher())
+        
+        
         
         output.receive(on: DispatchQueue.main).sink {[weak self] event in
             switch event {
-                
-            case .updateRestaurant(_):
-                break
-            case .getTagRestaurant(_, _):
-                break
-            case .updateTagRestaurant(_):
-                break
-            case .updateSearchRestaurant(let result):
+            case .updateSearchRes(let result):
                 self?.searchResult = result
                 self?.reloadDataAnimation()
-            case .callRestaurant(_):
+            case .moveToWeb(_, _):
                 break
-            case .moveNaverMap(_):
+            case .moveToMap(_):
                 break
-            case .heartResult(_):
+            case .moveToCall(_):
                 break
             }
         }.store(in: &cancellabels)
