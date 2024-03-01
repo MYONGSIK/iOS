@@ -147,13 +147,31 @@ class RestaurantSearchViewController: BaseViewController {
             case .updateSearchRes(let result):
                 self?.searchResult = result
                 self?.reloadDataAnimation()
-            case .moveToWeb(_, _):
+            case .moveToWeb(_, _, _):
                 break
-            case .moveToMap(_):
+            case .moveToMap(let urlStr, let isUrl):
+                if isUrl {
+                    let encodedStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                    
+                    if let url = URL(string: encodedStr), UIApplication.shared.canOpenURL(url) {
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    }
+                    else { self?.view.makeToast("네이버 지도앱이 설치되어있지 않습니다!")}
+                }else {
+                    self?.view.makeToast("주소가 등록되어있지 않습니다!")
+                }
                 break
-            case .moveToCall(_):
-                break
-            }
+            case .moveToCall(let url, let isUrl):
+                if isUrl {
+                    if let openApp = URL(string: url), UIApplication.shared.canOpenURL(openApp) {
+                        if #available(iOS 10.0, *) { UIApplication.shared.open(openApp, options: [:], completionHandler: nil) }
+                        else { UIApplication.shared.openURL(openApp) }
+                    }
+                    else { self?.view.makeToast("번호가 등록되어있지 않습니다!")}
+                }else {
+                    self?.view.makeToast("번호가 등록되어있지 않습니다!")
+                }
+                break            }
         }.store(in: &cancellabels)
     }
     
@@ -177,6 +195,7 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         let itemIdx = indexPath.item
+        cell.searchInput = self.input
         cell.setupRestaurant(self.searchResult[itemIdx], .kakaoCell)
         cell.setupLayout(todo: .search)
         return cell
@@ -197,3 +216,4 @@ extension RestaurantSearchViewController: UITextFieldDelegate {
         return true
     }
 }
+

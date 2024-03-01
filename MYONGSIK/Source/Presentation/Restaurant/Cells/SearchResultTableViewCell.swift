@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Combine
+import CombineCocoa
 
 protocol RestaurantCellDelegate {
     func showToast(message: String)
@@ -15,14 +17,20 @@ enum CellTodo {
     case main
     case random
     case search
+    case tag
 }
 
 // MARK: 검색 페이지 > 검색 결과 셀
 class SearchResultTableViewCell: UITableViewCell {
-    var storeData: RestaurantModel?
-    var data: ResponseHeartModel?
+    private var cancellabels = Set<AnyCancellable>()
+    var mainInput: PassthroughSubject<RestaurantViewModel.Input, Never>!
+    var searchInput: PassthroughSubject<RestaurantSearchViewModel.Input, Never>!
+    var tagInput: PassthroughSubject<RestaurantTagViewModel.Input, Never>!
+    
+    var restaurantData: RestaurantModel?
     var delegate: RestaurantCellDelegate?
     
+    var cellType: CellTodo = .main
     // MARK: Views
     let howManyLikeLabel = UILabel().then {
         $0.text = "명지대학생들이 00명이 담았어요!"
@@ -70,7 +78,6 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.titleLabel?.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.contentHorizontalAlignment  = .left
         $0.setTitleColor(UIColor.placeContentColor, for: .normal)
-        $0.addTarget(self, action: #selector(didTapLocationButton(_:)), for: .touchUpInside)
         
     }
     let phoneImage = UIImageView().then{
@@ -81,7 +88,6 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.titleLabel?.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.contentHorizontalAlignment  = .left
         $0.setTitleColor(UIColor.placeContentColor, for: .normal)
-        $0.addTarget(self, action: #selector(didTapPhoneNumButton(_:)), for: .touchUpInside)
     }
     lazy var goLinkButton = UIButton().then{
         $0.setTitle("바로 가기", for: .normal)
@@ -94,8 +100,6 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.tintColor = .white
         $0.backgroundColor = .signatureBlue
         $0.layer.cornerRadius = 15
-        
-        $0.addTarget(self, action: #selector(didTapGoLinkButton), for: .touchUpInside)
     }
     
     
@@ -111,22 +115,16 @@ class SearchResultTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+//        self.prepareForReuse()
+        
+        self.cancellabels.removeAll()
+    }
+    
     // MARK: Functions
     func deleteAllSubViews() {
-        [
-            howManyLikeLabel,
-            backView,
-            placeNameLabel,
-            dotLabel,
-            placeCategoryLabel,
-            distanceLabel,
-            goLinkButton,
-            pinImage,
-            locationButton,
-            phoneImage,
-            phoneNumButton
-            
-        ].forEach { subView in
+        [howManyLikeLabel, backView, placeNameLabel, dotLabel, placeCategoryLabel,
+        distanceLabel, goLinkButton, pinImage, locationButton, phoneImage, phoneNumButton].forEach { subView in
             subView.removeFromSuperview()
         }
     }
@@ -203,7 +201,6 @@ class SearchResultTableViewCell: UITableViewCell {
     private func setNoHowManyLabelConstraints() {
         howManyLikeLabel.removeFromSuperview()
 
-        /// set constraints
         self.backView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
         }
@@ -219,62 +216,21 @@ class SearchResultTableViewCell: UITableViewCell {
         
     }
     
-    @objc func didTapHeartButton(_ sender: UIButton) {
-        print("식당 좋아요 버튼 탭함")
-        sender.isSelected = !sender.isSelected
-        if sender.isSelected {
-            sender.tintColor = .systemPink
-            // MARK: - 서버와 통신 해 찜 추가로 변경
-        }
-        if !sender.isSelected {
-            sender.tintColor = .lightGray
-            // MARK: - 서버와 통신 해 찜 삭제로 변경
-        }
-    }
-    
-    @objc func didTapGoLinkButton() {
-        print("didTapGoLinkButton")
-        guard let link = self.data?.urlAddress else {return}
-        guard let placeName = self.data?.name else {return}
-        guard let category = self.data?.category else {return}
-        
-        let webView = WebViewController()
-        webView.storeData = storeData
-//        print("웹뷰로 넘어가는 데이터 - \(storeData)")
-        webView.webURL = link
-        webView.placeName = placeName
-        webView.category = category
-        if let vc = self.next(ofType: UIViewController.self) { vc.navigationController?.pushViewController(webView, animated: true) }
-    }
-    
-    @objc func didTapPhoneNumButton(_ sender: UIButton) {
-        if let phoneNum = sender.titleLabel?.text {
-            let url = "tel://\(phoneNum)"
-            
-            if let openApp = URL(string: url), UIApplication.shared.canOpenURL(openApp) {
-                if #available(iOS 10.0, *) { UIApplication.shared.open(openApp, options: [:], completionHandler: nil) }
-                else { UIApplication.shared.openURL(openApp) }
-            }
-            else { delegate?.showToast(message: "번호가 등록되어있지 않습니다!") }
-        }
-        else { delegate?.showToast(message: "번호가 등록되어있지 않습니다!") }
-    }
-    
-    @objc func didTapLocationButton(_ sender: UIButton) {
-        if let location = sender.titleLabel?.text {
-            
-            let urlStr = "nmap://search?query=" + location
-            let encodedStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-            
-            if let url = URL(string: encodedStr), UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-            else { delegate?.showToast(message: "네이버 지도앱이 설치되어있지 않습니다!") }
+    func setupLayout(todo: CellTodo) {
+        cellType = todo
+        switch todo {
+        case .main:
+            deleteAllSubViews()
+            setUpView()
+            setUpConstraint()
+        default:
+            setUpView()
+            setNoHowManyLabelConstraints()
         }
     }
     
     func setupRestaurant(_ data: RestaurantModel, _ cellMode: CellMode) {
-        self.storeData = data
+        self.restaurantData = data
         
         if cellMode == .rankCell {
             if let count = data.scrapCount {self.howManyLikeLabel.text = "명지대학생들이 \(count)명이 담았어요!"}
@@ -295,7 +251,7 @@ class SearchResultTableViewCell: UITableViewCell {
             self.locationButton.setTitle(location, for: .normal)
             if location == "" {
                 self.locationButton.setTitle("주소가 없습니다.", for: .normal)
-                self.storeData?.address = "주소가 없습니다."
+                self.restaurantData?.address = "주소가 없습니다."
             } else {
                 let attributedString = NSMutableAttributedString.init(string: location)
                 attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: location.count))
@@ -307,7 +263,7 @@ class SearchResultTableViewCell: UITableViewCell {
             self.phoneNumButton.setTitle(phone, for: .normal)
             if phone == "" {
                 self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)
-                self.storeData?.contact = "전화번호가 없습니다."
+                self.restaurantData?.contact = "전화번호가 없습니다."
             } else {
                 let attributedString = NSMutableAttributedString.init(string: phone)
                 attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: phone.count))
@@ -315,26 +271,48 @@ class SearchResultTableViewCell: UITableViewCell {
                 self.phoneNumButton.setAttributedTitle(attributedString, for: .normal)
             }
         }
-        if let longitude = data.longitude { self.storeData?.longitude = longitude }
-        if let latitude = data.latitude { self.storeData?.latitude = latitude }
+        if let longitude = data.longitude { self.restaurantData?.longitude = longitude }
+        if let latitude = data.latitude { self.restaurantData?.latitude = latitude }
         
         if cellMode == .rankCell {
             setupLayout(todo: .main)
         }else {
             setupLayout(todo: .random)
         }
+        
+        bind()
     }
     
-    func setupLayout(todo: CellTodo) {
-        switch todo {
-        case .main:
-            deleteAllSubViews()
-            setUpView()
-            setUpConstraint()
-        default:
-            setUpView()
-            setNoHowManyLabelConstraints()
-        }
+    func bind() {
+        goLinkButton.tapPublisher.sink { [weak self] _ in
+            if self?.cellType == .search {
+                self?.searchInput.send(.tapWebButton((self?.restaurantData)!))
+            }else if self?.cellType == .main  {
+                self?.mainInput.send(.tapWebButton((self?.restaurantData)!))
+            }else if self?.cellType == .tag {
+                self?.tagInput.send(.tapWebButton((self?.restaurantData)!))
+            }
+        }.store(in: &cancellabels)
+        
+        locationButton.tapPublisher.sink { [weak self] _ in
+            if self?.cellType == .search {
+                self?.searchInput.send(.tapAddressButton((self?.restaurantData)!))
+            }else if self?.cellType == .main  {
+                self?.mainInput.send(.tapAddressButton((self?.restaurantData)!))
+            }else if self?.cellType == .tag {
+                self?.tagInput.send(.tapAddressButton((self?.restaurantData)!))
+            }
+        }.store(in: &cancellabels)
+        
+        phoneNumButton.tapPublisher.sink { [weak self] _ in
+            if self?.cellType == .search {
+                self?.searchInput.send(.tapPhoneButton((self?.restaurantData)!))
+            }else if self?.cellType == .main  {
+                self?.mainInput.send(.tapPhoneButton((self?.restaurantData)!))
+            }else if self?.cellType == .tag {
+                self?.tagInput.send(.tapPhoneButton((self?.restaurantData)!))
+            }
+        }.store(in: &cancellabels)
+        
     }
-    
 }

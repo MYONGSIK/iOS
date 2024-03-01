@@ -64,15 +64,10 @@ class RestaurantService: RestaurantServiceProtocol {
         let sendUrl = Constants.KakaoURL + "\(keyword)" + CampusManager.shared.campus!.x + CampusManager.shared.campus!.y + radius + Constants.categoryCode + Constants.page + "\(page)" + Constants.sort
         guard let target = sendUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {return}
         guard let url = URL(string: target) else {return}
-        
-        print(url)
 
         AF.request(url, method: .get, parameters: nil, headers: headers)
            .validate()
            .responseDecodable(of: KakaoMapModel.self) { response in
-               
-               print(response)
-               
            switch response.result {
            case .success(let result):
                completion(result.documents)

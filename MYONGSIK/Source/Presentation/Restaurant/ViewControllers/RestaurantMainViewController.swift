@@ -125,19 +125,35 @@ class RestaurantMainViewController: MainBaseViewController {
                 }
                 self?.rankResults = result
                 self?.reloadDataAnimation()
-            case .callRestaurant(_):
-                break
-            case .moveNaverMap(_):
-                break
-            case .getTagRestaurant(let tag, let result):
+            case .moveToTagVC(let tag):
                 let vc = RestaurantTagViewController()
-                vc.tagResult = result
                 vc.tag = tag
                 self?.navigationController?.pushViewController(vc, animated: true)
                 break
-            case .updateTagRestaurant(_):
+            case .moveToWeb(_, _, _):
                 break
-            case .heartResult(_):
+            case .moveToMap(let urlStr, let isUrl):
+                if isUrl {
+                    let encodedStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                    
+                    if let url = URL(string: encodedStr), UIApplication.shared.canOpenURL(url) {
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    }
+                    else { self?.view.makeToast("네이버 지도앱이 설치되어있지 않습니다!")}
+                }else {
+                    self?.view.makeToast("주소가 등록되어있지 않습니다!")
+                }
+                break
+            case .moveToCall(let url, let isUrl):
+                if isUrl {
+                    if let openApp = URL(string: url), UIApplication.shared.canOpenURL(openApp) {
+                        if #available(iOS 10.0, *) { UIApplication.shared.open(openApp, options: [:], completionHandler: nil) }
+                        else { UIApplication.shared.openURL(openApp) }
+                    }
+                    else { self?.view.makeToast("번호가 등록되어있지 않습니다!")}
+                }else {
+                    self?.view.makeToast("번호가 등록되어있지 않습니다!")
+                }
                 break
             }
         }.store(in: &cancellabels)
@@ -259,6 +275,7 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
 
             DispatchQueue.main.async {
                 let itemIdx = indexPath.item - 3
+                cell.mainInput = self.input
                 cell.setupRestaurant(self.rankResults[itemIdx], self.cellMode)
                 cell.selectionStyle = .none
             }
@@ -282,4 +299,3 @@ extension RestaurantMainViewController: UITableViewDelegate, UITableViewDataSour
         }
     }
 }
-
