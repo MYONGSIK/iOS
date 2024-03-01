@@ -11,14 +11,14 @@ import Toast
 protocol MapStoreDelegate {
     func addHeart(placeName: String, category: String, url: String)
     func removeHeart(placeName: String)
-    func requestAddHeart(storeModel: StoreModel)
+    func requestAddHeart(storeModel: RestaurantModel)
     func showToast(message: String)
 }
 
 
 class MapStoreView: UIView {
     
-    private var storeModel: StoreModel?
+    private var storeModel: RestaurantModel?
     private var isHeart: Bool = false
     private var delegate: MapStoreDelegate?
     
@@ -82,7 +82,7 @@ class MapStoreView: UIView {
     
     
     
-    func configure(storeModel: StoreModel, isHeart: Bool, delegate: MapStoreDelegate) -> UIView {
+    func configure(storeModel: RestaurantModel, isHeart: Bool, delegate: MapStoreDelegate) -> UIView {
         setUpInitialSubView()
         
         self.isHeart = isHeart

@@ -16,9 +16,9 @@ class TabBarViewController: UITabBarController {
         self.tabBar.backgroundColor = .white
         
         
-        let gaAdController = GoogleMobileAdsController()
-         
-        gaAdController.createAndLoadInterstitial(vc: self)
+//        let gaAdController = GoogleMobileAdsController()
+//         
+//        gaAdController.createAndLoadInterstitial(vc: self)
         
         
        // 인스턴스화

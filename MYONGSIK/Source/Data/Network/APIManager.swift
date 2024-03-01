@@ -11,20 +11,6 @@ import Alamofire
 class APIManager {
     static let shared = APIManager()
     
-    private var campusInfo: CampusInfo = .seoul
-    
-    init() {
-        if let userCampus  = UserDefaults.standard.value(forKey: "userCampus") {
-            switch userCampus as! String {
-            case CampusInfo.seoul.name:
-                campusInfo = .seoul
-            case CampusInfo.yongin.name:
-                campusInfo = .yongin
-            default:
-                return
-            }
-        }
-    }
     
     func getData<T: Decodable>(urlEndpointString: String,
                                responseDataType: T.Type,
@@ -100,6 +86,10 @@ class APIManager {
                 }
                 .resume()
         }
+    
+    func getKakao() {
+        
+    }
 }
 
 // MARK: - Encodable Extension

@@ -10,7 +10,7 @@ import Combine
 
 protocol HeartServiceProtocol {
     func getHeartList(completion: @escaping ([ResponseHeartModel]) -> Void)
-    func postHeart(heart: RequestHeartModel, completion: @escaping (ResponseHeartModel) -> Void)
+    func postHeart(heart: RequestHeartModel, completion: @escaping (Bool) -> Void)
     func cancelHeart(id: String, completion: @escaping (Bool) -> Void)
 }
 
@@ -25,10 +25,10 @@ class HeartService: HeartServiceProtocol {
         }
     }
     
-    func postHeart(heart: RequestHeartModel, completion: @escaping (ResponseHeartModel) -> Void){
+    func postHeart(heart: RequestHeartModel, completion: @escaping (Bool) -> Void){
         apiManager.postData(urlEndpointString: Constants.HeartUrl, responseDataType: ResponseHeartModel.self, requestDataType: RequestHeartModel.self, parameter: heart) { response in
-            if let result = response.data {
-                completion(result)
+            if response.success {
+                completion(response.success)
             }
         }
     }
@@ -36,7 +36,9 @@ class HeartService: HeartServiceProtocol {
     func cancelHeart(id: String, completion: @escaping (Bool) -> Void) {
         apiManager.deleteData(urlEndpointString: Constants.HeartUrl + "/\(id)", responseDataType: ResponseHeartModel.self, requestDataType: RequestHeartModel.self
                               , parameter: nil) { response in
-             completion(response.success)
+            if response.success {
+                completion(response.success)
+            }
         }
     }
     

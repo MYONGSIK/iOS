@@ -195,11 +195,11 @@ class SubmitViewController: UIViewController {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"
             let registeredAt = formatter.string(from: Date())
-            
-            let param = SubmitModel(areaName: restraunt.getServerName(),
-                                    writerId: phoneId,
-                                    registeredAt: registeredAt,
-                                    content: submitted)
+//            
+//            let param = SubmitModel(areaName: restraunt.getServerName(),
+//                                    writerId: phoneId,
+//                                    registeredAt: registeredAt,
+//                                    content: submitted)
 //            APIManager.shared.postData(urlEndpointString: Constants.postFoodReviewWithArea,
 //                                       dataType: SubmitModel.self,
 //                                       responseType: SubmitResponseModel.self,
