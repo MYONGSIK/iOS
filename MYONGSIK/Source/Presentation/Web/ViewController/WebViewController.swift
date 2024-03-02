@@ -10,7 +10,11 @@ import WebKit
 
 // MARK: 링크 이동 후 보이는 페이지입니다.
 class WebViewController: UIViewController, WKUIDelegate {
-    // MARK: - Views
+    var webView: WKWebView!
+    
+    var restaurant: RestaurantModel?
+    var isHeart: Bool = false
+    
     let heartButton = UIButton().then{
         $0.setImage(UIImage(named: "empty_heart"), for: .normal)
         $0.setImage(UIImage(named: "fill_heart"), for: .selected)
@@ -23,15 +27,7 @@ class WebViewController: UIViewController, WKUIDelegate {
     }
     
     // MARK: - Life Cycles
-    var webView: WKWebView!
-    
-    // Properties
-    var storeData: RestaurantModel?
-    var campusInfo: CampusInfo?
-    
-    var webURL: String!
-    var placeName: String!
-    var category: String!
+
     
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
@@ -44,13 +40,16 @@ class WebViewController: UIViewController, WKUIDelegate {
         self.navigationController?.isNavigationBarHidden = false
         self.tabBarController?.tabBar.isHidden = true
         
-        
-        guard let url = self.webURL else {return}
+        setUpView()
+       
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        guard let url = self.restaurant?.urlAddress else {return}
         let myURL = URL(string: url)
         let myRequest = URLRequest(url: myURL!)
         webView.load(myRequest)
         
-        setUpView()
         heartButton.addTarget(self, action: #selector(heartButtonDidTap), for: .touchUpInside)
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -62,11 +61,8 @@ class WebViewController: UIViewController, WKUIDelegate {
     @objc func heartButtonDidTap() {
         UIDevice.vibrate()
         if heartButton.isSelected {
-            removeHeartData()
             removeHeartAnimation()
         } else {
-            addHeartData()
-            requestAddHeart()
             addHeartAnimation()
         }
     }
@@ -79,28 +75,8 @@ class WebViewController: UIViewController, WKUIDelegate {
             make.trailing.equalToSuperview().offset(-32)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-32)
         }
-        getHeartData()
     }
-    func addHeartData() {
-        guard let url = self.webURL else {return}
-        guard let placeName = self.placeName else {return}
-        guard let category = self.category else {return}
-        
-        // MARK: - 서버와 통신해 찜콩 리스트 저장
 
-    }
-    func removeHeartData() {
-        guard let url = self.webURL else {return}
-        guard let placeName = self.placeName else {return}
-        guard let category = self.category else {return}
-        
-        // MARK: - 서버와 통신해 찜콩리스트 삭제
-        
-    }
-    func getHeartData() {
-        // MARK: - 서버와 통신해 찜콩 리스트 Get
-       
-    }
     func addHeartAnimation() {
         ToastBar(self, message: .addHeart)
         UIView.transition(with: self.heartButton,
@@ -118,32 +94,5 @@ class WebViewController: UIViewController, WKUIDelegate {
                           animations: { () -> Void in
                           self.heartButton.isSelected = false},
                           completion: nil);
-    }
-    
-    func requestAddHeart() {
-        // TODO: 찜꽁 리스트 추가 POST
-//        let campus = (campusInfo == .seoul) ? "SEOUL" : "YONGIN"
-//        let phoneId = DeviceIdManager.shared.getDeviceID()
-//
-//        let bodyParam = HeartModel(address: storeData?.address,
-//                                   campus: campus,
-//                                   category: storeData?.category,
-//                                   code: storeData?.code,
-//                                   contact: storeData?.contact,
-//                                   distance: storeData?.distance,
-//                                   longitude: storeData?.latitude,
-//                                   latitude: storeData?.longitude,
-//                                   name: storeData?.name,
-//                                   phoneId: phoneId,
-//                                   urlAddress: storeData?.urlAddress)
-//        
-//        APIManager.shared.postData(urlEndpointString: Constants.postHeart,
-//                                   dataType: HeartModel.self,
-//                                   responseType: HeartModel.self,
-//                                   parameter: bodyParam,
-//                                   completionHandler: { response in
-//            print("찜꽁 POST Param - \(bodyParam)")
-//            print(response)
-//        })
     }
 }
