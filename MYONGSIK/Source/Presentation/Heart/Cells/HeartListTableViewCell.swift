@@ -25,7 +25,7 @@ class HeartListTableViewCell: UITableViewCell {
     
     
     var isSelect: Bool = false
-    var store: ResponseHeartModel?
+    var heart: ResponseHeartModel?
     
     
     
@@ -124,7 +124,6 @@ class HeartListTableViewCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        super.prepareForReuse()
         cancellabels.removeAll()
     }
     
@@ -269,7 +268,7 @@ class HeartListTableViewCell: UITableViewCell {
         }
         
         self.isSelect = isSelect
-        self.store = data
+        self.heart = data
         
         setUpView()
         setUpConstraint()
@@ -278,11 +277,11 @@ class HeartListTableViewCell: UITableViewCell {
     
     private func bind() {
         heartButton.tapPublisher.sink { [weak self] _ in
-            self?._input.send(.tapHeartButton(self!.store!.id.description))
+            self?._input.send(.tapHeartButton(self!.heart!.id.description))
         }.store(in: &cancellabels)
         
         goLinkButton.tapPublisher.sink { [weak self] _ in
-            self?._input.send(.tapLinkButton(self!.store!.urlAddress!))
+            self?._input.send(.tapLinkButton(self!.heart!))
         }.store(in: &cancellabels)
     }
 }

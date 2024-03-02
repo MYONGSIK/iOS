@@ -285,9 +285,9 @@ class SearchResultTableViewCell: UITableViewCell {
     
     func bind() {
         goLinkButton.tapPublisher.sink { [weak self] _ in
-            if self?.cellType == .search {
+            if self?.cellType == .search{
                 self?.searchInput.send(.tapWebButton((self?.restaurantData)!))
-            }else if self?.cellType == .main  {
+            }else if self?.cellType == .main || self?.cellType == .random{
                 self?.mainInput.send(.tapWebButton((self?.restaurantData)!))
             }else if self?.cellType == .tag {
                 self?.tagInput.send(.tapWebButton((self?.restaurantData)!))

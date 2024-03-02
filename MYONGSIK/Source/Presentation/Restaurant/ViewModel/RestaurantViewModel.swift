@@ -24,7 +24,6 @@ final class RestaurantViewModel: ViewModelabel {
         case viewDidLoad(String)
         case changeCategory(String)
         case tapTagButton(String)
-        case tapHeartButton(RestaurantModel)
         case tapWebButton(RestaurantModel)
         case tapAddressButton(RestaurantModel)
         case tapPhoneButton(RestaurantModel)
@@ -33,7 +32,7 @@ final class RestaurantViewModel: ViewModelabel {
     enum Output {
         case updateRestaurant([RestaurantModel])
         case moveToTagVC(String)
-        case moveToWeb(RestaurantModel, String, Bool)
+        case moveToWeb(RequestHeartModel, Bool, String?)
         case moveToMap(String, Bool)
         case moveToCall(String, Bool)
     }
@@ -58,21 +57,21 @@ final class RestaurantViewModel: ViewModelabel {
             case .tapTagButton(let tag):
                 self?.output.send(.moveToTagVC(tag))
                 break
-
-            case .tapHeartButton(_):
-                break
             case .tapWebButton(let restaurantModel):
-                guard let url = restaurantModel.address else {return}
-                
+                guard let urlAddress = restaurantModel.urlAddress else {return}
+                var id: String?
                 var isHeart = false
                 self?.heartService.getHeartList(completion: { result in
                     result.forEach {
                         if $0.name == restaurantModel.name {
                             isHeart = true
+                            id = $0.id.description
                         }
                     }
                     
-                    self?.output.send(.moveToWeb(restaurantModel ,url, isHeart))
+                    guard let heart = self?.transHeart(res: restaurantModel) else {return}
+                    
+                    self?.output.send(.moveToWeb(heart, isHeart, id))
                 })
                 break
             case .tapAddressButton(let restaurantModel):
@@ -103,7 +102,7 @@ final class RestaurantViewModel: ViewModelabel {
     
     private func transRes(kakaoList: [KakaoResultModel]) -> [RestaurantModel] {
         return kakaoList.map {
-            RestaurantModel(address: $0.address_name, category: $0.category_group_name, code: $0.category_group_code, contact: $0.phone, distance: $0.distance, name: $0.place_name, scrapCount: 0, storeId: Int($0.id!), urlAddress: $0.place_url,longitude: $0.x, latitude: $0.y)
+            RestaurantModel(address: $0.address_name, category: $0.category_group_name, code: $0.id, contact: $0.phone, distance: $0.distance, name: $0.place_name, scrapCount: 0, storeId: Int($0.id!), urlAddress: $0.place_url,longitude: $0.y, latitude: $0.x)
         }
     }
     
@@ -132,7 +131,7 @@ final class RestaurantTagViewModel: ViewModelabel {
     }
     enum Output {
         case updateTagResList([RestaurantModel])
-        case moveToWeb(RestaurantModel, String, Bool)
+        case moveToWeb(RequestHeartModel, Bool, String?)
         case moveToMap(String, Bool)
         case moveToCall(String, Bool)
     }
@@ -147,17 +146,20 @@ final class RestaurantTagViewModel: ViewModelabel {
                 }
                 break
             case .tapWebButton(let restaurantModel):
-                guard let url = restaurantModel.address else {return}
-                
+                guard let urlAddress = restaurantModel.urlAddress else {return}
+                var id: String?
                 var isHeart = false
                 self?.heartService.getHeartList(completion: { result in
                     result.forEach {
                         if $0.name == restaurantModel.name {
                             isHeart = true
+                            id = $0.id.description
                         }
                     }
                     
-                    self?.output.send(.moveToWeb(restaurantModel ,url, isHeart))
+                    guard let heart = self?.transHeart(res: restaurantModel) else {return}
+                    
+                    self?.output.send(.moveToWeb(heart, isHeart, id))
                 })
                 break
             case .tapAddressButton(let restaurantModel):
@@ -188,7 +190,7 @@ final class RestaurantTagViewModel: ViewModelabel {
     
     private func transRes(kakaoList: [KakaoResultModel]) -> [RestaurantModel] {
         return kakaoList.map {
-            RestaurantModel(address: $0.address_name, category: $0.category_group_name, code: $0.category_group_code, contact: $0.phone, distance: $0.distance, name: $0.place_name, scrapCount: 0, storeId: Int($0.id!), urlAddress: $0.place_url,longitude: $0.x, latitude: $0.y)
+            RestaurantModel(address: $0.address_name, category: $0.category_group_name, code: $0.id, contact: $0.phone, distance: $0.distance, name: $0.place_name, scrapCount: 0, storeId: Int($0.id!), urlAddress: $0.place_url,longitude: $0.y, latitude: $0.x)
         }
     }
     
@@ -217,7 +219,7 @@ final class RestaurantSearchViewModel: ViewModelabel {
     }
     enum Output {
         case updateSearchRes([RestaurantModel])
-        case moveToWeb(RestaurantModel, String, Bool)
+        case moveToWeb(RequestHeartModel, Bool, String?)
         case moveToMap(String, Bool)
         case moveToCall(String, Bool)
     }
@@ -232,17 +234,20 @@ final class RestaurantSearchViewModel: ViewModelabel {
                 })
                 break
             case .tapWebButton(let restaurantModel):
-                guard let url = restaurantModel.address else {return}
-                
+                guard let urlAddress = restaurantModel.urlAddress else {return}
+                var id: String?
                 var isHeart = false
                 self?.heartService.getHeartList(completion: { result in
                     result.forEach {
                         if $0.name == restaurantModel.name {
                             isHeart = true
+                            id = $0.id.description
                         }
                     }
                     
-                    self?.output.send(.moveToWeb(restaurantModel ,url, isHeart))
+                    guard let heart = self?.transHeart(res: restaurantModel) else {return}
+                    
+                    self?.output.send(.moveToWeb(heart, isHeart, id))
                 })
                 break
             case .tapAddressButton(let restaurantModel):
@@ -273,7 +278,7 @@ final class RestaurantSearchViewModel: ViewModelabel {
     
     private func transRes(kakaoList: [KakaoResultModel]) -> [RestaurantModel] {
         return kakaoList.map {
-            RestaurantModel(address: $0.address_name, category: $0.category_group_name, code: $0.category_group_code, contact: $0.phone, distance: $0.distance, name: $0.place_name, scrapCount: 0, storeId: Int($0.id!), urlAddress: $0.place_url,longitude: $0.x, latitude: $0.y)
+            RestaurantModel(address: $0.address_name, category: $0.category_group_name, code: $0.id, contact: $0.phone, distance: $0.distance, name: $0.place_name, scrapCount: 0, storeId: Int($0.id!), urlAddress: $0.place_url,longitude: $0.y, latitude: $0.x)
         }
     }
     

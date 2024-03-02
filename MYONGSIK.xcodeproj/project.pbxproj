@@ -62,6 +62,7 @@
 		73A9DAF72B8BA96F00D10102 /* CampusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A9DAF62B8BA96F00D10102 /* CampusManager.swift */; };
 		73A9DAFA2B8BB12D00D10102 /* RestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A9DAF92B8BB12D00D10102 /* RestaurantViewModel.swift */; };
 		73C5B24C29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */; };
+		73DCDA542B93201D0033FA85 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DCDA532B93201D0033FA85 /* WebViewModel.swift */; };
 		73DF1D892A9897180097DB63 /* CGFloat+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D882A9897180097DB63 /* CGFloat+.swift */; };
 		73DF1D8C2A9898FE0097DB63 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D8B2A9898FE0097DB63 /* Restaurant.swift */; };
 		73DF1D8E2A98A23A0097DB63 /* RestaurantSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D8D2A98A23A0097DB63 /* RestaurantSelectCell.swift */; };
@@ -203,6 +204,7 @@
 		73A9DAF62B8BA96F00D10102 /* CampusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusManager.swift; sourceTree = "<group>"; };
 		73A9DAF92B8BB12D00D10102 /* RestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewModel.swift; sourceTree = "<group>"; };
 		73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBottomAlertViewController.swift; sourceTree = "<group>"; };
+		73DCDA532B93201D0033FA85 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		73DF1D882A9897180097DB63 /* CGFloat+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+.swift"; sourceTree = "<group>"; };
 		73DF1D8B2A9898FE0097DB63 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		73DF1D8D2A98A23A0097DB63 /* RestaurantSelectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSelectCell.swift; sourceTree = "<group>"; };
@@ -451,6 +453,7 @@
 		2373E4EC290AD1AC00D51B8E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				73DCDA502B9320010033FA85 /* Web */,
 				23166AA528FEDA0A002AEFB7 /* Utils */,
 				23BE0150290E0AAF00861DA5 /* Restaurant */,
 				736A8DF529E999CC00D30A35 /* Map */,
@@ -591,7 +594,6 @@
 				23C993A329108F6F00B8D1E4 /* RestaurantSearchViewController.swift */,
 				23B9E8962911336A009B6D8F /* RestaurantMainViewController.swift */,
 				23451DE829116964006AE030 /* RestaurantTagViewController.swift */,
-				23451DEA29117355006AE030 /* WebViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -658,6 +660,31 @@
 				73A9DAF92B8BB12D00D10102 /* RestaurantViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		73DCDA502B9320010033FA85 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				73DCDA522B9320100033FA85 /* ViewModel */,
+				73DCDA512B9320060033FA85 /* ViewController */,
+			);
+			path = Web;
+			sourceTree = "<group>";
+		};
+		73DCDA512B9320060033FA85 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				23451DEA29117355006AE030 /* WebViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		73DCDA522B9320100033FA85 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				73DCDA532B93201D0033FA85 /* WebViewModel.swift */,
+			);
+			name = ViewModel;
 			sourceTree = "<group>";
 		};
 		73DF1D8A2A98979B0097DB63 /* Enum */ = {
@@ -1025,6 +1052,7 @@
 				73A9DAF72B8BA96F00D10102 /* CampusManager.swift in Sources */,
 				734360082A2DBBE800845A1B /* HeartService.swift in Sources */,
 				23C993A429108F6F00B8D1E4 /* RestaurantSearchViewController.swift in Sources */,
+				73DCDA542B93201D0033FA85 /* WebViewModel.swift in Sources */,
 				73C5B24C29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift in Sources */,
 				23B9E89B29114532009B6D8F /* TagCollectionViewCell.swift in Sources */,
 				2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */,

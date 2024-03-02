@@ -52,7 +52,6 @@ class RestaurantTagViewController: BaseViewController {
         input.send(.getTagResList(tag, 1))
     }
 
-    // MARK: Actions
     @objc func goBackButtonDidTap() {
         UIDevice.vibrate()
         self.navigationController?.popViewController(animated: true)
@@ -98,18 +97,19 @@ class RestaurantTagViewController: BaseViewController {
     }
     
     func bind() {
-        
-        
         let output = viewModel.trastfrom(input.eraseToAnyPublisher())
-        
-        
         
         output.receive(on: DispatchQueue.main).sink {[weak self] event in
             switch event {
             case .updateTagResList(let result):
                 self?.tagResult = result
                 self?.reloadDataAnimation()
-            case .moveToWeb(_, _, _):
+            case .moveToWeb(let heart, let isHeart, let id):
+                let vc = WebViewController()
+                vc.heart = heart
+                vc.isHeart = isHeart
+                vc.id = id
+                self?.navigationController?.pushViewController(vc, animated: true)
                 break
             case .moveToMap(let urlStr, let isUrl):
                 if isUrl {
@@ -148,7 +148,7 @@ class RestaurantTagViewController: BaseViewController {
                           completion: nil);
     }
 }
-// MARK: - TableView delegate
+
 extension RestaurantTagViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count = self.tagResult.count
