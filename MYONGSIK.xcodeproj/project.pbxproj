@@ -63,6 +63,8 @@
 		73A9DAFA2B8BB12D00D10102 /* RestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A9DAF92B8BB12D00D10102 /* RestaurantViewModel.swift */; };
 		73C5B24C29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */; };
 		73DCDA542B93201D0033FA85 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DCDA532B93201D0033FA85 /* WebViewModel.swift */; };
+		73DCDA562B93465D0033FA85 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DCDA552B93465D0033FA85 /* MapViewController.swift */; };
+		73DCDA5A2B936BE60033FA85 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DCDA592B936BE60033FA85 /* Key.swift */; };
 		73DF1D892A9897180097DB63 /* CGFloat+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D882A9897180097DB63 /* CGFloat+.swift */; };
 		73DF1D8C2A9898FE0097DB63 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D8B2A9898FE0097DB63 /* Restaurant.swift */; };
 		73DF1D8E2A98A23A0097DB63 /* RestaurantSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D8D2A98A23A0097DB63 /* RestaurantSelectCell.swift */; };
@@ -205,6 +207,8 @@
 		73A9DAF92B8BB12D00D10102 /* RestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewModel.swift; sourceTree = "<group>"; };
 		73C5B24B29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBottomAlertViewController.swift; sourceTree = "<group>"; };
 		73DCDA532B93201D0033FA85 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
+		73DCDA552B93465D0033FA85 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		73DCDA592B936BE60033FA85 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		73DF1D882A9897180097DB63 /* CGFloat+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+.swift"; sourceTree = "<group>"; };
 		73DF1D8B2A9898FE0097DB63 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		73DF1D8D2A98A23A0097DB63 /* RestaurantSelectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSelectCell.swift; sourceTree = "<group>"; };
@@ -474,6 +478,7 @@
 				A23DA70629A7EFEA003FDA56 /* DeviceIdManager.swift */,
 				23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */,
 				73A9DAF62B8BA96F00D10102 /* CampusManager.swift */,
+				73DCDA592B936BE60033FA85 /* Key.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -642,6 +647,7 @@
 			isa = PBXGroup;
 			children = (
 				73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */,
+				73DCDA552B93465D0033FA85 /* MapViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -760,6 +766,7 @@
 				23166A6C28FECD9C002AEFB7 /* Resources */,
 				EEDDC5406744A29A22DEECDA /* [CP] Embed Pods Frameworks */,
 				A258497B29E687CA00E75568 /* Embed Foundation Extensions */,
+				E41A36069A9DB94C4D47A94F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -802,6 +809,7 @@
 				23166A8B28FECD9F002AEFB7 /* Frameworks */,
 				23166A8C28FECD9F002AEFB7 /* Resources */,
 				77DE485AC24FFCE1C9AF4DDC /* [CP] Embed Pods Frameworks */,
+				7EB4FA45DDD84408DA5FED79 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1005,6 +1013,40 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		7EB4FA45DDD84408DA5FED79 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MYONGSIK-MYONGSIKUITests/Pods-MYONGSIK-MYONGSIKUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E41A36069A9DB94C4D47A94F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MYONGSIK/Pods-MYONGSIK-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		EEDDC5406744A29A22DEECDA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1042,6 +1084,8 @@
 				23E6ACA9290130C50091D803 /* UIDevice.swift in Sources */,
 				73DF1D8C2A9898FE0097DB63 /* Restaurant.swift in Sources */,
 				2311611C2911952200AD73D2 /* ToastBar.swift in Sources */,
+				73DCDA5A2B936BE60033FA85 /* Key.swift in Sources */,
+				73DCDA562B93465D0033FA85 /* MapViewController.swift in Sources */,
 				A2431C9029A34FBA00D8E493 /* PopupBaseVIewController.swift in Sources */,
 				23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */,
 				73DF1D942A99B2900097DB63 /* PageCell.swift in Sources */,

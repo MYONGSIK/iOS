@@ -62,33 +62,43 @@ PODS:
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleUserMessagingPlatform (2.1.0)
-  - GoogleUtilities/AppDelegateSwizzler (7.12.0):
+  - GoogleUserMessagingPlatform (2.2.0)
+  - GoogleUtilities/AppDelegateSwizzler (7.13.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.12.0):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Environment (7.13.0):
+    - GoogleUtilities/Privacy
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.12.0):
+  - GoogleUtilities/Logger (7.13.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.12.0):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/MethodSwizzler (7.13.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.12.0):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Network (7.13.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Privacy
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.12.0)"
-  - GoogleUtilities/Reachability (7.12.0):
+  - "GoogleUtilities/NSData+zlib (7.13.0)":
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Privacy (7.13.0)
+  - GoogleUtilities/Reachability (7.13.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.12.0):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/UserDefaults (7.13.0):
     - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
+  - KakaoMapsSDK (2.9.2)
   - Kingfisher (7.11.0)
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
     - nanopb/encode (= 2.30909.1)
   - nanopb/decode (2.30909.1)
   - nanopb/encode (2.30909.1)
-  - PromisesObjC (2.3.1)
+  - PromisesObjC (2.4.0)
   - SnapKit (5.7.1)
   - Then (3.0.0)
 
@@ -100,6 +110,7 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Core
   - Google-Mobile-Ads-SDK
+  - KakaoMapsSDK
   - Kingfisher
   - SnapKit
   - Then
@@ -118,6 +129,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUserMessagingPlatform
     - GoogleUtilities
+    - KakaoMapsSDK
     - Kingfisher
     - nanopb
     - PromisesObjC
@@ -135,14 +147,15 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 390ea1d10a4d02b20c965cbfd527ee9b3b412acb
   Google-Mobile-Ads-SDK: 7a466427864972f5229f1f89d004b998a28ddcae
   GoogleAppMeasurement: a65314d316443969ed3d3709b3a187448ed6418f
-  GoogleUserMessagingPlatform: dce302b8f1b84d6e945812ee7a15c3f65a102cbf
-  GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
+  GoogleUserMessagingPlatform: d31dbfb40ec02c5d9683029815c5d5a7f46389ee
+  GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
+  KakaoMapsSDK: c97934026d8e275f587cdb2c66ad8fe5ef40ca9a
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
-  PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
+  PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: 29380dea2da8a98425ee35443c3325644c58bcc9
+PODFILE CHECKSUM: c7279e9875446f049d50a987eb2be689c52c56e6
 
 COCOAPODS: 1.14.3

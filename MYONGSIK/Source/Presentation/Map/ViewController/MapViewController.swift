@@ -6,11 +6,17 @@
 //
 
 import UIKit
+import KakaoMapsSDK
 
 class MapViewController: UIViewController {
+    
+    private var mapController: KMController?
+    private var mapContainer: KMViewContainer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapContainer = self.view as? KMViewContainer
+        mapController = KMController(viewContainer: mapContainer!)
 
         // Do any additional setup after loading the view.
     }
