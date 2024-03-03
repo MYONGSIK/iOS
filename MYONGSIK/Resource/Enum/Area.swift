@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Restaurant: String, CaseIterable{
+enum Area: String, CaseIterable{
     case mcc = "MCC식당"
     case paulbassett = "폴바셋식당"
     case staff = "교직원식당"
@@ -16,7 +16,7 @@ enum Restaurant: String, CaseIterable{
     case myungjin = "명진당식당"
 }
 
-extension Restaurant {
+extension Area {
     func getServerName() -> String {
         switch self {
         case .paulbassett:

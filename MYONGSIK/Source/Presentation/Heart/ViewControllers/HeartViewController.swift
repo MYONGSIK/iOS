@@ -14,6 +14,7 @@ class HeartViewController: MainBaseViewController {
     var heartList: [ResponseHeartModel] = []
     var isSelectedCell: [Bool] = []
     
+    private let viewModel = HeartViewModel()
     private var cancellabels = Set<AnyCancellable>()
     private let input: PassthroughSubject<HeartViewModel.Input, Never> = .init()
                                             
@@ -54,7 +55,7 @@ class HeartViewController: MainBaseViewController {
     }
     
     private func bind() {
-        let output = HeartViewModel.shared.trastfrom(input.eraseToAnyPublisher())
+        let output = viewModel.trastfrom(input.eraseToAnyPublisher())
         output.receive(on: DispatchQueue.main)
             .sink { [weak self] event in
                 switch event {

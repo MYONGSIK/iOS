@@ -120,7 +120,6 @@ class MapViewController: UIViewController, MapControllerDelegate {
     }
     
     func addViews() {
-        print("addViews")
         let defaultPosition: MapPoint = MapPoint(longitude: CampusManager.shared.campus!.latitude, latitude: CampusManager.shared.campus!.longitude)
         let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 16)
         
@@ -140,12 +139,12 @@ class MapViewController: UIViewController, MapControllerDelegate {
         let view = mapController?.getView("mapview") as! KakaoMap
         let manager = view.getLabelManager()
        
-        let normalIcon = PoiIconStyle(symbol:imageResize(image: UIImage(named: "mapPin")!, newWidth: 20, newHeight: 25), anchorPoint: CGPoint(x: 0.5, y: 0.5))
+        let normalIcon = PoiIconStyle(symbol:imageResize(image: UIImage(named: "mapPin")!, newWidth: 22, newHeight: 25), anchorPoint: CGPoint(x: 0.5, y: 0.5))
         let normalText = PoiTextStyle(textLineStyles: [PoiTextLineStyle(textStyle: TextStyle(fontSize: 30, fontColor: UIColor.white))])
         normalText.textLayouts = [.center]
         let normalPoiStyle = PoiStyle(styleID: "NormalStyle", styles: [PerLevelPoiStyle(iconStyle: normalIcon, textStyle: normalText, level: 0)])
         
-        let selectIcon = PoiIconStyle(symbol:imageResize(image: UIImage(named: "selectedMapPin")!, newWidth: 30, newHeight: 35), anchorPoint: CGPoint(x: 0.5, y: 0.5))
+        let selectIcon = PoiIconStyle(symbol:imageResize(image: UIImage(named: "selectedMapPin")!, newWidth: 32, newHeight: 35), anchorPoint: CGPoint(x: 0.5, y: 0.4))
         let selectText = PoiTextStyle(textLineStyles: [PoiTextLineStyle(textStyle: TextStyle(fontSize: 35, fontColor: UIColor.black))])
         selectText.textLayouts = [.center]
         let selectPoiStyle = PoiStyle(styleID: "SelectStyle", styles: [PerLevelPoiStyle(iconStyle: selectIcon, textStyle: selectText, level: 0)])
@@ -222,11 +221,7 @@ class MapViewController: UIViewController, MapControllerDelegate {
 
     func addViewSucceeded(_ viewName: String, viewInfoName: String) {
         let view = mapController?.getView("mapview") as! KakaoMap
-        if UIDevice.current.hasNotch {
-            view.setLogoPosition(origin: GuiAlignment(vAlign: .bottom, hAlign: .right), position: CGPoint(x: 3, y: 121))
-        }else {
-            view.setLogoPosition(origin: GuiAlignment(vAlign: .bottom, hAlign: .right), position: CGPoint(x: 3, y: 91))
-        }
+        view.setLogoPosition(origin: GuiAlignment(vAlign: .bottom, hAlign: .right), position: CGPoint(x: 20, y: 100))
         
         createLabelLayer()
         createPoiStyle()

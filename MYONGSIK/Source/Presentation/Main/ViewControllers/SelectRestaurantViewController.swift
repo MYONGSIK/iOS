@@ -7,9 +7,16 @@
 
 import UIKit
 import SnapKit
+import Combine
+import CombineCocoa
 
 
 class SelectRestaurantViewController: MainBaseViewController {
+    private let viewModel = MainViewModel()
+    private var cancellabels = Set<AnyCancellable>()
+    private let input: PassthroughSubject<MainViewModel.Input, Never> = .init()
+    
+    private var areaList: [Area] = []
     
     private var buttonTableView = UITableView()
     
@@ -18,6 +25,9 @@ class SelectRestaurantViewController: MainBaseViewController {
         setup()
         setupView()
         setupConstraints()
+        bind()
+        
+        input.send(.viewDidLoad)
     }
     
     private func setup() {
@@ -47,27 +57,41 @@ class SelectRestaurantViewController: MainBaseViewController {
         }
     }
     
+    func bind() {
+        let output = viewModel.trastfrom(input.eraseToAnyPublisher())
+        
+        output.receive(on: DispatchQueue.main).sink { [weak self] event in
+            switch event {
+            case .updateArea(let areaList):
+                self?.areaList = areaList
+                self?.buttonTableView.reloadData()
+            case .moveToArea(let area):
+                let mainVC = MainViewController()
+                mainVC.area = area
+                self?.navigationController?.pushViewController(mainVC, animated: true)
+                break
+            case .moveToSetting(let areaList):
+                let settingVC = SettingAreaViewController()
+                self?.navigationController?.pushViewController(settingVC, animated: true)
+            }
+        }.store(in: &cancellabels)
+    }
 
 }
 
 extension SelectRestaurantViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MainViewModel.shared.getRestaurantsCount()
+        return areaList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RestaurantSelectCell
         
-        cell.setupContent(restaurant: MainViewModel.shared.getRestaurant(index: indexPath.row))
+        cell.setupContent(area: areaList[indexPath.row])
         
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: 선택된 식당의 학식 정보를 토대로 화면으로 전환 (MainVC) / 현재 화면 전환만 구현해둠
-        MainViewModel.shared.setRestaurant(index: indexPath.row)
-        MainViewModel.shared.getWeekFood()
-        
-        let mainVC = MainViewController()
-        self.navigationController?.pushViewController(mainVC, animated: true)
+        input.send(.tapAreaButton(areaList[indexPath.row]))
     }
 }

@@ -8,177 +8,163 @@
 import Foundation
 import Combine
 
+final class MainViewModel: ViewModelabel {
+    
+    private let mainService: MainServiceProtocol
+    private let output: PassthroughSubject<Output, Never> = .init()
+    private var cancellabels = Set<AnyCancellable>()
+    
+    var areaList: [Area] = []
+   
+    
+    init(mainService: MainServiceProtocol = MainService()) {
+        self.mainService = mainService
+        
+        if CampusManager.shared.campus == .seoul {
+            for i in 0..<2 {
+                areaList.append(Area.allCases[i])
+            }
+        }else {
+            for i in 2..<Area.allCases.count {
+                areaList.append(Area.allCases[i])
+            }
+        }
+    }
+    
+    enum Input {
+        case viewDidLoad
+        case tapAreaButton(Area)
+        case tapSetting
+    }
+    
+    enum Output {
+        case updateArea([Area])
+        case moveToArea(Area)
+        case moveToSetting([Area])
+    }
+    
+    func trastfrom(_ input: AnyPublisher<Input, Never>) -> AnyPublisher<Output, Never> {
+        input.sink { [weak self] event in
+            switch event {
+            case .viewDidLoad:
+                self?.output.send(.updateArea(self!.areaList))
+               break
+            case .tapAreaButton(let area):
+                self?.output.send(.moveToArea(area))
+               break
+            case .tapSetting:
+                self?.output.send(.moveToSetting(self!.areaList))
+                break
+            }
+        }.store(in: &cancellabels)
+        
+        return output.eraseToAnyPublisher()
+    }
+}
 
-class MainViewModel: ObservableObject{
-    static let shared = MainViewModel()
+final class FoodViewModel: ViewModelabel {
     
-    private let mainService = MainService()
+    private let mainService: MainServiceProtocol
+    private let output: PassthroughSubject<Output, Never> = .init()
+    private var cancellabels = Set<AnyCancellable>()
     
-    private var cancellabels: Set<AnyCancellable> = []
+    var areaList: [Area] = []
+   
     
-    private var restaurants: [Restaurant] = []
-    
-    init() {
-        setRestraunt()
-    }
-    
-    
-    
-    //안쓸거 같으면 삭제
-    private var pageCount = 0
-    private var resName = ""
-    
-    @Published var foodList: [[DayFoodModel]] = []
-    @Published var isFood: Bool = false
-    @Published var selectedRestaurant: Restaurant?
-    
-    var _pageCount: Int {
-        get {
-            return pageCount
-        }
-        set(pageCount) {
-            self.pageCount = pageCount
+    init(mainService: MainServiceProtocol = MainService()) {
+        self.mainService = mainService
+        
+        if CampusManager.shared.campus == .seoul {
+            for i in 0..<2 {
+                areaList.append(Area.allCases[i])
+            }
+        }else {
+            for i in 2..<Area.allCases.count {
+                areaList.append(Area.allCases[i])
+            }
         }
     }
     
-    func getFoodList(completion: @escaping ([[DayFoodModel]]) -> Void) {
-        $foodList.sink { foodList in
-            completion(foodList)
+    enum Input {
+        case viewDidLoad(Area)
+    }
+    
+    enum Output {
+        case updateFood([DayFoodModel])
+    }
+    
+    func trastfrom(_ input: AnyPublisher<Input, Never>) -> AnyPublisher<Output, Never> {
+        input.sink { [weak self] event in
+            switch event {
+            case .viewDidLoad(let area):
+                self?.mainService.getWeekFood(area: area.getServerName(), completion: { result in
+                    self?.output.send(.updateFood(result))
+                })
+               break
+            }
         }.store(in: &cancellabels)
-    }
-    
-    
-    func getDayFood(day: Int, index: Int, cancelLabels: inout Set<AnyCancellable> ,completion: @escaping (DayFoodModel) -> Void) {
-        $foodList.filter{ foodList in
-            foodList.count != 0 && foodList.count > day && foodList[day].count > index
-        }.sink { foodList in
-            completion(foodList[day][index])
-        }.store(in: &cancelLabels)
-    }
-    
-    func isFood(completion: @escaping (Bool) -> Void) {
-        $isFood.sink { isFood in
-            completion(isFood)
-        }.store(in: &cancellabels)
-    }
-    
-    func removeFoodList() {
-        isFood = false
-        foodList.removeAll()
-        selectedRestaurant = nil
-    }
-    
-    func getSelectedRestaurant(completion: @escaping (Restaurant) -> Void) {
-        $selectedRestaurant.filter { selectedRestaurant in
-            selectedRestaurant != nil
-        }.sink { selectedRestaurant in
-            completion(selectedRestaurant!)
-        }.store(in: &cancellabels)
-    }
-    
-    func getSelectedRestaurantFoodCount(completion: @escaping (Int) -> Void) {
-        $selectedRestaurant.filter { selectedRestaurant in
-            selectedRestaurant != nil
-        }.sink { selectedRestaurant in
-            completion(selectedRestaurant!.getFoodInfoCount())
-        }.store(in: &cancellabels)
-    }
-    
-    func getRestaurantsCount() -> Int {
-        return restaurants.count
-    }
-    
-    func getRestaurant(index: Int) -> Restaurant {
-        return restaurants[index]
-    }
-    
-    
-    func setRestaurant(index: Int) {
-        self.selectedRestaurant = restaurants[index]
-    }
-    
-    func getRestaurant() -> Restaurant {
-        if let restaurant = selectedRestaurant {
-            return restaurant
-        }
-        return .academy
-    }
-    
-    func getRestaurantFoodCount() -> Int {
-        return self.selectedRestaurant?.getFoodInfoCount() ?? 2
+        
+        return output.eraseToAnyPublisher()
     }
 }
 
 
-// MARK: 로직 처리
-extension MainViewModel {
-    func getWeekFood() {
-        mainService.getWeekFood(area: (self.selectedRestaurant?.getServerName())!) { response in
-            if response.success {
-                if let data = response.data {
-                    var dayFoodList: [DayFoodModel] = []
-                    for i in 0..<data.count {
-                        if self.selectedRestaurant! == .mcc || self.selectedRestaurant! == .myungjin {
-                            if i % 3 == 0 && i != 0{
-                                self.foodList.append(dayFoodList)
-                                dayFoodList.removeAll()
-                            }
-                        }else if self.selectedRestaurant! == .paulbassett {
-                            if i != 0 {
-                                self.foodList.append(dayFoodList)
-                                dayFoodList.removeAll()
-                            }
-                        }else {
-                            if i % 2 == 0 && i != 0{
-                                self.foodList.append(dayFoodList)
-                                dayFoodList.removeAll()
+final class AreaSettingViewModel: ViewModelabel {
+    
+    private let mainService: MainServiceProtocol
+    private let output: PassthroughSubject<Output, Never> = .init()
+    private var cancellabels = Set<AnyCancellable>()
+    
+    var areaList: [Area] = []
+   
+    init(mainService: MainServiceProtocol = MainService()) {
+        self.mainService = mainService
+        
+        if CampusManager.shared.campus == .seoul {
+            for i in 0..<2 {
+                areaList.append(Area.allCases[i])
+            }
+        }else {
+            for i in 2..<Area.allCases.count {
+                areaList.append(Area.allCases[i])
+            }
+        }
+    }
+    
+    enum Input {
+        case viewDidLoad
+        case tapAreaButton(Int)
+    }
+    
+    enum Output {
+        case loadArea([Area], Int)
+        case updateArea(Bool)
+    }
+    
+    func trastfrom(_ input: AnyPublisher<Input, Never>) -> AnyPublisher<Output, Never> {
+        input.sink { [weak self] event in
+            switch event {
+            case.viewDidLoad:
+                self?.mainService.getWidgetResName(completion: { result in
+                    var index = 0
+                    if let area = result {
+                        for i in 0..<self!.areaList.count {
+                            if self!.areaList[i].getServerName() == area {
+                                index = i
                             }
                         }
-                       
-                        dayFoodList.append(data[i])
                     }
-                    self.foodList.append(dayFoodList)
-                    self.isFood = true
-                }
+                    self?.output.send(.loadArea(self!.areaList, index))
+                })
+                break
+            case .tapAreaButton(let index):
+                self?.mainService.setWidgetResName(resName: self!.areaList[index].getServerName())
+                self?.output.send(.updateArea(true))
+                break
+                
             }
-        }
-    }
-    
-    func setRestraunt() {
-        if CampusManager.shared.campus == CampusInfo.seoul {
-            var seoulRestaurants: [Restaurant] = []
-            for i in 0..<2 {
-                seoulRestaurants.append(Restaurant.allCases[i])
-            }
-            self.restaurants = seoulRestaurants
-        }else if CampusManager.shared.campus == CampusInfo.yongin {
-            var yonginRestaurants: [Restaurant] = []
-            for i in 2..<Restaurant.allCases.count {
-                yonginRestaurants.append(Restaurant.allCases[i])
-            }
-            self.restaurants = yonginRestaurants
-        }
-    }
-    
-    func saveWidgetResName(resName: String) {
-        mainService.setWidgetResName(resName: resName)
-    }
-    
-    func loadWidgetResName() -> String {
-        mainService.getWidgetResName { resName in
-            self.resName = resName
-        }
+        }.store(in: &cancellabels)
         
-        if resName == "" {
-            if CampusManager.shared.campus == .seoul {
-                saveWidgetResName(resName: Restaurant.mcc.getServerName())
-                return Restaurant.mcc.getServerName()
-            }else if CampusManager.shared.campus == .yongin {
-                saveWidgetResName(resName: Restaurant.staff.getServerName())
-                return Restaurant.staff.getServerName()
-            }
-        }
-        
-        return resName
+        return output.eraseToAnyPublisher()
     }
 }
