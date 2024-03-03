@@ -120,10 +120,13 @@ class MapViewController: UIViewController, MapControllerDelegate {
     }
     
     func addViews() {
+        print("addViews")
         let defaultPosition: MapPoint = MapPoint(longitude: CampusManager.shared.campus!.latitude, latitude: CampusManager.shared.campus!.longitude)
-        let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition)
+        let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 16)
         
         mapController?.addView(mapviewInfo)
+        
+        
     }
     
     func createLabelLayer() {
@@ -218,6 +221,13 @@ class MapViewController: UIViewController, MapControllerDelegate {
     
 
     func addViewSucceeded(_ viewName: String, viewInfoName: String) {
+        let view = mapController?.getView("mapview") as! KakaoMap
+        if UIDevice.current.hasNotch {
+            view.setLogoPosition(origin: GuiAlignment(vAlign: .bottom, hAlign: .right), position: CGPoint(x: 3, y: 121))
+        }else {
+            view.setLogoPosition(origin: GuiAlignment(vAlign: .bottom, hAlign: .right), position: CGPoint(x: 3, y: 91))
+        }
+        
         createLabelLayer()
         createPoiStyle()
     }
@@ -225,6 +235,7 @@ class MapViewController: UIViewController, MapControllerDelegate {
     func containerDidResized(_ size: CGSize) {
         let mapView: KakaoMap? = mapController?.getView("mapview") as? KakaoMap
         mapView?.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
+        mapView?.moveCamera(CameraUpdate.make(target: MapPoint(longitude: CampusManager.shared.campus!.latitude, latitude: CampusManager.shared.campus!.longitude), zoomLevel: 6, rotation: 0, tilt: 0.0, mapView: mapView!))
     }
 
     func addObservers(){
