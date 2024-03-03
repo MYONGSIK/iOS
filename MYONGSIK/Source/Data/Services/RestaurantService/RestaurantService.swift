@@ -26,7 +26,8 @@ class RestaurantService: RestaurantServiceProtocol {
     func getRestaurantList(sort: String, completion: @escaping ([RestaurantModel]) -> Void) {
         let parameters: Parameters = [
             "sort": sort,
-            "campus": CampusManager.shared.campus!.param
+            "campus": CampusManager.shared.campus!.param,
+            "size": Int32.max
         ]
         
         APIManager.shared.getData(urlEndpointString: Constants.RestaurantUrl, responseDataType: ListModel<RestaurantModel>.self, parameter: parameters) { response in

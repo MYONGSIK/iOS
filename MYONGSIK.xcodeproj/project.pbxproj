@@ -50,8 +50,7 @@
 		23E6ACA9290130C50091D803 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6ACA8290130C50091D803 /* UIDevice.swift */; };
 		58A23E1C2028CBEE0CA8BC47 /* Pods_MYONGSIKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */; };
 		7303B8B02A0AA28F004C4C52 /* GoogleMobileAdsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7303B8AF2A0AA28F004C4C52 /* GoogleMobileAdsController.swift */; };
-		7303B8B22A0AA52D004C4C52 /* GoogleMobileAdsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7303B8B12A0AA52D004C4C52 /* GoogleMobileAdsKey.swift */; };
-		73178AC129EAFC3A001C3AA4 /* MapStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */; };
+		73178AC129EAFC3A001C3AA4 /* MapInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73178AC029EAFC3A001C3AA4 /* MapInfoView.swift */; };
 		73178AD829EED14A001C3AA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */; };
 		731C3F422A5D3DA300A5277A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731C3F412A5D3DA300A5277A /* MainViewModel.swift */; };
 		7329D7612B82EAB100D24D8F /* HeartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7329D7602B82EAB100D24D8F /* HeartViewModel.swift */; };
@@ -65,6 +64,7 @@
 		73DCDA542B93201D0033FA85 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DCDA532B93201D0033FA85 /* WebViewModel.swift */; };
 		73DCDA562B93465D0033FA85 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DCDA552B93465D0033FA85 /* MapViewController.swift */; };
 		73DCDA5A2B936BE60033FA85 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DCDA592B936BE60033FA85 /* Key.swift */; };
+		73DCDA5D2B937EEB0033FA85 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DCDA5C2B937EEB0033FA85 /* MapViewModel.swift */; };
 		73DF1D892A9897180097DB63 /* CGFloat+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D882A9897180097DB63 /* CGFloat+.swift */; };
 		73DF1D8C2A9898FE0097DB63 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D8B2A9898FE0097DB63 /* Restaurant.swift */; };
 		73DF1D8E2A98A23A0097DB63 /* RestaurantSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D8D2A98A23A0097DB63 /* RestaurantSelectCell.swift */; };
@@ -187,8 +187,7 @@
 		5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7303B8AF2A0AA28F004C4C52 /* GoogleMobileAdsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMobileAdsController.swift; sourceTree = "<group>"; };
-		7303B8B12A0AA52D004C4C52 /* GoogleMobileAdsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMobileAdsKey.swift; sourceTree = "<group>"; };
-		73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStoreView.swift; sourceTree = "<group>"; };
+		73178AC029EAFC3A001C3AA4 /* MapInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInfoView.swift; sourceTree = "<group>"; };
 		73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		731C3F412A5D3DA300A5277A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		7329D7602B82EAB100D24D8F /* HeartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartViewModel.swift; sourceTree = "<group>"; };
@@ -209,6 +208,7 @@
 		73DCDA532B93201D0033FA85 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		73DCDA552B93465D0033FA85 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		73DCDA592B936BE60033FA85 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
+		73DCDA5C2B937EEB0033FA85 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		73DF1D882A9897180097DB63 /* CGFloat+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+.swift"; sourceTree = "<group>"; };
 		73DF1D8B2A9898FE0097DB63 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		73DF1D8D2A98A23A0097DB63 /* RestaurantSelectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSelectCell.swift; sourceTree = "<group>"; };
@@ -474,7 +474,6 @@
 				23A7C669290AADE900351D16 /* InfoPlist */,
 				23166A7128FECD9D002AEFB7 /* AppDelegate.swift */,
 				7303B8AF2A0AA28F004C4C52 /* GoogleMobileAdsController.swift */,
-				7303B8B12A0AA52D004C4C52 /* GoogleMobileAdsKey.swift */,
 				A23DA70629A7EFEA003FDA56 /* DeviceIdManager.swift */,
 				23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */,
 				73A9DAF62B8BA96F00D10102 /* CampusManager.swift */,
@@ -638,6 +637,7 @@
 		736A8DF529E999CC00D30A35 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				73DCDA5B2B937EE00033FA85 /* ViewModel */,
 				736A8DF629E999D600D30A35 /* ViewController */,
 			);
 			path = Map;
@@ -646,7 +646,7 @@
 		736A8DF629E999D600D30A35 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				73178AC029EAFC3A001C3AA4 /* MapStoreView.swift */,
+				73178AC029EAFC3A001C3AA4 /* MapInfoView.swift */,
 				73DCDA552B93465D0033FA85 /* MapViewController.swift */,
 			);
 			path = ViewController;
@@ -691,6 +691,14 @@
 				73DCDA532B93201D0033FA85 /* WebViewModel.swift */,
 			);
 			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		73DCDA5B2B937EE00033FA85 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				73DCDA5C2B937EEB0033FA85 /* MapViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		73DF1D8A2A98979B0097DB63 /* Enum */ = {
@@ -1091,10 +1099,10 @@
 				73DF1D942A99B2900097DB63 /* PageCell.swift in Sources */,
 				A2431C8E29A347C300D8E493 /* CALayer+.swift in Sources */,
 				23166A7228FECD9D002AEFB7 /* AppDelegate.swift in Sources */,
-				7303B8B22A0AA52D004C4C52 /* GoogleMobileAdsKey.swift in Sources */,
 				7329D7632B82F7C800D24D8F /* ViewModelabel.swift in Sources */,
 				73A9DAF72B8BA96F00D10102 /* CampusManager.swift in Sources */,
 				734360082A2DBBE800845A1B /* HeartService.swift in Sources */,
+				73DCDA5D2B937EEB0033FA85 /* MapViewModel.swift in Sources */,
 				23C993A429108F6F00B8D1E4 /* RestaurantSearchViewController.swift in Sources */,
 				73DCDA542B93201D0033FA85 /* WebViewModel.swift in Sources */,
 				73C5B24C29F58FEC0035FB64 /* UpdateBottomAlertViewController.swift in Sources */,
@@ -1131,7 +1139,7 @@
 				23735B0128FEDBF900599221 /* UIColor.swift in Sources */,
 				7329D7612B82EAB100D24D8F /* HeartViewModel.swift in Sources */,
 				A2431C8C29A3473D00D8E493 /* String+.swift in Sources */,
-				73178AC129EAFC3A001C3AA4 /* MapStoreView.swift in Sources */,
+				73178AC129EAFC3A001C3AA4 /* MapInfoView.swift in Sources */,
 				7303B8B02A0AA28F004C4C52 /* GoogleMobileAdsController.swift in Sources */,
 				A23F2DB829A3131C0046ED70 /* SplashViewController.swift in Sources */,
 				73A9DAFA2B8BB12D00D10102 /* RestaurantViewModel.swift in Sources */,

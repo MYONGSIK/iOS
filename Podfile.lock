@@ -110,7 +110,7 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Core
   - Google-Mobile-Ads-SDK
-  - KakaoMapsSDK
+  - KakaoMapsSDK (~> 2.9.2)
   - Kingfisher
   - SnapKit
   - Then
@@ -156,6 +156,6 @@ SPEC CHECKSUMS:
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: c7279e9875446f049d50a987eb2be689c52c56e6
+PODFILE CHECKSUM: c511baca0f365971df2c5527175799dffdeac6e3
 
 COCOAPODS: 1.14.3

@@ -6,21 +6,18 @@
 //
 
 import UIKit
+import Combine
+import CombineCocoa
 import Toast
 
-protocol MapStoreDelegate {
-    func addHeart(placeName: String, category: String, url: String)
-    func removeHeart(placeName: String)
-    func requestAddHeart(storeModel: RestaurantModel)
-    func showToast(message: String)
-}
-
-
-class MapStoreView: UIView {
+class MapInfoView: UIView {
     
-    private var storeModel: RestaurantModel?
+    private var heart: RequestHeartModel?
     private var isHeart: Bool = false
-    private var delegate: MapStoreDelegate?
+    private var id: String?
+    
+    private var cancellabels = Set<AnyCancellable>()
+    private var input: PassthroughSubject<MapViewModel.Input, Never>?
     
     
     private let closeView = UIView().then {
@@ -56,9 +53,9 @@ class MapStoreView: UIView {
         $0.layer.borderColor = UIColor.gray.cgColor
         $0.layer.borderWidth = 0.5
         
-        $0.addTarget(self, action: #selector(heartButtonTap), for: .touchUpInside)
         $0.layer.cornerRadius = 15
         $0.setImage(UIImage(named: "heartButton"), for: .normal)
+        $0.setImage(UIImage(named: "heartFillButton"), for: .selected)
         
         $0.layer.shadowColor = UIColor(red: 62 / 255, green: 64 / 255, blue: 74 / 255, alpha: 0.16).cgColor
         $0.layer.shadowOpacity = 1
@@ -70,7 +67,6 @@ class MapStoreView: UIView {
         $0.layer.borderColor = UIColor.gray.cgColor
         $0.layer.borderWidth = 0.5
         
-        $0.addTarget(self, action: #selector(phoneButtonTap), for: .touchUpInside)
         $0.layer.cornerRadius = 15
         $0.setImage(UIImage(named: "phoneButton"), for: .normal)
         
@@ -80,22 +76,24 @@ class MapStoreView: UIView {
         $0.layer.shadowOffset = CGSize(width: 0, height: 4)
     }
     
+    func setId(id: String?) {
+        self.id = id
+    }
     
     
-    func configure(storeModel: RestaurantModel, isHeart: Bool, delegate: MapStoreDelegate) -> UIView {
+    
+    func configure(heart: RequestHeartModel, isHeart: Bool, id: String?, input: PassthroughSubject<MapViewModel.Input, Never>) -> UIView {
         setUpInitialSubView()
         
-        self.isHeart = isHeart
+        self.heart = heart
+        self.input = input
+        self.id = id
         
-        self.storeModel = storeModel
-        self.isHeart = isHeart
-        self.delegate = delegate
+        if let name = heart.name {storeNameLabel.text = name}
+        if let category = heart.category {categoryLabel.text = category}
+        if let address = heart.address { addressLabel.text = address}
         
-        storeNameLabel.text = storeModel.name
-        categoryLabel.text = storeModel.category
-        addressLabel.text = storeModel.address
-        
-        if let distance = storeModel.distance {
+        if let distance = heart.distance {
             if let distanceInt = Int(distance){
                 if distanceInt >= 1000 {
                     let distanceKmFirst = distanceInt / 1000
@@ -106,47 +104,13 @@ class MapStoreView: UIView {
                 }
             }
         }
+        reloadDataAnimation(isHeart: isHeart)
         
-        if self.isHeart {
-            heartButton.setImage(UIImage(named: "heartFillButton"), for: .normal)
-        }
+        bind()
         
         return self
     }
     
-    
-    @objc func heartButtonTap() {
-        if self.isHeart {
-            removeHeartAnimation()
-            
-            guard let placeName = storeModel?.name else {return}
-            delegate?.removeHeart(placeName: placeName)
-        }else {
-            addHeartAnimation()
-            
-            guard let placeName = storeModel?.name else {return}
-            guard let category = storeModel?.category else {return}
-            guard let url = storeModel?.urlAddress else {return}
-            
-            delegate?.addHeart(placeName: placeName, category: category, url: url)
-            delegate?.requestAddHeart(storeModel: storeModel!)
-        }
-        
-        self.isHeart.toggle()
-    }
-    
-    @objc func phoneButtonTap() {
-        if let phoneNum = storeModel?.contact {
-            let url = "tel://\(phoneNum)"
-            
-            if let openApp = URL(string: url), UIApplication.shared.canOpenURL(openApp) {
-                if #available(iOS 10.0, *) { UIApplication.shared.open(openApp, options: [:], completionHandler: nil) }
-                else { UIApplication.shared.openURL(openApp) }
-            }
-            else { delegate?.showToast(message: "번호가 등록되어있지 않습니다!") }
-        }
-        else { delegate?.showToast(message: "번호가 등록되어있지 않습니다!") }
-    }
     
     private func setUpInitialSubView() {
         self.backgroundColor = .white
@@ -221,34 +185,35 @@ class MapStoreView: UIView {
             $0.leading.equalTo(heartButton.snp.trailing).offset(6)
             $0.trailing.equalToSuperview().inset(12)
             $0.top.equalTo(addressLabel.snp.bottom).offset(12)
-//            $0.width.equalTo(buttonWidth)
             $0.height.equalTo(48)
         }
         
     }
     
-
-}
-
-extension MapStoreView {
-    func addHeartAnimation() {
-        delegate?.showToast(message: "찜꽁리스트에 추가되었습니다.💙")
+    func bind() {
+        heartButton.tapPublisher.sink { [weak self] _ in
+            if self!.isHeart {
+                self?.input?.send(.cancelHeart((self?.id)!))
+            }else {
+                self?.input?.send(.postHeart(self!.heart!))
+            }
+        }.store(in: &cancellabels)
+        
+        phoneButton.tapPublisher.sink { [weak self] _ in
+            self?.input?.send(.tapPhoneButton(self!.heart!))
+        }.store(in: &cancellabels)
+    }
+    
+    func reloadDataAnimation(isHeart: Bool) {
         UIView.transition(with: self.heartButton,
                           duration: 0.35,
                           options: .transitionCrossDissolve,
-                          animations: { () -> Void in
-            self.heartButton.setImage(UIImage(named: "heartFillButton"), for: .normal)},
-                          completion: nil);
-    }
-    func removeHeartAnimation() {
-        delegate?.showToast(message: "찜꽁리스트에서 삭제되었습니다.🥲")
-        UIView.transition(with: self.heartButton,
-                          duration: 0.35,
-                          options: .transitionCrossDissolve,
-                          animations: { () -> Void in
-            self.heartButton.setImage(UIImage(named: "heartButton"), for: .normal)},
-                          completion: nil);
+                          animations: {
+                            self.isHeart = isHeart
+                            self.heartButton.isSelected = isHeart
+                         },
+                         completion: nil);
     }
     
-    
+
 }
