@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Combine
 import CombineCocoa
+import GoogleMobileAds
 
 
 class SelectRestaurantViewController: MainBaseViewController {
@@ -18,6 +19,7 @@ class SelectRestaurantViewController: MainBaseViewController {
     
     private var areaList: [Area] = []
     
+    private var bannerView: GADBannerView!
     private var buttonTableView = UITableView()
     
     override func viewDidLoad() {
@@ -41,16 +43,28 @@ class SelectRestaurantViewController: MainBaseViewController {
         buttonTableView.rowHeight = UITableView.automaticDimension
         buttonTableView.estimatedRowHeight = UITableView.automaticDimension
         buttonTableView.separatorStyle = .none
+        
+        bannerView = GADBannerView(adSize: GADAdSizeBanner)
+        bannerView.adUnitID = Key.googleKey
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
     
     }
     
     private func setupView() {
         self.view.addSubview(buttonTableView)
+        self.view.addSubview(bannerView)
     }
     
     private func setupConstraints() {
-        buttonTableView.snp.makeConstraints {
+        bannerView.snp.makeConstraints {
             $0.top.equalTo(super.navigationImgView.snp.bottom).inset(10)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(80)
+        }
+        
+        buttonTableView.snp.makeConstraints {
+            $0.top.equalTo(bannerView.snp.bottom).inset(10)
             $0.leading.equalToSuperview().offset(15)
             $0.trailing.equalToSuperview().offset(-15)
             $0.bottom.equalToSuperview()
