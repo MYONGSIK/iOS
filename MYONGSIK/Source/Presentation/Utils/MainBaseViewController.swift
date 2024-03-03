@@ -60,7 +60,7 @@ class MainBaseViewController: UIViewController {
     
     @objc func goSettingRestaurant(_ sender: UIButton) {
         UIDevice.vibrate()
-        let settingVC = SettingRestautrantViewController()
+        let settingVC = SettingAreaViewController()
         self.navigationController?.pushViewController(settingVC, animated: true)
     }
 }

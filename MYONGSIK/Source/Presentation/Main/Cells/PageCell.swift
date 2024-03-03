@@ -6,12 +6,13 @@
 //
 
 import UIKit
-import SnapKit
 
 class PageCell: UICollectionViewCell {
     private let foodInfoTableView = UITableView()
     
     private var day = 0
+    var foodList: [DayFoodModel] = []
+    var area: Area?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -59,20 +60,12 @@ class PageCell: UICollectionViewCell {
 
 extension PageCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count = 0
-        MainViewModel.shared.getSelectedRestaurantFoodCount { foodCount in
-            count = foodCount
-        }
-        return count
+        return foodList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FoodInfoCell
-        
-        MainViewModel.shared.getDayFood(day: day, index: indexPath.row, cancelLabels: &cell.cancelLabels) { foodInfo in
-            cell.setContent(foodInfo: foodInfo)
-        }
-        
+        cell.setContent(foodInfo: foodList[indexPath.row], area: area!)
         return cell
     }
     

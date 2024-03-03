@@ -1,15 +1,14 @@
-//
-//  ViewController.swift
-//  MYONGSIK
-//
-//  Created by gomin on 2022/10/18.
-//
-
 import UIKit
-import SnapKit
+import Combine
 
 class MainViewController: MainBaseViewController {
-    // MARK: - Variables
+    private let viewModel = FoodViewModel()
+    private var cancellabels = Set<AnyCancellable>()
+    private let input: PassthroughSubject<FoodViewModel.Input, Never> = .init()
+    
+    var foodList: [DayFoodModel] = []
+    var area: Area?
+    
     private var currentPageNum = 0
     private var startDate = Date()
 
@@ -49,8 +48,6 @@ class MainViewController: MainBaseViewController {
     private let tablePageControl = UIPageControl()
     private let tablePageView = UIView()
     
-    private let submitButton = UIButton()
-    
     private let isEmptyDataLabel = UILabel()
 
 
@@ -62,13 +59,14 @@ class MainViewController: MainBaseViewController {
         setup()
         setupView()
         setupConstraint()
-        setupObserver()
+        setupArea()
         setupCurrentPage()
+        bind()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        MainViewModel.shared.removeFoodList()
-        self.navigationController?.popViewController(animated: true)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        input.send(.viewDidLoad(area!))
     }
     
     private func setup() {
@@ -118,15 +116,6 @@ class MainViewController: MainBaseViewController {
         config.background.backgroundColor = .signatureBlue
         config.cornerStyle = .capsule
         
-        submitButton.configuration = config
-        submitButton.clipsToBounds = true
-        submitButton.setImage(UIImage(named: "pencil"), for: .normal)
-        submitButton.layer.shadowColor = UIColor.black.cgColor
-        submitButton.layer.masksToBounds = false
-        submitButton.layer.shadowOffset = CGSize(width: 0, height: 0)
-        submitButton.layer.shadowRadius = 2
-        submitButton.layer.shadowOpacity = 0.25
-        submitButton.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
      
         isEmptyDataLabel.text = "* 제공된 학식 정보가 없습니다 *"
         isEmptyDataLabel.numberOfLines = 0
@@ -156,8 +145,6 @@ class MainViewController: MainBaseViewController {
         contentView.addSubview(mealCollectionView)
         
         contentView.addSubview(tablePageControl)
-
-        contentView.addSubview(submitButton)
     }
     
     func setupConstraint() {
@@ -203,7 +190,7 @@ class MainViewController: MainBaseViewController {
             make.top.equalTo(operatingTimeLabel.snp.bottom).offset(20)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(MainViewModel.shared.getRestaurantFoodCount() * 150)
+            make.height.equalTo((area?.getFoodInfoCount())! * 150)
         }
         
         
@@ -213,55 +200,48 @@ class MainViewController: MainBaseViewController {
             make.height.equalTo(30)
         }
         
-        submitButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(tablePageControl.snp.bottom).offset(30)
-            make.width.equalTo(245)
-            make.height.equalTo(50)
-        }
-      
-        
         isEmptyDataLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(CGFloat.screenHeight / 3)
             make.centerX.equalToSuperview()
         }
         
-        
-        
-        
     }
     
-    private func setupObserver() {
-        MainViewModel.shared.getFoodList { [self] foodList in
-            if foodList.isEmpty {
-                scrolleView.isScrollEnabled = false
-                mealCollectionView.isHidden = true
-                tablePageControl.isHidden = true
-                submitButton.isHidden = true
-                isEmptyDataLabel.isHidden = false
-            }else {
-                scrolleView.isScrollEnabled = true
-                mealCollectionView.isHidden = false
-                tablePageControl.isHidden = false
-                submitButton.isHidden = false
-                isEmptyDataLabel.isHidden = true
-             
-                
-                setupCurrentPage()
-            }
+    private func setupArea() {
+        if foodList.isEmpty {
+            scrolleView.isScrollEnabled = false
+            mealCollectionView.isHidden = true
+            tablePageControl.isHidden = true
+            isEmptyDataLabel.isHidden = false
+        }else {
+            scrolleView.isScrollEnabled = true
+            mealCollectionView.isHidden = false
+            tablePageControl.isHidden = false
+            isEmptyDataLabel.isHidden = true
+            
+            
+            setupCurrentPage()
         }
         
-        MainViewModel.shared.getSelectedRestaurant { restaurant in
-            switch restaurant {
-            case .mcc, .paulbassett:
-                return
-            default:
-                self.operatingTimeLabel.attributedText = "운영시간  |  \(restaurant.getResTime())"
-                    .attributed(of: "운영시간", value: [
-                        .foregroundColor: UIColor.darkGray
-                ])
-            }
+        if area != .mcc || area != .paulbassett {
+            self.operatingTimeLabel.attributedText = "운영시간  |  \(area!.getResTime())"
+                .attributed(of: "운영시간", value: [
+                    .foregroundColor: UIColor.darkGray
+            ])
         }
+    }
+    
+    func bind() {
+        let output = viewModel.trastfrom(input.eraseToAnyPublisher())
+        
+        output.receive(on: DispatchQueue.main).sink { [weak self] event in
+            switch event {
+            case .updateFood(let foodList):
+                self?.foodList = foodList
+                self?.setupArea()
+                self?.reloadDataAnimation()
+            }
+        }.store(in: &cancellabels)
     }
     
     private func setupCurrentPage() {
@@ -347,22 +327,23 @@ class MainViewController: MainBaseViewController {
         setArrowButtons()
     }
     
+    func reloadDataAnimation() {
+        UIView.transition(with: self.mealCollectionView,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { () -> Void in
+                          self.mealCollectionView.reloadData()},
+                          completion: nil);
+    }
+    
     
     @objc private func didTapBackItemButton() {
-        MainViewModel.shared.removeFoodList()
         self.navigationController?.popViewController(animated: true)
     }
     
 
     @objc private func didTapGoBeforeButton(_ sender: UIButton) {didTapChangeDateButton(value: -1) }
     @objc private func didTapGoAfterButton(_ sender: UIButton) { didTapChangeDateButton(value: 1) }
-    
-    @objc func submitButtonTapped(_ sender: UIButton){
-        let submitViewController = SubmitViewController()
-        submitViewController.modalPresentationStyle = .custom
-        submitViewController.modalTransitionStyle = .crossDissolve
-        self.present(submitViewController, animated: true)
-    }
 }
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -376,7 +357,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PageCell
         
         cell.setDay(page: indexPath.row)
-        
+        cell.area = area
+        cell.foodList = foodList
         return cell
     }
     

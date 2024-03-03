@@ -16,11 +16,6 @@ class TabBarViewController: UITabBarController {
         self.tabBar.backgroundColor = .white
         
         
-        let gaAdController = GoogleMobileAdsController()
-         
-        gaAdController.createAndLoadInterstitial(vc: self)
-        
-        
        // 인스턴스화
         let resVC = RestaurantMainViewController()
         let mapVC = MapViewController()
@@ -47,7 +42,7 @@ class TabBarViewController: UITabBarController {
         let nav3 = UINavigationController(rootViewController: mainVC)
         let nav4 = UINavigationController(rootViewController: heartVC)
     
-        setViewControllers([nav1, nav2, nav3, nav4], animated: false)
+        setViewControllers([nav1,nav2, nav3, nav4], animated: false)
         
         self.selectedIndex = 2
     }

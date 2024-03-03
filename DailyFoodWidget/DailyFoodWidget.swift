@@ -46,7 +46,7 @@ struct DayFoodModel: Decodable {
     let toDay: String?
 }
 
-let baseURL = "http://43.201.72.185:8085/api/v2/meals/"
+let baseURL = "http://ms.everymeal.shop/api/v2/meals/"
 
 // MARK: 위젯을 새로고침할 타임라인을 결정하는 객체
 //struct Provider: IntentTimelineProvider {

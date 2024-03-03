@@ -7,7 +7,7 @@ target 'MYONGSIK' do
 
   # Pods for MYONGSIK
 
-	pod 'SnapKit', '~> 5.6.0'
+	pod 'SnapKit'
 	pod 'Then'
 	pod 'Kingfisher'
 	pod 'Alamofire'
@@ -16,12 +16,8 @@ target 'MYONGSIK' do
   pod 'Firebase/Core'
   pod 'Firebase/Analytics'
   pod 'Google-Mobile-Ads-SDK'
-
-	#RxSwift
-    	pod 'RxSwift'
-#    	pod 'RxCocoa'
-
-	pod 'RealmSwift', '~>10'
+  pod 'CombineCocoa'
+  pod 'KakaoMapsSDK' , '~> 2.9.2'
 
   target 'MYONGSIKTests' do
     inherit! :search_paths

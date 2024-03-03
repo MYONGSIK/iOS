@@ -6,7 +6,8 @@
 //
 
 import UIKit
-import RealmSwift
+import Combine
+import CombineCocoa
 
 protocol RestaurantCellDelegate {
     func showToast(message: String)
@@ -16,16 +17,20 @@ enum CellTodo {
     case main
     case random
     case search
+    case tag
 }
 
 // MARK: 검색 페이지 > 검색 결과 셀
 class SearchResultTableViewCell: UITableViewCell {
-    let realm = try! Realm()
-    var campusInfo: CampusInfo?
-    var storeData: StoreModel?
-    var data: HeartListModel?
+    private var cancellabels = Set<AnyCancellable>()
+    var mainInput: PassthroughSubject<RestaurantViewModel.Input, Never>!
+    var searchInput: PassthroughSubject<RestaurantSearchViewModel.Input, Never>!
+    var tagInput: PassthroughSubject<RestaurantTagViewModel.Input, Never>!
+    
+    var restaurantData: RestaurantModel?
     var delegate: RestaurantCellDelegate?
     
+    var cellType: CellTodo = .main
     // MARK: Views
     let howManyLikeLabel = UILabel().then {
         $0.text = "명지대학생들이 00명이 담았어요!"
@@ -64,13 +69,7 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.textColor = .signatureBlue
     }
-//    let heartButton = UIButton().then {
-//        $0.setImage(UIImage(systemName: "heart"), for: .normal)
-//        $0.setImage(UIImage(systemName: "heart.fill"), for: .selected)
-//        $0.tintColor = .lightGray
-//
-//        $0.addTarget(self, action: #selector(didTapHeartButton(_:)), for: .touchUpInside)
-//    }
+
     let pinImage = UIImageView().then{
         $0.image = UIImage(named: "pin")
     }
@@ -79,7 +78,6 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.titleLabel?.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.contentHorizontalAlignment  = .left
         $0.setTitleColor(UIColor.placeContentColor, for: .normal)
-        $0.addTarget(self, action: #selector(didTapLocationButton(_:)), for: .touchUpInside)
         
     }
     let phoneImage = UIImageView().then{
@@ -90,7 +88,6 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.titleLabel?.font = UIFont.NotoSansKR(size: 13, family: .Bold)
         $0.contentHorizontalAlignment  = .left
         $0.setTitleColor(UIColor.placeContentColor, for: .normal)
-        $0.addTarget(self, action: #selector(didTapPhoneNumButton(_:)), for: .touchUpInside)
     }
     lazy var goLinkButton = UIButton().then{
         $0.setTitle("바로 가기", for: .normal)
@@ -103,8 +100,6 @@ class SearchResultTableViewCell: UITableViewCell {
         $0.tintColor = .white
         $0.backgroundColor = .signatureBlue
         $0.layer.cornerRadius = 15
-        
-        $0.addTarget(self, action: #selector(didTapGoLinkButton), for: .touchUpInside)
     }
     
     
@@ -120,22 +115,16 @@ class SearchResultTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+//        self.prepareForReuse()
+        
+        self.cancellabels.removeAll()
+    }
+    
     // MARK: Functions
     func deleteAllSubViews() {
-        [
-            howManyLikeLabel,
-            backView,
-            placeNameLabel,
-            dotLabel,
-            placeCategoryLabel,
-            distanceLabel,
-            goLinkButton,
-            pinImage,
-            locationButton,
-            phoneImage,
-            phoneNumButton
-            
-        ].forEach { subView in
+        [howManyLikeLabel, backView, placeNameLabel, dotLabel, placeCategoryLabel,
+        distanceLabel, goLinkButton, pinImage, locationButton, phoneImage, phoneNumButton].forEach { subView in
             subView.removeFromSuperview()
         }
     }
@@ -148,7 +137,6 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.addSubview(dotLabel)
         backView.addSubview(placeCategoryLabel)
         backView.addSubview(distanceLabel)
-//        backView.addSubview(heartButton)
         
         backView.addSubview(goLinkButton)
         
@@ -165,7 +153,6 @@ class SearchResultTableViewCell: UITableViewCell {
         backView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(15)
             make.top.equalTo(howManyLikeLabel.snp.bottom).offset(5)
-//            make.top.equalToSuperview().offset(40)
             make.bottom.equalToSuperview().inset(10)
         }
         placeNameLabel.snp.makeConstraints { make in
@@ -184,11 +171,7 @@ class SearchResultTableViewCell: UITableViewCell {
             make.centerY.equalTo(placeCategoryLabel)
             make.trailing.lessThanOrEqualToSuperview().offset(-20)  //
         }
-//        heartButton.snp.makeConstraints { make in
-//            make.top.trailing.equalToSuperview().inset(20)
-//            make.leading.equalTo(distanceLabel.snp.trailing).offset(5)
-//            make.width.height.equalTo(30)
-//        }
+
         goLinkButton.snp.makeConstraints { make in
             make.width.equalTo(100)
             make.height.equalTo(30)
@@ -202,7 +185,6 @@ class SearchResultTableViewCell: UITableViewCell {
         locationButton.snp.makeConstraints { make in
             make.leading.equalTo(pinImage.snp.trailing).offset(10)
             make.top.centerY.equalTo(pinImage)
-//            make.trailing.lessThanOrEqualTo(goLinkButton.snp.leading).offset(-42)
             make.trailing.equalToSuperview().offset(-20)
         }
         phoneImage.snp.makeConstraints { make in
@@ -219,7 +201,6 @@ class SearchResultTableViewCell: UITableViewCell {
     private func setNoHowManyLabelConstraints() {
         howManyLikeLabel.removeFromSuperview()
 
-        /// set constraints
         self.backView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
         }
@@ -235,122 +216,25 @@ class SearchResultTableViewCell: UITableViewCell {
         
     }
     
-    @objc func didTapHeartButton(_ sender: UIButton) {
-        print("식당 좋아요 버튼 탭함")
-        sender.isSelected = !sender.isSelected
-        if sender.isSelected {
-            sender.tintColor = .systemPink
-            addHeartData(data: self.data)   // 로컬에 찜 추가
-        }
-        if !sender.isSelected {
-            sender.tintColor = .lightGray
-            deleteHeartData(data: self.data)    // 로컬에 찜 삭제
+    func setupLayout(todo: CellTodo) {
+        cellType = todo
+        switch todo {
+        case .main:
+            deleteAllSubViews()
+            setUpView()
+            setUpConstraint()
+        default:
+            setUpView()
+            setNoHowManyLabelConstraints()
         }
     }
     
-    @objc func didTapGoLinkButton() {
-        print("didTapGoLinkButton")
-        guard let link = self.data?.placeUrl else {return}
-        guard let placeName = self.data?.placeName else {return}
-        guard let category = self.data?.category else {return}
+    func setupRestaurant(_ data: RestaurantModel, _ cellMode: CellMode) {
+        self.restaurantData = data
         
-        let webView = WebViewController()
-        webView.campusInfo = campusInfo
-        webView.storeData = storeData
-//        print("웹뷰로 넘어가는 데이터 - \(storeData)")
-        webView.webURL = link
-        webView.placeName = placeName
-        webView.category = category
-        if let vc = self.next(ofType: UIViewController.self) { vc.navigationController?.pushViewController(webView, animated: true) }
-    }
-    
-    @objc func didTapPhoneNumButton(_ sender: UIButton) {
-        if let phoneNum = sender.titleLabel?.text {
-            let url = "tel://\(phoneNum)"
-            
-            if let openApp = URL(string: url), UIApplication.shared.canOpenURL(openApp) {
-                if #available(iOS 10.0, *) { UIApplication.shared.open(openApp, options: [:], completionHandler: nil) }
-                else { UIApplication.shared.openURL(openApp) }
-            }
-            else { delegate?.showToast(message: "번호가 등록되어있지 않습니다!") }
+        if cellMode == .rankCell {
+            if let count = data.scrapCount {self.howManyLikeLabel.text = "명지대학생들이 \(count)명이 담았어요!"}
         }
-        else { delegate?.showToast(message: "번호가 등록되어있지 않습니다!") }
-    }
-    
-    @objc func didTapLocationButton(_ sender: UIButton) {
-        if let location = sender.titleLabel?.text {
-            
-            let urlStr = "nmap://search?query=" + location
-            let encodedStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-            
-            if let url = URL(string: encodedStr), UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-            else { delegate?.showToast(message: "네이버 지도앱이 설치되어있지 않습니다!") }
-        }
-    }
-    
-    // MARK: 서버에서 데이터를 받아온 후 출력시킵니다.
-    func setUpData(_ data: KakaoResultModel) {
-        print("setUpData called --> \(data)")
-        self.data = HeartListModel(placeName: data.place_name ?? nil,
-                                   category: data.category_group_name ?? nil,
-                                   placeUrl: data.place_url ?? nil)
-        self.storeData = StoreModel(address: data.road_address_name,
-                                    category: data.category_group_name,
-                                    code: data.id,
-                                    contact: data.phone,
-                                    distance: data.distance,
-                                    name: data.place_name,
-                                    scrapCount: nil,
-                                    storeId: Int(data.id!),
-                                    urlAddress: data.place_url,
-                                    longitude: data.x,
-                                    latitude: data.y)
-
-        if let placeName = data.place_name {self.placeNameLabel.text = placeName}
-        if let category = data.category_group_name {self.placeCategoryLabel.text = category}
-        if let distance = data.distance {
-            guard let distanceInt = Int(distance) else {return}
-            if distanceInt >= 1000 {
-                let distanceKmFirst = distanceInt / 1000
-                let distanceKmSecond = (distanceInt % 1000) / 100
-                self.distanceLabel.text = "\(distanceKmFirst).\(distanceKmSecond)km"
-            } else {
-                self.distanceLabel.text = "\(distanceInt)m"
-            }
-        }
-        if let location  = data.road_address_name {
-            self.locationButton.setTitle(location, for: .normal)
-            if location == "" {
-                self.locationButton.setTitle("주소가 없습니다.", for: .normal)
-                self.storeData?.address = "주소가 없습니다."
-            } else {
-                let attributedString = NSMutableAttributedString.init(string: location)
-                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: location.count))
-                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.signatureGray, range: NSRange.init(location: 0, length: location.count))
-                self.locationButton.setAttributedTitle(attributedString, for: .normal)
-            }
-        }
-        if let phone = data.phone {
-            self.phoneNumButton.setTitle(phone, for: .normal)
-            if phone == "" {
-                self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)
-                self.storeData?.contact = "전화번호가 없습니다."
-            } else {
-                let attributedString = NSMutableAttributedString.init(string: phone)
-                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: phone.count))
-                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.signatureGray, range: NSRange.init(location: 0, length: phone.count))
-                self.phoneNumButton.setAttributedTitle(attributedString, for: .normal)
-            }
-        }
-    }
-    func setUpDataWithRank(_ data: StoreModel) {
-        self.storeData = data
-        self.data = HeartListModel(placeName: data.name ?? nil,
-                                   category: data.category ?? nil,
-                                   placeUrl: data.urlAddress ?? nil)
-        if let count = data.scrapCount {self.howManyLikeLabel.text = "명지대학생들이 \(count)명이 담았어요!"}
         if let placeName = data.name {self.placeNameLabel.text = placeName}
         if let category = data.category {self.placeCategoryLabel.text = category}
         if let distance = data.distance {
@@ -367,7 +251,7 @@ class SearchResultTableViewCell: UITableViewCell {
             self.locationButton.setTitle(location, for: .normal)
             if location == "" {
                 self.locationButton.setTitle("주소가 없습니다.", for: .normal)
-                self.storeData?.address = "주소가 없습니다."
+                self.restaurantData?.address = "주소가 없습니다."
             } else {
                 let attributedString = NSMutableAttributedString.init(string: location)
                 attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: location.count))
@@ -379,7 +263,7 @@ class SearchResultTableViewCell: UITableViewCell {
             self.phoneNumButton.setTitle(phone, for: .normal)
             if phone == "" {
                 self.phoneNumButton.setTitle("전화번호가 없습니다.", for: .normal)
-                self.storeData?.contact = "전화번호가 없습니다."
+                self.restaurantData?.contact = "전화번호가 없습니다."
             } else {
                 let attributedString = NSMutableAttributedString.init(string: phone)
                 attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: phone.count))
@@ -387,41 +271,48 @@ class SearchResultTableViewCell: UITableViewCell {
                 self.phoneNumButton.setAttributedTitle(attributedString, for: .normal)
             }
         }
-        if let longitude = data.longitude { self.storeData?.longitude = longitude }
-        if let latitude = data.latitude { self.storeData?.latitude = latitude }
-    }
-    
-    func addHeartData(data: HeartListModel?) {
-        if let data = data {
-            
-            let objc = HeartListData()
-            objc.placeName = data.placeName
-            objc.category = data.category
-            objc.placeUrl = data.placeUrl
-            
-            try! realm.write { realm.add(objc) }
+        if let longitude = data.longitude { self.restaurantData?.longitude = longitude }
+        if let latitude = data.latitude { self.restaurantData?.latitude = latitude }
+        
+        if cellMode == .rankCell {
+            setupLayout(todo: .main)
+        }else {
+            setupLayout(todo: .random)
         }
+        
+        bind()
     }
     
-    func deleteHeartData(data: HeartListModel?) {
-        if let data = data {
-            let predicate = NSPredicate(format: "placeName = %@", data.placeName)
-            let objc = realm.objects(HeartListData.self).filter(predicate)
-            try! realm.write { realm.delete(objc) }
-        }
+    func bind() {
+        goLinkButton.tapPublisher.sink { [weak self] _ in
+            if self?.cellType == .search{
+                self?.searchInput.send(.tapWebButton((self?.restaurantData)!))
+            }else if self?.cellType == .main || self?.cellType == .random{
+                self?.mainInput.send(.tapWebButton((self?.restaurantData)!))
+            }else if self?.cellType == .tag {
+                self?.tagInput.send(.tapWebButton((self?.restaurantData)!))
+            }
+        }.store(in: &cancellabels)
+        
+        locationButton.tapPublisher.sink { [weak self] _ in
+            if self?.cellType == .search {
+                self?.searchInput.send(.tapAddressButton((self?.restaurantData)!))
+            }else if self?.cellType == .main  {
+                self?.mainInput.send(.tapAddressButton((self?.restaurantData)!))
+            }else if self?.cellType == .tag {
+                self?.tagInput.send(.tapAddressButton((self?.restaurantData)!))
+            }
+        }.store(in: &cancellabels)
+        
+        phoneNumButton.tapPublisher.sink { [weak self] _ in
+            if self?.cellType == .search {
+                self?.searchInput.send(.tapPhoneButton((self?.restaurantData)!))
+            }else if self?.cellType == .main  {
+                self?.mainInput.send(.tapPhoneButton((self?.restaurantData)!))
+            }else if self?.cellType == .tag {
+                self?.tagInput.send(.tapPhoneButton((self?.restaurantData)!))
+            }
+        }.store(in: &cancellabels)
+        
     }
-    
-    func setupLayout(todo: CellTodo) {
-        switch todo {
-        case .main:
-            deleteAllSubViews()
-            setUpView()
-            setUpConstraint()
-            
-        default:
-            setUpView()
-            setNoHowManyLabelConstraints()
-        }
-    }
-    
 }

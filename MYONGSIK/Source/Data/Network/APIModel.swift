@@ -13,7 +13,26 @@ struct APIModel<T: Decodable>: Decodable {
     let httpStatus: String?
     let message: String?
     var data: T?
-    
-//    let errorCode: String?
-//    let dayOfTheWeek: String?
+}
+
+
+struct ListModel<T: Codable>: Codable {
+    let content: [T]?
+    let empty, first, last: Bool
+    let number, numberOfElements: Int
+    let pageable: Pageable
+    let size: Int
+    let sort: Sort
+    let totalElements, totalPages: Int
+}
+
+struct Pageable: Codable {
+    let offset, pageNumber, pageSize: Int
+    let paged: Bool
+    let sort: Sort
+    let unpaged: Bool
+}
+
+struct Sort: Codable {
+    let empty, sorted, unsorted: Bool
 }

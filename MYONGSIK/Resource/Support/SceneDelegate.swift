@@ -17,7 +17,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
-        MainViewModel.shared.loadCampus()
         
         // MARK: Light mode
         //iOS 13 부터 다크모드가 적용되므로 다음과 같은 조건문 성립.
@@ -34,14 +33,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         
-        MainViewModel.shared.campus { campus in
-            if campus == "" {
-                self.window?.rootViewController = SplashViewController()
-            }else {
-                self.window?.rootViewController = TabBarViewController()
-            }
+        if let campus = CampusManager.shared.campus {
+            self.window?.rootViewController = TabBarViewController()
+        }else {
+            self.window?.rootViewController = SplashViewController()
         }
-    
+        
         window?.backgroundColor = .systemBackground
         window?.makeKeyAndVisible()
     }
