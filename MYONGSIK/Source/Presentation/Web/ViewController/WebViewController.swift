@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+
 import Combine
 import CombineCocoa
 
@@ -20,7 +21,7 @@ class WebViewController: UIViewController, WKUIDelegate {
     var heart: RequestHeartModel?
     var isHeart: Bool = false
     var id: String?
-    
+
     let heartButton = UIButton().then{
         $0.setImage(UIImage(named: "empty_heart"), for: .normal)
         $0.setImage(UIImage(named: "fill_heart"), for: .selected)
@@ -47,12 +48,14 @@ class WebViewController: UIViewController, WKUIDelegate {
         self.tabBarController?.tabBar.isHidden = true
         
         setUpView()
+
         bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         heartButton.isSelected = isHeart
         input.send(.viewDidLoad(heart!))
+
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -102,6 +105,7 @@ class WebViewController: UIViewController, WKUIDelegate {
             }
         }.store(in: &cancellabels)
     }
+
 
     func addHeartAnimation() {
         ToastBar(self, message: .addHeart)

@@ -50,3 +50,4 @@ final class WebViewModel: ViewModelabel {
         return output.eraseToAnyPublisher()
     }
 }
+
