@@ -86,14 +86,14 @@ class FoodInfoCell: UITableViewCell {
         }
     }
     
-    func setContent(foodInfo: DayFoodModel) {
+    func setContent(foodInfo: DayFoodModel, area: Area) {
         switch foodInfo.mealType {
         case "LUNCH_A":
-            categoryLabel.text = MainViewModel.shared.getRestaurant().getLunchAName()
+            categoryLabel.text = area.getLunchAName()
         case "LUNCH_B":
-            categoryLabel.text = MainViewModel.shared.getRestaurant().getLunchBName()
+            categoryLabel.text = area.getLunchBName()
         case "DINNER":
-            categoryLabel.text = MainViewModel.shared.getRestaurant().getDinnerName()
+            categoryLabel.text = area.getDinnerName()
         default:
             categoryLabel.text = ""
         }

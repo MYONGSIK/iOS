@@ -9,8 +9,6 @@ import Foundation
 import Combine
 
 final class HeartViewModel: ViewModelabel {
-    static let shared = HeartViewModel()
-    
     private let heartService: HeartServiceProtocol
     private let output: PassthroughSubject<Output, Never> = .init()
     private var cancellabels = Set<AnyCancellable>()

@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         FirebaseApp.configure()
-        GADMobileAds.sharedInstance().start()
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         SDKInitializer.InitSDK(appKey: Key.kakaoKey)
         return true
     }

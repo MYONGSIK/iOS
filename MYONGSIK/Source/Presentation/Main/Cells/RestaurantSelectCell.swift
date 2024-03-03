@@ -82,11 +82,11 @@ class RestaurantSelectCell: UITableViewCell {
         }
     }
     
-    func setupContent(restaurant: Restaurant) {
-        restaurantNameLabel.text = restaurant.rawValue
-        operatingTimeLabel.text = restaurant.getTime()
+    func setupContent(area: Area) {
+        restaurantNameLabel.text = area.rawValue
+        operatingTimeLabel.text = area.getTime()
         
-        if restaurant == .myungjin {
+        if area == .myungjin {
             restaurantNameLabel.snp.makeConstraints {
                 $0.top.equalToSuperview().inset(15)
             }

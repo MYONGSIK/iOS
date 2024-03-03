@@ -9,14 +9,20 @@ import UIKit
 import SnapKit
 import Then
 import WidgetKit
+import Combine
+import Toast
 
 // MARK: 위젯용 식당 설정 페이지
-class SettingRestautrantViewController: BaseViewController {
-    let restaurants = [ "생활관식당", "명진당", "학생회관", "교직원식당" ]
-    var selectedResName = "생활관식당"
+class SettingAreaViewController: BaseViewController {
+    private let viewModel = AreaSettingViewModel()
+    private var cancellabels = Set<AnyCancellable>()
+    private let input: PassthroughSubject<AreaSettingViewModel.Input, Never> = .init()
     
-    // MARK: Views
+    var areaList: [Area] = []
+    var selectIndex = 0
+    
     var restaurantsTableView: UITableView!
+    
     
     let backButton = UIButton().then {
         $0.setImage(UIImage(named: "arrow_left_gray"), for: .normal)
@@ -32,11 +38,13 @@ class SettingRestautrantViewController: BaseViewController {
     // MARK: Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let _ = UserDefaults.shared.value(forKey: "yongin_widget_res_name") {}
-        else { UserDefaults.shared.set("생활관식당", forKey: "yongin_widget_res_name") }
+        
         setUpTableView(dataSourceDelegate: self)
         setupView()
         setupConstraints()
+        bind()
+        
+        input.send(.viewDidLoad)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,6 +91,33 @@ class SettingRestautrantViewController: BaseViewController {
         }
     }
     
+    func bind() {
+        let output = viewModel.trastfrom(input.eraseToAnyPublisher())
+        
+        output.receive(on: DispatchQueue.main).sink { [weak self] event in
+            switch event {
+            case .loadArea(let areaList, let selectIndex):
+                self?.areaList = areaList
+                self?.selectIndex = selectIndex
+                self?.reloadDataAnimation()
+                
+            case .updateArea(_):
+                WidgetCenter.shared.reloadAllTimelines()
+                self?.reloadDataAnimation()
+                self?.view.makeToast("위젯 설정 변경에 성공하였습니다!")
+            }
+        }.store(in: &cancellabels)
+    }
+    
+    func reloadDataAnimation() {
+        UIView.transition(with: self.restaurantsTableView,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { () -> Void in
+                          self.restaurantsTableView.reloadData()},
+                          completion: nil);
+    }
+    
     
     @objc private func didTapBackButton() {
         self.navigationController?.popViewController(animated: true)
@@ -90,31 +125,31 @@ class SettingRestautrantViewController: BaseViewController {
     
 }
 
-extension SettingRestautrantViewController: UITableViewDelegate, UITableViewDataSource {
+extension SettingAreaViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MainViewModel.shared.getRestaurantsCount()
+        return areaList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingResTableViewCell", for: indexPath) as? SettingResTableViewCell else { return UITableViewCell() }
         
         cell.selectionStyle = .none
-        cell.configureName(name: MainViewModel.shared.getRestaurant(index: indexPath.row).rawValue)
+        cell.configureName(name: areaList[indexPath.row].rawValue)
         
-        if MainViewModel.shared.getRestaurant(index: indexPath.row).getServerName() == MainViewModel.shared.loadWidgetResName() {
+        if indexPath.row == selectIndex {
             cell.setSelectedRes(selected: true)
         }else {
             cell.setSelectedRes(selected: false)
         }
-
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { return 70 }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        MainViewModel.shared.saveWidgetResName(resName: MainViewModel.shared.getRestaurant(index: indexPath.row).getServerName())
-        WidgetCenter.shared.reloadAllTimelines()
-        tableView.reloadData()
+        selectIndex = indexPath.row
+        input.send(.tapAreaButton(indexPath.row))
+
     }
 }
