@@ -50,6 +50,7 @@
 		23E6ACA9290130C50091D803 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6ACA8290130C50091D803 /* UIDevice.swift */; };
 		58A23E1C2028CBEE0CA8BC47 /* Pods_MYONGSIKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */; };
 		7303B8B02A0AA28F004C4C52 /* GoogleMobileAdsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7303B8AF2A0AA28F004C4C52 /* GoogleMobileAdsController.swift */; };
+		7306FF732B9483D0001B380E /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306FF722B9483D0001B380E /* Key.swift */; };
 		73178AC129EAFC3A001C3AA4 /* MapInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73178AC029EAFC3A001C3AA4 /* MapInfoView.swift */; };
 		73178AD829EED14A001C3AA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */; };
 		731C3F422A5D3DA300A5277A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731C3F412A5D3DA300A5277A /* MainViewModel.swift */; };
@@ -62,7 +63,6 @@
 		73A9DAFA2B8BB12D00D10102 /* RestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A9DAF92B8BB12D00D10102 /* RestaurantViewModel.swift */; };
 		73DCDA542B93201D0033FA85 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DCDA532B93201D0033FA85 /* WebViewModel.swift */; };
 		73DCDA562B93465D0033FA85 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DCDA552B93465D0033FA85 /* MapViewController.swift */; };
-		73DCDA5A2B936BE60033FA85 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DCDA592B936BE60033FA85 /* Key.swift */; };
 		73DCDA5D2B937EEB0033FA85 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DCDA5C2B937EEB0033FA85 /* MapViewModel.swift */; };
 		73DF1D892A9897180097DB63 /* CGFloat+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D882A9897180097DB63 /* CGFloat+.swift */; };
 		73DF1D8C2A9898FE0097DB63 /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF1D8B2A9898FE0097DB63 /* Area.swift */; };
@@ -185,6 +185,7 @@
 		5079EC780F0F07C3EA02711C /* Pods_MYONGSIKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6500C555B9535208405D27B9 /* Pods_MYONGSIK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MYONGSIK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7303B8AF2A0AA28F004C4C52 /* GoogleMobileAdsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMobileAdsController.swift; sourceTree = "<group>"; };
+		7306FF722B9483D0001B380E /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		73178AC029EAFC3A001C3AA4 /* MapInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInfoView.swift; sourceTree = "<group>"; };
 		73178AD729EED14A001C3AA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		731C3F412A5D3DA300A5277A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -204,7 +205,6 @@
 		73A9DAF92B8BB12D00D10102 /* RestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewModel.swift; sourceTree = "<group>"; };
 		73DCDA532B93201D0033FA85 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		73DCDA552B93465D0033FA85 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		73DCDA592B936BE60033FA85 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		73DCDA5C2B937EEB0033FA85 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		73DF1D882A9897180097DB63 /* CGFloat+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+.swift"; sourceTree = "<group>"; };
 		73DF1D8B2A9898FE0097DB63 /* Area.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
@@ -473,7 +473,7 @@
 				A23DA70629A7EFEA003FDA56 /* DeviceIdManager.swift */,
 				23166A7328FECD9D002AEFB7 /* SceneDelegate.swift */,
 				73A9DAF62B8BA96F00D10102 /* CampusManager.swift */,
-				73DCDA592B936BE60033FA85 /* Key.swift */,
+				7306FF722B9483D0001B380E /* Key.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -1086,7 +1086,6 @@
 				23E6ACA9290130C50091D803 /* UIDevice.swift in Sources */,
 				73DF1D8C2A9898FE0097DB63 /* Area.swift in Sources */,
 				2311611C2911952200AD73D2 /* ToastBar.swift in Sources */,
-				73DCDA5A2B936BE60033FA85 /* Key.swift in Sources */,
 				73DCDA562B93465D0033FA85 /* MapViewController.swift in Sources */,
 				A2431C9029A34FBA00D8E493 /* PopupBaseVIewController.swift in Sources */,
 				23166A7628FECD9D002AEFB7 /* MainViewController.swift in Sources */,
@@ -1103,6 +1102,7 @@
 				2324102628FF0A4A0095C0CC /* BaseViewController.swift in Sources */,
 				2311611829117F9D00AD73D2 /* HeartListTableViewCell.swift in Sources */,
 				A2EA100929F3F855000D600B /* SettingAreaViewController.swift in Sources */,
+				7306FF732B9483D0001B380E /* Key.swift in Sources */,
 				A23DA70929A7F1AD003FDA56 /* UserModel.swift in Sources */,
 				23C993AA2910945400B8D1E4 /* UITextField.swift in Sources */,
 				2394E92C28FEF8E6009B6AEF /* DayFoodModel.swift in Sources */,

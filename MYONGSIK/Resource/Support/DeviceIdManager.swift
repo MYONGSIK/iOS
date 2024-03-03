@@ -38,6 +38,7 @@ class DeviceIdManager {
         
         let status: OSStatus = SecItemAdd(query as CFDictionary, nil)
         if status == errSecSuccess {
+            self.deviceId = deviceID
             registerUser(uuid: deviceID)
             return true
         }
