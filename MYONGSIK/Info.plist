@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-1097074016852233~2813341263</string>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
 	<key>KAKAO_APP_KEY</key>
 	<string>e29222d0f452b6f56a7bca329249ec61</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -14,26 +14,8 @@
 	<string>13.0.0</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-<!--		<key>NSAllowsArbitraryLoadsInWebContent</key>-->
-<!--		<true/>-->
-<!--		<key>NSExceptionDomains</key>-->
-<!--		<dict>-->
-<!--			<key>NSIncludesSubDomains</key>-->
-<!--			<true/>-->
-<!--			<key>http://13.209.50.30</key>-->
-<!--			<dict>-->
-<!--				<key>NSExceptionAllowsInsecureHTTPLoads</key>-->
-<!--				<true/>-->
-<!--				<key>NSIncludesSubdomains</key>-->
-<!--				<true/>-->
-<!--                <key>NSExceptionRequiresForwardSecrecy</key>-->
-<!--                <true/>-->
-<!--                <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>-->
-<!--                <true/>-->
-<!--			</dict>-->
-<!--		</dict>-->
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 	</dict>
 	<key>NSUserActivityTypes</key>
 	<array>

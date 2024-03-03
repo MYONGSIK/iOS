@@ -911,7 +911,7 @@ Copyright 2022 Google
 
 ## GoogleUserMessagingPlatform
 
-Copyright 2023 Google
+Copyright 2024 Google LLC
 
 ## GoogleUtilities
 
@@ -1140,6 +1140,10 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
+## KakaoMapsSDK
+
+Copyright (c) Kakao corp. All rights reserved.
 
 ## Kingfisher
 

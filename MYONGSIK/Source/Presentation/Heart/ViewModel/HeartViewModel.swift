@@ -23,13 +23,13 @@ final class HeartViewModel: ViewModelabel {
         case viewDidLoad
         case viewWillAppear
         case tapHeartButton(String)
-        case tapLinkButton(String)
+        case tapLinkButton(ResponseHeartModel)
     }
     
     enum Output {
         case updateHeart([ResponseHeartModel])
-        case heartResult(Bool)
-        case moveToLink(String)
+        case heartResult
+        case moveToLink(RequestHeartModel, String)
     }
     
     func trastfrom(_ input: AnyPublisher<Input, Never>) -> AnyPublisher<Output, Never> {
@@ -41,16 +41,17 @@ final class HeartViewModel: ViewModelabel {
                 }
             case .tapHeartButton(let id):
                 self?.heartService.cancelHeart(id: id) { result in
-                    self?.output.send(.heartResult(result))
+                    self?.output.send(.heartResult)
                 }
-                self?.heartService.getHeartList { result in
-                    self?.output.send(.updateHeart(result))
-                }
-            case.tapLinkButton(let link):
-                self?.output.send(.moveToLink(link))
+            case.tapLinkButton(let heart):
+                self?.output.send(.moveToLink((self?.transHeart(heart: heart))!, heart.id.description))
             }
         }.store(in: &cancellabels)
         
         return output.eraseToAnyPublisher()
+    }
+    
+    func transHeart(heart: ResponseHeartModel) -> RequestHeartModel {
+        return RequestHeartModel(address: heart.address, campus: CampusManager.shared.campus?.name, category: heart.category, code: heart.code, contact: heart.contact, distance: heart.distance,longitude: heart.longitude, latitude: heart.latitude,name: heart.name, phoneId: DeviceIdManager.shared.getDeviceID(), urlAddress: heart.urlAddress)
     }
 }

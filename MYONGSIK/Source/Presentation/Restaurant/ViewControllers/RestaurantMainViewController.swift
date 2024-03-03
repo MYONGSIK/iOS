@@ -130,7 +130,12 @@ class RestaurantMainViewController: MainBaseViewController {
                 vc.tag = tag
                 self?.navigationController?.pushViewController(vc, animated: true)
                 break
-            case .moveToWeb(_, _, _):
+            case .moveToWeb(let heart, let isHeart, let id):
+                let vc = WebViewController()
+                vc.heart = heart
+                vc.isHeart = isHeart
+                vc.id = id
+                self?.navigationController?.pushViewController(vc, animated: true)
                 break
             case .moveToMap(let urlStr, let isUrl):
                 if isUrl {

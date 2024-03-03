@@ -15,7 +15,7 @@ class GoogleMobileAdsController {
     
     func createAndLoadInterstitial(vc: UIViewController) {
         let request = GADRequest()
-            GADInterstitialAd.load(withAdUnitID: gakey,
+        GADInterstitialAd.load(withAdUnitID: Key.googleKey,
                                         request: request,
                                         completionHandler: { [self] ad, error in
                 if let error = error {

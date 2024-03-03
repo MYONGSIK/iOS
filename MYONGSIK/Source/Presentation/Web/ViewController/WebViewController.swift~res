@@ -8,20 +8,13 @@
 import UIKit
 import WebKit
 
-import Combine
-import CombineCocoa
-
+// MARK: 링크 이동 후 보이는 페이지입니다.
 class WebViewController: UIViewController, WKUIDelegate {
     var webView: WKWebView!
     
-    private let viewModel = WebViewModel()
-    private var cancellabels = Set<AnyCancellable>()
-    private var input: PassthroughSubject<WebViewModel.Input, Never> = .init()
-    
-    var heart: RequestHeartModel?
+    var restaurant: RestaurantModel?
     var isHeart: Bool = false
-    var id: String?
-
+    
     let heartButton = UIButton().then{
         $0.setImage(UIImage(named: "empty_heart"), for: .normal)
         $0.setImage(UIImage(named: "fill_heart"), for: .selected)
@@ -48,21 +41,33 @@ class WebViewController: UIViewController, WKUIDelegate {
         self.tabBarController?.tabBar.isHidden = true
         
         setUpView()
-
-        bind()
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        heartButton.isSelected = isHeart
-        input.send(.viewDidLoad(heart!))
-
+        guard let url = self.restaurant?.urlAddress else {return}
+        let myURL = URL(string: url)
+        let myRequest = URLRequest(url: myURL!)
+        webView.load(myRequest)
+        
+        heartButton.addTarget(self, action: #selector(heartButtonDidTap), for: .touchUpInside)
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.isNavigationBarHidden = true
     }
-
+    // MARK: - Actions
+    @objc func heartButtonDidTap() {
+        UIDevice.vibrate()
+        if heartButton.isSelected {
+            removeHeartAnimation()
+        } else {
+            addHeartAnimation()
+        }
+    }
+    
+    // MARK: - Functions
     func setUpView() {
         webView.addSubview(heartButton)
         heartButton.snp.makeConstraints { make in
@@ -71,41 +76,6 @@ class WebViewController: UIViewController, WKUIDelegate {
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-32)
         }
     }
-    
-    func bind() {
-        heartButton.tapPublisher.sink { [weak self] _ in
-            if self!.isHeart {
-                guard let id = self?.id else {return}
-                self?.input.send(.cancelHeart(id))
-            }else {
-                guard let heart = self?.heart else {return}
-                print(heart)
-                self?.input.send(.postHeart(heart))
-            }
-        }.store(in: &cancellabels)
-        
-        
-        let output = viewModel.trastfrom(input.eraseToAnyPublisher())
-        
-        output.receive(on: DispatchQueue.main).sink { [weak self] event in
-            switch event {
-            case .updateWeb(let url):
-                let myURL = URL(string: url)
-                let myRequest = URLRequest(url: myURL!)
-                self?.webView.load(myRequest)
-            case .postHeart(let id):
-                self?.id = id
-                self?.addHeartAnimation()
-                self?.isHeart = true
-            case .cancelHeart(let result):
-                if result {
-                    self?.removeHeartAnimation()
-                    self?.isHeart = false
-                }
-            }
-        }.store(in: &cancellabels)
-    }
-
 
     func addHeartAnimation() {
         ToastBar(self, message: .addHeart)

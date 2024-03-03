@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import GoogleMobileAds
+import KakaoMapsSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         GADMobileAds.sharedInstance().start()
+        SDKInitializer.InitSDK(appKey: Key.kakaoKey)
         return true
     }
 

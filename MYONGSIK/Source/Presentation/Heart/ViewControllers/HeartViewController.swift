@@ -50,7 +50,7 @@ class HeartViewController: MainBaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        self.input.send(.viewWillAppear)
+        self.input.send(.viewWillAppear)
     }
     
     private func bind() {
@@ -63,14 +63,18 @@ class HeartViewController: MainBaseViewController {
                     self?.heartTableView.isHidden = heartList.isEmpty
                     self?.emptyLabel.isHidden = !heartList.isEmpty
                     self?.heartList = heartList
-                    self?.heartTableView.reloadData()
+                    self?.reloadDataAnimation()
                     break
-                case.heartResult(let result):
+                case.heartResult:
                     self!.view.makeToast("찜꽁리스트에서 삭제되었습니다.🥲")
+                    self?.input.send(.viewDidLoad)
                     break
-                case .moveToLink(let link):
-                    print(1)
-                    self?.moveToWebVC(link: link)
+                case .moveToLink(let heart, let id):
+                    let vc = WebViewController()
+                    vc.heartButton.isHidden = true
+                    vc.heart = heart
+                    vc.id = id
+                    self?.navigationController?.pushViewController(vc, animated: true)
                     break
                 }
             }.store(in: &cancellabels)
@@ -110,14 +114,15 @@ class HeartViewController: MainBaseViewController {
         }
     }
     
-    func moveToWebVC(link: String) {
-        let vc = WebViewController()
-        vc.webURL = link
-        vc.heartButton.isHidden = true
-        
-        self.navigationController?.pushViewController(vc, animated: true)
+    func reloadDataAnimation() {
+        // reload data with animation
+        UIView.transition(with: self.heartTableView,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { () -> Void in
+                          self.heartTableView.reloadData()},
+                          completion: nil);
     }
-    
 
 }
 // MARK: - TableView delegate
