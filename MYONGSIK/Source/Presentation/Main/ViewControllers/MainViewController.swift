@@ -223,11 +223,13 @@ class MainViewController: MainBaseViewController {
             setupCurrentPage()
         }
         
-        if area != .mcc || area != .paulbassett {
+        if area != .mcc && area != .paulbassett {
             self.operatingTimeLabel.attributedText = "운영시간  |  \(area!.getResTime())"
                 .attributed(of: "운영시간", value: [
                     .foregroundColor: UIColor.darkGray
             ])
+        }else {
+            self.operatingTimeLabel.isHidden = true
         }
     }
     
@@ -356,9 +358,9 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PageCell
         
-        cell.setDay(page: indexPath.row)
         cell.area = area
         cell.foodList = foodList
+        cell.setDay(page: indexPath.row)
         return cell
     }
     

@@ -10,8 +10,6 @@ import Combine
 
 class FoodInfoCell: UITableViewCell {
     
-    var cancelLabels: Set<AnyCancellable> = []
-    
     private let containerView = UIView()
     private let categoryLabel = UILabel()
     private let foodInfoLabel = UILabel()
