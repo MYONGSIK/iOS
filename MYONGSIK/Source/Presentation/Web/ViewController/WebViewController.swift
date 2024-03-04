@@ -38,6 +38,10 @@ class WebViewController: UIViewController, WKUIDelegate {
     
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
+        let pref = WKWebpagePreferences.init()
+        pref.preferredContentMode = .mobile
+        webConfiguration.defaultWebpagePreferences = pref
+        
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.uiDelegate = self
         view = webView
