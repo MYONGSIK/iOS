@@ -60,12 +60,14 @@ class PageCell: UICollectionViewCell {
 
 extension PageCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return foodList.count
+        return area!.getFoodInfoCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FoodInfoCell
-        cell.setContent(foodInfo: foodList[indexPath.row], area: area!)
+        if !foodList.isEmpty {
+            cell.setContent(foodInfo: foodList[indexPath.row + (self.day * area!.getFoodInfoCount())], area: area!)
+        }
         return cell
     }
     

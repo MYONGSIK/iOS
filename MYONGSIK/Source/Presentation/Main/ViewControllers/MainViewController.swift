@@ -239,6 +239,7 @@ class MainViewController: MainBaseViewController {
         output.receive(on: DispatchQueue.main).sink { [weak self] event in
             switch event {
             case .updateFood(let foodList):
+                print(foodList)
                 self?.foodList = foodList
                 self?.setupArea()
                 self?.reloadDataAnimation()
