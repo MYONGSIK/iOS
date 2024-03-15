@@ -15,6 +15,7 @@ target 'MYONGSIK' do
   pod 'Firebase'
   pod 'Firebase/Core'
   pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
   pod 'Google-Mobile-Ads-SDK'
   pod 'CombineCocoa'
   pod 'KakaoMapsSDK' , '~> 2.9.2'
