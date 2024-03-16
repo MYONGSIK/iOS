@@ -8,10 +8,7 @@
 import Foundation
 import Combine
 
-protocol RestaurantViewModelable {
-    func transRes(kakaoList: [KakaoResultModel]) -> [RestaurantModel]
-    func transHeart(res: RestaurantModel) -> RequestHeartModel
-}
+protocol RestaurantViewModelable {}
 
 extension RestaurantViewModelable {
     func transRes(kakaoList: [KakaoResultModel]) -> [RestaurantModel] {
