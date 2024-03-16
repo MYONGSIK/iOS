@@ -8,8 +8,25 @@
 import Foundation
 import Combine
 
+protocol RestaurantViewModelable {
+    func transRes(kakaoList: [KakaoResultModel]) -> [RestaurantModel]
+    func transHeart(res: RestaurantModel) -> RequestHeartModel
+}
 
-final class RestaurantViewModel: ViewModelabel {
+extension RestaurantViewModelable {
+    func transRes(kakaoList: [KakaoResultModel]) -> [RestaurantModel] {
+        return kakaoList.map {
+            RestaurantModel(address: $0.address_name, category: $0.category_group_name, code: $0.id, contact: $0.phone, distance: $0.distance, name: $0.place_name, scrapCount: 0, storeId: Int($0.id!), urlAddress: $0.place_url,longitude: $0.y, latitude: $0.x)
+        }
+    }
+    
+    func transHeart(res: RestaurantModel) -> RequestHeartModel {
+        return RequestHeartModel(address: res.address, campus: CampusManager.shared.campus?.name, category: res.category, code: res.code, contact: res.contact, distance: res.distance, longitude: res.longitude, latitude: res.latitude, name: res.name, phoneId: DeviceIdManager.shared.getDeviceID(), urlAddress: res.urlAddress)
+        
+    }
+}
+
+final class RestaurantViewModel: ViewModelabel, RestaurantViewModelable {
     private let restaurantService: RestaurantServiceProtocol
     private let heartService: HeartServiceProtocol
     private let output: PassthroughSubject<Output, Never> = .init()
@@ -99,20 +116,9 @@ final class RestaurantViewModel: ViewModelabel {
         
         return output.eraseToAnyPublisher()
     }
-    
-    private func transRes(kakaoList: [KakaoResultModel]) -> [RestaurantModel] {
-        return kakaoList.map {
-            RestaurantModel(address: $0.address_name, category: $0.category_group_name, code: $0.id, contact: $0.phone, distance: $0.distance, name: $0.place_name, scrapCount: 0, storeId: Int($0.id!), urlAddress: $0.place_url,longitude: $0.y, latitude: $0.x)
-        }
-    }
-    
-    private func transHeart(res: RestaurantModel) -> RequestHeartModel {
-        return RequestHeartModel(address: res.address, campus: CampusManager.shared.campus?.name, category: res.category, code: res.code, contact: res.contact, distance: res.distance, longitude: res.longitude, latitude: res.latitude, name: res.name, phoneId: DeviceIdManager.shared.getDeviceID(), urlAddress: res.urlAddress)
-        
-    }
 }
 
-final class RestaurantTagViewModel: ViewModelabel {
+final class RestaurantTagViewModel: ViewModelabel, RestaurantViewModelable {
     private let restaurantService: RestaurantServiceProtocol
     private let heartService: HeartServiceProtocol
     private let output: PassthroughSubject<Output, Never> = .init()
@@ -187,20 +193,9 @@ final class RestaurantTagViewModel: ViewModelabel {
         
         return output.eraseToAnyPublisher()
     }
-    
-    private func transRes(kakaoList: [KakaoResultModel]) -> [RestaurantModel] {
-        return kakaoList.map {
-            RestaurantModel(address: $0.address_name, category: $0.category_group_name, code: $0.id, contact: $0.phone, distance: $0.distance, name: $0.place_name, scrapCount: 0, storeId: Int($0.id!), urlAddress: $0.place_url,longitude: $0.y, latitude: $0.x)
-        }
-    }
-    
-    private func transHeart(res: RestaurantModel) -> RequestHeartModel {
-        return RequestHeartModel(address: res.address, campus: CampusManager.shared.campus?.name, category: res.category, code: res.code, contact: res.contact, distance: res.distance, longitude: res.longitude, latitude: res.latitude, name: res.name, phoneId: DeviceIdManager.shared.getDeviceID(), urlAddress: res.urlAddress)
-        
-    }
 }
 
-final class RestaurantSearchViewModel: ViewModelabel {
+final class RestaurantSearchViewModel: ViewModelabel, RestaurantViewModelable {
     private let restaurantService: RestaurantServiceProtocol
     private let heartService: HeartServiceProtocol
     private let output: PassthroughSubject<Output, Never> = .init()
@@ -274,16 +269,5 @@ final class RestaurantSearchViewModel: ViewModelabel {
         }.store(in: &cancellabels)
         
         return output.eraseToAnyPublisher()
-    }
-    
-    private func transRes(kakaoList: [KakaoResultModel]) -> [RestaurantModel] {
-        return kakaoList.map {
-            RestaurantModel(address: $0.address_name, category: $0.category_group_name, code: $0.id, contact: $0.phone, distance: $0.distance, name: $0.place_name, scrapCount: 0, storeId: Int($0.id!), urlAddress: $0.place_url,longitude: $0.y, latitude: $0.x)
-        }
-    }
-    
-    private func transHeart(res: RestaurantModel) -> RequestHeartModel {
-        return RequestHeartModel(address: res.address, campus: CampusManager.shared.campus?.name, category: res.category, code: res.code, contact: res.contact, distance: res.distance, longitude: res.longitude, latitude: res.latitude, name: res.name, phoneId: DeviceIdManager.shared.getDeviceID(), urlAddress: res.urlAddress)
-        
     }
 }
